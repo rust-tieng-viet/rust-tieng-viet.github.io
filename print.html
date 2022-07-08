@@ -8,7 +8,16 @@
 
 
         <!-- Custom HTML head -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-88RKF7DLPY"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
         
+          gtag('config', 'G-88RKF7DLPY');
+        </script>
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -117,6 +126,9 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -195,7 +207,7 @@ cho mượn (borrow) nó một thời gian.</p>
 <li>Khi truyền một reference tới variable, bạn có thể <strong>immutable</strong> borrow không giới hạn; hoặc <strong>mutable</strong> borrow một lần.</li>
 </ol>
 <p>Ví dụ: đoạn chương trình sau sẽ không compile được</p>
-<pre><pre class="playground"><code class="language-rust">fn hold_my_vec&lt;T&gt;(_: Vec&lt;T&gt;) {}
+<pre><pre class="playground"><code class="language-rust edition2021">fn hold_my_vec&lt;T&gt;(_: Vec&lt;T&gt;) {}
 
 fn main() {
   let x = vec![1, 2, 3];
@@ -206,7 +218,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>Compiler sẽ báo lỗi như sau: <code>rustc main.rs</code></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>error[E0382]: borrow of moved value: `x`
     --&gt; main.rs:7:13
@@ -231,7 +243,7 @@ vì thế data sẽ được di chuyển (move) hoặc mượn (borrow) vào fun
 <a href="https://doc.rust-lang.org/core/clone/trait.Clone.html">Clone trait</a>.
 Chỉ để cho code chạy được thì đây là một cách nhanh để compiler ngưng báo lỗi.
 Lưu ý thì việc clone thường sẽ tốn khá nhiều chi phí, nhất là đối với những object lớn.</p>
-<pre><pre class="playground"><code class="language-rust">fn hold_my_vec&lt;T&gt;(_: Vec&lt;T&gt;) {}
+<pre><pre class="playground"><code class="language-rust edition2021">fn hold_my_vec&lt;T&gt;(_: Vec&lt;T&gt;) {}
 
 fn main() {
   let x = vec![1, 2, 3];
@@ -245,7 +257,7 @@ fn main() {
 việc take ownership. Có một cách tốt hơn là <strong>references.</strong> Thay vì
 để function take ownership, ta có thể cho nó mượn giá trị.
 Chúng ta sẽ truyền vào một reference — a borrowed value.</p>
-<pre><pre class="playground"><code class="language-rust">fn hold_my_vec&lt;T&gt;(_: &amp;Vec&lt;T&gt;) {}
+<pre><pre class="playground"><code class="language-rust edition2021">fn hold_my_vec&lt;T&gt;(_: &amp;Vec&lt;T&gt;) {}
 
 fn main() {
   let x = vec![1, 2, 3];
@@ -267,7 +279,7 @@ vẫn có thể tiếp tục sử sử dụng trong chương trình.</p>
 <a href="https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#the-stack-and-the-heap">Xem thêm về stack và heap tại đây</a>.</p>
 <p>Khi một Box nằm ngoài scope, destructor sẽ được gọi để giải phóng bộ nhớ. 
 Sử dụng Box không ảnh hưởng nhiều đến performance do Box không bổ sung thêm thông tin metadata nào khác. </p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
   let b = Box::new(5);
   println!(&quot;b = {}&quot;, b);
 }
@@ -286,7 +298,7 @@ Sử dụng Box không ảnh hưởng nhiều đến performance do Box không b
 là một ví dụ của recursive type. Cons là viết tắt của <em>&quot;construct function&quot;</em>. 
 Mỗi item trong cons list có 2 thành phần: giá trị của item hiện tại và next item. 
 Item cuối cùng có giá trị Nil và không có next item. </p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum List {
   Cons(i32, List),
@@ -295,7 +307,7 @@ Item cuối cùng có giá trị Nil và không có next item. </p>
 <span class="boring">}
 </span></code></pre></pre>
 <p>Bây giờ hãy sử dụng <code>List</code> type để lưu list <code>1, 2, 3</code> như sau</p>
-<pre><pre class="playground"><code class="language-rust">enum List {
+<pre><pre class="playground"><code class="language-rust edition2021">enum List {
   Cons(i32, List),
   Nil,
 }
@@ -307,7 +319,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>Nếu chúng ta compile đoạn code trên, compiler sẽ báo như sau:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>$ cargo run
    Compiling cons-list v0.1.0 (file:///duyet/cons-list)
@@ -340,7 +352,7 @@ error: could not compile `cons-list` due to 2 previous errors
 </span></code></pre></pre>
 <p>Compiler nói rằng kiểu dữ liệu này <em>has infinite size.</em> Bởi vì <code>List</code> có variant là <code>List::Cons</code> chứa trực tiếp một <code>List</code> khác trong chính nó. Do đó Rust sẽ không biết được sẽ cần bao nhiêu bộ nhớ để lưu giá trị của <code>List</code>. </p>
 <p>Dừng lại một chút để xem Rust tính toán bộ nhớ của một kiểu dữ liệu bình thường như thế nào:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Message {
   Quit,
@@ -354,7 +366,7 @@ error: could not compile `cons-list` due to 2 previous errors
 <p>Quay lại với Cons List, bộ nhớ mà Rust tính toán được có thể đến vô tận.</p>
 <p><img src="basic//media/2022/03/cons.svg" alt="" /></p>
 <p>Theo như gợi ý của compiler, chúng ta có thể sử dụng <code>Box&lt;T&gt;</code> để có một Recursive Type với một kích thước bộ nhớ xác định:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to make `List` representable
   |
@@ -365,7 +377,7 @@ error: could not compile `cons-list` due to 2 previous errors
 <p>Bởi vì <code>Box&lt;T&gt;</code> là một pointer, Rust luôn biết chính xác bao nhiêu bộ nhớ mà một <code>Box&lt;T&gt;</code> <strong>pointer</strong> cần.</p>
 <p><img src="basic//media/2022/03/cons-box.png" alt="" /></p>
 <p>Chương trình của chúng ta lúc này sẽ là:</p>
-<pre><pre class="playground"><code class="language-rust">enum List {
+<pre><pre class="playground"><code class="language-rust edition2021">enum List {
   Cons(i32, Box&lt;List&gt;),
   Nil,
 }
@@ -378,7 +390,7 @@ fn main() {
 </code></pre></pre>
 <h1 id="2-sử-dụng-trait-objects-cho-phép-sử-dụng-giá-trị-từ-nhiều-kiểu-dữ-liệu-khác-nhau"><a class="header" href="#2-sử-dụng-trait-objects-cho-phép-sử-dụng-giá-trị-từ-nhiều-kiểu-dữ-liệu-khác-nhau">2. Sử dụng <em>trait objects</em> cho phép sử dụng giá trị từ nhiều kiểu dữ liệu khác nhau</a></h1>
 <p>Một giới hạn của <code>Vec</code> là chỉ có thể lưu trữ các thành phần có kiểu dữ liệu giống nhau mà thôi. Ta có thể lách luật trong một số trường hợp bằng cách sử dụng enum có nhiều variant giữ nhiều kiểu dữ liệu khác nhau</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Cell {
   Int(i32),
@@ -394,7 +406,7 @@ let row = vec![
 <span class="boring">}
 </span></code></pre></pre>
 <p>Tuy nhiên, trong một số trường hợp mong muốn thư viện của chúng ta có thể dễ dàng được mở rộng một số trường hợp khác. Chúng ta đã biết được định nghĩa Trait cho các Common Behavior. Trong Rust, trait định nghĩa các hành vi, và các hành vi này có thể được <code>impl</code> cho struct hoặc enum, để giúp một struct hoặc enum mang đặc tính các hành vi đó. </p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Draw {
   fn draw(&amp;self);
@@ -454,7 +466,7 @@ xử lý mọi trường hợp giá trị đặc biệt, hoặc do chương trì
 Có nghĩa là ta có thể <em>vô tình</em> làm crash chương trình với một lỗi nhỏ ở bất kỳ đâu, ở bất kỳ thời điểm nào.</p>
 <p>Rust làm điều này tốt hơn, chỉ với <code>Option</code>. </p>
 <p>Một giá trị optional có thể mang một giá trị nào đó <strong>Some(something)</strong> hoặc không mang giá trị nào cả (<strong>None</strong>).</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// An output can have either Some value or no value/ None.
 enum Option&lt;T&gt; { // T is a generic and it can contain any type of value.
@@ -466,7 +478,7 @@ enum Option&lt;T&gt; { // T is a generic and it can contain any type of value.
 <p>Theo thiết kế, mặc định bạn sẽ không bao giờ lấy được giá trị bạn cần nếu không xử lý 
 các trường hợp có thể xảy ra với <code>Option</code>, là <code>None</code> chẳng hạn. 
 Điều này được bắt buộc bởi compiler lúc compile code, có nghĩa là nếu bạn quên check, code sẽ không bao giờ được compile.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let sentence = &quot;The fox jumps over the dog&quot;;
 let index = sentence.find(&quot;fox&quot;);
@@ -481,7 +493,7 @@ if let Some(fox) = index {
 <h2 id="cách-sử-dụng-option"><a class="header" href="#cách-sử-dụng-option"><strong>Cách sử dụng Option</strong></a></h2>
 <p>Option là standard library, do đã được <a href="https://learning-rust.github.io/docs/d7.std_primitives_and_preludes.html#Preludes">preludes</a> nên chúng ta không cần khai báo trước khi sử dụng. Ngoài enum <a href="https://doc.rust-lang.org/std/option/enum.Option.html">Option</a> thì các variant của nó cũng đã được preludes sẵn như <a href="https://doc.rust-lang.org/std/option/enum.Option.html#variant.Some">Some</a> và <a href="https://doc.rust-lang.org/std/option/enum.Option.html#variant.None">None</a>.</p>
 <p>Ví dụ, ta có một function tính giá trị chia hai số, đôi khi sẽ không tìm ra được kết quả, ta sử dụng Some nhu sau:</p>
-<pre><pre class="playground"><code class="language-rust">fn divide(numerator: f64, denominator: f64) -&gt; Option&lt;f64&gt; {
+<pre><pre class="playground"><code class="language-rust edition2021">fn divide(numerator: f64, denominator: f64) -&gt; Option&lt;f64&gt; {
   if denominator == 0.0 {
     None
   } else {
@@ -507,7 +519,7 @@ fn main() {
 <p>Option method overview: <a href="https://doc.rust-lang.org/std/option/#method-overview">https://doc.rust-lang.org/std/option/#method-overview</a></p>
 <h3 id="unwrap"><a class="header" href="#unwrap"><code>.unwrap()</code></a></h3>
 <p>Trả về giá trị nằm trong <code>Some</code>. Nếu giá trị là None có thể dẫn đến panic chương trình. </p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = Some(&quot;air&quot;);
 assert_eq!(x.unwrap(), &quot;air&quot;);
@@ -518,7 +530,7 @@ assert_eq!(x.unwrap(), &quot;air&quot;); // panic!
 </span></code></pre></pre>
 <h3 id="expect"><a class="header" href="#expect"><code>.expect()</code></a></h3>
 <p>Giống <code>.unwrap()</code>, nhưng nếu panic thì Rust sẽ kèm theo message</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x: Option&lt;&amp;str&gt; = None;
 x.expect(&quot;fruits are healthy&quot;); // panics: `fruits are healthy`
@@ -526,14 +538,14 @@ x.expect(&quot;fruits are healthy&quot;); // panics: `fruits are healthy`
 </span></code></pre></pre>
 <h3 id="unwrap_or"><a class="header" href="#unwrap_or"><code>.unwrap_or()</code></a></h3>
 <p>Trả về giá trị nằm trong <code>Some</code>, nếu không trả về giá trị nằm trong <code>or</code></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>assert_eq!(Some(&quot;car&quot;).unwrap_or(&quot;bike&quot;), &quot;car&quot;);
 <span class="boring">}
 </span></code></pre></pre>
 <h3 id="unwrap_or_default"><a class="header" href="#unwrap_or_default"><code>.unwrap_or_default()</code></a></h3>
 <p>Trả về giá trị nằm trong <code>Some</code>, nếu không trả về giá <a href="https://doc.rust-lang.org/std/default/trait.Default.html#tymethod.default">default</a>.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let good_year_from_input = &quot;1909&quot;;
 let bad_year_from_input = &quot;190blarg&quot;;
@@ -550,7 +562,7 @@ mapping <a href="https://doc.rust-lang.org/std/option/enum.Option.html#variant.S
 thành <a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Ok"><code>Ok(v)</code></a> 
 và <a href="https://doc.rust-lang.org/std/option/enum.Option.html#variant.None"><code>None</code></a> 
 sang <a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err"><code>Err(err)</code></a>.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = Some(&quot;foo&quot;);
 assert_eq!(x.ok_or(0), Ok(&quot;foo&quot;));
@@ -558,7 +570,7 @@ assert_eq!(x.ok_or(0), Ok(&quot;foo&quot;));
 </span></code></pre></pre>
 <h3 id="match"><a class="header" href="#match"><code>match</code></a></h3>
 <p>Chúng ta có thể sử dụng pattern matching để code dễ đọc hơn</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn get_name(who: Option&lt;String&gt;) -&gt; String {
   match who {
@@ -576,7 +588,7 @@ get_name(Some(&quot;duyet&quot;));
 <li>thành công (<strong><code>Ok</code></strong>) và trả về kết quả</li>
 <li>hoặc lỗi (<strong><code>Err</code></strong>) và trả về thông tin lỗi.</li>
 </ul>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Result&lt;T, E&gt; {
   Ok(T),
@@ -585,7 +597,7 @@ get_name(Some(&quot;duyet&quot;));
 <span class="boring">}
 </span></code></pre></pre>
 <p>Ví dụ</p>
-<pre><pre class="playground"><code class="language-rust">fn get_age(who: &amp;str) -&gt; Result&lt;i8, &amp;str&gt; {
+<pre><pre class="playground"><code class="language-rust edition2021">fn get_age(who: &amp;str) -&gt; Result&lt;i8, &amp;str&gt; {
   if who == &quot;duyet&quot; {
     Ok(18)
   } else {
@@ -608,7 +620,7 @@ fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
 <p>Như bạn thấy thì <code>main()</code> cũng có thể return về <code>Result&lt;(), &amp;'static str&gt;</code></p>
 <h3 id="unwrap-1"><a class="header" href="#unwrap-1"><code>.unwrap()</code></a></h3>
 <p>Ví dụ trên nhưng sử dụng <code>.unwrap()</code> , chủ động panic (crash) dừng chương trình nếu gặp lỗi.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
   let who = &quot;duyet&quot;;
   let age = get_age(who).unwrap();
   println!(&quot;{} is {}&quot;, who, age);
@@ -619,7 +631,7 @@ fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
 <p><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=c93551e94e040369d5874672495e3fc9">(Rust Playground)</a></p>
 <h3 id="expect-1"><a class="header" href="#expect-1"><code>.expect()</code></a></h3>
 <p>Giống như <code>unwrap()</code>: chủ động panic (crash) dừng chương trình nếu gặp lỗi và kèm theo message. Sẽ rất có ích, nhất là khi có quá nhiều unwrap, bạn sẽ không biết nó panic ở đâu.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
   let who = &quot;ngan&quot;;
   let age = get_age(who).expect(&quot;could not get age&quot;);
   println!(&quot;{} is {}&quot;, who, age);
@@ -631,7 +643,7 @@ fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
 <p>Xem thêm mọi method khác của Result <a href="https://doc.rust-lang.org/std/result/enum.Result.html">tại đây</a>.</p>
 <h1 id="3-convert-result-sang-option"><a class="header" href="#3-convert-result-sang-option">3. Convert <code>Result</code> sang <code>Option</code></a></h1>
 <p>Đôi khi bạn sẽ cần convert từ <code>Ok(v)</code> sang <code>Some(v)</code> hoặc <code>Err(e)</code> sang <code>Some(e)</code></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// .ok(v) = Some(v)
 let x: Result&lt;u32, &amp;str&gt; = Ok(2);
@@ -651,7 +663,7 @@ assert_eq!(x.err(), Some(&quot;Nothing here&quot;));
 <h1 id="4-toán-tử-"><a class="header" href="#4-toán-tử-">4. Toán tử <code>?</code></a></h1>
 <p>Khi viết code mà có quá nhiều functions trả về <a href="https://doc.rust-lang.org/std/result/enum.Result.html">Result</a>, việc handle Err sẽ khá nhàm chán. Toán tử chấm hỏi <a href="https://doc.rust-lang.org/std/ops/trait.Try.html">?</a> cho phép dừng function tại vị trí đó và return cho function cha nếu <a href="https://doc.rust-lang.org/std/result/enum.Result.html">Result</a> ở vị trí đó là Err.</p>
 <p>Nó sẽ thay thế đoạn code sau:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
 use std::io::prelude::*;
@@ -683,7 +695,7 @@ fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>thành</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
 use std::io::prelude::*;
@@ -710,7 +722,7 @@ fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
 <p><code>?</code> chỉ có thể được dùng trong function có kiểu dữ liệu trả về là <a href="https://doc.rust-lang.org/std/result/enum.Result.html">Result</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="-code-comment-sao-cho-đúng"><a class="header" href="#-code-comment-sao-cho-đúng"><code>/// code comment</code> sao cho đúng</a></h1>
 <p>Comment sao cho đúng để đồng đội bớt chửi.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// hello, world
 <span class="boring">}
@@ -719,14 +731,14 @@ fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
 <p>Trong Rust comment bắt đầu bằng 2 slashes <code>//</code> được gọi là <em>Regular comments</em>,
 chú thích cho một đoạn code hoặc biểu thức theo sau nó.
 Compiler sẽ không quan tâm đến các Regular comments này.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
   // I’m feeling lucky today
   let lucky_number = 7;
 }
 </code></pre></pre>
 <p>Nếu comment có nhiều hơn một dòng,
 hãy ngắt nó thành nhiều dòng -.-</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// So we’re doing something complicated here, long enough that we need
 // multiple lines of comments to do it! Whew! Hopefully, this comment will
@@ -734,14 +746,14 @@ hãy ngắt nó thành nhiều dòng -.-</p>
 <span class="boring">}
 </span></code></pre></pre>
 <p>Comment cũng có thể được đặt cuối dòng code, nếu nó ngắn gọn và đơn giản:</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
   let lucky_number = 7; // I’m feeling lucky today
 }
 </code></pre></pre>
 <h2 id="doc-comments"><a class="header" href="#doc-comments">Doc comments</a></h2>
 <p>Doc comments sẽ được Compiler parse thành <a href="https://doc.rust-lang.org/rust-by-example/meta/doc.html">HTML documentation</a>
 khi render document bằng <a href="basic/./cargo-doc.html">cargo doc</a>.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Generate library docs for the following item.
 //! Generate library docs for the enclosing item.
@@ -749,7 +761,7 @@ khi render document bằng <a href="basic/./cargo-doc.html">cargo doc</a>.</p>
 </span></code></pre></pre>
 <p>Doc comments sẽ cực kỳ hữu ích cho project lớn và cần một hệ thống document chính xác và up to date.</p>
 <p><code>//!</code> sẽ generate doc cho crate/mod trong file hiện tại.</p>
-<pre><pre class="playground"><code class="language-rust">#![crate_name = &quot;doc&quot;]
+<pre><pre class="playground"><code class="language-rust edition2021">#![crate_name = &quot;doc&quot;]
 
 /// A human being is represented here
 pub struct Person {
@@ -794,7 +806,7 @@ fn main() {
 </code></pre></pre>
 <p>Chúng ta có thể thậm chí comment lại example code hoặc cách sử dụng một function nào đó,
 code này cũng sẽ được compile và test, đảm bảo được code và doc luôn luôn chính xác với nhau, một giải pháp khá thông minh.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Adds one to the number given.
 ///
@@ -825,12 +837,12 @@ pub fn add_one(x: i32) -&gt; i32 {
 <p>Có 3 loại struct:</p>
 <h1 id="unit-struct"><a class="header" href="#unit-struct">Unit struct</a></h1>
 <p>Unit struct là một struct mà không có gì cả:</p>
-<pre><pre class="playground"><code class="language-rust">struct FileDirectory;
+<pre><pre class="playground"><code class="language-rust edition2021">struct FileDirectory;
 fn main() {} 
 </code></pre></pre>
 <h1 id="tuple-struct"><a class="header" href="#tuple-struct">Tuple struct</a></h1>
 <p>Tuple struct hay còn gọi là Unnamed struct. Bạn chỉ cần định nghĩa kiểu dữ liệu, không cần định tên field name.</p>
-<pre><pre class="playground"><code class="language-rust">struct Colour(u8, u8, u8);
+<pre><pre class="playground"><code class="language-rust edition2021">struct Colour(u8, u8, u8);
 
 fn main() {
   let my_colour = Colour(50, 0, 50); // Make a colour out of RGB (red, green, blue)
@@ -844,7 +856,7 @@ fn main() {
 </code></pre></pre>
 <h1 id="named-struct"><a class="header" href="#named-struct">Named struct</a></h1>
 <p>Phổ biến nhất, bạn sẽ phải định nghĩa field name trong block <code>{}</code> </p>
-<pre><pre class="playground"><code class="language-rust">struct Colour(u8, u8, u8); // Declare the same Colour tuple struct
+<pre><pre class="playground"><code class="language-rust edition2021">struct Colour(u8, u8, u8); // Declare the same Colour tuple struct
 
 struct SizeAndColour {
   size: u32,
@@ -862,7 +874,7 @@ fn main() {
 }
 </code></pre></pre>
 <p><code>colour: colour</code> có thể được viết gọn lại thành:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let size_and_colour = SizeAndColour {
   size: 150,
@@ -894,7 +906,7 @@ khác nhau vào các kiểu dữ liệu (types) và tạo nên các mối quan h
 </ol>
 <p>Để gắn một trait vào một type, bạn cần implement nó. 
 Bởi vì <code>Debug</code> hay <code>Copy</code> quá phổ biến, nên Rust có attribute để tự động implement:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[derive(Debug)]
 struct MyStruct {
@@ -907,7 +919,7 @@ bằng cách <code>impl</code> nó. Ví dụ bạn có trait <code>Add</code>
 (<a href="https://doc.rust-lang.org/std/ops/trait.Add.html#implementors">std::ops::Add</a>) 
 để add 2 type lại với nhau. Nhưng Rust sẽ không biết cách bạn add 2 
 type đó lại như thế nào, bạn cần phải tự định nghĩa:</p>
-<pre><pre class="playground"><code class="language-rust">use std::ops::Add;
+<pre><pre class="playground"><code class="language-rust edition2021">use std::ops::Add;
 
 struct MyStruct {
   number: usize,
@@ -946,7 +958,7 @@ có thể hiển thị summaries của data có thể store trên <code>NewsArti
 hoặc <code>Tweet</code> instance. Chúng ta cần định nghĩa method <code>summarize</code> 
 trên mỗi instance. Để định nghĩa một trait, ta dùng <code>trait</code> theo sau 
 là trait name; dùng keyword <code>pub</code> nếu định nghĩa một public trait.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Summary {
   fn summarize(&amp;self) -&gt; String;
@@ -962,7 +974,7 @@ bởi vì mỗi type (<code>NewsArticle</code> hay <code>Tweet</code>) đều c�
 <p>Bây giờ ta định implement các method của trait Summary cho từng type. 
 Ví dụ dưới đây ta có <code>struct NewsArticle</code> và <code>struct Tweet</code>, 
 và ta định nghĩa <code>summarize</code> cho 2 struct này.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Summary {
   fn summarize(&amp;self) -&gt; String;
@@ -1001,7 +1013,7 @@ Bây giờ Summary đã được implement cho <code>NewsArticle</code> và <cod
 người sử dụng crate đã có thể sử dụng các phương thức của trait như các method function bình thường. 
 Chỉ một điều khác biệt là bạn cần mang trait đó vào cùng scope hiện tại cùng với type để có thể sử dụng. 
 Ví dụ:</p>
-<pre><pre class="playground"><code class="language-rust">use aggregator::{Summary, Tweet}; // &lt;-- same scope
+<pre><pre class="playground"><code class="language-rust edition2021">use aggregator::{Summary, Tweet}; // &lt;-- same scope
 
 fn main() {
   let tweet = Tweet {
@@ -1017,7 +1029,7 @@ fn main() {
 </code></pre></pre>
 <p>Rust Playground: <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=dc563051aecebae4344776c06fb1b49d">https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=dc563051aecebae4344776c06fb1b49d</a></p>
 <p>Chúng ta có thể implement trait cho mọi type khác bất kỳ, ví dụ implement <code>Summary</code> cho <code>Vec&lt;T&gt;</code> trong scope của crate hiện tại.</p>
-<pre><pre class="playground"><code class="language-rust">pub trait Summary {
+<pre><pre class="playground"><code class="language-rust edition2021">pub trait Summary {
   fn summarize(&amp;self) -&gt; String;
 }
 
@@ -1041,7 +1053,7 @@ trong trong crate hiện tại. Rule này giúp tránh chống chéo và chắc 
 rằng không ai có thể break code của người khác và ngược lại.</p>
 <h1 id="default-implementations"><a class="header" href="#default-implementations">Default Implementations</a></h1>
 <p>Đôi khi bạn cần có default behavior mà không cần phải implement content cho từng type mỗi khi cần sử dụng:</p>
-<pre><pre class="playground"><code class="language-rust">pub trait Summary {
+<pre><pre class="playground"><code class="language-rust edition2021">pub trait Summary {
   fn summarize(&amp;self) -&gt; String {
     String::from(&quot;(Read more...)&quot;)
   }
@@ -1067,7 +1079,7 @@ fn main() {
 một function chấp nhận tham số là nhiều kiểu dữ liệu khác nhau. 
 Nói theo một cách khác, bạn không cần biết kiểu dữ liệu, 
 bạn cần biết kiểu dữ liệu đó mang các behavior nào thì đúng hơn.</p>
-<pre><pre class="playground"><code class="language-rust">fn notify(data: &amp;impl Summary) {
+<pre><pre class="playground"><code class="language-rust edition2021">fn notify(data: &amp;impl Summary) {
   println!(&quot;News: {}&quot;, data.summarize());
 }
 
@@ -1083,7 +1095,7 @@ do đó ta có thể sử dụng method <code>.summary()</code> bên trong funct
 <h1 id="trait-bound"><a class="header" href="#trait-bound">Trait Bound</a></h1>
 <p>Một syntax sugar khác mà ta có thể sử dụng thay cho <code>&amp;impl Summary</code> ở trên, 
 gọi là <em>trait bound</em>, bạn sẽ bắt gặp nhiều trong Rust document:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn notify&lt;T: Summary&gt;(item: &amp;T) {
   println!(&quot;News: {}&quot;, item.summarize());
@@ -1098,7 +1110,7 @@ Ta có thể đọc là: <code>item</code> có kiểu generic là <code>T</code>
 <li><code>notify&lt;T: Summary&gt;(</code> generic type được implement <code>trait Summary</code></li>
 </ul>
 <p>Cú pháp này có thể dài hơn và không dễ đọc như <code>&amp;impl Summary</code>, nhưng hãy xem ví dụ dưới đây:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn notify(item1: &amp;impl Summary, item2: &amp;impl Summary) {}  // (1)
 pub fn notify&lt;T: Summary&gt;(item1: &amp;T, item2: &amp;T) {}            // (2)
@@ -1110,7 +1122,7 @@ mà còn giúp force <code>item1</code> và <code>item2</code> có cùng kiểu 
 <h1 id="specifying-multiple-trait-bounds-with-the--syntax"><a class="header" href="#specifying-multiple-trait-bounds-with-the--syntax">Specifying Multiple Trait Bounds with the + Syntax</a></h1>
 <p>Ta có cú pháp <code>+</code> nếu muốn generic <code>T</code> có được impl nhiều trait khác nhau. 
 Ví dụ ta muốn <code>item</code> phải có cả <code>Summary</code> lẫn <code>Display</code></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn notify(item: &amp;(impl Summary + Display)) {}
 pub fn notify&lt;T: Summary + Display&gt;(item: &amp;T) {}
@@ -1120,13 +1132,13 @@ pub fn notify&lt;T: Summary + Display&gt;(item: &amp;T) {}
 <p>Đôi khi bạn sẽ có nhiều genenic type, mỗi generic type lại có nhiều trait bound,
 khiến code khó đọc. Rust có một cú pháp <code>where</code> cho phép định nghĩa trait bound 
 phía sau function signature. Ví dụ:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn some_function&lt;T: Display + Clone, U: Clone + Debug&gt;(t: &amp;T, u: &amp;U) -&gt; i32 {
 <span class="boring">}
 </span></code></pre></pre>
 <p>Với <code>where</code> clause:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn some_function&lt;T, U&gt;(t: &amp;T, u: &amp;U) -&gt; i32
     where T: Display + Clone,
@@ -1136,7 +1148,7 @@ phía sau function signature. Ví dụ:</p>
 </span></code></pre></pre>
 <h1 id="returning-types-that-implement-traits"><a class="header" href="#returning-types-that-implement-traits">Returning Types that Implement Traits</a></h1>
 <p>Chúng ta cũng có thể sử dụng <code>impl Trait</code> cho giá trị được trả về của function.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn returns_summarizable() -&gt; impl Summary {
     Tweet {
@@ -1151,7 +1163,7 @@ phía sau function signature. Ví dụ:</p>
 <p>Được đọc là: function <code>returns_summarizable()</code> trả về bất kỳ kiểu dữ liệu nào có <code>impl Summary</code>. 
 Tuy nhiên bạn chỉ có thể return về hoặc <code>Tweet</code> 
 hoặc <code>NewsArticle</code> do cách implement của compiler. Code sau sẽ có lỗi:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn returns_summarizable(switch: bool) -&gt; impl Summary {
     if switch { NewsArticle {} }
@@ -1163,7 +1175,7 @@ hoặc <code>NewsArticle</code> do cách implement của compiler. Code sau sẽ
 <h1 id="using-trait-bounds-to-conditionally-implement-methods"><a class="header" href="#using-trait-bounds-to-conditionally-implement-methods">Using Trait Bounds to Conditionally Implement Methods</a></h1>
 <p>Ta có thể implement 1 method có điều kiện cho bất kỳ type nào 
 có implement một trait khác cụ thể. Ví dụ để dễ hiểu hơn dưới đây:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fmt::Display;
 
@@ -1203,7 +1215,7 @@ Hơi xoắn não nhưng hãy xem ví dụ dưới đây.</p>
 <p>Ví dụ: <code>ToString</code> trait trong 
 <a href="https://doc.rust-lang.org/src/alloc/string.rs.html#2390">Rust standard library</a>, 
 nó được implement cho mọi kiểu dữ liệu nào có được implement <code>Display</code> trait.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl&lt;T: Display&gt; ToString for T {
   // --snip--
@@ -1211,7 +1223,7 @@ nó được implement cho mọi kiểu dữ liệu nào có được implement 
 <span class="boring">}
 </span></code></pre></pre>
 <p>Có nghĩa là, với mọi type có <code>impl Display</code>, ta có hiển nhiên thể sử dụng được các thuộc tính của <code>trait ToString</code>.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = 3.to_string(); // do 3 thoaỏa manãn Display
 <span class="boring">}
@@ -1219,13 +1231,13 @@ nó được implement cho mọi kiểu dữ liệu nào có được implement 
 <p>Do <code>3</code> thỏa mãn điều kiện là đã được <code>impl Display for i32</code>. 
 (<a href="https://doc.rust-lang.org/std/fmt/trait.Display.html#impl-Display-11">https://doc.rust-lang.org/std/fmt/trait.Display.html#impl-Display-11</a>)</p>
 <h1 id="trait-inheritance"><a class="header" href="#trait-inheritance">Trait Inheritance</a></h1>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait B: A {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>Cái này không hẳn gọi là <em>Trait Inheritance</em>, cái này đúng hơn gọi là &quot;cái nào implement cái <code>B</code> thì cũng nên implement cái <code>A</code>&quot;. <code>A</code> và <code>B</code> vẫn là 2 trait độc lập nên vẫn phải implemenet cả 2.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl B for Z {}
 impl A for Z {}
@@ -1265,7 +1277,7 @@ Bạn có thể xem trong Rust document. Ví dụ <code>char</code>:
 <li><strong>Display:</strong> bạn có thể sử dụng <code>{}</code> để print.</li>
 <li><strong>Debug:</strong> bạn có thể sử dụng <code>{:?}</code> để print.</li>
 </ul>
-<pre><pre class="playground"><code class="language-rust">fn prints_number(number: i32) {
+<pre><pre class="playground"><code class="language-rust edition2021">fn prints_number(number: i32) {
   println!(&quot;{}&quot;, number);
 }
 
@@ -1281,7 +1293,7 @@ fn main() {
 <p>Nếu bạn đọc document của String: <a href="https://doc.rust-lang.org/std/string/struct.String.html">https://doc.rust-lang.org/std/string/struct.String.html</a></p>
 <p><img src="basic//media/2022/02/duyet-clone-trait.png" alt="" /></p>
 <p>String không được implement <strong>Copy</strong>, thay vào đó là <strong>Clone</strong>. Clone cũng giúp copy giá trị nhưng sẽ cần rất nhiều memory, và ta phải tự gọi method <code>.clone()</code> chứ Rust sẽ không tự Clone.</p>
-<pre><pre class="playground"><code class="language-rust">fn prints_country(country_name: String) {
+<pre><pre class="playground"><code class="language-rust edition2021">fn prints_country(country_name: String) {
   println!(&quot;{}&quot;, country_name);
 }
 
@@ -1292,7 +1304,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>Sẽ báo lỗi, theo như compiler giải thích rằng <code>country</code> là <code>String</code> và không được implement <code>Copy</code> nên country bị move vào trong function. Do đó ta không thể sử dụng <code>country</code> được nữa.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>error[E0382]: use of moved value: `country`
  --&gt; src/main.rs:8:20
@@ -1309,7 +1321,7 @@ For more information about this error, try `rustc --explain E0382`.
 </span></code></pre></pre>
 <p>Có hai cách:</p>
 <h3 id="1-sử-dụng-clone"><a class="header" href="#1-sử-dụng-clone">(1) Sử dụng <code>.clone()</code></a></h3>
-<pre><pre class="playground"><code class="language-rust">fn prints_country(country_name: String) {
+<pre><pre class="playground"><code class="language-rust edition2021">fn prints_country(country_name: String) {
   println!(&quot;{}&quot;, country_name);
 }
 
@@ -1321,7 +1333,7 @@ fn main() {
 </code></pre></pre>
 <p>String rất lớn, do đó <code>.copy()</code> sẽ tốn rất nhiều bộ nhớ. Sử dụng <code>&amp;</code> để reference sẽ nhanh hơn, nếu có thể.</p>
 <h3 id="2-sử-dụng--reference"><a class="header" href="#2-sử-dụng--reference">(2) Sử dụng <code>&amp;</code> reference</a></h3>
-<pre><pre class="playground"><code class="language-rust">fn prints_country(country_name: &amp;String) {
+<pre><pre class="playground"><code class="language-rust edition2021">fn prints_country(country_name: &amp;String) {
   println!(&quot;{}&quot;, country_name);
 }
 
@@ -1333,7 +1345,7 @@ fn main() {
 </code></pre></pre>
 <h1 id="bonus-string-và-str"><a class="header" href="#bonus-string-và-str">Bonus: String và &amp;str</a></h1>
 <p>Nếu bạn có một <code>String</code> và <code>&amp;</code> reference, Rust sẽ convert nó thành <code>&amp;str</code> khi bạn cần.</p>
-<pre><pre class="playground"><code class="language-rust">fn prints_country(country_name: &amp;str) {
+<pre><pre class="playground"><code class="language-rust edition2021">fn prints_country(country_name: &amp;str) {
   println!(&quot;{}&quot;, country_name);
 }
 
@@ -1347,7 +1359,7 @@ fn main() {
 Nó có thể vừa là String literals <code>let s = &quot;I am &amp;str&quot;;</code>. Trường hợp này <code>s</code> có kiểu <code>&amp;'static</code> bởi vì nó được ghi trực tiếp vào binary. <code>&amp;str</code> cũng có thể là borrowed của <code>str</code> hoặc <code>String</code>.</p>
 <h1 id="bonus-uninitialized-variable"><a class="header" href="#bonus-uninitialized-variable">Bonus: uninitialized variable</a></h1>
 <p>Variable mà không có giá trị được gọi là uninitialized variable.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
   let my_variable; // ⚠️
 }
 </code></pre></pre>
@@ -1357,7 +1369,7 @@ Nó có thể vừa là String literals <code>let s = &quot;I am &amp;str&quot;;
 <li>Gán giá trị cho nó trong 1 scope khác</li>
 <li>Vẫn giữ được giá trị của của variable đó khi ra khỏi scope.</li>
 </ul>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
   let my_number;
   {
     my_number = 100;
@@ -1367,7 +1379,7 @@ Nó có thể vừa là String literals <code>let s = &quot;I am &amp;str&quot;;
 }
 </code></pre></pre>
 <p>Hoặc phức tạp hơn</p>
-<pre><pre class="playground"><code class="language-rust">fn loop_then_return(mut counter: i32) -&gt; i32 {
+<pre><pre class="playground"><code class="language-rust edition2021">fn loop_then_return(mut counter: i32) -&gt; i32 {
   loop {
     counter += 1;
     if counter % 50 == 0 {
@@ -1397,7 +1409,7 @@ fn main() {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="fromstr"><a class="header" href="#fromstr"><code>FromStr</code></a></h1>
 <p><a href="https://doc.rust-lang.org/std/str/trait.FromStr.html">FromStr</a> là một trait để khởi tạo instance từ string trong Rust, 
 nó tương đương abstract class nếu bạn có background OOP.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait FromStr {
   type Err;
@@ -1408,7 +1420,7 @@ nó tương đương abstract class nếu bạn có background OOP.</p>
 <p>Thường phương thức <code>from_str</code> của <code>FromStr</code> thường được ngầm định 
 sử dụng thông qua phương thức <a href="https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse">parse</a> 
 của <a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>. Ví dụ:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Thay vì
 let one = u32::from_str(&quot;1&quot;);
@@ -1430,7 +1442,7 @@ như trên hoặc sử dụng turbofish <code>::&lt;&gt;</code> để thuật to
 để parse thành đúng kiểu bạn cần.</p>
 <h1 id="parse-str-to-struct"><a class="header" href="#parse-str-to-struct">Parse str to Struct</a></h1>
 <p>Bạn có 1 struct và muốn parse 1 str thành struct đó, bạn sẽ cần impl trait <code>FromStr</code></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::str::FromStr;
 use std::num::ParseIntError;
@@ -1466,14 +1478,14 @@ assert_eq!(p.unwrap(), Point{ x: 1, y: 2} )
 </span></code></pre></pre>
 <h1 id="parse-str-to-enum"><a class="header" href="#parse-str-to-enum">Parse str to Enum</a></h1>
 <p>Một điều mình thấy để code dễ đọc, dễ maintain hơn là chúng ta nên tránh sử dụng stringly-typed apis. Ví dụ như:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn print(color: &amp;str, text: &amp;str) { ... }
 print(&quot;Foobar&quot;, &quot;blue&quot;);
 <span class="boring">}
 </span></code></pre></pre>
 <p>Thay vì đó mà hãy sử dụng enum:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Color { Red, Green, CornflowerBlue }
 
@@ -1482,20 +1494,20 @@ print(Green, &quot;duyet&quot;);
 <span class="boring">}
 </span></code></pre></pre>
 <p>Cũng nên hạn chế sử dụng quá nhiều Boolean, thực tế Boolean cũng chỉ là </p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum bool { true, false }
 <span class="boring">}
 </span></code></pre></pre>
 <p>Thay vào đó hãy tự định nghĩa enum cho các ngữ cảnh khác nhau để code dễ đọc hơn:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum EnvVars { Clear, Inherit }
 enum DisplayStyle { Color, Monochrome } 
 <span class="boring">}
 </span></code></pre></pre>
 <p>Chúng ta implement <a href="https://doc.rust-lang.org/std/str/trait.FromStr.html">std::str::FromStr</a> trait như sau:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::str::FromStr;
 
@@ -1532,13 +1544,13 @@ assert_eq!(c, Color::Red);
 <p><img src="https://blog.duyet.net/static/a4e75d7d370caf2b035a94ab66138e47/3fe5e/rust-turbofish.webp" alt="Rust Turbofish" /></p>
 <p>Trong trường hợp bạn cần chỉ định kiểu dữ liệu cho một generic function, method, struct, hoặc enum, 
 Rust có một cú pháp đặc biệt để làm điều này gọi là turbofish. Quy tắc là khi nào bạn thấy</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>$ident&lt;T&gt;
 <span class="boring">}
 </span></code></pre></pre>
 <p>trong bất kỳ định nghĩa nào, thì bạn có thể sử dụng nó dưới dạng</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>$ident::&lt;T&gt;
 <span class="boring">}
@@ -1546,13 +1558,13 @@ Rust có một cú pháp đặc biệt để làm điều này gọi là turbofi
 <p>để chỉ định kiểu dữ liệu cho generic parameter. Sau đây là một số ví dụ để làm rõ hơn.</p>
 <h1 id="generic-function"><a class="header" href="#generic-function">Generic Function</a></h1>
 <p>Ví dụ function <code>std::mem::size_of()</code> có definition như sau:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn size_of&lt;T&gt;() -&gt; usize
 <span class="boring">}
 </span></code></pre></pre>
 <p>Khi gọi <code>size_of</code> với turbofish:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>std::mem::size_of::&lt;u32&gt;()
 // 4
@@ -1561,26 +1573,26 @@ Rust có một cú pháp đặc biệt để làm điều này gọi là turbofi
 <p>sẽ cho ta biết size của u32 theo số bytes.</p>
 <h1 id="generic-method"><a class="header" href="#generic-method">Generic Method</a></h1>
 <p>Phương thức <code>parse()</code> của <code>str</code> bạn cũng sẽ hay gặp cách sử dụng với cú pháp turbofish:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn parse&lt;F&gt;(&amp;self) -&gt; Result&lt;F, F::Err&gt; where F: FromStr
 <span class="boring">}
 </span></code></pre></pre>
 <p>Chúng ta có thể sử dụng turbofish để mô tả kiểu dữ liệu sẽ được parsed từ <code>str</code></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>&quot;1234&quot;.parse::&lt;u32&gt;()
 <span class="boring">}
 </span></code></pre></pre>
 <p>Một ví dụ phổ biến nữa là <code>collect()</code> của <code>Iterator</code></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn collect&lt;B&gt;(self) -&gt; B where B: FromIterator&lt;Self::Item&gt; 
 <span class="boring">}
 </span></code></pre></pre>
 <p>Bởi vì compiler đã biết kiểu dữ liệu của <code>Self::Item</code> mà ta đang collect rồi, 
 chúng ta thường không cần ghi ra. Thay vào đó là sử dụng <code>_</code> để compiler tự động infer ra. Ví dụ:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a = vec![1u8, 2, 3, 4];
 
@@ -1588,14 +1600,14 @@ a.iter().collect::&lt;Vec&lt;_&gt;&gt;();
 <span class="boring">}
 </span></code></pre></pre>
 <p>Sẵn tiện nói về <code>Iterator</code> chúng ta cũng có thể sử dụng turbofish syntax với <code>sum()</code> và <code>product()</code>.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn sum&lt;S&gt;(self) -&gt; S where S: Sum&lt;Self::Item&gt;
 fn product&lt;P&gt;(self) -&gt; P where P: Product&lt;Self::Item&gt;
 <span class="boring">}
 </span></code></pre></pre>
 <p>Cú pháp như sau:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>[1, 2, 3, 4].iter().sum::&lt;u32&gt;()
 [1, 2, 3, 4].iter().product::&lt;u32&gt;()
@@ -1604,13 +1616,13 @@ fn product&lt;P&gt;(self) -&gt; P where P: Product&lt;Self::Item&gt;
 <h1 id="generic-struct"><a class="header" href="#generic-struct">Generic Struct</a></h1>
 <p>Trong trường hợp compiler không có đủ thông tin để infer khi tạo generic struct, 
 chúng ta cũng có thể sử dụng turbofish syntax. Ví dụ struct <code>Vec</code> có định nghĩa như sau</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct Vec&lt;T&gt; { /* fields omitted */ }
 <span class="boring">}
 </span></code></pre></pre>
 <p>Ví dụ để khởi tạo <code>Vec</code> mới với <code>Vec::new()</code> ta có thể viết</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>Vec::&lt;u8&gt;::new()
 <span class="boring">}
@@ -1618,13 +1630,13 @@ chúng ta cũng có thể sử dụng turbofish syntax. Ví dụ struct <code>Ve
 <p>Nhớ là ta bỏ turbofish sau <code>Vec::</code> không phải sau method <code>new</code> 
 bởi vì struct sử dụng generic type chứ không phải method <code>new</code>. 
 Hơi bựa nhưng nó vẫn thỏa quy tắc của turbofish. Một ví dụ khác</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>std::collections::HashSet::&lt;u8&gt;::with_capacity(10) 
 <span class="boring">}
 </span></code></pre></pre>
 <p>Ta đang tạo một <code>Hashset</code> với 10 phần tử, bởi vì <code>Hashset</code> struct có định nghĩa như sau</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct HashSet&lt;T, S = RandomState&gt; { /* fields omitted */ } 
 <span class="boring">}
@@ -1634,7 +1646,7 @@ Hơi bựa nhưng nó vẫn thỏa quy tắc của turbofish. Một ví dụ kh�
 <p>Tuy nhiên Enum lại không theo quy tắc trên, bởi vì enum trong Rust không được 
 scoped tại enum name, do đó ta đặt turbofish sau enum variant. 
 Ví dụ hãy xem enum <code>Result</code> được dùng rất nhiều trong Rust</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[must_use]
 pub enum Result&lt;T, E&gt; {
@@ -1644,7 +1656,7 @@ pub enum Result&lt;T, E&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>Chúng ta sử dụng như thế này:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>Result::Ok::&lt;u8, ()&gt;(10)
 Result::Err::&lt;u8, ()&gt;(())
@@ -1652,7 +1664,7 @@ Result::Err::&lt;u8, ()&gt;(())
 </span></code></pre></pre>
 <p>Và bởi vì <code>Result</code> thường được prelude (import sẵn)
 trong Rust, thực tế mọi người sẽ viết như thế này:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>Ok::&lt;u8, ()&gt;(10)
 Err::&lt;u8, ()&gt;(()) 
@@ -1681,7 +1693,7 @@ Err::&lt;u8, ()&gt;(())
 Giúp in nội dung ra standard output, với một dấu newline xuống dòng.</p>
 <p><code>println!</code> có cùng cú pháp với <a href="basic/macro/./format.html">format!</a>.</p>
 <p>Ví dụ:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>println!(); // prints just a newline
 println!(&quot;hello there!&quot;);
@@ -1689,7 +1701,7 @@ println!(&quot;format {} arguments&quot;, &quot;some&quot;);
 <span class="boring">}
 </span></code></pre></pre>
 <h1 id="in-một-struct"><a class="header" href="#in-một-struct">In một Struct</a></h1>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[derive(Debug)]
 struct MyStruct {
@@ -1710,7 +1722,7 @@ println!(&quot;my struct = {:?}&quot;, my_struct); // my struct = MyStruct { ite
 <p><code>format!()</code> giúp khởi tạo một <code>String</code>. Tham số đầu tiên của <code>format!</code> là chuỗi định dạng. 
 Sức mạnh của format string này ở trong các <code>{}</code>.</p>
 <p>Xem các ví dụ sau:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">fn main() {
 </span>format!(&quot;test&quot;);
 format!(&quot;hello {}&quot;, &quot;world!&quot;);
 format!(&quot;x = {}, y = {y}&quot;, 10, y = 30);
@@ -1723,7 +1735,7 @@ format!(&quot;z = {z}&quot;);
 <p>Để convert một giá trị thành <code>String</code>, thay vì sử dụng <code>format!()</code> thì người ta hay sử dụng 
 <a href="https://doc.rust-lang.org/std/string/trait.ToString.html">to_string</a>. 
 Method này sẽ sử dụng <a href="https://doc.rust-lang.org/std/fmt/trait.Display.html">Display</a> formatting trait.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">fn main() {
 </span>// Thay vì
 format!(&quot;single string&quot;);
 

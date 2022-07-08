@@ -7,7 +7,16 @@
 
 
         <!-- Custom HTML head -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-88RKF7DLPY"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
         
+          gtag('config', 'G-88RKF7DLPY');
+        </script>
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -116,6 +125,12 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/basic/option-result.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -166,7 +181,7 @@ xử lý mọi trường hợp giá trị đặc biệt, hoặc do chương trì
 Có nghĩa là ta có thể <em>vô tình</em> làm crash chương trình với một lỗi nhỏ ở bất kỳ đâu, ở bất kỳ thời điểm nào.</p>
 <p>Rust làm điều này tốt hơn, chỉ với <code>Option</code>. </p>
 <p>Một giá trị optional có thể mang một giá trị nào đó <strong>Some(something)</strong> hoặc không mang giá trị nào cả (<strong>None</strong>).</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// An output can have either Some value or no value/ None.
 enum Option&lt;T&gt; { // T is a generic and it can contain any type of value.
@@ -178,7 +193,7 @@ enum Option&lt;T&gt; { // T is a generic and it can contain any type of value.
 <p>Theo thiết kế, mặc định bạn sẽ không bao giờ lấy được giá trị bạn cần nếu không xử lý 
 các trường hợp có thể xảy ra với <code>Option</code>, là <code>None</code> chẳng hạn. 
 Điều này được bắt buộc bởi compiler lúc compile code, có nghĩa là nếu bạn quên check, code sẽ không bao giờ được compile.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let sentence = &quot;The fox jumps over the dog&quot;;
 let index = sentence.find(&quot;fox&quot;);
@@ -193,7 +208,7 @@ if let Some(fox) = index {
 <h2 id="cách-sử-dụng-option"><a class="header" href="#cách-sử-dụng-option"><strong>Cách sử dụng Option</strong></a></h2>
 <p>Option là standard library, do đã được <a href="https://learning-rust.github.io/docs/d7.std_primitives_and_preludes.html#Preludes">preludes</a> nên chúng ta không cần khai báo trước khi sử dụng. Ngoài enum <a href="https://doc.rust-lang.org/std/option/enum.Option.html">Option</a> thì các variant của nó cũng đã được preludes sẵn như <a href="https://doc.rust-lang.org/std/option/enum.Option.html#variant.Some">Some</a> và <a href="https://doc.rust-lang.org/std/option/enum.Option.html#variant.None">None</a>.</p>
 <p>Ví dụ, ta có một function tính giá trị chia hai số, đôi khi sẽ không tìm ra được kết quả, ta sử dụng Some nhu sau:</p>
-<pre><pre class="playground"><code class="language-rust">fn divide(numerator: f64, denominator: f64) -&gt; Option&lt;f64&gt; {
+<pre><pre class="playground"><code class="language-rust edition2021">fn divide(numerator: f64, denominator: f64) -&gt; Option&lt;f64&gt; {
   if denominator == 0.0 {
     None
   } else {
@@ -219,7 +234,7 @@ fn main() {
 <p>Option method overview: <a href="https://doc.rust-lang.org/std/option/#method-overview">https://doc.rust-lang.org/std/option/#method-overview</a></p>
 <h3 id="unwrap"><a class="header" href="#unwrap"><code>.unwrap()</code></a></h3>
 <p>Trả về giá trị nằm trong <code>Some</code>. Nếu giá trị là None có thể dẫn đến panic chương trình. </p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = Some(&quot;air&quot;);
 assert_eq!(x.unwrap(), &quot;air&quot;);
@@ -230,7 +245,7 @@ assert_eq!(x.unwrap(), &quot;air&quot;); // panic!
 </span></code></pre></pre>
 <h3 id="expect"><a class="header" href="#expect"><code>.expect()</code></a></h3>
 <p>Giống <code>.unwrap()</code>, nhưng nếu panic thì Rust sẽ kèm theo message</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x: Option&lt;&amp;str&gt; = None;
 x.expect(&quot;fruits are healthy&quot;); // panics: `fruits are healthy`
@@ -238,14 +253,14 @@ x.expect(&quot;fruits are healthy&quot;); // panics: `fruits are healthy`
 </span></code></pre></pre>
 <h3 id="unwrap_or"><a class="header" href="#unwrap_or"><code>.unwrap_or()</code></a></h3>
 <p>Trả về giá trị nằm trong <code>Some</code>, nếu không trả về giá trị nằm trong <code>or</code></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>assert_eq!(Some(&quot;car&quot;).unwrap_or(&quot;bike&quot;), &quot;car&quot;);
 <span class="boring">}
 </span></code></pre></pre>
 <h3 id="unwrap_or_default"><a class="header" href="#unwrap_or_default"><code>.unwrap_or_default()</code></a></h3>
 <p>Trả về giá trị nằm trong <code>Some</code>, nếu không trả về giá <a href="https://doc.rust-lang.org/std/default/trait.Default.html#tymethod.default">default</a>.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let good_year_from_input = &quot;1909&quot;;
 let bad_year_from_input = &quot;190blarg&quot;;
@@ -262,7 +277,7 @@ mapping <a href="https://doc.rust-lang.org/std/option/enum.Option.html#variant.S
 thành <a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Ok"><code>Ok(v)</code></a> 
 và <a href="https://doc.rust-lang.org/std/option/enum.Option.html#variant.None"><code>None</code></a> 
 sang <a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err"><code>Err(err)</code></a>.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = Some(&quot;foo&quot;);
 assert_eq!(x.ok_or(0), Ok(&quot;foo&quot;));
@@ -270,7 +285,7 @@ assert_eq!(x.ok_or(0), Ok(&quot;foo&quot;));
 </span></code></pre></pre>
 <h3 id="match"><a class="header" href="#match"><code>match</code></a></h3>
 <p>Chúng ta có thể sử dụng pattern matching để code dễ đọc hơn</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn get_name(who: Option&lt;String&gt;) -&gt; String {
   match who {
@@ -288,7 +303,7 @@ get_name(Some(&quot;duyet&quot;));
 <li>thành công (<strong><code>Ok</code></strong>) và trả về kết quả</li>
 <li>hoặc lỗi (<strong><code>Err</code></strong>) và trả về thông tin lỗi.</li>
 </ul>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Result&lt;T, E&gt; {
   Ok(T),
@@ -297,7 +312,7 @@ get_name(Some(&quot;duyet&quot;));
 <span class="boring">}
 </span></code></pre></pre>
 <p>Ví dụ</p>
-<pre><pre class="playground"><code class="language-rust">fn get_age(who: &amp;str) -&gt; Result&lt;i8, &amp;str&gt; {
+<pre><pre class="playground"><code class="language-rust edition2021">fn get_age(who: &amp;str) -&gt; Result&lt;i8, &amp;str&gt; {
   if who == &quot;duyet&quot; {
     Ok(18)
   } else {
@@ -320,7 +335,7 @@ fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
 <p>Như bạn thấy thì <code>main()</code> cũng có thể return về <code>Result&lt;(), &amp;'static str&gt;</code></p>
 <h3 id="unwrap-1"><a class="header" href="#unwrap-1"><code>.unwrap()</code></a></h3>
 <p>Ví dụ trên nhưng sử dụng <code>.unwrap()</code> , chủ động panic (crash) dừng chương trình nếu gặp lỗi.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
   let who = &quot;duyet&quot;;
   let age = get_age(who).unwrap();
   println!(&quot;{} is {}&quot;, who, age);
@@ -331,7 +346,7 @@ fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
 <p><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=c93551e94e040369d5874672495e3fc9">(Rust Playground)</a></p>
 <h3 id="expect-1"><a class="header" href="#expect-1"><code>.expect()</code></a></h3>
 <p>Giống như <code>unwrap()</code>: chủ động panic (crash) dừng chương trình nếu gặp lỗi và kèm theo message. Sẽ rất có ích, nhất là khi có quá nhiều unwrap, bạn sẽ không biết nó panic ở đâu.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
   let who = &quot;ngan&quot;;
   let age = get_age(who).expect(&quot;could not get age&quot;);
   println!(&quot;{} is {}&quot;, who, age);
@@ -343,7 +358,7 @@ fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
 <p>Xem thêm mọi method khác của Result <a href="https://doc.rust-lang.org/std/result/enum.Result.html">tại đây</a>.</p>
 <h1 id="3-convert-result-sang-option"><a class="header" href="#3-convert-result-sang-option">3. Convert <code>Result</code> sang <code>Option</code></a></h1>
 <p>Đôi khi bạn sẽ cần convert từ <code>Ok(v)</code> sang <code>Some(v)</code> hoặc <code>Err(e)</code> sang <code>Some(e)</code></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// .ok(v) = Some(v)
 let x: Result&lt;u32, &amp;str&gt; = Ok(2);
@@ -363,7 +378,7 @@ assert_eq!(x.err(), Some(&quot;Nothing here&quot;));
 <h1 id="4-toán-tử-"><a class="header" href="#4-toán-tử-">4. Toán tử <code>?</code></a></h1>
 <p>Khi viết code mà có quá nhiều functions trả về <a href="https://doc.rust-lang.org/std/result/enum.Result.html">Result</a>, việc handle Err sẽ khá nhàm chán. Toán tử chấm hỏi <a href="https://doc.rust-lang.org/std/ops/trait.Try.html">?</a> cho phép dừng function tại vị trí đó và return cho function cha nếu <a href="https://doc.rust-lang.org/std/result/enum.Result.html">Result</a> ở vị trí đó là Err.</p>
 <p>Nó sẽ thay thế đoạn code sau:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
 use std::io::prelude::*;
@@ -395,7 +410,7 @@ fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>thành</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
 use std::io::prelude::*;

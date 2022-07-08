@@ -7,7 +7,16 @@
 
 
         <!-- Custom HTML head -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-88RKF7DLPY"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
         
+          gtag('config', 'G-88RKF7DLPY');
+        </script>
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -116,6 +125,12 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/basic/box.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -148,7 +163,7 @@
 <a href="https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#the-stack-and-the-heap">Xem thêm về stack và heap tại đây</a>.</p>
 <p>Khi một Box nằm ngoài scope, destructor sẽ được gọi để giải phóng bộ nhớ. 
 Sử dụng Box không ảnh hưởng nhiều đến performance do Box không bổ sung thêm thông tin metadata nào khác. </p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
   let b = Box::new(5);
   println!(&quot;b = {}&quot;, b);
 }
@@ -167,7 +182,7 @@ Sử dụng Box không ảnh hưởng nhiều đến performance do Box không b
 là một ví dụ của recursive type. Cons là viết tắt của <em>&quot;construct function&quot;</em>. 
 Mỗi item trong cons list có 2 thành phần: giá trị của item hiện tại và next item. 
 Item cuối cùng có giá trị Nil và không có next item. </p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum List {
   Cons(i32, List),
@@ -176,7 +191,7 @@ Item cuối cùng có giá trị Nil và không có next item. </p>
 <span class="boring">}
 </span></code></pre></pre>
 <p>Bây giờ hãy sử dụng <code>List</code> type để lưu list <code>1, 2, 3</code> như sau</p>
-<pre><pre class="playground"><code class="language-rust">enum List {
+<pre><pre class="playground"><code class="language-rust edition2021">enum List {
   Cons(i32, List),
   Nil,
 }
@@ -188,7 +203,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>Nếu chúng ta compile đoạn code trên, compiler sẽ báo như sau:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>$ cargo run
    Compiling cons-list v0.1.0 (file:///duyet/cons-list)
@@ -221,7 +236,7 @@ error: could not compile `cons-list` due to 2 previous errors
 </span></code></pre></pre>
 <p>Compiler nói rằng kiểu dữ liệu này <em>has infinite size.</em> Bởi vì <code>List</code> có variant là <code>List::Cons</code> chứa trực tiếp một <code>List</code> khác trong chính nó. Do đó Rust sẽ không biết được sẽ cần bao nhiêu bộ nhớ để lưu giá trị của <code>List</code>. </p>
 <p>Dừng lại một chút để xem Rust tính toán bộ nhớ của một kiểu dữ liệu bình thường như thế nào:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Message {
   Quit,
@@ -235,7 +250,7 @@ error: could not compile `cons-list` due to 2 previous errors
 <p>Quay lại với Cons List, bộ nhớ mà Rust tính toán được có thể đến vô tận.</p>
 <p><img src="/media/2022/03/cons.svg" alt="" /></p>
 <p>Theo như gợi ý của compiler, chúng ta có thể sử dụng <code>Box&lt;T&gt;</code> để có một Recursive Type với một kích thước bộ nhớ xác định:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to make `List` representable
   |
@@ -246,7 +261,7 @@ error: could not compile `cons-list` due to 2 previous errors
 <p>Bởi vì <code>Box&lt;T&gt;</code> là một pointer, Rust luôn biết chính xác bao nhiêu bộ nhớ mà một <code>Box&lt;T&gt;</code> <strong>pointer</strong> cần.</p>
 <p><img src="/media/2022/03/cons-box.png" alt="" /></p>
 <p>Chương trình của chúng ta lúc này sẽ là:</p>
-<pre><pre class="playground"><code class="language-rust">enum List {
+<pre><pre class="playground"><code class="language-rust edition2021">enum List {
   Cons(i32, Box&lt;List&gt;),
   Nil,
 }
@@ -259,7 +274,7 @@ fn main() {
 </code></pre></pre>
 <h1 id="2-sử-dụng-trait-objects-cho-phép-sử-dụng-giá-trị-từ-nhiều-kiểu-dữ-liệu-khác-nhau"><a class="header" href="#2-sử-dụng-trait-objects-cho-phép-sử-dụng-giá-trị-từ-nhiều-kiểu-dữ-liệu-khác-nhau">2. Sử dụng <em>trait objects</em> cho phép sử dụng giá trị từ nhiều kiểu dữ liệu khác nhau</a></h1>
 <p>Một giới hạn của <code>Vec</code> là chỉ có thể lưu trữ các thành phần có kiểu dữ liệu giống nhau mà thôi. Ta có thể lách luật trong một số trường hợp bằng cách sử dụng enum có nhiều variant giữ nhiều kiểu dữ liệu khác nhau</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Cell {
   Int(i32),
@@ -275,7 +290,7 @@ let row = vec![
 <span class="boring">}
 </span></code></pre></pre>
 <p>Tuy nhiên, trong một số trường hợp mong muốn thư viện của chúng ta có thể dễ dàng được mở rộng một số trường hợp khác. Chúng ta đã biết được định nghĩa Trait cho các Common Behavior. Trong Rust, trait định nghĩa các hành vi, và các hành vi này có thể được <code>impl</code> cho struct hoặc enum, để giúp một struct hoặc enum mang đặc tính các hành vi đó. </p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Draw {
   fn draw(&amp;self);

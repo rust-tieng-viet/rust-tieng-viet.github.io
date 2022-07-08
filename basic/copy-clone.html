@@ -7,7 +7,16 @@
 
 
         <!-- Custom HTML head -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-88RKF7DLPY"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
         
+          gtag('config', 'G-88RKF7DLPY');
+        </script>
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -116,6 +125,12 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/basic/copy-clone.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -158,7 +173,7 @@ Bạn có thể xem trong Rust document. Ví dụ <code>char</code>:
 <li><strong>Display:</strong> bạn có thể sử dụng <code>{}</code> để print.</li>
 <li><strong>Debug:</strong> bạn có thể sử dụng <code>{:?}</code> để print.</li>
 </ul>
-<pre><pre class="playground"><code class="language-rust">fn prints_number(number: i32) {
+<pre><pre class="playground"><code class="language-rust edition2021">fn prints_number(number: i32) {
   println!(&quot;{}&quot;, number);
 }
 
@@ -174,7 +189,7 @@ fn main() {
 <p>Nếu bạn đọc document của String: <a href="https://doc.rust-lang.org/std/string/struct.String.html">https://doc.rust-lang.org/std/string/struct.String.html</a></p>
 <p><img src="/media/2022/02/duyet-clone-trait.png" alt="" /></p>
 <p>String không được implement <strong>Copy</strong>, thay vào đó là <strong>Clone</strong>. Clone cũng giúp copy giá trị nhưng sẽ cần rất nhiều memory, và ta phải tự gọi method <code>.clone()</code> chứ Rust sẽ không tự Clone.</p>
-<pre><pre class="playground"><code class="language-rust">fn prints_country(country_name: String) {
+<pre><pre class="playground"><code class="language-rust edition2021">fn prints_country(country_name: String) {
   println!(&quot;{}&quot;, country_name);
 }
 
@@ -185,7 +200,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>Sẽ báo lỗi, theo như compiler giải thích rằng <code>country</code> là <code>String</code> và không được implement <code>Copy</code> nên country bị move vào trong function. Do đó ta không thể sử dụng <code>country</code> được nữa.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>error[E0382]: use of moved value: `country`
  --&gt; src/main.rs:8:20
@@ -202,7 +217,7 @@ For more information about this error, try `rustc --explain E0382`.
 </span></code></pre></pre>
 <p>Có hai cách:</p>
 <h3 id="1-sử-dụng-clone"><a class="header" href="#1-sử-dụng-clone">(1) Sử dụng <code>.clone()</code></a></h3>
-<pre><pre class="playground"><code class="language-rust">fn prints_country(country_name: String) {
+<pre><pre class="playground"><code class="language-rust edition2021">fn prints_country(country_name: String) {
   println!(&quot;{}&quot;, country_name);
 }
 
@@ -214,7 +229,7 @@ fn main() {
 </code></pre></pre>
 <p>String rất lớn, do đó <code>.copy()</code> sẽ tốn rất nhiều bộ nhớ. Sử dụng <code>&amp;</code> để reference sẽ nhanh hơn, nếu có thể.</p>
 <h3 id="2-sử-dụng--reference"><a class="header" href="#2-sử-dụng--reference">(2) Sử dụng <code>&amp;</code> reference</a></h3>
-<pre><pre class="playground"><code class="language-rust">fn prints_country(country_name: &amp;String) {
+<pre><pre class="playground"><code class="language-rust edition2021">fn prints_country(country_name: &amp;String) {
   println!(&quot;{}&quot;, country_name);
 }
 
@@ -226,7 +241,7 @@ fn main() {
 </code></pre></pre>
 <h1 id="bonus-string-và-str"><a class="header" href="#bonus-string-và-str">Bonus: String và &amp;str</a></h1>
 <p>Nếu bạn có một <code>String</code> và <code>&amp;</code> reference, Rust sẽ convert nó thành <code>&amp;str</code> khi bạn cần.</p>
-<pre><pre class="playground"><code class="language-rust">fn prints_country(country_name: &amp;str) {
+<pre><pre class="playground"><code class="language-rust edition2021">fn prints_country(country_name: &amp;str) {
   println!(&quot;{}&quot;, country_name);
 }
 
@@ -240,7 +255,7 @@ fn main() {
 Nó có thể vừa là String literals <code>let s = &quot;I am &amp;str&quot;;</code>. Trường hợp này <code>s</code> có kiểu <code>&amp;'static</code> bởi vì nó được ghi trực tiếp vào binary. <code>&amp;str</code> cũng có thể là borrowed của <code>str</code> hoặc <code>String</code>.</p>
 <h1 id="bonus-uninitialized-variable"><a class="header" href="#bonus-uninitialized-variable">Bonus: uninitialized variable</a></h1>
 <p>Variable mà không có giá trị được gọi là uninitialized variable.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
   let my_variable; // ⚠️
 }
 </code></pre></pre>
@@ -250,7 +265,7 @@ Nó có thể vừa là String literals <code>let s = &quot;I am &amp;str&quot;;
 <li>Gán giá trị cho nó trong 1 scope khác</li>
 <li>Vẫn giữ được giá trị của của variable đó khi ra khỏi scope.</li>
 </ul>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
   let my_number;
   {
     my_number = 100;
@@ -260,7 +275,7 @@ Nó có thể vừa là String literals <code>let s = &quot;I am &amp;str&quot;;
 }
 </code></pre></pre>
 <p>Hoặc phức tạp hơn</p>
-<pre><pre class="playground"><code class="language-rust">fn loop_then_return(mut counter: i32) -&gt; i32 {
+<pre><pre class="playground"><code class="language-rust edition2021">fn loop_then_return(mut counter: i32) -&gt; i32 {
   loop {
     counter += 1;
     if counter % 50 == 0 {

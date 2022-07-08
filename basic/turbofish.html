@@ -7,7 +7,16 @@
 
 
         <!-- Custom HTML head -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-88RKF7DLPY"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
         
+          gtag('config', 'G-88RKF7DLPY');
+        </script>
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -116,6 +125,12 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/basic/turbofish.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -146,13 +161,13 @@
 <p><img src="https://blog.duyet.net/static/a4e75d7d370caf2b035a94ab66138e47/3fe5e/rust-turbofish.webp" alt="Rust Turbofish" /></p>
 <p>Trong trường hợp bạn cần chỉ định kiểu dữ liệu cho một generic function, method, struct, hoặc enum, 
 Rust có một cú pháp đặc biệt để làm điều này gọi là turbofish. Quy tắc là khi nào bạn thấy</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>$ident&lt;T&gt;
 <span class="boring">}
 </span></code></pre></pre>
 <p>trong bất kỳ định nghĩa nào, thì bạn có thể sử dụng nó dưới dạng</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>$ident::&lt;T&gt;
 <span class="boring">}
@@ -160,13 +175,13 @@ Rust có một cú pháp đặc biệt để làm điều này gọi là turbofi
 <p>để chỉ định kiểu dữ liệu cho generic parameter. Sau đây là một số ví dụ để làm rõ hơn.</p>
 <h1 id="generic-function"><a class="header" href="#generic-function">Generic Function</a></h1>
 <p>Ví dụ function <code>std::mem::size_of()</code> có definition như sau:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn size_of&lt;T&gt;() -&gt; usize
 <span class="boring">}
 </span></code></pre></pre>
 <p>Khi gọi <code>size_of</code> với turbofish:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>std::mem::size_of::&lt;u32&gt;()
 // 4
@@ -175,26 +190,26 @@ Rust có một cú pháp đặc biệt để làm điều này gọi là turbofi
 <p>sẽ cho ta biết size của u32 theo số bytes.</p>
 <h1 id="generic-method"><a class="header" href="#generic-method">Generic Method</a></h1>
 <p>Phương thức <code>parse()</code> của <code>str</code> bạn cũng sẽ hay gặp cách sử dụng với cú pháp turbofish:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn parse&lt;F&gt;(&amp;self) -&gt; Result&lt;F, F::Err&gt; where F: FromStr
 <span class="boring">}
 </span></code></pre></pre>
 <p>Chúng ta có thể sử dụng turbofish để mô tả kiểu dữ liệu sẽ được parsed từ <code>str</code></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>&quot;1234&quot;.parse::&lt;u32&gt;()
 <span class="boring">}
 </span></code></pre></pre>
 <p>Một ví dụ phổ biến nữa là <code>collect()</code> của <code>Iterator</code></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn collect&lt;B&gt;(self) -&gt; B where B: FromIterator&lt;Self::Item&gt; 
 <span class="boring">}
 </span></code></pre></pre>
 <p>Bởi vì compiler đã biết kiểu dữ liệu của <code>Self::Item</code> mà ta đang collect rồi, 
 chúng ta thường không cần ghi ra. Thay vào đó là sử dụng <code>_</code> để compiler tự động infer ra. Ví dụ:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a = vec![1u8, 2, 3, 4];
 
@@ -202,14 +217,14 @@ a.iter().collect::&lt;Vec&lt;_&gt;&gt;();
 <span class="boring">}
 </span></code></pre></pre>
 <p>Sẵn tiện nói về <code>Iterator</code> chúng ta cũng có thể sử dụng turbofish syntax với <code>sum()</code> và <code>product()</code>.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn sum&lt;S&gt;(self) -&gt; S where S: Sum&lt;Self::Item&gt;
 fn product&lt;P&gt;(self) -&gt; P where P: Product&lt;Self::Item&gt;
 <span class="boring">}
 </span></code></pre></pre>
 <p>Cú pháp như sau:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>[1, 2, 3, 4].iter().sum::&lt;u32&gt;()
 [1, 2, 3, 4].iter().product::&lt;u32&gt;()
@@ -218,13 +233,13 @@ fn product&lt;P&gt;(self) -&gt; P where P: Product&lt;Self::Item&gt;
 <h1 id="generic-struct"><a class="header" href="#generic-struct">Generic Struct</a></h1>
 <p>Trong trường hợp compiler không có đủ thông tin để infer khi tạo generic struct, 
 chúng ta cũng có thể sử dụng turbofish syntax. Ví dụ struct <code>Vec</code> có định nghĩa như sau</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct Vec&lt;T&gt; { /* fields omitted */ }
 <span class="boring">}
 </span></code></pre></pre>
 <p>Ví dụ để khởi tạo <code>Vec</code> mới với <code>Vec::new()</code> ta có thể viết</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>Vec::&lt;u8&gt;::new()
 <span class="boring">}
@@ -232,13 +247,13 @@ chúng ta cũng có thể sử dụng turbofish syntax. Ví dụ struct <code>Ve
 <p>Nhớ là ta bỏ turbofish sau <code>Vec::</code> không phải sau method <code>new</code> 
 bởi vì struct sử dụng generic type chứ không phải method <code>new</code>. 
 Hơi bựa nhưng nó vẫn thỏa quy tắc của turbofish. Một ví dụ khác</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>std::collections::HashSet::&lt;u8&gt;::with_capacity(10) 
 <span class="boring">}
 </span></code></pre></pre>
 <p>Ta đang tạo một <code>Hashset</code> với 10 phần tử, bởi vì <code>Hashset</code> struct có định nghĩa như sau</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct HashSet&lt;T, S = RandomState&gt; { /* fields omitted */ } 
 <span class="boring">}
@@ -248,7 +263,7 @@ Hơi bựa nhưng nó vẫn thỏa quy tắc của turbofish. Một ví dụ kh�
 <p>Tuy nhiên Enum lại không theo quy tắc trên, bởi vì enum trong Rust không được 
 scoped tại enum name, do đó ta đặt turbofish sau enum variant. 
 Ví dụ hãy xem enum <code>Result</code> được dùng rất nhiều trong Rust</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[must_use]
 pub enum Result&lt;T, E&gt; {
@@ -258,7 +273,7 @@ pub enum Result&lt;T, E&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>Chúng ta sử dụng như thế này:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>Result::Ok::&lt;u8, ()&gt;(10)
 Result::Err::&lt;u8, ()&gt;(())
@@ -266,7 +281,7 @@ Result::Err::&lt;u8, ()&gt;(())
 </span></code></pre></pre>
 <p>Và bởi vì <code>Result</code> thường được prelude (import sẵn)
 trong Rust, thực tế mọi người sẽ viết như thế này:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>Ok::&lt;u8, ()&gt;(10)
 Err::&lt;u8, ()&gt;(()) 

@@ -7,7 +7,16 @@
 
 
         <!-- Custom HTML head -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-88RKF7DLPY"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
         
+          gtag('config', 'G-88RKF7DLPY');
+        </script>
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -116,6 +125,12 @@
                         <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/basic/macro/format.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -147,7 +162,7 @@
 <p><code>format!()</code> giúp khởi tạo một <code>String</code>. Tham số đầu tiên của <code>format!</code> là chuỗi định dạng. 
 Sức mạnh của format string này ở trong các <code>{}</code>.</p>
 <p>Xem các ví dụ sau:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">fn main() {
 </span>format!(&quot;test&quot;);
 format!(&quot;hello {}&quot;, &quot;world!&quot;);
 format!(&quot;x = {}, y = {y}&quot;, 10, y = 30);
@@ -160,7 +175,7 @@ format!(&quot;z = {z}&quot;);
 <p>Để convert một giá trị thành <code>String</code>, thay vì sử dụng <code>format!()</code> thì người ta hay sử dụng 
 <a href="https://doc.rust-lang.org/std/string/trait.ToString.html">to_string</a>. 
 Method này sẽ sử dụng <a href="https://doc.rust-lang.org/std/fmt/trait.Display.html">Display</a> formatting trait.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">fn main() {
 </span>// Thay vì
 format!(&quot;single string&quot;);
 

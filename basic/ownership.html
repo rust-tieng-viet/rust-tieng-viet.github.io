@@ -7,7 +7,16 @@
 
 
         <!-- Custom HTML head -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-88RKF7DLPY"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
         
+          gtag('config', 'G-88RKF7DLPY');
+        </script>
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -116,6 +125,12 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/basic/ownership.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -179,7 +194,7 @@ cho mượn (borrow) nó một thời gian.</p>
 <li>Khi truyền một reference tới variable, bạn có thể <strong>immutable</strong> borrow không giới hạn; hoặc <strong>mutable</strong> borrow một lần.</li>
 </ol>
 <p>Ví dụ: đoạn chương trình sau sẽ không compile được</p>
-<pre><pre class="playground"><code class="language-rust">fn hold_my_vec&lt;T&gt;(_: Vec&lt;T&gt;) {}
+<pre><pre class="playground"><code class="language-rust edition2021">fn hold_my_vec&lt;T&gt;(_: Vec&lt;T&gt;) {}
 
 fn main() {
   let x = vec![1, 2, 3];
@@ -190,7 +205,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>Compiler sẽ báo lỗi như sau: <code>rustc main.rs</code></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>error[E0382]: borrow of moved value: `x`
     --&gt; main.rs:7:13
@@ -215,7 +230,7 @@ vì thế data sẽ được di chuyển (move) hoặc mượn (borrow) vào fun
 <a href="https://doc.rust-lang.org/core/clone/trait.Clone.html">Clone trait</a>.
 Chỉ để cho code chạy được thì đây là một cách nhanh để compiler ngưng báo lỗi.
 Lưu ý thì việc clone thường sẽ tốn khá nhiều chi phí, nhất là đối với những object lớn.</p>
-<pre><pre class="playground"><code class="language-rust">fn hold_my_vec&lt;T&gt;(_: Vec&lt;T&gt;) {}
+<pre><pre class="playground"><code class="language-rust edition2021">fn hold_my_vec&lt;T&gt;(_: Vec&lt;T&gt;) {}
 
 fn main() {
   let x = vec![1, 2, 3];
@@ -229,7 +244,7 @@ fn main() {
 việc take ownership. Có một cách tốt hơn là <strong>references.</strong> Thay vì
 để function take ownership, ta có thể cho nó mượn giá trị.
 Chúng ta sẽ truyền vào một reference — a borrowed value.</p>
-<pre><pre class="playground"><code class="language-rust">fn hold_my_vec&lt;T&gt;(_: &amp;Vec&lt;T&gt;) {}
+<pre><pre class="playground"><code class="language-rust edition2021">fn hold_my_vec&lt;T&gt;(_: &amp;Vec&lt;T&gt;) {}
 
 fn main() {
   let x = vec![1, 2, 3];

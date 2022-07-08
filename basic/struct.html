@@ -7,7 +7,16 @@
 
 
         <!-- Custom HTML head -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-88RKF7DLPY"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
         
+          gtag('config', 'G-88RKF7DLPY');
+        </script>
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -116,6 +125,12 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/basic/struct.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -156,12 +171,12 @@
 <p>Có 3 loại struct:</p>
 <h1 id="unit-struct"><a class="header" href="#unit-struct">Unit struct</a></h1>
 <p>Unit struct là một struct mà không có gì cả:</p>
-<pre><pre class="playground"><code class="language-rust">struct FileDirectory;
+<pre><pre class="playground"><code class="language-rust edition2021">struct FileDirectory;
 fn main() {} 
 </code></pre></pre>
 <h1 id="tuple-struct"><a class="header" href="#tuple-struct">Tuple struct</a></h1>
 <p>Tuple struct hay còn gọi là Unnamed struct. Bạn chỉ cần định nghĩa kiểu dữ liệu, không cần định tên field name.</p>
-<pre><pre class="playground"><code class="language-rust">struct Colour(u8, u8, u8);
+<pre><pre class="playground"><code class="language-rust edition2021">struct Colour(u8, u8, u8);
 
 fn main() {
   let my_colour = Colour(50, 0, 50); // Make a colour out of RGB (red, green, blue)
@@ -175,7 +190,7 @@ fn main() {
 </code></pre></pre>
 <h1 id="named-struct"><a class="header" href="#named-struct">Named struct</a></h1>
 <p>Phổ biến nhất, bạn sẽ phải định nghĩa field name trong block <code>{}</code> </p>
-<pre><pre class="playground"><code class="language-rust">struct Colour(u8, u8, u8); // Declare the same Colour tuple struct
+<pre><pre class="playground"><code class="language-rust edition2021">struct Colour(u8, u8, u8); // Declare the same Colour tuple struct
 
 struct SizeAndColour {
   size: u32,
@@ -193,7 +208,7 @@ fn main() {
 }
 </code></pre></pre>
 <p><code>colour: colour</code> có thể được viết gọn lại thành:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let size_and_colour = SizeAndColour {
   size: 150,

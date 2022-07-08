@@ -7,7 +7,16 @@
 
 
         <!-- Custom HTML head -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-88RKF7DLPY"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
         
+          gtag('config', 'G-88RKF7DLPY');
+        </script>
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -116,6 +125,12 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/basic/fromstr.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -145,7 +160,7 @@
                         <h1 id="fromstr"><a class="header" href="#fromstr"><code>FromStr</code></a></h1>
 <p><a href="https://doc.rust-lang.org/std/str/trait.FromStr.html">FromStr</a> là một trait để khởi tạo instance từ string trong Rust, 
 nó tương đương abstract class nếu bạn có background OOP.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait FromStr {
   type Err;
@@ -156,7 +171,7 @@ nó tương đương abstract class nếu bạn có background OOP.</p>
 <p>Thường phương thức <code>from_str</code> của <code>FromStr</code> thường được ngầm định 
 sử dụng thông qua phương thức <a href="https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse">parse</a> 
 của <a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>. Ví dụ:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Thay vì
 let one = u32::from_str(&quot;1&quot;);
@@ -178,7 +193,7 @@ như trên hoặc sử dụng turbofish <code>::&lt;&gt;</code> để thuật to
 để parse thành đúng kiểu bạn cần.</p>
 <h1 id="parse-str-to-struct"><a class="header" href="#parse-str-to-struct">Parse str to Struct</a></h1>
 <p>Bạn có 1 struct và muốn parse 1 str thành struct đó, bạn sẽ cần impl trait <code>FromStr</code></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::str::FromStr;
 use std::num::ParseIntError;
@@ -214,14 +229,14 @@ assert_eq!(p.unwrap(), Point{ x: 1, y: 2} )
 </span></code></pre></pre>
 <h1 id="parse-str-to-enum"><a class="header" href="#parse-str-to-enum">Parse str to Enum</a></h1>
 <p>Một điều mình thấy để code dễ đọc, dễ maintain hơn là chúng ta nên tránh sử dụng stringly-typed apis. Ví dụ như:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn print(color: &amp;str, text: &amp;str) { ... }
 print(&quot;Foobar&quot;, &quot;blue&quot;);
 <span class="boring">}
 </span></code></pre></pre>
 <p>Thay vì đó mà hãy sử dụng enum:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Color { Red, Green, CornflowerBlue }
 
@@ -230,20 +245,20 @@ print(Green, &quot;duyet&quot;);
 <span class="boring">}
 </span></code></pre></pre>
 <p>Cũng nên hạn chế sử dụng quá nhiều Boolean, thực tế Boolean cũng chỉ là </p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum bool { true, false }
 <span class="boring">}
 </span></code></pre></pre>
 <p>Thay vào đó hãy tự định nghĩa enum cho các ngữ cảnh khác nhau để code dễ đọc hơn:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum EnvVars { Clear, Inherit }
 enum DisplayStyle { Color, Monochrome } 
 <span class="boring">}
 </span></code></pre></pre>
 <p>Chúng ta implement <a href="https://doc.rust-lang.org/std/str/trait.FromStr.html">std::str::FromStr</a> trait như sau:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::str::FromStr;
 
