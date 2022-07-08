@@ -7,10 +7,11 @@
 Rust là một ngôn ngữ mới, với hệ thống tài liệu và sách đồ sộ và chi tiết.
 Nhưng đôi khi nó sẽ khó với một số người bởi đa số sẽ là Tiếng Anh.
 Với những ghi chép trong sách này, hy vọng có thể giúp cho mọi người,
-cũng như dành cho các thành viên trong team mình có thể tiếp cận với
+cũng như dành cho các thành viên trong team mình tại Fossil có thể tiếp cận với
 ngôn ngữ này nhanh chóng và dễ dàng hơn.
 
-# References
+### Links
 
-- [Mã nguồn sách này](https://github.com/rust-tieng-viet)
+- [Mã nguồn sách này](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io)
+- [Đóng góp, sửa chữa](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io#contribution)
 - [License](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/blob/main/LICENCE)
