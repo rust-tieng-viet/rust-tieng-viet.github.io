@@ -1,7 +1,8 @@
 # Rust Tiếng Việt
 
-The Book is published at https://rust-tieng-viet.github.io
+[![Deploy Book](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/actions/workflows/deploy.yml)
 
+The Book is published at https://rust-tieng-viet.github.io
 
 # Build the book from source
 
