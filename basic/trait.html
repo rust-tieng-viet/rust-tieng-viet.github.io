@@ -1,0 +1,573 @@
+<!DOCTYPE HTML>
+<html lang="vi" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Trait - Rust Tiếng Việt</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Cơ bản</li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.</strong> Variables</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.</strong> Cargo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">2.1.</strong> cargo r</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.2.</strong> cargo t</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.3.</strong> cargo d</div></li></ol></li><li class="chapter-item expanded "><a href="../basic/ownership.html"><strong aria-hidden="true">3.</strong> Ownership</a></li><li class="chapter-item expanded "><a href="../basic/variables.html"><strong aria-hidden="true">4.</strong> Variables</a></li><li class="chapter-item expanded "><a href="../basic/box.html"><strong aria-hidden="true">5.</strong> Box</a></li><li class="chapter-item expanded "><a href="../basic/option-result.html"><strong aria-hidden="true">6.</strong> Option, Result</a></li><li class="chapter-item expanded "><a href="../basic/code-comment.html"><strong aria-hidden="true">7.</strong> /// code comment</a></li><li class="chapter-item expanded "><a href="../basic/struct.html"><strong aria-hidden="true">8.</strong> Struct</a></li><li class="chapter-item expanded "><a href="../basic/trait.html" class="active"><strong aria-hidden="true">9.</strong> Trait</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../basic/copy-clone.html"><strong aria-hidden="true">9.1.</strong> Copy, Clone</a></li><li class="chapter-item expanded "><a href="../basic/fromstr.html"><strong aria-hidden="true">9.2.</strong> FromStr</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.3.</strong> Display</div></li></ol></li><li class="chapter-item expanded "><a href="../basic/turbofish.html"><strong aria-hidden="true">10.</strong> Turbofish ::&lt;&gt;</a></li><li class="chapter-item expanded "><a href="../basic/macro/index.html"><strong aria-hidden="true">11.</strong> macros!</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../basic/macro/println.html"><strong aria-hidden="true">11.1.</strong> println!</a></li><li class="chapter-item expanded "><a href="../basic/macro/format.html"><strong aria-hidden="true">11.2.</strong> format!</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">11.3.</strong> macro_rules!</div></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><li class="part-title">Crates hay dùng</li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.</strong> tokio.rs</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">13.</strong> actix-web</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.</strong> anyhow</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.</strong> serde</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">16.</strong> clap</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">17.</strong> log</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">18.</strong> config</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Design patterns</li><li class="chapter-item expanded "><div><strong aria-hidden="true">19.</strong> Behavioural Patterns</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">20.</strong> Creational Patterns</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">21.</strong> Structural Patterns</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Rust Idioms</li><li class="chapter-item expanded affix "><div>Concatenating strings with format!</div></li><li class="chapter-item expanded affix "><div>Constructor</div></li><li class="chapter-item expanded affix "><div>The Default Trait</div></li><li class="chapter-item expanded affix "><div>Finalisation in destructors</div></li><li class="chapter-item expanded affix "><div>Temporary mutability</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust Tiếng Việt</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="trait"><a class="header" href="#trait">Trait</a></h1>
+<p>Rust có nhiều loại data types như primitives (<code>i8</code>, <code>i32</code>, <code>str</code>, ...), struct, enum và các loại kết hợp (aggregate) như tuples và array. Mọi types không có mối liên hệ nào với nhau. Các data types có các phương thức (methods) để tính toán hay convert từ loại này sang loại khác, nhưng chỉ để cho tiện lợi hơn, method chỉ là các function. Bạn sẽ làm gì nếu một tham số là nhiều loại kiểu dữ liệu? Một số ngôn ngữ như Typescript hay Python sẽ có cách sử dụng Union type như thế này:</p>
+<pre><code class="language-typescript">function notify(data: string | number) {
+  if (typeof data == &quot;number&quot;) {
+    // ...
+  } else if (typeof data == &quot;number&quot;) {
+    // ...
+  }
+}
+</code></pre>
+<p>Còn trong Rust thì sao?</p>
+<p><img src="https://i.imgur.com/ZKHSRQK.png" alt="Trait implementations for Display" /></p>
+<h1 id="trait-là-gì"><a class="header" href="#trait-là-gì">Trait là gì?</a></h1>
+<p>Có thể bạn đã thấy qua trait rồi: <code>Debug</code>, <code>Copy</code>, <code>Clone</code>, ... là các trait.</p>
+<p>Trait là một cơ chế abstract để thêm các tính năng (functionality) hay hành vi (behavior) 
+khác nhau vào các kiểu dữ liệu (types) và tạo nên các mối quan hệ giữa chúng.</p>
+<p>Trait thường đóng 2 vai trò:</p>
+<ol>
+<li>Giống như là interfaces trong Java hay C# (fun fact: lần đầu tiên nó được gọi là <code>interface</code>). Ta có thể kế thừa (inheritance) interface, nhưng không kế thừa được implementation của interface*.* Cái này giúp Rust có thể hỗ trợ <a href="https://stevedonovan.github.io/rust-gentle-intro/object-orientation.html">OOP</a>. Nhưng có một chút khác biệt, nó không hẳn là interface.</li>
+<li>Vai trò này phổ biến hơn, trait đóng vai trò là generic constraints. Dễ hiểu hơn, ví dụ, bạn định nghĩa một function, tham số là một <em>kiểu dữ liệu bất kỳ</em> nào đó, không quan tâm, miễn sau kiểu dữ liệu đó phải có phương thức <code>method_this()</code>, <code>method_that()</code> nào đó cho tui. <em>Kiểu dữ liệu nào đó</em> gọi là <em>genetic type</em>. Function có chứa tham số generic type đó được gọi là <em>generic function</em>. Và việc ràng buộc phải có <code>method_this()</code>, <code>method_that()</code> , ... gọi là <em>generic constraints</em>. Mình sẽ giải thích rõ cùng với các ví dụ sau dưới đây.</li>
+</ol>
+<p>Để gắn một trait vào một type, bạn cần implement nó. 
+Bởi vì <code>Debug</code> hay <code>Copy</code> quá phổ biến, nên Rust có attribute để tự động implement:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[derive(Debug)]
+struct MyStruct {
+  number: usize,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Nhưng một số trait phức tạp hơn bạn cần định nghĩa cụ thể 
+bằng cách <code>impl</code> nó. Ví dụ bạn có trait <code>Add</code> 
+(<a href="https://doc.rust-lang.org/std/ops/trait.Add.html#implementors">std::ops::Add</a>) 
+để add 2 type lại với nhau. Nhưng Rust sẽ không biết cách bạn add 2 
+type đó lại như thế nào, bạn cần phải tự định nghĩa:</p>
+<pre><pre class="playground"><code class="language-rust">use std::ops::Add;
+
+struct MyStruct {
+  number: usize,
+}
+
+impl Add for MyStruct {    // &lt;-- here
+  type Output = Self;
+  fn add(self, other: Self) -&gt; Self {
+    Self { number: self.number + other.number }
+  }
+}
+
+fn main() {
+  let a1 = MyStruct { number: 1 };
+  let a2 = MyStruct { number: 2 };
+  let a3 = MyStruct { number: 3 };
+
+  assert_eq!(a1 + a2, a3);
+}
+</code></pre></pre>
+<p>Note: Mình sẽ gọi <strong>Define Trait</strong> là việc định nghĩa, 
+khai báo một trait mới trong Rust (<code>trait Add</code>). 
+<strong>Implement Trait</strong> là việc khai báo nội dung của function được 
+liệu kê trong Trait cho một kiểu dữ liệu cụ thể nào đó (<code>impl Add for MyStruct</code>).</p>
+<h1 id="Định-nghĩa-một-trait"><a class="header" href="#Định-nghĩa-một-trait">Định nghĩa một Trait</a></h1>
+<p>Nhắc lại là Trait định nghĩa các hành vi (behavior). 
+Các types khác nhau có thể chia sẻ cùng cá hành vi. 
+Định nghĩa một trait giúp <strong>nhóm</strong> các hành vi để làm một việc gì đó.</p>
+<p>Theo ví dụ của Rust Book, ví dụ ta các struct chứa nhiều loại text:</p>
+<ul>
+<li><code>NewsArticle</code> struct chứa news story, và</li>
+<li><code>Tweet</code> struct có thể chứa tối đa 280 characters cùng với metadata.</li>
+</ul>
+<p>Bây giờ chúng ta cần viết 1 crate name có tên là <code>aggregator</code> 
+có thể hiển thị summaries của data có thể store trên <code>NewsArticle</code> 
+hoặc <code>Tweet</code> instance. Chúng ta cần định nghĩa method <code>summarize</code> 
+trên mỗi instance. Để định nghĩa một trait, ta dùng <code>trait</code> theo sau 
+là trait name; dùng keyword <code>pub</code> nếu định nghĩa một public trait.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Summary {
+  fn summarize(&amp;self) -&gt; String;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Trong ngoặc, ta định nghĩa các method signatures để định nghĩa hành vi: 
+<code>fn summarize(&amp;self) -&gt; String</code>. Ta có thể định nghĩa nội dung của function. 
+Hoặc không, ta dùng <code>;</code> kết thúc method signature, để bắt buộc type nào 
+implement <code>trait Summary</code> đều phải định nghĩa riêng cho nó, 
+bởi vì mỗi type (<code>NewsArticle</code> hay <code>Tweet</code>) đều có cách riêng để <code>summarize</code>. Mỗi trait có thể có nhiều method.</p>
+<h1 id="implement-trait-cho-một-type"><a class="header" href="#implement-trait-cho-một-type">Implement Trait cho một Type</a></h1>
+<p>Bây giờ ta định implement các method của trait Summary cho từng type. 
+Ví dụ dưới đây ta có <code>struct NewsArticle</code> và <code>struct Tweet</code>, 
+và ta định nghĩa <code>summarize</code> cho 2 struct này.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Summary {
+  fn summarize(&amp;self) -&gt; String;
+}
+
+pub struct NewsArticle {
+  pub headline: String,
+  pub location: String,
+  pub author: String,
+  pub content: String,
+}
+
+impl Summary for NewsArticle {
+  fn summarize(&amp;self) -&gt; String {
+    format!(&quot;{}, by {} ({})&quot;, self.headline, self.author, self.location)
+  }
+}
+
+pub struct Tweet {
+  pub username: String,
+  pub content: String,
+  pub reply: bool,
+  pub retweet: bool,
+}
+
+impl Summary for Tweet {
+  fn summarize(&amp;self) -&gt; String {
+    format!(&quot;{}: {}&quot;, self.username, self.content)
+  }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Implement trait cho type giống như <code>impl</code> bình thường, 
+chỉ có khác là ta thêm <strong>trait name</strong> và keyword <code>for</code> sau <code>impl</code>. 
+Bây giờ Summary đã được implement cho <code>NewsArticle</code> và <code>Tweet</code>, 
+người sử dụng crate đã có thể sử dụng các phương thức của trait như các method function bình thường. 
+Chỉ một điều khác biệt là bạn cần mang trait đó vào cùng scope hiện tại cùng với type để có thể sử dụng. 
+Ví dụ:</p>
+<pre><pre class="playground"><code class="language-rust">use aggregator::{Summary, Tweet}; // &lt;-- same scope
+
+fn main() {
+  let tweet = Tweet {
+    username: String::from(&quot;horse_ebooks&quot;),
+    content: String::from(&quot;of course, as you probably already know, people&quot;),
+    reply: false,
+    retweet: false,
+  };
+  
+  println!(&quot;1 new tweet: {}&quot;, tweet.summarize());
+  // 1 new tweet: horse_ebooks: of course, as you probably already know, people
+}
+</code></pre></pre>
+<p>Rust Playground: <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=dc563051aecebae4344776c06fb1b49d">https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=dc563051aecebae4344776c06fb1b49d</a></p>
+<p>Chúng ta có thể implement trait cho mọi type khác bất kỳ, ví dụ implement <code>Summary</code> cho <code>Vec&lt;T&gt;</code> trong scope của crate hiện tại.</p>
+<pre><pre class="playground"><code class="language-rust">pub trait Summary {
+  fn summarize(&amp;self) -&gt; String;
+}
+
+impl&lt;T&gt; Summary for Vec&lt;T&gt; {    // &lt;-- local scope
+  fn summarize(&amp;self) -&gt; String {
+    format!(&quot;There are {} items in vec&quot;, self.len())
+  }
+}
+
+fn main() {
+  let vec = vec![1i32, 2i32];
+  println!(&quot;{}&quot;, vec.summarize());
+  // There are 2 items in vec
+}
+</code></pre></pre>
+<p>Rust Playground: <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=dcaa812fab222ec0c713a38b066bda20">https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=dcaa812fab222ec0c713a38b066bda20</a></p>
+<p>Bạn sẽ không thể implement external traits trên external types. 
+Ví dụ ta không thể implement <code>Display</code> cho <code>Vec&lt;T&gt;</code> bởi vì 
+<code>Display</code> và <code>Vec&lt;T&gt;</code> được định nghĩa trong standard library, 
+trong trong crate hiện tại. Rule này giúp tránh chống chéo và chắc chắn 
+rằng không ai có thể break code của người khác và ngược lại.</p>
+<h1 id="default-implementations"><a class="header" href="#default-implementations">Default Implementations</a></h1>
+<p>Đôi khi bạn cần có default behavior mà không cần phải implement content cho từng type mỗi khi cần sử dụng:</p>
+<pre><pre class="playground"><code class="language-rust">pub trait Summary {
+  fn summarize(&amp;self) -&gt; String {
+    String::from(&quot;(Read more...)&quot;)
+  }
+}
+
+pub struct NewsArticle {
+  pub headline: String,
+  pub location: String,
+  pub author: String,
+  pub content: String,
+}
+
+impl Summary for NewsArticle {}; // &lt;-- sử dụng {}
+
+fn main() {
+  let article = NewsArticle { ... };
+  println!(&quot;New article: {}&quot;, article.summarize());
+  // New article: (Read more...)
+}
+</code></pre></pre>
+<h1 id="traits-as-parameters"><a class="header" href="#traits-as-parameters">Traits as Parameters</a></h1>
+<p>Trở lại ví dụ Typescript ở đầu tiên, với Trait bạn đã có thể define 
+một function chấp nhận tham số là nhiều kiểu dữ liệu khác nhau. 
+Nói theo một cách khác, bạn không cần biết kiểu dữ liệu, 
+bạn cần biết kiểu dữ liệu đó mang các behavior nào thì đúng hơn.</p>
+<pre><pre class="playground"><code class="language-rust">fn notify(data: &amp;impl Summary) {
+  println!(&quot;News: {}&quot;, data.summarize());
+}
+
+fn main() {
+  let news = NewsArticle {};
+  notify(news);
+}
+</code></pre></pre>
+<p>Ở đây, thay vì cần biết <code>data</code> là type nào (<code>NewsArticle</code> hay <code>Tweet</code>?), 
+ta chỉ cần cho Rust compiler biết là <code>notify</code> sẽ chấp nhận mọi 
+<strong>type có implement</strong> <code>trait Summary</code>, mà trait Summary có behavior <code>.summarize()</code>, 
+do đó ta có thể sử dụng method <code>.summary()</code> bên trong function.</p>
+<h1 id="trait-bound"><a class="header" href="#trait-bound">Trait Bound</a></h1>
+<p>Một syntax sugar khác mà ta có thể sử dụng thay cho <code>&amp;impl Summary</code> ở trên, 
+gọi là <em>trait bound</em>, bạn sẽ bắt gặp nhiều trong Rust document:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn notify&lt;T: Summary&gt;(item: &amp;T) {
+  println!(&quot;News: {}&quot;, item.summarize());
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Đầu tiên chúng ta định nghĩa trait bound bằng cách định nghĩa 
+một generic type parameter trước, sau đó là <code>:</code> trong ngoặc <code>&lt;</code> và <code>&gt;</code>. 
+Ta có thể đọc là: <code>item</code> có kiểu generic là <code>T</code> và <code>T</code> phải được <code>impl Summary</code>.</p>
+<ul>
+<li><code>notify&lt;T&gt;(</code> khai báo generic type <code>T</code></li>
+<li><code>notify&lt;T: Summary&gt;(</code> generic type được implement <code>trait Summary</code></li>
+</ul>
+<p>Cú pháp này có thể dài hơn và không dễ đọc như <code>&amp;impl Summary</code>, nhưng hãy xem ví dụ dưới đây:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn notify(item1: &amp;impl Summary, item2: &amp;impl Summary) {}  // (1)
+pub fn notify&lt;T: Summary&gt;(item1: &amp;T, item2: &amp;T) {}            // (2)
+<span class="boring">}
+</span></code></pre></pre>
+<p>Dùng <em>trait bound</em> giúp ta tái sử dụng lại <code>T</code>, 
+mà còn giúp force <code>item1</code> và <code>item2</code> có cùng kiểu dữ liệu, 
+đây là cách duy nhất (cả 2 đều là <code>NewsArticle</code> hoặc cả 2 đều là <code>Tweet</code>) mà (1) không thể.</p>
+<h1 id="specifying-multiple-trait-bounds-with-the--syntax"><a class="header" href="#specifying-multiple-trait-bounds-with-the--syntax">Specifying Multiple Trait Bounds with the + Syntax</a></h1>
+<p>Ta có cú pháp <code>+</code> nếu muốn generic <code>T</code> có được impl nhiều trait khác nhau. 
+Ví dụ ta muốn <code>item</code> phải có cả <code>Summary</code> lẫn <code>Display</code></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn notify(item: &amp;(impl Summary + Display)) {}
+pub fn notify&lt;T: Summary + Display&gt;(item: &amp;T) {}
+<span class="boring">}
+</span></code></pre></pre>
+<h1 id="where-clauses"><a class="header" href="#where-clauses"><code>where</code> Clauses</a></h1>
+<p>Đôi khi bạn sẽ có nhiều genenic type, mỗi generic type lại có nhiều trait bound,
+khiến code khó đọc. Rust có một cú pháp <code>where</code> cho phép định nghĩa trait bound 
+phía sau function signature. Ví dụ:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn some_function&lt;T: Display + Clone, U: Clone + Debug&gt;(t: &amp;T, u: &amp;U) -&gt; i32 {
+<span class="boring">}
+</span></code></pre></pre>
+<p>Với <code>where</code> clause:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn some_function&lt;T, U&gt;(t: &amp;T, u: &amp;U) -&gt; i32
+    where T: Display + Clone,
+	  U: Clone + Debug,
+{
+<span class="boring">}
+</span></code></pre></pre>
+<h1 id="returning-types-that-implement-traits"><a class="header" href="#returning-types-that-implement-traits">Returning Types that Implement Traits</a></h1>
+<p>Chúng ta cũng có thể sử dụng <code>impl Trait</code> cho giá trị được trả về của function.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn returns_summarizable() -&gt; impl Summary {
+    Tweet {
+        username: String::from(&quot;horse_ebooks&quot;),
+        content: String::from(&quot;ahihi&quot;),
+        reply: false,
+        retweet: false,
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Được đọc là: function <code>returns_summarizable()</code> trả về bất kỳ kiểu dữ liệu nào có <code>impl Summary</code>. 
+Tuy nhiên bạn chỉ có thể return về hoặc <code>Tweet</code> 
+hoặc <code>NewsArticle</code> do cách implement của compiler. Code sau sẽ có lỗi:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn returns_summarizable(switch: bool) -&gt; impl Summary {
+    if switch { NewsArticle {} }
+		else { Tweet {} }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Rust Book có một chương riêng để xử lý vấn đề này: <a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types">Chapter 17: Using Trait Objects That Allow for Values of Different Types</a></p>
+<h1 id="using-trait-bounds-to-conditionally-implement-methods"><a class="header" href="#using-trait-bounds-to-conditionally-implement-methods">Using Trait Bounds to Conditionally Implement Methods</a></h1>
+<p>Ta có thể implement 1 method có điều kiện cho bất kỳ type nào 
+có implement một trait khác cụ thể. Ví dụ để dễ hiểu hơn dưới đây:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fmt::Display;
+
+struct Pair&lt;T&gt; {
+  x: T,
+  y: T,
+}
+
+impl&lt;T&gt; Pair&lt;T&gt; {
+  fn new(x: T, y: T) -&gt; Self {
+    Self { x, y }
+  }
+}
+
+impl&lt;T: Display + PartialOrd&gt; Pair&lt;T&gt; {
+  fn cmp_display(&amp;self) {
+    if self.x &gt;= self.y {
+      println!(&quot;The largest member is x = {}&quot;, self.x);
+    } else {
+      println!(&quot;The largest member is y = {}&quot;, self.y);
+    }
+  }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>impl&lt;T&gt; Pair&lt;T&gt;</code> implement function <code>new</code> trả về kiểu dữ liệu <code>Pair&lt;T&gt;</code> với <code>T</code> là generic (bất kỳ kiểu dữ liệu nào.</p>
+<p><code>impl&lt;T: Display + PartialOrd&gt; Pair&lt;T&gt;</code> implement function <code>cmp_display</code> 
+cho mọi generic <code>T</code> với <code>T</code> đã được implement <code>Display + PartialOrd</code> 
+trước đó rồi (do đó mới có thể sử dụng các behavior của 
+<code>Display</code> (<code>println!(&quot;{}&quot;)</code>) và <code>PartialOrd</code> (<code>&gt;</code>, <code>&lt;</code>, ...) được.</p>
+<h1 id="blanket-implementations"><a class="header" href="#blanket-implementations">Blanket implementations</a></h1>
+<p>Ta cũng có thể implement 1 trait có điều kiện cho bất kỳ kiểu dữ liệu 
+nào có implement một trait khác rồi. Implementation của một trait cho 
+1 kiểu dữ liệu khác thỏa mãn trait bound được gọi là <em>blanket implementations</em> 
+và được sử dụng rộng rãi trong Rust standard library. 
+Hơi xoắn não nhưng hãy xem ví dụ dưới đây.</p>
+<p>Ví dụ: <code>ToString</code> trait trong 
+<a href="https://doc.rust-lang.org/src/alloc/string.rs.html#2390">Rust standard library</a>, 
+nó được implement cho mọi kiểu dữ liệu nào có được implement <code>Display</code> trait.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl&lt;T: Display&gt; ToString for T {
+  // --snip--
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Có nghĩa là, với mọi type có <code>impl Display</code>, ta có hiển nhiên thể sử dụng được các thuộc tính của <code>trait ToString</code>.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s = 3.to_string(); // do 3 thoaỏa manãn Display
+<span class="boring">}
+</span></code></pre></pre>
+<p>Do <code>3</code> thỏa mãn điều kiện là đã được <code>impl Display for i32</code>. 
+(<a href="https://doc.rust-lang.org/std/fmt/trait.Display.html#impl-Display-11">https://doc.rust-lang.org/std/fmt/trait.Display.html#impl-Display-11</a>)</p>
+<h1 id="trait-inheritance"><a class="header" href="#trait-inheritance">Trait Inheritance</a></h1>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait B: A {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Cái này không hẳn gọi là <em>Trait Inheritance</em>, cái này đúng hơn gọi là &quot;cái nào implement cái <code>B</code> thì cũng nên implement cái <code>A</code>&quot;. <code>A</code> và <code>B</code> vẫn là 2 trait độc lập nên vẫn phải implemenet cả 2.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl B for Z {}
+impl A for Z {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Inheritance thì không được khuyến khích sử dụng.</p>
+<h1 id="kết"><a class="header" href="#kết">Kết</a></h1>
+<p>Compiler sử dụng trait bound để kiểm tra các kiểu dữ liệu được sử dụng trong code có đúng behavior không. 
+Trong Python hay các ngôn ngữ dynamic typed khác, ta sẽ gặp lỗi lúc runtime nếu chúng ta gọi các method mà 
+kiểu dữ liệu đó không có hoặc không được định nghĩa.</p>
+<p>Bạn có chắc chắn là <code>a</code> dưới đây có method <code>summarize()</code> hay không? 
+Nhớ rằng typing hint của Python3 chỉ có tác dụng là nhắc nhở cho lập trình viên thôi.</p>
+<pre><code class="language-python"># Python
+func print_it(a: Union[NewsArticle, Tweet]):
+  print(a.summarize())
+
+print_it(1)
+print_it(&quot;what&quot;)
+</code></pre>
+<p>Do đó Rust bắt được mọi lỗi lúc compile time và force chúng ta phải fix hết trước khi chương trình chạy. 
+Do đó chúng ta không cần phải viết thêm code để kiểm tra behavior (hay sự tồn tại của method) 
+trước khi sử dụng lúc runtime nữa, tăng cường được performance mà không phải từ bỏ tính flexibility của generics.</p>
+<p>Xem về <a href="./struct.html">Struct</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../basic/struct.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../basic/copy-clone.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../basic/struct.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../basic/copy-clone.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
