@@ -163,11 +163,12 @@
 <p>Rust là một ngôn ngữ mới, với hệ thống tài liệu và sách đồ sộ và chi tiết.
 Nhưng đôi khi nó sẽ khó với một số người bởi đa số sẽ là Tiếng Anh.
 Với những ghi chép trong sách này, hy vọng có thể giúp cho mọi người,
-cũng như dành cho các thành viên trong team mình có thể tiếp cận với
+cũng như dành cho các thành viên trong team mình tại Fossil có thể tiếp cận với
 ngôn ngữ này nhanh chóng và dễ dàng hơn.</p>
-<h1 id="references"><a class="header" href="#references">References</a></h1>
+<h3 id="links"><a class="header" href="#links">Links</a></h3>
 <ul>
-<li><a href="https://github.com/rust-tieng-viet">Mã nguồn sách này</a></li>
+<li><a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io">Mã nguồn sách này</a></li>
+<li><a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io#contribution">Đóng góp, sửa chữa</a></li>
 <li><a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/blob/main/LICENCE">License</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ownership"><a class="header" href="#ownership">Ownership</a></h1>
@@ -434,7 +435,7 @@ impl Screen {
 </ul>
 <p>Sử dụng trait object, Rust type system sẽ chắc chắn là tại thời điểm compile, tất cả các giá trị sử dụng tại ngữ cảnh đó đều phải được implement trai của <em>trait object</em> đó. Nói tóm lại, chúng ta sẽ không cần quan tâm đó là kiểu dữ liệu gì, chỉ cần biết kiểu dữ liệu đó phải được implement <em>trait</em> chúng ta cần là được.</p>
 <p>Lý do cần sử dụng pointer reference <code>&amp;</code> hoặc smart pointer <code>Box&lt;T&gt;</code> bởi vì compiler không biết chính xác về kiểu dữ liệu, Rust sẽ dùng pointer của trait object để biết được method nào để cần được gọi. Xem thêm về <strong><a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">Trait Objects Perform Dynamic Dispatch</a>.</strong></p>
-<h1 id="references-1"><a class="header" href="#references-1">References</a></h1>
+<h1 id="references"><a class="header" href="#references">References</a></h1>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch15-01-box.html">Using Box<T> to Point to Data on the Heap</a></li>
 <li><a href="https://doc.rust-lang.org/rust-by-example/std/box.html#box-stack-and-heap">Box, stack and heap - Rust By Example</a></li>
@@ -1535,7 +1536,7 @@ let c: Color = &quot;red&quot;.parse().unwrap();
 assert_eq!(c, Color::Red);
 <span class="boring">}
 </span></code></pre></pre>
-<h1 id="references-2"><a class="header" href="#references-2">References</a></h1>
+<h1 id="references-1"><a class="header" href="#references-1">References</a></h1>
 <ul>
 <li><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse">https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse</a></li>
 <li><a href="https://doc.rust-lang.org/nightly/std/str/trait.FromStr.html">https://doc.rust-lang.org/nightly/std/str/trait.FromStr.html</a></li>
@@ -1743,7 +1744,7 @@ format!(&quot;single string&quot;);
 &quot;single string&quot;.to_string();
 <span class="boring">}
 </span></code></pre></pre>
-<h1 id="references-3"><a class="header" href="#references-3">References</a></h1>
+<h1 id="references-2"><a class="header" href="#references-2">References</a></h1>
 <ul>
 <li>https://doc.rust-lang.org/std/macro.format.html</li>
 </ul>
