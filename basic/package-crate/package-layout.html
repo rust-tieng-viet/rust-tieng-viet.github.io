@@ -158,7 +158,8 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="package-layout"><a class="header" href="#package-layout">Package layout</a></h1>
-<p>Được mô tả trong <a href="https://doc.rust-lang.org/cargo/guide/project-layout.html">Cargo book</a>, một crate trong Rust sẽ có layout như sau, chúng ta nên follow theo những conventions này.</p>
+<p>Được mô tả trong <a href="https://doc.rust-lang.org/cargo/guide/project-layout.html">Cargo book</a>, 
+một crate trong Rust sẽ có layout như sau:</p>
 <pre><code>.
 ├── Cargo.lock
 ├── Cargo.toml
@@ -185,11 +186,11 @@
         └── test_module.rs
 </code></pre>
 <ul>
-<li><code>Cargo.toml</code> và <code>Cargo.lock</code> dược đặt ở thư mục gốc của package. Thường trong các crate người ta sẽ hướng dẫn bạn thêm một dòng <code>crate_name = &quot;&lt;version&gt;&quot;</code> bên dưới section <code>[dependencies]</code> hoặc <code>[dev-dependencies]</code>. Không nên đụng đến file <code>Cargo.lock</code>.</li>
+<li><code>Cargo.toml</code> và <code>Cargo.lock</code> dược đặt ở thư mục gốc của package. Thường để sử dụng các library nào đó, người ta sẽ hướng dẫn bạn thêm một dòng ví dụ <code>log = &quot;0.6&quot;</code> bên dưới section <code>[dependencies]</code> hoặc <code>[dev-dependencies]</code>. Không nên đụng đến file <code>Cargo.lock</code> do nó được generate tự động.</li>
 <li>Source code được đặt trong thư mục <code>src</code>.</li>
-<li>File chính của library crate <code>src/lib.rs</code>.</li>
-<li>File chính của binary crate <code>src/main.rs</code>.</li>
-<li>Benchmarks được đặt trong thư mục <code>benches</code>.</li>
+<li>File chính của library crate là <code>src/lib.rs</code>.</li>
+<li>File chính của binary crate là <code>src/main.rs</code>.</li>
+<li>Benchmark code được đặt trong thư mục <code>benches</code>.</li>
 <li>Code ví dụ (examples) được đặt trong thư mục <code>examples</code>.</li>
 <li>Integration tests được đặt trong thư mục <code>tests</code>.</li>
 <li><code>helper.rs</code> và <code>utils/</code> được gọi là các module. Nếu module là một thư mục gồm nhiều file khác, file <code>mod.rs</code> được coi như là file index của module đó. Xem thêm về modules <a href="https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html">tại đây</a>. </li>
