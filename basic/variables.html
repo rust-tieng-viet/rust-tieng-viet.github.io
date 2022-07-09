@@ -158,10 +158,10 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="variables"><a class="header" href="#variables">Variables</a></h1>
-<p>Variables trong Rust là có kiểu dữ liệu tĩnh. 
+<p>Variables trong Rust có kiểu dữ liệu tĩnh. 
 Ta khai báo kiểu dữ liệu trong lúc khai báo biến. 
 Trong đa số các trường hợp compiler có thể đoán được kiểu dữ liệu
-bạn đang khai báo trong ngữ cảnh đó, nên đôi khi chúng ta có thể bỏ qua việc khai báo kiểu.</p>
+nên đôi khi ta có thể bỏ qua.</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let an_integer = 1u32;
@@ -172,13 +172,16 @@ let unit = ();
 let copied_integer = an_integer;
 <span class="boring">}
 </span></code></pre></pre>
-<p>Mọi biến đều phải được sử dụng trong, nếu không compiler sẽ warning.
+<p>Mọi biến đều phải được sử dụng, nếu không, compiler sẽ warning.
 Để skip warning, thêm dấu underscore ở đầu tên biến.</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// The compiler warns about unused variable bindings; these warnings can
 // be silenced by prefixing the variable name with an underscore
 let _unused_variable = 3u32;
+
+// Skip the result of function
+let _ = check_error();
 <span class="boring">}
 </span></code></pre></pre>
 <h2 id="mut"><a class="header" href="#mut"><code>mut</code></a></h2>
@@ -201,7 +204,7 @@ a = 2;
 //   | ^^^^^ cannot assign twice to immutable variable
 <span class="boring">}
 </span></code></pre></pre>
-<p>Để có thể làm như vậy, ta thêm từ khóa <code>mut</code> sau <code>let</code>. </p>
+<p>Để có thể thay đổi giá trị của biến, ta thêm từ khóa <code>mut</code> sau <code>let</code>. </p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut a = 1;
@@ -210,9 +213,16 @@ a = 2;
 println!(&quot;a = {}&quot;, a);
 <span class="boring">}
 </span></code></pre></pre>
+<p>Ta cũng có thể khai báo lại biến đó để assign lại giá trị mới:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let a = 1;
+let a = a + 1;
+<span class="boring">}
+</span></code></pre></pre>
 <h2 id="scope"><a class="header" href="#scope">Scope</a></h2>
 <p>Giá trị của variables có thể được xác định tùy theo scope.
-Scope là một tập các dòng code nằm trong <code>{}</code>.</p>
+Scope là một tập hợp các dòng code nằm trong <code>{}</code>.</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a = 1;
