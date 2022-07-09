@@ -114,26 +114,9 @@ Bạn sẽ bắt gặp rất rất nhiều method khác nhau để xử lý giá
 
 [`Option`](https://doc.rust-lang.org/std/option/) method overview: [https://doc.rust-lang.org/std/option/#method-overview](https://doc.rust-lang.org/std/option/#method-overview)
 
-### `.unwrap()`
+{{#include ./unwrap.md}}
 
-Trả về giá trị nằm trong `Some`. Nếu giá trị là None có thể dẫn đến panic chương trình. 
-
-```rust
-let x = Some("air");
-assert_eq!(x.unwrap(), "air");
-
-let x: Option<&str> = None;
-assert_eq!(x.unwrap(), "air"); // panic!
-```
-
-### `.expect()`
-
-Giống `.unwrap()`, nhưng nếu panic thì Rust sẽ kèm theo message
-
-```rust
-let x: Option<&str> = None;
-x.expect("fruits are healthy"); // panics: `fruits are healthy`
-```
+{{#include ./expect.md}}
 
 ### `.unwrap_or()`
 
@@ -173,3 +156,4 @@ fn get_name(who: Option<String>) -> String {
 get_name(Some("duyet"));
 ```
 
+{{#include ./if_let_some.md}}
