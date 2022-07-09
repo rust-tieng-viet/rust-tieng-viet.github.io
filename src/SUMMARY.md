@@ -70,6 +70,19 @@
 
 ---
 
+# Design patterns
+
+- [Behavioural Patterns](./design-pattern/behavioural/README.md)
+  - [Strategy Pattern](./design-pattern/behavioural/strategy.md)
+  - [Command Pattern](./design-pattern/behavioural/command.md)
+- [Creational Patterns](./design-pattern/creational/README.md)
+  - [Builder Pattern](./design-pattern/creational/builder.md)
+- [Structural Patterns](./design-pattern/structural/README.md)
+  - [Prefer Small Crates](./design-pattern/structural/small-rates.md)
+
+
+---
+
 # Crates hay dùng
 
 - [tokio]()
@@ -85,29 +98,11 @@
 
 ---
 
-# Design patterns
-
-- [Behavioural Patterns](./design-pattern/behavioural/README.md)
-  - [Strategy Pattern](./design-pattern/behavioural/strategy.md)
-  - [Command Pattern](./design-pattern/behavioural/command.md)
-- [Creational Patterns](./design-pattern/creational/README.md)
-  - [Builder Pattern](./design-pattern/creational/builder.md)
-- [Structural Patterns](./design-pattern/structural/README.md)
-  - [Prefer Small Crates](./design-pattern/structural/small-rates.md)
-
----
-
 # Rust Idioms
 
-[Use borrowed types for arguments]()
-
-[Concatenating strings with `format!`]()
-
-[Constructor]()
-
-[The Default Trait]()
-
-[Finalisation in destructors]()
-
-[Temporary mutability]()
-
+- [Use borrowed types for arguments]()
+- [Concatenating strings with `format!`]()
+- [Constructor]()
+- [The Default Trait]()
+- [Finalisation in destructors]()
+- [Temporary mutability]()
