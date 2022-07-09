@@ -55,9 +55,13 @@
 
 # Design patterns
 
-- [Behavioural Patterns]()
-- [Creational Patterns]()
-- [Structural Patterns]()
+- [Behavioural Patterns](./design-pattern/behavioural/README.md)
+  - [Strategy Pattern](./design-pattern/behavioural/strategy.md)
+  - [Command Pattern](./design-pattern/behavioural/command.md)
+- [Creational Patterns](./design-pattern/creational/README.md)
+  - [Builder Pattern](./design-pattern/creational/builder.md)
+- [Structural Patterns](./design-pattern/structural/README.md)
+  - [Prefer Small Crates](./design-pattern/structural/small-rates.md)
 
 ---
 
