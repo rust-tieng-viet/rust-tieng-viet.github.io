@@ -1,1 +1,3 @@
-// Make Github recognize this as a Rust project
+fn main() {
+    // Make Github recognize this as a Rust project
+}
