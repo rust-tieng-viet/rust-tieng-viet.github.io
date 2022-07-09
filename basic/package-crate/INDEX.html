@@ -159,9 +159,11 @@
                     <main>
                         <h1 id="packages-và-crates"><a class="header" href="#packages-và-crates">Packages và Crates</a></h1>
 <p><strong>Package</strong> là một hoặc nhiều crates. Một package gồm một file <code>Cargo.toml</code> mô tả cách để build các crates đó.</p>
-<p><strong>Crate</strong> có thể là một binary crate hoặc library crate.
-- <strong>binary crate</strong> có thể được compile thành binary và có thể thực thi được, ví dụ như một command-line hoặc server. Một binary crate bắt buộc phải có một hàm <code>main</code>
-- <strong>library crate</strong> không có hàm <code>main</code>, nó cũng compile thành binary. Library crate dùng để share tính năng cho nhiều project khác. </p>
+<p><strong>Crate</strong> có thể là một binary crate hoặc library crate.</p>
+<ul>
+<li><strong>binary crate</strong> có thể được compile thành binary và có thể thực thi được, ví dụ như một command-line hoặc server. Một binary crate bắt buộc phải có một hàm <code>main()</code></li>
+<li><strong>library crate</strong> không cần hàm <code>main()</code>. Library crate dùng để share các tính năng cho các project khác. </li>
+</ul>
 
                     </main>
 
