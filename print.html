@@ -443,12 +443,14 @@ một crate trong Rust sẽ có layout như sau:</p>
 <li><code>helper.rs</code> và <code>utils/</code> được gọi là các module. Nếu module là một thư mục gồm nhiều file khác, file <code>mod.rs</code> được coi như là file index của module đó. Xem thêm về modules <a href="https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html">tại đây</a>. </li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="crate"><a class="header" href="#crate">Crate</a></h1>
-<p>Một <strong>crate</strong> có thể là một <strong>binary crate</strong> hoặc <strong>library crate</strong>.
-- <strong>binary crate</strong> có thể được compile thành binary và có thể thực thi được, ví dụ như một command-line hoặc server. Một binary crate bắt buộc phải có một hàm <code>main</code>
-- <strong>library crate</strong> không có hàm <code>main</code>, nó cũng compile thành binary. Library crate dùng để share tính năng cho nhiều project khác. </p>
-<p>Crate thường được publish trên <a href="https://crates.io">https://crates.io</a>.</p>
+<p><strong>Crate</strong> có thể là một binary crate hoặc library crate.</p>
+<ul>
+<li><strong>binary crate</strong> có thể được compile thành binary và có thể thực thi được, ví dụ như một command-line hoặc server. Một binary crate bắt buộc phải có một hàm <code>main()</code></li>
+<li><strong>library crate</strong> không cần hàm <code>main()</code>. Library crate dùng để share các tính năng cho các project khác. </li>
+</ul>
+<p>Crate được publish trên <a href="https://crates.io">https://crates.io</a>.</p>
 <h2 id="init-crate"><a class="header" href="#init-crate">Init crate</a></h2>
-<p>Để init một crate mới ta sử dụng cargo:</p>
+<p>Để tạo một crate mới ta sử dụng cargo:</p>
 <ul>
 <li><code>cargo new crate_name</code>: binary crate.</li>
 <li><code>cargo new crate_name --lib</code>: library crate.</li>
@@ -466,9 +468,9 @@ một crate trong Rust sẽ có layout như sau:</p>
 └── src
     └── lib.rs
 </code></pre>
-<p>Một crate có thể vừa có <code>lib.rs</code> và vừa có <code>main.rs</code>.</p>
+<p>Một crate có thể vừa có <code>lib.rs</code> và <code>main.rs</code>.</p>
 <p>Binary crate khi <code>cargo build</code> hoặc <code>cargo run</code> sẽ build ra một file binary bỏ trong <code>./target/debug/&lt;crate_name&gt;</code>. </p>
-<p>Khi build cho production, ta thêm <code>--release</code> lúc này cargo sẽ build thành binary bỏ trong <code>./target/release/&lt;crate_name&gt;</code>. </p>
+<p>Khi build cho môi trường production, ta thêm <code>--release</code> lúc này cargo sẽ build thành binary bỏ trong <code>./target/release/&lt;crate_name&gt;</code>. </p>
 <p><code>debug</code> hay <code>release</code> được gọi là các build target. Build trong <code>release</code> sẽ được apply nhiều optimization hơn, kích thước nhỏ hơn, chạy nhanh hơn nhưng compile lâu hơn.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="use-crate"><a class="header" href="#use-crate">use crate</a></h1>
 <p>Để sử dụng (import) một crate từ <a href="https://crates.io">https://crates.io</a>, ví dụ <a href="https://crates.io/crates/log">https://crates.io/crates/log</a>.</p>
