@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>format! - Rust Tiếng Việt</title>
+        <title>Vec - Rust Tiếng Việt</title>
 
 
         <!-- Custom HTML head -->
@@ -90,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Introduction</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Cơ bản</li><li class="chapter-item expanded "><a href="../../basic/variables.html"><strong aria-hidden="true">1.</strong> Variables</a></li><li class="chapter-item expanded "><a href="../../basic/cargo/INDEX.html"><strong aria-hidden="true">2.</strong> Cargo</a></li><li class="chapter-item expanded "><a href="../../basic/package-crate/INDEX.html"><strong aria-hidden="true">3.</strong> Packages và Crates</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/package-crate/package-layout.html"><strong aria-hidden="true">3.1.</strong> Package layout</a></li><li class="chapter-item expanded "><a href="../../basic/package-crate/crate.html"><strong aria-hidden="true">3.2.</strong> Crate</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/ownership.html"><strong aria-hidden="true">4.</strong> Ownership</a></li><li class="chapter-item expanded "><a href="../../basic/variables.html"><strong aria-hidden="true">5.</strong> Variables</a></li><li class="chapter-item expanded "><a href="../../basic/vec/INDEX.html"><strong aria-hidden="true">6.</strong> Vec</a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">6.1.</strong> Iter</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.2.</strong> Sử dụng Enum để chứa nhiều loại dữ liệu</div></li></ol></li><li class="chapter-item expanded "><a href="../../basic/box.html"><strong aria-hidden="true">7.</strong> Box</a></li><li class="chapter-item expanded "><a href="../../basic/option.html"><strong aria-hidden="true">8.</strong> Option</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/unwrap_or_default.html"><strong aria-hidden="true">8.1.</strong> .unwrap_or_default()</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/result.html"><strong aria-hidden="true">9.</strong> Result</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/result-to-option.html"><strong aria-hidden="true">9.1.</strong> Convert Result sang Option</a></li><li class="chapter-item expanded "><a href="../../basic/question-mark.html"><strong aria-hidden="true">9.2.</strong> Toán tử ?</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/code-comment.html"><strong aria-hidden="true">10.</strong> /// code comment</a></li><li class="chapter-item expanded "><a href="../../basic/struct.html"><strong aria-hidden="true">11.</strong> Struct</a></li><li class="chapter-item expanded "><a href="../../basic/trait.html"><strong aria-hidden="true">12.</strong> Trait</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/copy-clone.html"><strong aria-hidden="true">12.1.</strong> Copy, Clone</a></li><li class="chapter-item expanded "><a href="../../basic/fromstr.html"><strong aria-hidden="true">12.2.</strong> FromStr</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.3.</strong> Display</div></li></ol></li><li class="chapter-item expanded "><a href="../../basic/turbofish.html"><strong aria-hidden="true">13.</strong> Turbofish ::&lt;&gt;</a></li><li class="chapter-item expanded "><a href="../../basic/macro/index.html"><strong aria-hidden="true">14.</strong> macros!</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/macro/println.html"><strong aria-hidden="true">14.1.</strong> println!</a></li><li class="chapter-item expanded "><a href="../../basic/macro/format.html" class="active"><strong aria-hidden="true">14.2.</strong> format!</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.3.</strong> macro_rules!</div></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><li class="part-title">Crates hay dùng</li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.</strong> tokio.rs</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">16.</strong> actix-web</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">17.</strong> anyhow</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">18.</strong> serde</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">19.</strong> clap</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">20.</strong> log</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">21.</strong> config</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Design patterns</li><li class="chapter-item expanded "><div><strong aria-hidden="true">22.</strong> Behavioural Patterns</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">23.</strong> Creational Patterns</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">24.</strong> Structural Patterns</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Rust Idioms</li><li class="chapter-item expanded affix "><div>Concatenating strings with format!</div></li><li class="chapter-item expanded affix "><div>Constructor</div></li><li class="chapter-item expanded affix "><div>The Default Trait</div></li><li class="chapter-item expanded affix "><div>Finalisation in destructors</div></li><li class="chapter-item expanded affix "><div>Temporary mutability</div></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Introduction</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Cơ bản</li><li class="chapter-item expanded "><a href="../../basic/variables.html"><strong aria-hidden="true">1.</strong> Variables</a></li><li class="chapter-item expanded "><a href="../../basic/cargo/INDEX.html"><strong aria-hidden="true">2.</strong> Cargo</a></li><li class="chapter-item expanded "><a href="../../basic/package-crate/INDEX.html"><strong aria-hidden="true">3.</strong> Packages và Crates</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/package-crate/package-layout.html"><strong aria-hidden="true">3.1.</strong> Package layout</a></li><li class="chapter-item expanded "><a href="../../basic/package-crate/crate.html"><strong aria-hidden="true">3.2.</strong> Crate</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/ownership.html"><strong aria-hidden="true">4.</strong> Ownership</a></li><li class="chapter-item expanded "><a href="../../basic/variables.html"><strong aria-hidden="true">5.</strong> Variables</a></li><li class="chapter-item expanded "><a href="../../basic/vec/INDEX.html" class="active"><strong aria-hidden="true">6.</strong> Vec</a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">6.1.</strong> Iter</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.2.</strong> Sử dụng Enum để chứa nhiều loại dữ liệu</div></li></ol></li><li class="chapter-item expanded "><a href="../../basic/box.html"><strong aria-hidden="true">7.</strong> Box</a></li><li class="chapter-item expanded "><a href="../../basic/option.html"><strong aria-hidden="true">8.</strong> Option</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/unwrap_or_default.html"><strong aria-hidden="true">8.1.</strong> .unwrap_or_default()</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/result.html"><strong aria-hidden="true">9.</strong> Result</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/result-to-option.html"><strong aria-hidden="true">9.1.</strong> Convert Result sang Option</a></li><li class="chapter-item expanded "><a href="../../basic/question-mark.html"><strong aria-hidden="true">9.2.</strong> Toán tử ?</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/code-comment.html"><strong aria-hidden="true">10.</strong> /// code comment</a></li><li class="chapter-item expanded "><a href="../../basic/struct.html"><strong aria-hidden="true">11.</strong> Struct</a></li><li class="chapter-item expanded "><a href="../../basic/trait.html"><strong aria-hidden="true">12.</strong> Trait</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/copy-clone.html"><strong aria-hidden="true">12.1.</strong> Copy, Clone</a></li><li class="chapter-item expanded "><a href="../../basic/fromstr.html"><strong aria-hidden="true">12.2.</strong> FromStr</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.3.</strong> Display</div></li></ol></li><li class="chapter-item expanded "><a href="../../basic/turbofish.html"><strong aria-hidden="true">13.</strong> Turbofish ::&lt;&gt;</a></li><li class="chapter-item expanded "><a href="../../basic/macro/index.html"><strong aria-hidden="true">14.</strong> macros!</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/macro/println.html"><strong aria-hidden="true">14.1.</strong> println!</a></li><li class="chapter-item expanded "><a href="../../basic/macro/format.html"><strong aria-hidden="true">14.2.</strong> format!</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.3.</strong> macro_rules!</div></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><li class="part-title">Crates hay dùng</li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.</strong> tokio.rs</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">16.</strong> actix-web</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">17.</strong> anyhow</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">18.</strong> serde</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">19.</strong> clap</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">20.</strong> log</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">21.</strong> config</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Design patterns</li><li class="chapter-item expanded "><div><strong aria-hidden="true">22.</strong> Behavioural Patterns</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">23.</strong> Creational Patterns</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">24.</strong> Structural Patterns</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Rust Idioms</li><li class="chapter-item expanded affix "><div>Concatenating strings with format!</div></li><li class="chapter-item expanded affix "><div>Constructor</div></li><li class="chapter-item expanded affix "><div>The Default Trait</div></li><li class="chapter-item expanded affix "><div>Finalisation in destructors</div></li><li class="chapter-item expanded affix "><div>Temporary mutability</div></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -128,7 +128,7 @@
                         <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/basic/macro/format.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/basic/vec/INDEX.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -157,45 +157,62 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="format"><a class="header" href="#format"><code>format!()</code></a></h1>
-<p>Đây là một trong những macro được dùng nhiều nhất trong Rust.</p>
-<p><code>format!()</code> giúp khởi tạo một <code>String</code>. Tham số đầu tiên của <code>format!</code> là chuỗi định dạng. 
-Sức mạnh của format string này ở trong các <code>{}</code>.</p>
-<p>Xem các ví dụ sau:</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">fn main() {
-</span>format!(&quot;test&quot;);
-format!(&quot;hello {}&quot;, &quot;world!&quot;);
-format!(&quot;x = {}, y = {y}&quot;, 10, y = 30);
-
-let z = 100;
-format!(&quot;z = {z}&quot;);
+                        <h1 id="vectors"><a class="header" href="#vectors">Vectors</a></h1>
+<p>Vector có để được xem là re-sizable array nhưng mọi phần tử trong vec phải có cùng kiểu dữ liệu.</p>
+<p>Vector là một generic type: <code>Vec&lt;T&gt;</code>, <code>T</code> có thể là bất kỳ kiểu dữ liệu nào. Ví dụ một vector chứa <code>i32</code> được viết là <code>Vec&lt;i32&gt;</code>.</p>
+<h2 id="tạo-vector-rỗng"><a class="header" href="#tạo-vector-rỗng">Tạo vector rỗng</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let a = Vec::new(); // 1.With new() keyword
+let b = vec![]; // 2.Using the vec! macro
 <span class="boring">}
 </span></code></pre></pre>
-<h2 id="to_string-để-convert-một-giá-trị-thành-string"><a class="header" href="#to_string-để-convert-một-giá-trị-thành-string"><code>.to_string()</code> để convert một giá trị thành String</a></h2>
-<p>Để convert một giá trị thành <code>String</code>, thay vì sử dụng <code>format!()</code> thì người ta hay sử dụng 
-<a href="https://doc.rust-lang.org/std/string/trait.ToString.html">to_string</a>. 
-Method này sẽ sử dụng <a href="https://doc.rust-lang.org/std/fmt/trait.Display.html">Display</a> formatting trait.</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">fn main() {
-</span>// Thay vì
-format!(&quot;single string&quot;);
+<h2 id="tạo-vector-với-kiểu-dữ-liệu"><a class="header" href="#tạo-vector-với-kiểu-dữ-liệu">Tạo vector với kiểu dữ liệu</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let a2: Vec&lt;i32&gt; = Vec::new();
+let b2: Vec&lt;i32&gt; = vec![];
+let b3 = vec![1i32, 2, 3]; // Khai báo kiểu cho phần tử đầu tiên
 
-// Sử dụng
-&quot;single string&quot;.to_string();
+let b4 = vec![0; 10]; // Vec chứa mười số 0
 <span class="boring">}
 </span></code></pre></pre>
-<h1 id="references"><a class="header" href="#references">References</a></h1>
-<ul>
-<li>https://doc.rust-lang.org/std/macro.format.html</li>
-</ul>
+<h2 id="in-vector"><a class="header" href="#in-vector">In vector</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let c = vec![5, 4, 3, 2, 1];
+println!(&quot;vec = {:?}&quot;, c);
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="push-và-pop"><a class="header" href="#push-và-pop">Push và Pop</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut d: Vec&lt;i32&gt; = vec![];
+d.push(1);
+d.push(2);
+d.pop();
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="kiểm-tra-kích-thước-của-vector"><a class="header" href="#kiểm-tra-kích-thước-của-vector">Kiểm tra kích thước của vector</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let d = vec![0; 10];
+
+println!(&quot;len = {}&quot;, d.len());
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../basic/macro/println.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../basic/variables.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
+                            <a rel="next" href="../../basic/box.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -203,10 +220,13 @@ format!(&quot;single string&quot;);
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../basic/macro/println.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../basic/variables.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
+                    <a rel="next" href="../../basic/box.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
