@@ -1,9 +1,9 @@
 # Variables
 
-Variables trong Rust là có kiểu dữ liệu tĩnh. 
+Variables trong Rust có kiểu dữ liệu tĩnh. 
 Ta khai báo kiểu dữ liệu trong lúc khai báo biến. 
 Trong đa số các trường hợp compiler có thể đoán được kiểu dữ liệu
-bạn đang khai báo trong ngữ cảnh đó, nên đôi khi chúng ta có thể bỏ qua việc khai báo kiểu.
+nên đôi khi ta có thể bỏ qua.
 
 ```rust
 let an_integer = 1u32;
@@ -14,13 +14,16 @@ let unit = ();
 let copied_integer = an_integer;
 ```
 
-Mọi biến đều phải được sử dụng trong, nếu không compiler sẽ warning.
+Mọi biến đều phải được sử dụng, nếu không, compiler sẽ warning.
 Để skip warning, thêm dấu underscore ở đầu tên biến.
 
 ```rust
 // The compiler warns about unused variable bindings; these warnings can
 // be silenced by prefixing the variable name with an underscore
 let _unused_variable = 3u32;
+
+// Skip the result of function
+let _ = check_error();
 ```
 
 ## `mut`
@@ -45,7 +48,7 @@ a = 2;
 ```
 
 
-Để có thể làm như vậy, ta thêm từ khóa `mut` sau `let`. 
+Để có thể thay đổi giá trị của biến, ta thêm từ khóa `mut` sau `let`. 
 
 ```rust
 let mut a = 1;
@@ -54,10 +57,17 @@ a = 2;
 println!("a = {}", a);
 ```
 
+Ta cũng có thể khai báo lại biến đó để assign lại giá trị mới:
+
+```rust
+let a = 1;
+let a = a + 1;
+```
+
 ## Scope
 
 Giá trị của variables có thể được xác định tùy theo scope.
-Scope là một tập các dòng code nằm trong `{}`.
+Scope là một tập hợp các dòng code nằm trong `{}`.
 
 ```rust
 let a = 1;
