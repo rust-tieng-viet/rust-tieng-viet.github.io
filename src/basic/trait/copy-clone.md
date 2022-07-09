@@ -10,11 +10,9 @@ Làm sao để biết đọc một kiểu dữ liệu có được **implement C
 Bạn có thể xem trong Rust document. Ví dụ `char`:
 [https://doc.rust-lang.org/std/primitive.char.html](https://doc.rust-lang.org/std/primitive.char.html)
 
-![](/media/2022/02/duyet-copy-trait.png)
-
 Nếu bạn thấy:
 
-- **Copy**: được copy nếu bạn bỏ nó vào function.
+- **Copy**: có thể được copy nếu bạn bỏ nó vào function.
 - **Display:** bạn có thể sử dụng `{}` để print.
 - **Debug:** bạn có thể sử dụng `{:?}` để print.
 
@@ -101,79 +99,5 @@ fn main() {
 }
 ```
 
-# Bonus: String và &str
+{{#include ./string-str.md}}
 
-Nếu bạn có một `String` và `&` reference, Rust sẽ convert nó thành `&str` khi bạn cần.
-
-```rust
-fn prints_country(country_name: &str) {
-  println!("{}", country_name);
-}
-
-fn main() {
-  let country = String::from("Duyet");
-  prints_country(&country);
-  prints_country(&country);
-}
-```
-
-`&str` là một kiểu hơi phức tạp. 
-Nó có thể vừa là String literals `let s = "I am &str";`. Trường hợp này `s` có kiểu `&'static` bởi vì nó được ghi trực tiếp vào binary. `&str` cũng có thể là borrowed của `str` hoặc `String`.
-
-# Bonus: uninitialized variable
-
-Variable mà không có giá trị được gọi là uninitialized variable.
-
-```rust
-fn main() {
-  let my_variable; // ⚠️
-}
-```
-
-Rust sẽ không compile và bạn sẽ không thể sử dụng cho đến khi `my_variable` được gán giá trị nào đó. Ta có thể lợi dụng điều này:
-
-- Khai báo uninitialized variable.
-- Gán giá trị cho nó trong 1 scope khác
-- Vẫn giữ được giá trị của của variable đó khi ra khỏi scope.
-
-```rust
-fn main() {
-  let my_number;
-  {
-    my_number = 100;
-  }
-
-  println!("{}", my_number);
-}
-```
-
-Hoặc phức tạp hơn
-
-```rust
-fn loop_then_return(mut counter: i32) -> i32 {
-  loop {
-    counter += 1;
-    if counter % 50 == 0 {
-      break;
-    }
-  }
-  counter
-}
-
-fn main() {
-  let my_number;
-
-  {
-    // Pretend we need to have this code block
-    let number = {
-      // Pretend there is code here to make a number
-      // Lots of code, and finally:
-      57
-    };
-
-    my_number = loop_then_return(number);
-  }
-
-  println!("{}", my_number); // 100
-}
-```

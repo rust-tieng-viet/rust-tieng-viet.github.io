@@ -1,11 +1,16 @@
 # [`Result`](https://doc.rust-lang.org/std/result/)
 
+
 Tương tự như [`Option`](./option.md). 
 Một kết quả trả về ([`Result`](https://doc.rust-lang.org/std/result/))
 của một function thường sẽ có hai trường hợp:
 
 - thành công ([`Ok`](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Ok)) và trả về kết quả
 - hoặc lỗi ([`Err`](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err)) và trả về thông tin lỗi.
+
+[`Result`](https://doc.rust-lang.org/std/result/) là một phiên bản cao cấp hơn của [`Option`](../option/README.md).
+Nó mô tả *lỗi gì* đang xảy ra thay vì khả năng *tồn tại* giá trị hay không.
+
 
 ```rust
 enum Result<T, E> {

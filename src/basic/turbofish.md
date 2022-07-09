@@ -137,10 +137,10 @@ Ok::<u8, ()>(10)
 Err::<u8, ()>(()) 
 ```
 
-# Reference
+# References
 
 - [Generic Types, Traits, and Lifetimes](https://doc.rust-lang.org/book/ch10-00-generics.html#generic-types-traits-and-lifetimes)
 - [Generics in the rust book](https://doc.rust-lang.org/book/generics.html)
 - [Rust syntax index](https://doc.rust-lang.org/book/syntax-index.html)
-- [https://matematikaadit.github.io/posts/rust-turbofish.html](https://matematikaadit.github.io/posts/rust-turbofish.html)
-- [https://techblog.tonsser.com/posts/what-is-rusts-turbofish](https://techblog.tonsser.com/posts/what-is-rusts-turbofish)
+- <https://matematikaadit.github.io/posts/rust-turbofish.html>
+- <https://techblog.tonsser.com/posts/what-is-rusts-turbofish>
