@@ -16,5 +16,9 @@ Cũng như truyền cảm hứng và mở rộng cộng đồng sử dụng Rust
 ### Links
 
 - [Mã nguồn sách này](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io)
-- [Đóng góp, sửa chữa](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io#contribution)
+- [Đóng góp, chỉnh sửa](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io#contribution)
 - [License](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/blob/main/LICENCE)
+
+###
+
+{{#include SUMMARY.md}}

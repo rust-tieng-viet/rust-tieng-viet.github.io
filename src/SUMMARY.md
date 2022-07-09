@@ -1,7 +1,7 @@
-# Summary
+# Table of Contents
 
-[Introduction](README.md)
-[Who is using?](who-is-using.md)
+* [Introduction](README.md)
+* [Who is using?](who-is-using.md)
 
 ---
 
@@ -34,18 +34,22 @@
   - [println!](./basic/macro/println.md)
   - [format!](./basic/macro/format.md)
   - [macro_rules!]()
+- [Rc, Arc]()
 
 ---
 
 # Crates hay dùng
 
-- [tokio.rs]()
+- [tokio]()
 - [actix-web]()
 - [anyhow]()
 - [serde]()
 - [clap]()
 - [log]()
 - [config]()
+- [async_trait]()
+- [lazy_static]()
+- [indoc]()
 
 ---
 
