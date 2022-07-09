@@ -1,6 +1,7 @@
 # `FromStr`
 
-[FromStr](https://doc.rust-lang.org/std/str/trait.FromStr.html) là một trait để khởi tạo instance từ string trong Rust, 
+[FromStr](https://doc.rust-lang.org/std/str/trait.FromStr.html) 
+là một trait để khởi tạo instance từ string trong Rust, 
 nó tương đương abstract class nếu bạn có background OOP.
 
 ```rust
@@ -11,7 +12,8 @@ pub trait FromStr {
 ```
 
 Thường phương thức `from_str` của `FromStr` thường được ngầm định 
-sử dụng thông qua phương thức [parse](https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse) 
+sử dụng thông qua phương thức 
+[parse](https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse) 
 của [str](https://doc.rust-lang.org/nightly/std/primitive.str.html). Ví dụ:
 
 ```rust
@@ -31,10 +33,10 @@ assert!(nope.is_err());
 ```
 
 `parse` là một phương thức general nên thường được sử dụng với kiểu dữ liệu
-như trên hoặc sử dụng turbofish `::<>` để thuật toán inference có thể hiểu 
-để parse thành đúng kiểu bạn cần.
+như trên hoặc sử dụng [turbofish](./turbofish.md) `::<>` để thuật toán inference
+có thể hiểu để parse thành đúng kiểu bạn cần.
 
-# Parse str to Struct
+# Parse `str` to `Struct`
 
 Bạn có 1 struct và muốn parse 1 str thành struct đó, bạn sẽ cần impl trait `FromStr`
 
@@ -71,9 +73,10 @@ let p = Point::from_str("(1,2)");
 assert_eq!(p.unwrap(), Point{ x: 1, y: 2} )
 ```
 
-# Parse str to Enum
+# Parse `str` to `Enum`
 
-Một điều mình thấy để code dễ đọc, dễ maintain hơn là chúng ta nên tránh sử dụng stringly-typed apis. Ví dụ như:
+Một điều mình nhận thấy để code dễ đọc, dễ maintain hơn là 
+ta nên sử dụng Enum thay cho string để so sánh giá trị. Ví dụ:
 
 ```rust
 fn print(color: &str, text: &str) { ... }
@@ -89,7 +92,7 @@ fn print(color: Color, text: &str) { ... }
 print(Green, "duyet");
 ```
 
-Cũng nên hạn chế sử dụng quá nhiều Boolean, thực tế Boolean cũng chỉ là 
+Cũng nên hạn chế sử dụng quá nhiều Boolean, thực tế Boolean cũng chỉ là 1 enum
 
 ```rust
 enum bool { true, false }
@@ -133,5 +136,6 @@ assert_eq!(c, Color::Red);
 
 # References
 
+- [Trait](./trait.md)
 - [https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse](https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse)
 - [https://doc.rust-lang.org/nightly/std/str/trait.FromStr.html](https://doc.rust-lang.org/nightly/std/str/trait.FromStr.html)
