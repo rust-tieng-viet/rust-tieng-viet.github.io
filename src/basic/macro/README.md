@@ -11,3 +11,5 @@ Thực chất có 3 loại macro trong Rust.
 # Sự khác nhau giữa Macros và Functions
 
 TODO
+
+{{#include ./standard-macros.md}}
