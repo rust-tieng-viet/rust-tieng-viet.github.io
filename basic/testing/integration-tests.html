@@ -1,0 +1,266 @@
+<!DOCTYPE HTML>
+<html lang="vi" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Integration Tests - Rust Tiếng Việt</title>
+
+
+        <!-- Custom HTML head -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-88RKF7DLPY"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-88RKF7DLPY');
+        </script>
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../../who-is-using.html"><strong aria-hidden="true">2.</strong> Who is using?</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Cơ bản</li><li class="chapter-item expanded "><a href="../../basic/variables/index.html"><strong aria-hidden="true">3.</strong> Variables</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/variables/mut.html"><strong aria-hidden="true">3.1.</strong> mut</a></li><li class="chapter-item expanded "><a href="../../basic/variables/uninitialized.html"><strong aria-hidden="true">3.2.</strong> uninitialized variable</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/closure.html"><strong aria-hidden="true">4.</strong> Closure</a></li><li class="chapter-item expanded "><a href="../../basic/cargo/index.html"><strong aria-hidden="true">5.</strong> Cargo</a></li><li class="chapter-item expanded "><a href="../../basic/package-crate/index.html"><strong aria-hidden="true">6.</strong> Packages và Crates</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/package-crate/package-layout.html"><strong aria-hidden="true">6.1.</strong> Package layout</a></li><li class="chapter-item expanded "><a href="../../basic/package-crate/crate.html"><strong aria-hidden="true">6.2.</strong> Crate</a></li><li class="chapter-item expanded "><a href="../../basic/package-crate/use-crate/index.html"><strong aria-hidden="true">6.3.</strong> use crate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/package-crate/use-crate/self-super.html"><strong aria-hidden="true">6.3.1.</strong> use self, use super</a></li><li class="chapter-item expanded "><a href="../../basic/package-crate/use-crate/pub-use.html"><strong aria-hidden="true">6.3.2.</strong> pub use</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/package-crate/preludes.html"><strong aria-hidden="true">6.4.</strong> Preludes</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/ownership.html"><strong aria-hidden="true">7.</strong> Ownership</a></li><li class="chapter-item expanded "><a href="../../basic/generics/index.html"><strong aria-hidden="true">8.</strong> Generics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/generics/functions.html"><strong aria-hidden="true">8.1.</strong> Generic Functions</a></li><li class="chapter-item expanded "><a href="../../basic/generics/impl.html"><strong aria-hidden="true">8.2.</strong> Generic Implementation</a></li><li class="chapter-item expanded "><a href="../../basic/generics/trait.html"><strong aria-hidden="true">8.3.</strong> Generic Trait</a></li><li class="chapter-item expanded "><a href="../../basic/generics/bounds.html"><strong aria-hidden="true">8.4.</strong> Bounds</a></li><li class="chapter-item expanded "><a href="../../basic/generics/where.html"><strong aria-hidden="true">8.5.</strong> where</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/vec/INDEX.html"><strong aria-hidden="true">9.</strong> Vec</a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">9.1.</strong> Iter</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.2.</strong> Sử dụng Enum để chứa nhiều loại dữ liệu</div></li></ol></li><li class="chapter-item expanded "><a href="../../basic/box.html"><strong aria-hidden="true">10.</strong> Box</a></li><li class="chapter-item expanded "><a href="../../basic/option/index.html"><strong aria-hidden="true">11.</strong> Option</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/option/unwrap.html"><strong aria-hidden="true">11.1.</strong> unwrap()</a></li><li class="chapter-item expanded "><a href="../../basic/option/expect.html"><strong aria-hidden="true">11.2.</strong> expect()</a></li><li class="chapter-item expanded "><a href="../../basic/option/unwrap_or_default.html"><strong aria-hidden="true">11.3.</strong> unwrap_or_default()</a></li><li class="chapter-item expanded "><a href="../../basic/option/if_let_some.html"><strong aria-hidden="true">11.4.</strong> if let Some(x) = x</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/result/index.html"><strong aria-hidden="true">12.</strong> Result</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/result/result-to-option.html"><strong aria-hidden="true">12.1.</strong> Convert Result sang Option</a></li><li class="chapter-item expanded "><a href="../../basic/result/question-mark.html"><strong aria-hidden="true">12.2.</strong> Toán tử ?</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/code-comment/index.html"><strong aria-hidden="true">13.</strong> /// Viết code comment</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/code-comment/doc-comment.html"><strong aria-hidden="true">13.1.</strong> Doc comments</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/struct.html"><strong aria-hidden="true">14.</strong> Struct</a></li><li class="chapter-item expanded "><a href="../../basic/trait/index.html"><strong aria-hidden="true">15.</strong> Trait</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/trait/supertraits.html"><strong aria-hidden="true">15.1.</strong> Supertraits</a></li><li class="chapter-item expanded "><a href="../../basic/trait/copy-clone.html"><strong aria-hidden="true">15.2.</strong> Copy, Clone</a></li><li class="chapter-item expanded "><a href="../../basic/trait/string-str.html"><strong aria-hidden="true">15.3.</strong> String và &str</a></li><li class="chapter-item expanded "><a href="../../basic/trait/fromstr.html"><strong aria-hidden="true">15.4.</strong> FromStr</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.5.</strong> Display</div></li></ol></li><li class="chapter-item expanded "><a href="../../basic/enum/index.html"><strong aria-hidden="true">16.</strong> Enum</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/enum/match.html"><strong aria-hidden="true">16.1.</strong> match Enum</a></li><li class="chapter-item expanded "><a href="../../basic/enum/use-variants.html"><strong aria-hidden="true">16.2.</strong> Mang Variants ra ngoài scope của Enum</a></li><li class="chapter-item expanded "><a href="../../basic/enum/impl.html"><strong aria-hidden="true">16.3.</strong> impl Enum</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/turbofish.html"><strong aria-hidden="true">17.</strong> Turbofish ::&lt;&gt;</a></li><li class="chapter-item expanded "><a href="../../basic/macro/index.html"><strong aria-hidden="true">18.</strong> macros!</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/macro/standard-macros.html"><strong aria-hidden="true">18.1.</strong> Macros mặc định</a></li><li class="chapter-item expanded "><a href="../../basic/macro/println.html"><strong aria-hidden="true">18.2.</strong> println!</a></li><li class="chapter-item expanded "><a href="../../basic/macro/format.html"><strong aria-hidden="true">18.3.</strong> format!</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">18.4.</strong> macro_rules!</div></li></ol></li><li class="chapter-item expanded "><a href="../../basic/match/index.html"><strong aria-hidden="true">19.</strong> match</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/match/literals.html"><strong aria-hidden="true">19.1.</strong> Matching giá trị</a></li><li class="chapter-item expanded "><a href="../../basic/match/named-vars.html"><strong aria-hidden="true">19.2.</strong> Matching Named Variables</a></li><li class="chapter-item expanded "><a href="../../basic/match/multiple.html"><strong aria-hidden="true">19.3.</strong> Matching Multiple</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/attr.html"><strong aria-hidden="true">20.</strong> #[attributes]</a></li><li class="chapter-item expanded "><a href="../../basic/error-handling/index.html"><strong aria-hidden="true">21.</strong> Xử lý lỗi</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/error-handling/panic.html"><strong aria-hidden="true">21.1.</strong> panic</a></li><li class="chapter-item expanded "><a href="../../basic/error-handling/option.html"><strong aria-hidden="true">21.2.</strong> Option</a></li><li class="chapter-item expanded "><a href="../../basic/error-handling/result.html"><strong aria-hidden="true">21.3.</strong> Result</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/error-handling/result-map.html"><strong aria-hidden="true">21.3.1.</strong> Result map</a></li><li class="chapter-item expanded "><a href="../../basic/error-handling/result-alias.html"><strong aria-hidden="true">21.3.2.</strong> Result alias</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">21.4.</strong> Custom error</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">21.5.</strong> Boxing error</div></li></ol></li><li class="chapter-item expanded "><a href="../../basic/testing/index.html"><strong aria-hidden="true">22.</strong> Viết Tests</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/testing/test-organization.html"><strong aria-hidden="true">22.1.</strong> Tổ chức Tests</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/testing/unit-tests.html"><strong aria-hidden="true">22.1.1.</strong> Unit Tests</a></li><li class="chapter-item expanded "><a href="../../basic/testing/integration-tests.html" class="active"><strong aria-hidden="true">22.1.2.</strong> Integration Tests</a></li><li class="chapter-item expanded "><a href="../../basic/testing/doc-tests.html"><strong aria-hidden="true">22.1.3.</strong> Doc Tests</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/testing/env-conflict.html"><strong aria-hidden="true">22.2.</strong> Xung đột biến môi trường</a></li></ol></li><li class="chapter-item expanded "><a href="../../basic/rustdoc/index.html"><strong aria-hidden="true">23.</strong> Viết Docs</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../basic/code-comment/doc-comment.html"><strong aria-hidden="true">23.1.</strong> Doc comments</a></li><li class="chapter-item expanded "><a href="../../basic/rustdoc/doc-README.html"><strong aria-hidden="true">23.2.</strong> Sử dụng README.md làm crate document</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">24.</strong> Smart Pointers</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">24.1.</strong> Box</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">24.2.</strong> Rc, Reference Counted</div></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><li class="part-title">Design patterns</li><li class="chapter-item expanded "><a href="../../design-pattern/behavioural/index.html"><strong aria-hidden="true">25.</strong> Behavioural Patterns</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../design-pattern/behavioural/strategy.html"><strong aria-hidden="true">25.1.</strong> Strategy Pattern</a></li><li class="chapter-item expanded "><a href="../../design-pattern/behavioural/command.html"><strong aria-hidden="true">25.2.</strong> Command Pattern</a></li></ol></li><li class="chapter-item expanded "><a href="../../design-pattern/creational/index.html"><strong aria-hidden="true">26.</strong> Creational Patterns</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../design-pattern/creational/builder.html"><strong aria-hidden="true">26.1.</strong> Builder Pattern</a></li></ol></li><li class="chapter-item expanded "><a href="../../design-pattern/structural/index.html"><strong aria-hidden="true">27.</strong> Structural Patterns</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../design-pattern/structural/small-rates.html"><strong aria-hidden="true">27.1.</strong> Prefer Small Crates</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><li class="part-title">Crates hay dùng</li><li class="chapter-item expanded "><div><strong aria-hidden="true">28.</strong> tokio</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">29.</strong> actix-web</div></li><li class="chapter-item expanded "><a href="../../crates/anyhow/index.html"><strong aria-hidden="true">30.</strong> anyhow</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">31.</strong> serde</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">31.1.</strong> serde_json</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">32.</strong> clap</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">33.</strong> log</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">34.</strong> config</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">35.</strong> async_trait</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">36.</strong> lazy_static</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">37.</strong> indoc</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Rust Idioms</li><li class="chapter-item expanded "><div><strong aria-hidden="true">38.</strong> Use borrowed types for arguments</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">39.</strong> Concatenating strings with format!</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">40.</strong> Constructor</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">41.</strong> The Default Trait</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">42.</strong> Finalisation in destructors</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">43.</strong> Temporary mutability</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust Tiếng Việt</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/basic/testing/integration-tests.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="integration-tests"><a class="header" href="#integration-tests">Integration Tests</a></h2>
+<p>Integration tests nằm hoàn toàn bên ngoài thư viện của bạn.
+Mục đích của integration tests nhằm kiểm tra các thành phần của
+thư viện của bạn hoạt động cùng với nhau có chính xác không.</p>
+<p>Để bắt đầu viết integration tests, tạo thư mục <code>tests</code> nằm cùng cấp với <code>src</code>.</p>
+<p>Trong thư mục <code>tests</code>, cargo sẽ compile mỗi file thành một thành một crate độc lập.</p>
+<p>File: tests/integration_test.rs</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use adder;
+
+#[test]
+fưn it_adds_two() {
+  assert_eq!(4, adder::adder(2, 2));
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Ở đây chúng ta import <code>use adder</code> thay vì <code>use crate::</code> 
+do file integration test này là một crate độc lập.</p>
+<p>Chạy <code>cargo test</code></p>
+<pre><code>$ cargo test
+   Compiling adder v0.1.0 (file:///projects/adder)
+    Finished test [unoptimized + debuginfo] target(s) in 1.31s
+     Running unittests (target/debug/deps/adder-1082c4b063a8fbe6)
+
+running 1 test
+test tests::test_adder ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/integration_test.rs (target/debug/deps/integration_test-1082c4b063a8fbe6)
+
+running 1 test
+test it_adds_two ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests adder
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00sđ
+</code></pre>
+<p>Do integration tests phải import thư viện để chạy test code, crate bắt buộc phải có <code>src/lib.rs</code>.
+Các binary crates không thể test theo cách này.</p>
+<p>Do đó các project Rust họ thường tổ chức theo kiểu build binary từ <code>src/main.rs</code> và import trực tiếp logic từ <code>src/lib.rs</code>.</p>
+<h4 id="references"><a class="header" href="#references">References</a></h4>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/ch11-03-test-organization.html#submodules-in-integration-tests">Submodules in Integration Tests</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch11-03-test-organization.html#integration-tests-for-binary-crates">Integration Tests for Binary Crates</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../basic/testing/unit-tests.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../basic/testing/doc-tests.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../basic/testing/unit-tests.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../basic/testing/doc-tests.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
