@@ -16,7 +16,7 @@ jobs:
           toolchain: stable
 
       - name: Install mdBook
-        run: (test -x $HOME/.cargo/bin/mdbook || cargo install mdbook)
+        run: (test -x $HOME/.cargo/bin/mdbook || cargo install mdbook --no-default-features --features search)
 
       - name: Build mdBook
         run: mdbook build
