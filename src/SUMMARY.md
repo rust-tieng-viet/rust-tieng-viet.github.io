@@ -11,6 +11,8 @@
   - [mut](./basic/variables/mut.md)
   - [uninitialized variable](./basic/variables/uninitialized.md)
 
+- [Closure](./basic/closure.md)
+
 - [Cargo](./basic/cargo/README.md)
 
 - [Packages và Crates](./basic/package-crate/README.md)
