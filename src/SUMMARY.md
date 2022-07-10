@@ -48,7 +48,8 @@
   - [Convert `Result` sang `Option`](./basic/result/result-to-option.md)
   - [Toán tử `?`](./basic/result/question-mark.md)
 
-- [`/// code comment`](./basic/code-comment.md)
+- [`/// Viết code comment`](./basic/code-comment/README.md)
+  - [Doc comments](./basic/code-comment/doc-comment.md)
 
 - [Struct](./basic/struct.md)
 
@@ -87,6 +88,17 @@
     - [Result alias](./basic/error-handling/result-alias.md)
   - [Custom error]()
   - [Boxing error]()
+
+- [Viết Tests](./basic/testing/README.md)
+  - [Tổ chức Tests](./basic/testing/test-organization.md)
+    - [Unit Tests](./basic/testing/unit-tests.md)
+    - [Integration Tests](./basic/testing/integration-tests.md)
+    - [Doc Tests](./basic/testing/doc-tests.md)
+  - [Xung đột biến môi trường](./basic/testing/env-conflict.md)
+
+- [Viết Docs](./basic/rustdoc/README.md)
+  - [Doc comments](./basic/code-comment/doc-comment.md)
+  - [Sử dụng README.md làm crate document](./basic/rustdoc/doc-README.md)
 
 - [Smart Pointers]()
   - [Box<T>]()
