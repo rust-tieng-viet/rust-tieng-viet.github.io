@@ -4,7 +4,14 @@
 
 > The book is published at <https://rust-tieng-viet.github.io>.
 
-Rust là một ngôn ngữ thú vị, nhanh, an toàn và được bình chọn là 
+```
+    _~^~^~_
+\) /  o o  \ (/
+  '_   _   _'
+  / '-----' \
+```
+
+Rust là một ngôn ngữ nhanh, an toàn và được bình chọn là 
 ngôn ngữ được ưa thích nhất trong nhiều năm liền theo 
 [Stack Overflow Survey](https://survey.stackoverflow.co/2022/#section-most-loved-dreaded-and-wanted-programming-scripting-and-markup-languages).
 Rust có một hệ thống tài liệu và sách đồ sộ, chi tiết.

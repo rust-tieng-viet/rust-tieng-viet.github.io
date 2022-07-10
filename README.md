@@ -2,7 +2,14 @@
 
 [![Deploy Book](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/actions/workflows/deploy.yml)
 
-The Book is published at https://rust-tieng-viet.github.io
+> The Book is published at https://rust-tieng-viet.github.io
+
+```
+    _~^~^~_
+\) /  o o  \ (/
+  '_   _   _'
+  / '-----' \
+```
 
 # Build the book from source
 
@@ -18,7 +25,7 @@ mdbook serve --open
 
 # Contribution
 
-The content of this book is all contained in the [src/](./src) directory.
+The content of this book is all contained in the [`src/`](./src) directory.
 Each page is a separate Markdown file. Check out the 
 [Markdown chapter](https://rust-lang.github.io/mdBook/format/markdown.html) 
 for more information on formatting the content.
