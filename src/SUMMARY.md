@@ -111,8 +111,9 @@
 
 - [tokio]()
 - [actix-web]()
-- [anyhow]()
+- [anyhow](./crates/anyhow/README.md)
 - [serde]()
+  - [serde_json]()
 - [clap]()
 - [log]()
 - [config]()
