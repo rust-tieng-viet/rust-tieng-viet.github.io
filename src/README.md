@@ -27,6 +27,7 @@ Vui lòng xem mục **references** ở cuối các trang nếu bạn muốn đà
 
 - [Mã nguồn sách này](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io)
 - [Đóng góp, chỉnh sửa](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io#contribution)
+- [Yêu cầu thêm nội dung](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/issues/new?assignees=duyet%2Cduyetbot&labels=request%2Ccontent&template=request_content.yml&title=%5BY%C3%AAu+c%E1%BA%A7u+n%E1%BB%99i+dung%5D)
 - [License](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/blob/main/LICENCE)
 
 

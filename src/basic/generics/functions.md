@@ -3,12 +3,16 @@
 Định nghĩa một generic function bằng cách khai báo generic type `<T>` sau tên của function.
 
 ```rust,no_run
-fn foo<T>(arg: T) { ... }
+fn foo<T>(x: T) {} // x có kiểu T, T là generic type
+
+fn bar<T>(x: T, y: T) {} // x và y đều có kiểu T
+
+fn baz<T, U>(x: T, y: U) {} // sử dụng nhiều generic type
 ```
 
-Sử dụng generic function đôi khi yêu cầu chỉ định kiểu dữ liệu tường minh cho tham số đó.
+Gọi một generic function đôi khi yêu cầu chỉ định kiểu dữ liệu tường minh cho tham số đó.
 Đôi khi là do function được gọi trả về kiểu dữ liệu là generic, hoặc compiler không có
-đủ thông tin. Thực thi một function và chỉ định tường minh có cú pháp như sau:
+đủ thông tin. Thực thi một function và chỉ định kiểu dữ liệu tường minh có cú pháp như sau:
 
 ```rust,no_run
 function_name::<A, B>()

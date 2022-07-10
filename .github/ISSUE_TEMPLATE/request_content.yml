@@ -1,0 +1,40 @@
+name: Yêu cầu thêm nội dung 
+description: Gửi yêu cầu yêu cầu bổ sung nội dung còn thiếu 
+title: "[Yêu cầu nội dung]" 
+labels: ["request", "content"]
+assignees:
+  - duyet
+  - duyetbot
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cảm ơn bạn đã quan tâm đến [Rust Tiếng Việt](https://rust-tieng-viet.github.io/), bạn cần điều gì?
+  - type: dropdown
+    id: request_type
+    attributes:
+      label: Loại yêu cầu
+      options:
+        - Yêu cầu thêm nội dung 
+    validations:
+      required: true
+  - type: input
+    id: contact
+    attributes:
+      label: Thông tin liên hệ (nếu cần) 
+      description: Nếu bạn cần thảo luận thêm, vui lòng để email mình sẽ liên hệ lại 
+      placeholder: ex. me@duyet.net
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Nội dung bạn yêu cầu
+      placeholder: Tell me!
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL 
+      description: URL đến nội dung liên quan mà bạn đang đề cập (nếu có)

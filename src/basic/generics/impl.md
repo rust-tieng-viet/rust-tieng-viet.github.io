@@ -1,7 +1,8 @@
 # Generic Implementation
 
-Giống như function, ta cũng có thể sử dụng generic type cho
-implementation
+Ta cũng có thể sử dụng generic type cho implementation.
+
+Khai báo generic type sau từ khóa `impl`: `impl<T, U> ...`.
 
 ```rust,editable
 struct S; // Kiểu tường minh `S`

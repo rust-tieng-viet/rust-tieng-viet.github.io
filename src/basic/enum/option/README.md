@@ -83,34 +83,13 @@ sẵn như [Some](https://doc.rust-lang.org/std/option/enum.Option.html#variant.
 và [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None).
 
 Ví dụ, ta có một function tính giá trị chia hai số, 
-đôi khi sẽ không tìm ra được kết quả, ta sử dụng Some nhu sau:
+đôi khi sẽ không tìm ra được kết quả, ta sử dụng Some như sau:
 
-```rust,editable
-fn divide(numerator: f64, denominator: f64) -> Option<f64> {
-  if denominator == 0.0 {
-    None
-  } else {
-    Some(numerator / denominator)
-  }
-}
-
-fn main() {
-  // The return value of the function is an option
-  let result = divide(2.0, 3.0);
-
-  // Pattern match to retrieve the value
-  match result {
-    // The division was valid
-    Some(x) => println!("Result: {}", x),
-    // The division was invalid
-    None    => println!("Cannot divide by 0"),
-  }
-}
-```
+{{#playground ./option-example.rs}}
 
 Ta thường sử dụng `match` để bắt giá trị trả về (`Some` hoặc `None`). 
 
-Bạn sẽ bắt gặp rất rất nhiều method khác nhau để xử lý giá trị của `Option`
+Bạn sẽ bắt gặp rất nhiều method khác nhau để xử lý giá trị của `Option`
 
 [`Option`](https://doc.rust-lang.org/std/option/) method overview: [https://doc.rust-lang.org/std/option/#method-overview](https://doc.rust-lang.org/std/option/#method-overview)
 

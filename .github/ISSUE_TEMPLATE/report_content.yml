@@ -1,0 +1,43 @@
+name: Báo cáo nội dung 
+description: Gửi yêu cầu khi phát hiện nội dung sai, sai chính tả, định dạng.
+title: "[Báo cáo nội dung]" 
+labels: ["report", "content"]
+assignees:
+  - duyet
+  - duyetbot
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cảm ơn bạn đã quan tâm đến [Rust Tiếng Việt](https://rust-tieng-viet.github.io/), bạn cần điều gì?
+  - type: dropdown
+    id: request_type
+    attributes:
+      label: Loại yêu cầu
+      options:
+        - Sai nội dung 
+        - Lỗi chính tả
+        - Sai định dạng
+        - Tôi không làm được theo hướng dẫn
+    validations:
+      required: true
+  - type: input
+    id: contact
+    attributes:
+      label: Thông tin liên hệ (nếu cần) 
+      description: Nếu bạn cần thảo luận thêm, vui lòng để email mình sẽ liên hệ lại 
+      placeholder: ex. me@duyet.net
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Nội dung
+      placeholder: Tell me!
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL 
+      description: Vui lòng để lại URL bạn đang đề cập đến (nếu có) 

@@ -12,7 +12,7 @@ của một function thường sẽ có hai trường hợp:
 Nó mô tả *lỗi gì* đang xảy ra thay vì khả năng *tồn tại* giá trị hay không.
 
 
-```rust,editable
+```rust
 enum Result<T, E> {
   Ok(T),
   Err(E),
@@ -21,26 +21,7 @@ enum Result<T, E> {
 
 Ví dụ
 
-```rust,editable
-fn get_age(who: &str) -> Result<i8, &str> {
-  if who == "duyet" {
-    Ok(18)
-  } else {
-    Err("unknown")
-  }
-}
-
-fn main() -> Result<(), &'static str> {
-  let who = "duyet";
-
-  match get_age(who) {
-    Ok(age)  => println!("{} is {}", who, age),
-    Err(err) => println!("Err: {}", err),
-  }
-
-  Ok(())
-}
-```
+{{#playground ./result-example.rs}}
 
 Như bạn thấy thì `main()` cũng có thể return về `Result<(), &'static str>`
 
