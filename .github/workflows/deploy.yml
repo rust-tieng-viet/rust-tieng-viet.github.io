@@ -13,7 +13,10 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
+          profile: minimal
           toolchain: stable
+          
+      - uses: Swatinem/rust-cache@v1
 
       - name: Install mdBook
         run: (test -x $HOME/.cargo/bin/mdbook || cargo install mdbook --no-default-features --features search)
