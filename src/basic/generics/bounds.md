@@ -11,18 +11,21 @@ và `T` *bắt buộc* phải đã được implement `Display`.
 
 
 ```rust
+# use std::fmt::Display;
 fn printer<T: Display>(t: T) {
     println!("{}", t);
 }
+# fn main() {}
 ```
 
 Bounding giới hạn lại generic type. 
 
-```rust
+```rust,compile_fail
+# use std::fmt::Display;
 // T phải được impl `Display`
 struct S<T: Display>(T);
 
-// Lỗi do `Vec<T>` không được implement `Display`.
+// error[E0277]: `Vec<{integer}>` doesn't implement `std::fmt::Display`
 let s = S(vec![1]);
 ```
 
@@ -32,7 +35,9 @@ let s = S(vec![1]);
 Ví dụ sau có nghĩa `T` phải được implement trait `Display` và `Debug`.
 
 ```rust
-fn printer<T: Display + Display>(t: T) {
+# use std::fmt::Display;
+# use core::fmt::Debug;
+fn printer<T: Display + Debug>(t: T) {
     println!("{:?}", t);
 }
 ```

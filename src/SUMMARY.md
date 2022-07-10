@@ -18,7 +18,6 @@
     - [use self, use super](./basic/package-crate/use-crate/self-super.md)
     - [pub use](./basic/package-crate/use-crate/pub-use.md)
 - [Ownership](./basic/ownership.md)
-- [Variables](./basic/variables.md)
 - [Generics](./basic/generics/README.md)
   - [Generic Functions](./basic/generics/functions.md)
   - [Generic Implementation](./basic/generics/impl.md)

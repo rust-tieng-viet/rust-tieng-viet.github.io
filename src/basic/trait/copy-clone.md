@@ -16,7 +16,7 @@ Nếu bạn thấy:
 - **Display:** bạn có thể sử dụng `{}` để print.
 - **Debug:** bạn có thể sử dụng `{:?}` để print.
 
-```rust
+```rust,editable
 fn prints_number(number: i32) {
   println!("{}", number);
 }
@@ -39,7 +39,7 @@ Nếu bạn đọc document của String: [https://doc.rust-lang.org/std/string/
 
 String không được implement **Copy**, thay vào đó là **Clone**. Clone cũng giúp copy giá trị nhưng sẽ cần rất nhiều memory, và ta phải tự gọi method `.clone()` chứ Rust sẽ không tự Clone.
 
-```rust
+```rust,editable
 fn prints_country(country_name: String) {
   println!("{}", country_name);
 }
@@ -53,7 +53,7 @@ fn main() {
 
 Sẽ báo lỗi, theo như compiler giải thích rằng `country` là `String` và không được implement `Copy` nên country bị move vào trong function. Do đó ta không thể sử dụng `country` được nữa.
 
-```rust
+```rust,editable
 error[E0382]: use of moved value: `country`
  --> src/main.rs:8:20
   |
@@ -71,7 +71,7 @@ Có hai cách:
 
 ### (1) Sử dụng `.clone()`
 
-```rust
+```rust,editable
 fn prints_country(country_name: String) {
   println!("{}", country_name);
 }
@@ -87,7 +87,7 @@ String rất lớn, do đó `.copy()` sẽ tốn rất nhiều bộ nhớ. Sử 
 
 ### (2) Sử dụng `&` reference
 
-```rust
+```rust,editable
 fn prints_country(country_name: &String) {
   println!("{}", country_name);
 }

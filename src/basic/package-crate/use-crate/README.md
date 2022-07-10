@@ -37,7 +37,7 @@ log = "0.4.17"
 
 ### 2. Sử dụng crate trong code
 
-```rust
+```rust,no_run
 fn main() {
     log::info!("hello");
     log::error!("oops");
@@ -47,7 +47,7 @@ fn main() {
 Sử dụng keyword `use`. Chức năng chính của `use` là bind lại full path 
 của element vào một tên mới, để chúng ta không cần phải lặp lại một tên dài mỗi lần sử dụng.
 
-```rust
+```rust,no_run
 use log::info;
 use log::error;
 
@@ -59,7 +59,7 @@ fn main() {
 
 Nhóm các import lại với nhau:
 
-```rust
+```rust,no_run
 use log::{info, error};
 
 fn main() {
@@ -71,7 +71,7 @@ fn main() {
 Import mọi thứ được public trong crate/module. Cách này thường hay tránh bởi 
 sẽ khó biết được function, struct, ... nào đó đang thuộc crate nào, ngoại trừ các `prelude::*`.
 
-```rust
+```rust,no_run
 use log::*;
 
 fn main() {
@@ -84,7 +84,7 @@ fn main() {
 
 `use` cũng thường được sử dụng import element vào trong scope hiện tại.
 
-```rust
+```rust,no_run
 fn hello() -> String {
   "Hello, world!".to_string()
 }
@@ -102,7 +102,7 @@ mod tests {
 
 Bạn sẽ sẽ hay gặp:
 
-```rust
+```rust,no_run
 // ...
 
 #[cfg(test)]

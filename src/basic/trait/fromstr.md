@@ -4,7 +4,7 @@
 là một trait để khởi tạo instance từ string trong Rust, 
 nó tương đương abstract class nếu bạn có background OOP.
 
-```rust
+```rust,editable
 pub trait FromStr {
   type Err;
   fn from_str(s: &str) -> Result<Self, Self::Err>;
@@ -16,7 +16,7 @@ sử dụng thông qua phương thức
 [parse](https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse) 
 của [str](https://doc.rust-lang.org/nightly/std/primitive.str.html). Ví dụ:
 
-```rust
+```rust,editable
 // Thay vì
 let one = u32::from_str("1");
 
@@ -40,7 +40,7 @@ có thể hiểu để parse thành đúng kiểu bạn cần.
 
 Bạn có 1 struct và muốn parse 1 str thành struct đó, bạn sẽ cần impl trait `FromStr`
 
-```rust
+```rust,editable
 use std::str::FromStr;
 use std::num::ParseIntError;
 
@@ -78,14 +78,14 @@ assert_eq!(p.unwrap(), Point{ x: 1, y: 2} )
 Một điều mình nhận thấy để code dễ đọc, dễ maintain hơn là 
 ta nên sử dụng Enum thay cho string để so sánh giá trị. Ví dụ:
 
-```rust
+```rust,editable
 fn print(color: &str, text: &str) { ... }
 print("Foobar", "blue");
 ```
 
 Thay vì đó mà hãy sử dụng enum:
 
-```rust
+```rust,editable
 enum Color { Red, Green, CornflowerBlue }
 
 fn print(color: Color, text: &str) { ... }
@@ -94,20 +94,20 @@ print(Green, "duyet");
 
 Cũng nên hạn chế sử dụng quá nhiều Boolean, thực tế Boolean cũng chỉ là 1 enum
 
-```rust
+```rust,editable
 enum bool { true, false }
 ```
 
 Thay vào đó hãy tự định nghĩa enum cho các ngữ cảnh khác nhau để code dễ đọc hơn:
 
-```rust
+```rust,editable
 enum EnvVars { Clear, Inherit }
 enum DisplayStyle { Color, Monochrome } 
 ```
 
 Chúng ta implement [std::str::FromStr](https://doc.rust-lang.org/std/str/trait.FromStr.html) trait như sau:
 
-```rust
+```rust,editable
 use std::str::FromStr;
 
 #[derive(Debug, PartialEq)]

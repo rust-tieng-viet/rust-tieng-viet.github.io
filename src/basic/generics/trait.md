@@ -2,7 +2,7 @@
 
 Trait cũng có thể được tổng quát hóa.
 
-```rust,compile_fail
+```rust,editable,compile_fail
 // Non-copyable types.
 struct Empty;
 struct Null;
@@ -30,7 +30,8 @@ fn main() {
     // Deallocate `empty` and `null`.
     empty.double_drop(null);
 
-    empty;
-    null;
+    // TODO: uncomment
+    // empty;
+    // null;
 }
 ```

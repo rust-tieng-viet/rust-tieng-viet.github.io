@@ -4,21 +4,17 @@ Vector có để được xem là re-sizable array nhưng mọi phần tử tron
 
 Vector là một generic type: `Vec<T>`, `T` có thể là bất kỳ kiểu dữ liệu nào. Ví dụ một vector chứa `i32` được viết là `Vec<i32>`.
 
-## Tạo vector rỗng
+## Tạo vector
 
 ```rust
-let a = Vec::new(); // 1.With new() keyword
-let b = vec![]; // 2.Using the vec! macro
-```
+let a1: Vec<i32> = Vec::new();
+let a2: Vec<i32> = vec![];
 
-## Tạo vector với kiểu dữ liệu
+// Khai báo kiểu cho phần tử đầu tiên
+let b2 = vec![1i32, 2, 3];
 
-```rust
-let a2: Vec<i32> = Vec::new();
-let b2: Vec<i32> = vec![];
-let b3 = vec![1i32, 2, 3]; // Khai báo kiểu cho phần tử đầu tiên
-
-let b4 = vec![0; 10]; // Vec chứa mười số 0
+// Vec chứa mười số 0
+let b3 = vec![0; 10];
 ```
 
 ## In vector

@@ -7,7 +7,7 @@ Giúp in nội dung ra standard output, với một dấu newline xuống dòng.
 
 Ví dụ:
 
-```rust
+```rust,editable
 println!(); // prints just a newline
 println!("hello there!");
 println!("format {} arguments", "some");
@@ -15,7 +15,7 @@ println!("format {} arguments", "some");
 
 # In một Struct
 
-```rust
+```rust,editable
 #[derive(Debug)]
 struct MyStruct {
   item: String,

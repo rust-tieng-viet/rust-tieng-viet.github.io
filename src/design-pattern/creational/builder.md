@@ -4,7 +4,7 @@ Rust không có overloading, do đó bạn cần phải viết nhiều construct
 cho tất cả các trường hợp có thể có, với các method name khác nhau. 
 Việc này sẽ cực kỳ mất thời gian nếu struct có quá nhiều *fields* hoặc *constructor* phức tạp.
 
-```rust
+```rust,editable
 impl Foo {
   pub fn new(a: String) -> Self {}
   pub fn new(a: String, b: String) -> Self {} // <-- không thể
@@ -25,7 +25,7 @@ Builder cho phép construct một object bằng cách gọi `build()`.
 
 # Ví dụ
 
-```rust
+```rust,editable
 #[derive(Debug, PartialEq)]
 pub struct Foo {
   // Lots of complicated fields.

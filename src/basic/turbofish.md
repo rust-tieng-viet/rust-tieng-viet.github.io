@@ -5,13 +5,13 @@
 Trong trường hợp bạn cần chỉ định kiểu dữ liệu cho một generic function, method, struct, hoặc enum, 
 Rust có một cú pháp đặc biệt để làm điều này gọi là turbofish. Quy tắc là khi nào bạn thấy
 
-```rust
+```rust,editable
 $ident<T>
 ```
 
 trong bất kỳ định nghĩa nào, thì bạn có thể sử dụng nó dưới dạng
 
-```rust
+```rust,editable
 $ident::<T>
 ```
 
@@ -21,13 +21,13 @@ $ident::<T>
 
 Ví dụ function `std::mem::size_of()` có definition như sau:
 
-```rust
+```rust,editable
 pub fn size_of<T>() -> usize
 ```
 
 Khi gọi `size_of` với turbofish:
 
-```rust
+```rust,editable
 std::mem::size_of::<u32>()
 // 4
 ```
@@ -38,26 +38,26 @@ sẽ cho ta biết size của u32 theo số bytes.
 
 Phương thức `parse()` của `str` bạn cũng sẽ hay gặp cách sử dụng với cú pháp turbofish:
 
-```rust
+```rust,editable
 fn parse<F>(&self) -> Result<F, F::Err> where F: FromStr
 ```
 
 Chúng ta có thể sử dụng turbofish để mô tả kiểu dữ liệu sẽ được parsed từ `str`
 
-```rust
+```rust,editable
 "1234".parse::<u32>()
 ```
 
 Một ví dụ phổ biến nữa là `collect()` của `Iterator`
 
-```rust
+```rust,editable
 fn collect<B>(self) -> B where B: FromIterator<Self::Item> 
 ```
 
 Bởi vì compiler đã biết kiểu dữ liệu của `Self::Item` mà ta đang collect rồi, 
 chúng ta thường không cần ghi ra. Thay vào đó là sử dụng `_` để compiler tự động infer ra. Ví dụ:
 
-```rust
+```rust,editable
 let a = vec![1u8, 2, 3, 4];
 
 a.iter().collect::<Vec<_>>();
@@ -65,14 +65,14 @@ a.iter().collect::<Vec<_>>();
 
 Sẵn tiện nói về `Iterator` chúng ta cũng có thể sử dụng turbofish syntax với `sum()` và `product()`.
 
-```rust
+```rust,editable
 fn sum<S>(self) -> S where S: Sum<Self::Item>
 fn product<P>(self) -> P where P: Product<Self::Item>
 ```
 
 Cú pháp như sau:
 
-```rust
+```rust,editable
 [1, 2, 3, 4].iter().sum::<u32>()
 [1, 2, 3, 4].iter().product::<u32>()
 ```
@@ -82,13 +82,13 @@ Cú pháp như sau:
 Trong trường hợp compiler không có đủ thông tin để infer khi tạo generic struct, 
 chúng ta cũng có thể sử dụng turbofish syntax. Ví dụ struct `Vec` có định nghĩa như sau
 
-```rust
+```rust,editable
 pub struct Vec<T> { /* fields omitted */ }
 ```
 
 Ví dụ để khởi tạo `Vec` mới với `Vec::new()` ta có thể viết
 
-```rust
+```rust,editable
 Vec::<u8>::new()
 ```
 
@@ -96,13 +96,13 @@ Nhớ là ta bỏ turbofish sau `Vec::` không phải sau method `new`
 bởi vì struct sử dụng generic type chứ không phải method `new`. 
 Hơi bựa nhưng nó vẫn thỏa quy tắc của turbofish. Một ví dụ khác
 
-```rust
+```rust,editable
 std::collections::HashSet::<u8>::with_capacity(10) 
 ```
 
 Ta đang tạo một `Hashset` với 10 phần tử, bởi vì `Hashset` struct có định nghĩa như sau
 
-```rust
+```rust,editable
 pub struct HashSet<T, S = RandomState> { /* fields omitted */ } 
 ```
 
@@ -114,7 +114,7 @@ Tuy nhiên Enum lại không theo quy tắc trên, bởi vì enum trong Rust kh�
 scoped tại enum name, do đó ta đặt turbofish sau enum variant. 
 Ví dụ hãy xem enum `Result` được dùng rất nhiều trong Rust
 
-```rust
+```rust,editable
 #[must_use]
 pub enum Result<T, E> {
   Ok(T),
@@ -124,7 +124,7 @@ pub enum Result<T, E> {
 
 Chúng ta sử dụng như thế này:
 
-```rust
+```rust,editable
 Result::Ok::<u8, ()>(10)
 Result::Err::<u8, ()>(())
 ```
@@ -132,7 +132,7 @@ Result::Err::<u8, ()>(())
 Và bởi vì `Result` thường được prelude (import sẵn)
 trong Rust, thực tế mọi người sẽ viết như thế này:
 
-```rust
+```rust,editable
 Ok::<u8, ()>(10)
 Err::<u8, ()>(()) 
 ```

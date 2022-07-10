@@ -6,13 +6,13 @@ Do đó người sử dụng có thể sử dụng các module khác đó ngay t
 
 Module khác (*) đó có thể là một internal module, internal crate hoặc external crate.
 
-```rust
+```rust,no_run
 // src/utils.rs
 pub use log::*;
 
 ```
 
-```rust
+```rust,no_run
 // src/main.rs
 use crate::utils::info;
 

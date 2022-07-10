@@ -6,24 +6,28 @@ Trong đa số các trường hợp compiler có thể đoán được kiểu d�
 nên đôi khi ta có thể bỏ qua.
 
 ```rust
+# fn main() {
 let an_integer = 1u32;
 let a_boolean = true;
 let unit = ();
 
 // copy `an_integer` into `copied_integer`
 let copied_integer = an_integer;
+# }
 ```
 
 Mọi biến đều phải được sử dụng, nếu không, compiler sẽ warning.
 Để skip warning, thêm dấu underscore ở đầu tên biến.
 
 ```rust
+# fn main() {
 // The compiler warns about unused variable bindings; these warnings can
 // be silenced by prefixing the variable name with an underscore
 let _unused_variable = 3u32;
 
 // Skip the result of function
 let _ = check_error();
+# }
 ```
 
 {{#include ./mut.md}}
@@ -33,7 +37,7 @@ let _ = check_error();
 Giá trị của variables có thể được xác định tùy theo scope.
 Scope là một tập hợp các dòng code nằm trong `{}`.
 
-```rust
+```rust,editable
 let a = 1;
 
 {
@@ -48,7 +52,7 @@ println!("outer: a = {}", a); // 1
 
 Ta cũng có thể return giá trị trong một scope cho một variable.
 
-```rust
+```rust,editable
 let a = {
     let y = 10;
     let z = 100;

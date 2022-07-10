@@ -11,3 +11,6 @@ edition = "2021"
 [output.html]
 git-repository-url = "https://github.com/rust-tieng-viet/rust-tieng-viet.github.io"
 edit-url-template = "https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/{path}"
+
+[output.html.playground]
+editable = true

@@ -85,7 +85,7 @@ và [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None).
 Ví dụ, ta có một function tính giá trị chia hai số, 
 đôi khi sẽ không tìm ra được kết quả, ta sử dụng Some nhu sau:
 
-```rust
+```rust,editable
 fn divide(numerator: f64, denominator: f64) -> Option<f64> {
   if denominator == 0.0 {
     None

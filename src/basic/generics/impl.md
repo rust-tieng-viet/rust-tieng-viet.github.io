@@ -3,7 +3,7 @@
 Giống như function, ta cũng có thể sử dụng generic type cho
 implementation
 
-```rust
+```rust,editable
 struct S; // Kiểu tường minh `S`
 struct GenericVal<T>(T); // Generic type `GenericVal`
 
@@ -13,11 +13,13 @@ impl GenericVal<S> {} // `S` được định nghĩa ở trên
 
 // cần khai báo `<T>` để duy trì tính tổng quát
 impl<T> GenericVal<T> {}
+
+fn main() {}
 ```
 
 Một ví dụ khác
 
-```rust
+```rust,editable
 struct GenVal<T> {
     gen_val: T,
 }

@@ -44,7 +44,7 @@ Chỉ cần nhớ hai quy tắc quan trọng:
 
 Ví dụ: đoạn chương trình sau sẽ không compile được
 
-```rust
+```rust,editable,compile_fail,should_panic
 fn hold_my_vec<T>(_: Vec<T>) {}
 
 fn main() {
@@ -58,7 +58,7 @@ fn main() {
 
 Compiler sẽ báo lỗi như sau: `rustc main.rs`
 
-```rust
+```rust,editable
 error[E0382]: borrow of moved value: `x`
     --> main.rs:7:13
   |
@@ -84,7 +84,7 @@ Mặc dùng không thể implement `Copy` trait, `Vec` vẫn có
 Chỉ để cho code chạy được thì đây là một cách nhanh để compiler ngưng báo lỗi.
 Lưu ý thì việc clone thường sẽ tốn khá nhiều chi phí, nhất là đối với những object lớn.
 
-```rust
+```rust,editable
 fn hold_my_vec<T>(_: Vec<T>) {}
 
 fn main() {
@@ -101,7 +101,7 @@ việc take ownership. Có một cách tốt hơn là **references.** Thay vì
 để function take ownership, ta có thể cho nó mượn giá trị.
 Chúng ta sẽ truyền vào một reference — a borrowed value.
 
-```rust
+```rust,editable
 fn hold_my_vec<T>(_: &Vec<T>) {}
 
 fn main() {

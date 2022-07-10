@@ -20,7 +20,7 @@ Ví dụ, chúng ta có 1 `struct Data` và implement một số phương thức
 nhiều dạng format khác nhau (ví dụ `JSON`, `YAML`, `Plain Text`, ...). 
 Ta gọi mỗi format ở đây là một strategy.
 
-```rust
+```rust,editable
 use std::collections::HashMap;
 
 type Data = HashMap<String, u32>;
@@ -43,7 +43,7 @@ trong tương lai hay không (ví dụ `JSONLine`, `CSV`, `Parquet`, ...)
 
 Nếu thiết kế sử dụng Strategy Pattern:
 
-```rust
+```rust,editable
 use std::collections::HashMap;
 
 // Data
@@ -106,7 +106,7 @@ thực tế người ta thưởng đặt ở nhiều module khác nhau hoặc m�
 
 Còn nếu chúng ta đang implement một `crate`, thì `crate` ở ví dụ trên user có thể dễ dàng custom một `Formatter` mới: 
 
-```rust
+```rust,editable
 use crate::example::{Data, Formatter};
 
 struct CustomFormatter;

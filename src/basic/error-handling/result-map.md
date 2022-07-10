@@ -3,7 +3,7 @@
 Ta có thể xử lý giá trị bên trong `Result` mà không cần xử lý `Err`, 
 trong trường hợp bạn muốn trả `Err` cho hàm bên trên đó tự lý.
 
-```rust
+```rust,editable
 use std::num::ParseIntError;
 
 fn multiply(a: &str, b: &str) -> Result<i32, ParseIntError> {
@@ -36,7 +36,7 @@ fn main() {
 
 Thay vào đó ta sử dụng `.map()`, `.and_then()` để đoạn code trên hiệu quả và dễ đọc hơn.
 
-```rust
+```rust,editable
 use std::num::ParseIntError;
 
 fn multiply(a: &str, b: &str) -> Result<i32, ParseIntError> {

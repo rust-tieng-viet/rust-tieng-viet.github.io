@@ -2,7 +2,7 @@
 
 Variable mà chưa được gán giá trị được gọi là uninitialized variable.
 
-```rust
+```rust,editable
 fn main() {
   let my_variable; // ⚠️
 }
@@ -14,7 +14,7 @@ Rust sẽ không compile và bạn sẽ không thể sử dụng cho đến khi 
 - Gán giá trị cho nó trong 1 scope khác
 - Vẫn giữ được giá trị của của variable đó khi ra khỏi scope.
 
-```rust
+```rust,editable
 fn main() {
   let my_number;
   {
@@ -27,7 +27,7 @@ fn main() {
 
 Hoặc phức tạp hơn
 
-```rust
+```rust,editable
 fn loop_then_return(mut counter: i32) -> i32 {
   loop {
     counter += 1;

@@ -5,7 +5,7 @@ Metadata này được dùng cho việc:
 
 - [conditional compilation of code](https://doc.rust-lang.org/rust-by-example/attribute/cfg.html): compile code theo điều kiện, ví dụ một số code sẽ chỉ được compile cho tests, cho OS cụ thể, cho một số feature nào đó, etc.
 
-    ```rust
+    ```rust,editable
     // This function only gets compiled if the target OS is linux
     #[cfg(target_os = "linux")]
     fn are_you_on_linux() {
@@ -21,7 +21,7 @@ Metadata này được dùng cho việc:
 
 - [set crate name, version and type (binary or library)](https://doc.rust-lang.org/rust-by-example/attribute/crate.html)
 
-    ```rust
+    ```rust,editable
     // This crate is a library
     #![crate_type = "lib"]
     // The library is named "rary"
@@ -38,7 +38,7 @@ Metadata này được dùng cho việc:
 - link đến foreign library
 - đánh dấu các function là unit tests
 
-    ```rust
+    ```rust,editable
     #[test]
     fn test_hello() {
         assert!("hello");
@@ -58,7 +58,7 @@ Attributes cũng có thể có tham số:
 
 Attributes có thể có nhiều giá trị, có thể break thành nhiều dòng:
 
-```rust
+```rust,editable
 #[attribute(value, value2)]
 
 #[attribute(value, value2, value3,

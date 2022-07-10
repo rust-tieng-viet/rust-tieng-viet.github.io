@@ -12,7 +12,7 @@ của một function thường sẽ có hai trường hợp:
 Nó mô tả *lỗi gì* đang xảy ra thay vì khả năng *tồn tại* giá trị hay không.
 
 
-```rust
+```rust,editable
 enum Result<T, E> {
   Ok(T),
   Err(E),
@@ -21,7 +21,7 @@ enum Result<T, E> {
 
 Ví dụ
 
-```rust
+```rust,editable
 fn get_age(who: &str) -> Result<i8, &str> {
   if who == "duyet" {
     Ok(18)
@@ -48,7 +48,7 @@ Như bạn thấy thì `main()` cũng có thể return về `Result<(), &'static
 
 Ví dụ trên nhưng sử dụng `.unwrap()` , chủ động panic (crash) dừng chương trình nếu gặp lỗi.
 
-```rust
+```rust,editable
 fn main() -> Result<(), &'static str> {
   let who = "duyet";
   let age = get_age(who).unwrap();
@@ -62,7 +62,7 @@ fn main() -> Result<(), &'static str> {
 
 Giống như `unwrap()`: chủ động panic (crash) dừng chương trình nếu gặp lỗi và kèm theo message. Sẽ rất có ích, nhất là khi có quá nhiều unwrap, bạn sẽ không biết nó panic ở đâu.
 
-```rust
+```rust,editable
 fn main() -> Result<(), &'static str> {
   let who = "ngan";
   let age = get_age(who).expect("could not get age");

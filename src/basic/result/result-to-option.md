@@ -6,7 +6,7 @@
 
 ## `.ok()`
 
-```rust
+```rust,editable
 // .ok(v) = Some(v)
 let x: Result<u32, &str> = Ok(2);
 assert_eq!(x.ok(), Some(2));
@@ -17,7 +17,7 @@ assert_eq!(x.ok(), None);
 
 ## `.err()`
 
-```rust
+```rust,editable
 // .err()
 let x: Result<u32, &str> = Ok(2);
 assert_eq!(x.err(), None);

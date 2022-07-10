@@ -4,7 +4,7 @@ Rust cho phép chúng ta tạo [alias](https://doc.rust-lang.org/rust-by-example
 Việc alias `Result` sẽ tiết kiệm chúng ta rất nhiều thời gian, 
 nhất là trong cùng một module và ta đang cố reuse `Result` nhiều lần.
 
-```rust
+```rust,editable
 use std::num::ParseIntError;
 
 // Define a generic alias for a `Result` with the error type `ParseIntError`.

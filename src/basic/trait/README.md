@@ -31,7 +31,7 @@ Trait thường đóng 2 vai trò:
 Để gắn một trait vào một type, bạn cần implement nó. 
 Bởi vì `Debug` hay `Copy` quá phổ biến, nên Rust có attribute để tự động implement:
 
-```rust
+```rust,editable
 #[derive(Debug)]
 struct MyStruct {
   number: usize,
@@ -44,7 +44,7 @@ bằng cách `impl` nó. Ví dụ bạn có trait `Add`
 để add 2 type lại với nhau. Nhưng Rust sẽ không biết cách bạn add 2 
 type đó lại như thế nào, bạn cần phải tự định nghĩa:
 
-```rust
+```rust,editable
 use std::ops::Add;
 
 struct MyStruct {
@@ -89,7 +89,7 @@ hoặc `Tweet` instance. Chúng ta cần định nghĩa method `summarize`
 trên mỗi instance. Để định nghĩa một trait, ta dùng `trait` theo sau 
 là trait name; dùng keyword `pub` nếu định nghĩa một public trait.
 
-```rust
+```rust,editable
 pub trait Summary {
   fn summarize(&self) -> String;
 }
@@ -107,7 +107,7 @@ Bây giờ ta định implement các method của trait Summary cho từng type.
 Ví dụ dưới đây ta có `struct NewsArticle` và `struct Tweet`, 
 và ta định nghĩa `summarize` cho 2 struct này.
 
-```rust
+```rust,editable
 pub trait Summary {
   fn summarize(&self) -> String;
 }
@@ -146,7 +146,7 @@ người sử dụng crate đã có thể sử dụng các phương thức của
 Chỉ một điều khác biệt là bạn cần mang trait đó vào cùng scope hiện tại cùng với type để có thể sử dụng. 
 Ví dụ:
 
-```rust
+```rust,editable
 use aggregator::{Summary, Tweet}; // <-- same scope
 
 fn main() {
@@ -166,7 +166,7 @@ Rust Playground: [https://play.rust-lang.org/?version=stable&mode=debug&edition=
 
 Chúng ta có thể implement trait cho mọi type khác bất kỳ, ví dụ implement `Summary` cho `Vec<T>` trong scope của crate hiện tại.
 
-```rust
+```rust,editable
 pub trait Summary {
   fn summarize(&self) -> String;
 }
@@ -196,7 +196,7 @@ rằng không ai có thể break code của người khác và ngược lại.
 
 Đôi khi bạn cần có default behavior mà không cần phải implement content cho từng type mỗi khi cần sử dụng:
 
-```rust
+```rust,editable
 pub trait Summary {
   fn summarize(&self) -> String {
     String::from("(Read more...)")
@@ -226,7 +226,7 @@ một function chấp nhận tham số là nhiều kiểu dữ liệu khác nhau
 Nói theo một cách khác, bạn không cần biết kiểu dữ liệu, 
 bạn cần biết kiểu dữ liệu đó mang các behavior nào thì đúng hơn.
 
-```rust
+```rust,editable
 fn notify(data: &impl Summary) {
   println!("News: {}", data.summarize());
 }
@@ -247,7 +247,7 @@ do đó ta có thể sử dụng method `.summary()` bên trong function.
 Một syntax sugar khác mà ta có thể sử dụng thay cho `&impl Summary` ở trên, 
 gọi là _trait bound_, bạn sẽ bắt gặp nhiều trong Rust document:
 
-```rust
+```rust,editable
 pub fn notify<T: Summary>(item: &T) {
   println!("News: {}", item.summarize());
 }
@@ -262,7 +262,7 @@ Ta có thể đọc là: `item` có kiểu generic là `T` và `T` phải đư�
 
 Cú pháp này có thể dài hơn và không dễ đọc như `&impl Summary`, nhưng hãy xem ví dụ dưới đây:
 
-```rust
+```rust,editable
 pub fn notify(item1: &impl Summary, item2: &impl Summary) {}  // (1)
 pub fn notify<T: Summary>(item1: &T, item2: &T) {}            // (2)
 ```
@@ -276,7 +276,7 @@ mà còn giúp force `item1` và `item2` có cùng kiểu dữ liệu,
 Ta có cú pháp `+` nếu muốn generic `T` có được impl nhiều trait khác nhau. 
 Ví dụ ta muốn `item` phải có cả `Summary` lẫn `Display`
 
-```rust
+```rust,editable
 pub fn notify(item: &(impl Summary + Display)) {}
 pub fn notify<T: Summary + Display>(item: &T) {}
 ```
@@ -287,13 +287,13 @@ pub fn notify<T: Summary + Display>(item: &T) {}
 khiến code khó đọc. Rust có một cú pháp `where` cho phép định nghĩa trait bound 
 phía sau function signature. Ví dụ:
 
-```rust
+```rust,editable
 fn some_function<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {
 ```
 
 Với `where` clause:
 
-```rust
+```rust,editable
 fn some_function<T, U>(t: &T, u: &U) -> i32
     where T: Display + Clone,
 	  U: Clone + Debug,
@@ -304,7 +304,7 @@ fn some_function<T, U>(t: &T, u: &U) -> i32
 
 Chúng ta cũng có thể sử dụng `impl Trait` cho giá trị được trả về của function.
 
-```rust
+```rust,editable
 fn returns_summarizable() -> impl Summary {
     Tweet {
         username: String::from("horse_ebooks"),
@@ -319,7 +319,7 @@ fn returns_summarizable() -> impl Summary {
 Tuy nhiên bạn chỉ có thể return về hoặc `Tweet` 
 hoặc `NewsArticle` do cách implement của compiler. Code sau sẽ có lỗi:
 
-```rust
+```rust,editable
 fn returns_summarizable(switch: bool) -> impl Summary {
     if switch { NewsArticle {} }
 		else { Tweet {} }
@@ -333,7 +333,7 @@ Rust Book có một chương riêng để xử lý vấn đề này: [Chapter 17
 Ta có thể implement 1 method có điều kiện cho bất kỳ type nào 
 có implement một trait khác cụ thể. Ví dụ để dễ hiểu hơn dưới đây:
 
-```rust
+```rust,editable
 use std::fmt::Display;
 
 struct Pair<T> {
@@ -377,7 +377,7 @@ Ví dụ: `ToString` trait trong
 [Rust standard library](https://doc.rust-lang.org/src/alloc/string.rs.html#2390), 
 nó được implement cho mọi kiểu dữ liệu nào có được implement `Display` trait.
 
-```rust
+```rust,editable
 impl<T: Display> ToString for T {
   // --snip--
 }
@@ -385,7 +385,7 @@ impl<T: Display> ToString for T {
 
 Có nghĩa là, với mọi type có `impl Display`, ta có hiển nhiên thể sử dụng được các thuộc tính của `trait ToString`.
 
-```rust
+```rust,editable
 let s = 3.to_string(); // do 3 thoaỏa manãn Display
 ```
 
@@ -394,13 +394,13 @@ Do `3` thỏa mãn điều kiện là đã được `impl Display for i32`.
 
 # Trait Inheritance 
 
-```rust
+```rust,editable
 pub trait B: A {}
 ```
 
 Cái này không hẳn gọi là *Trait Inheritance*, cái này đúng hơn gọi là "cái nào implement cái `B` thì cũng nên implement cái `A`". `A` và `B` vẫn là 2 trait độc lập nên vẫn phải implemenet cả 2.
 
-```rust
+```rust,editable
 impl B for Z {}
 impl A for Z {}
 ```

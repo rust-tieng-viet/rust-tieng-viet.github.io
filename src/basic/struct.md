@@ -20,7 +20,7 @@ Có 3 loại struct:
 
 Unit struct là một struct mà không có gì cả:
 
-```rust
+```rust,editable
 struct FileDirectory;
 fn main() {} 
 ```
@@ -29,7 +29,7 @@ fn main() {}
 
 Tuple struct hay còn gọi là Unnamed struct. Bạn chỉ cần định nghĩa kiểu dữ liệu, không cần định tên field name.
 
-```rust
+```rust,editable
 struct Colour(u8, u8, u8);
 
 fn main() {
@@ -47,7 +47,7 @@ fn main() {
 
 Phổ biến nhất, bạn sẽ phải định nghĩa field name trong block `{}` 
 
-```rust
+```rust,editable
 struct Colour(u8, u8, u8); // Declare the same Colour tuple struct
 
 struct SizeAndColour {
@@ -68,7 +68,7 @@ fn main() {
 
 `colour: colour` có thể được viết gọn lại thành:
 
-```rust
+```rust,editable
 let size_and_colour = SizeAndColour {
   size: 150,
   colour

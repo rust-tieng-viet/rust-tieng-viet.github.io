@@ -2,7 +2,7 @@
 
 Nếu bạn có một `String` và `&` reference, Rust sẽ convert nó thành `&str` khi bạn cần.
 
-```rust
+```rust,editable
 fn prints_country(country_name: &str) {
   println!("{}", country_name);
 }

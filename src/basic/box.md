@@ -7,7 +7,7 @@ Tất cả giá trị trên Rust mặc định đều được allocated trên s
 Khi một Box nằm ngoài scope, destructor sẽ được gọi để giải phóng bộ nhớ. 
 Sử dụng Box không ảnh hưởng nhiều đến performance do Box không bổ sung thêm thông tin metadata nào khác. 
 
-```rust
+```rust,editable
 fn main() {
   let b = Box::new(5);
   println!("b = {}", b);
@@ -42,7 +42,7 @@ enum List {
 
 Bây giờ hãy sử dụng `List` type để lưu list `1, 2, 3` như sau
 
-```rust
+```rust,editable
 enum List {
   Cons(i32, List),
   Nil,
@@ -57,7 +57,7 @@ fn main() {
 
 Nếu chúng ta compile đoạn code trên, compiler sẽ báo như sau:
 
-```rust
+```bash
 $ cargo run
    Compiling cons-list v0.1.0 (file:///duyet/cons-list)
 error[E0072]: recursive type `List` has infinite size
@@ -108,7 +108,7 @@ Quay lại với Cons List, bộ nhớ mà Rust tính toán được có thể �
 
 Theo như gợi ý của compiler, chúng ta có thể sử dụng `Box<T>` để có một Recursive Type với một kích thước bộ nhớ xác định:
 
-```rust
+```bash
 help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to make `List` representable
   |
 2 |     Cons(i32, Box<List>),
@@ -121,7 +121,7 @@ Bởi vì `Box<T>` là một pointer, Rust luôn biết chính xác bao nhiêu b
 
 Chương trình của chúng ta lúc này sẽ là:
 
-```rust
+```rust,editable
 enum List {
   Cons(i32, Box<List>),
   Nil,

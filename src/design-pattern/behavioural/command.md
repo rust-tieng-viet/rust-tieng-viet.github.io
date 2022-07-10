@@ -27,7 +27,7 @@ Chúng ta định nghĩa một common trait cho command
 với hai operation là `exec` và `rollback`. 
 Các struct command phải được implement trait này.
 
-```rust
+```rust,editable
 pub trait Migration {
   fn execute(&self) -> &str;
   fn rollback(&self) -> &str;
@@ -96,7 +96,7 @@ fn main() {
 Chúng ta có thể thực hiện theo một cách khác là tách mỗi 
 command thành một function và lưu lại function pointer để thực thi sau.
 
-```rust
+```rust,editable
 type FnPtr = fn() -> String;
 
 struct Command {
@@ -150,7 +150,7 @@ fn main() {
 Thay vì định nghĩa một command trait theo cách 1, 
 ta có thể lưu tất cả command được implement `trait Fn` trong một vector.
 
-```rust
+```rust,editable
 type Migration<'a> = Box<dyn Fn() -> &'a str>;
 
 struct Schema<'a> {

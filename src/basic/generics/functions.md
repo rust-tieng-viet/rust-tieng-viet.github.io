@@ -2,7 +2,7 @@
 
 Định nghĩa một generic function bằng cách khai báo generic type `<T>` sau tên của function.
 
-```rust
+```rust,no_run
 fn foo<T>(arg: T) { ... }
 ```
 
@@ -10,19 +10,21 @@ Sử dụng generic function đôi khi yêu cầu chỉ định kiểu dữ li�
 Đôi khi là do function được gọi trả về kiểu dữ liệu là generic, hoặc compiler không có
 đủ thông tin. Thực thi một function và chỉ định tường minh có cú pháp như sau:
 
-```rust
+```rust,no_run
 function_name::<A, B>()
 ```
 
 Ví dụ:
 
-```rust
+```rust,editable
 fn print_me<T: ToString>(content: T) {
     println!("{}", content.to_string());
 }
 
-print_me::<i32>(100);
-print_me::<u64>(1_000_000);
+fn main() {
+    print_me::<i32>(100);
+    print_me::<u64>(1_000_000);
+}
 ```
 
 Cú pháp `<T: ToString>` có nghĩa là: function `print_me` chấp nhận mọi tham số có
@@ -31,7 +33,7 @@ kiểu `T`, miễn sau `T` được implement trait
 
 Một ví dụ khác phức tạp hơn từ [Rust By Example](https://doc.rust-lang.org/rust-by-example/generics/gen_fn.html)
 
-```rust
+```rust,editable
 struct A;          // Type tường minh `A`.
 struct S(A);       // Type tường minh `S`.
 struct SGen<T>(T); // Type Generic `SGen`.

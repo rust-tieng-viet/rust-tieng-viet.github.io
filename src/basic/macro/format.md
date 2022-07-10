@@ -7,7 +7,7 @@ Sức mạnh của format string này ở trong các `{}`.
 
 Xem các ví dụ sau:
 
-```rust
+```rust,editable
 # fn main() {
 format!("test");
 format!("hello {}", "world!");
@@ -24,7 +24,7 @@ format!("z = {z}");
 [to_string](https://doc.rust-lang.org/std/string/trait.ToString.html). 
 Method này sẽ sử dụng [Display](https://doc.rust-lang.org/std/fmt/trait.Display.html) formatting trait.
 
-```rust
+```rust,editable
 # fn main() {
 // Thay vì
 format!("single string");

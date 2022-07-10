@@ -2,7 +2,7 @@
 
 Comment sao cho đúng để đồng đội bớt chửi.
 
-```rust
+```rust,editable
 // hello, world
 ```
 
@@ -12,7 +12,7 @@ Trong Rust comment bắt đầu bằng 2 slashes `//` được gọi là *Regula
 chú thích cho một đoạn code hoặc biểu thức theo sau nó.
 Compiler sẽ không quan tâm đến các Regular comments này.  
 
-```rust
+```rust,editable
 fn main() {
   // I’m feeling lucky today
   let lucky_number = 7;
@@ -22,7 +22,7 @@ fn main() {
 Nếu comment có nhiều hơn một dòng,
 hãy ngắt nó thành nhiều dòng -.-
 
-```rust
+```rust,editable
 // So we’re doing something complicated here, long enough that we need
 // multiple lines of comments to do it! Whew! Hopefully, this comment will
 // explain what’s going on.
@@ -30,7 +30,7 @@ hãy ngắt nó thành nhiều dòng -.-
 
 Comment cũng có thể được đặt cuối dòng code, nếu nó ngắn gọn và đơn giản:
 
-```rust
+```rust,editable
 fn main() {
   let lucky_number = 7; // I’m feeling lucky today
 }
@@ -41,7 +41,7 @@ fn main() {
 Doc comments sẽ được Compiler parse thành [HTML documentation](https://doc.rust-lang.org/rust-by-example/meta/doc.html)
 khi render document bằng [cargo doc](./cargo-doc.md).
 
-```rust
+```rust,editable
 /// Generate library docs for the following item.
 //! Generate library docs for the enclosing item.
 ```
@@ -50,7 +50,7 @@ Doc comments sẽ cực kỳ hữu ích cho project lớn và cần một hệ t
 
 `//!` sẽ generate doc cho crate/mod trong file hiện tại.
 
-```rust
+```rust,editable
 #![crate_name = "doc"]
 
 /// A human being is represented here
@@ -99,7 +99,7 @@ Chúng ta có thể thậm chí comment lại example code hoặc cách sử d�
 code này cũng sẽ được compile và test, đảm bảo được code và doc luôn luôn chính xác với nhau, một giải pháp khá thông minh.
 
 
-```rust
+```rust,editable
 /// Adds one to the number given.
 ///
 /// # Examples

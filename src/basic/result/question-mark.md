@@ -4,7 +4,7 @@ Khi viết code mà có quá nhiều functions trả về [`Result`](./result.md
 
 Nó sẽ thay thế đoạn code sau:
 
-```rust
+```rust,editable
 use std::fs::File;
 use std::io::prelude::*;
 use std::io;
@@ -36,7 +36,7 @@ fn write_info(info: &Info) -> io::Result<()> {
 
 thành
 
-```rust
+```rust,editable
 use std::fs::File;
 use std::io::prelude::*;
 use std::io;
