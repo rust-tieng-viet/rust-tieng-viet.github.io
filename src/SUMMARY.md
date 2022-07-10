@@ -8,7 +8,6 @@
 # Cơ bản
 
 - [Variables](./basic/variables/README.md)
-
   - [mut](./basic/variables/mut.md)
   - [uninitialized variable](./basic/variables/uninitialized.md)
 
@@ -134,20 +133,22 @@
 
 - [tokio]()
 - [actix-web]()
-- [anyhow](./crates/anyhow/README.md)
+- [anyhow](./crates/anyhow.md)
 - [serde]()
   - [serde_json]()
 - [clap]()
-- [log]()
+- [log](./crates/log/README.md)
+  - [env_logger](./crates/log/env_logger.md)
 - [config]()
-- [async_trait]()
-- [lazy_static]()
+- [async_trait](./crates/async_trait.md)
+- [lazy_static](./crates/lazy_static.md)
 - [indoc]()
 
 ---
 
 # Rust Idioms
 
+- [Functional programming]()
 - [Use borrowed types for arguments]()
 - [Concatenating strings with `format!`]()
 - [Constructor]()

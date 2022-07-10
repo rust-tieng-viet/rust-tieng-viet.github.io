@@ -1,15 +1,13 @@
-# anyhow
+# [`anyhow`]
 
 [`anyhow`] là thư viện giúp đơn giản hóa việc handle lỗi trong Rust application.
 
-- Doc: <https://docs.rs/anyhow>
-- Github: <https://github.com/dtolnay/anyhow>
-- Installation:
+File: Cargo.toml
 
-    ```toml
-    [dependencies]
-    anyhow = "1.0"
-    ```
+```toml
+[dependencies]
+anyhow = "1.0"
+```
 
 Cách sử dụng
 
@@ -61,7 +59,10 @@ Cách sử dụng
     ensure!(user == 0, "only user 0 is allowed");
     ```
 
+### References
 
+- Doc: <https://docs.rs/anyhow>
+- Github: <https://github.com/dtolnay/anyhow>
 
 
 [`anyhow`]: https://docs.rs/anyhow
