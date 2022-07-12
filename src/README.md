@@ -38,4 +38,3 @@ Vui lòng xem mục **references** ở cuối các trang nếu bạn muốn đà
 - [License](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/blob/main/LICENCE)
 
 
-{{#include SUMMARY.md}}
