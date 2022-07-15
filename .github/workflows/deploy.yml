@@ -24,6 +24,11 @@ jobs:
       - name: Build mdBook
         run: mdbook build
 
+      - name: Generate sitemap
+        run: |
+          cd book
+          npx static-sitemap-cli --base https://rust-tieng-viet.github.io
+
       - name: Deploy to GitHub
         uses: JamesIves/github-pages-deploy-action@v4.3.4
         with:
