@@ -12,12 +12,11 @@
 ```
 
 Rust là một ngôn ngữ nhanh, an toàn và được bình chọn là 
-ngôn ngữ được ưa thích nhất trong nhiều năm liền theo 
-[Stack Overflow Survey](https://survey.stackoverflow.co/2022/#section-most-loved-dreaded-and-wanted-programming-scripting-and-markup-languages).
+ngôn ngữ được ưa thích nhất trong nhiều năm liền theo [Stack Overflow Survey].
 Rust có một hệ thống tài liệu và sách đồ sộ, chi tiết.
 Nhưng đôi khi nó sẽ khó tiếp cận với một số người bởi đa số tài liệu là Tiếng Anh.
 Với những ghi chép trong sách này, hy vọng có thể giúp cho mọi người
-(cũng như dành cho các thành viên trong team mình tại Fossil) có thể tiếp cận với
+(cũng như các thành viên trong team mình [tại Fossil]) có thể tiếp cận với
 ngôn ngữ này một cách nhanh chóng và dễ dàng hơn.
 Cũng như truyền cảm hứng và mở rộng cộng đồng sử dụng Rust tại Việt Nam.
 
@@ -37,4 +36,5 @@ Vui lòng xem mục **references** ở cuối các trang nếu bạn muốn đà
 - [Yêu cầu thêm nội dung](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/issues/new?assignees=duyet%2Cduyetbot&labels=request%2Ccontent&template=request_content.yml&title=%5BY%C3%AAu+c%E1%BA%A7u+n%E1%BB%99i+dung%5D)
 - [License](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/blob/main/LICENCE)
 
-
+[Stack Overflow Survey]: https://survey.stackoverflow.co/2022/#section-most-loved-dreaded-and-wanted-programming-scripting-and-markup-languages.
+[tại Fossil]: https://blog.duyet.net/2021/11/rust-data-engineering.html
