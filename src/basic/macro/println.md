@@ -1,4 +1,4 @@
-# println!()
+# `println!`
 
 Đây là một trong những macro được dùng nhiều nhất trong Rust.
 Giúp in nội dung ra standard output, với một dấu newline xuống dòng.

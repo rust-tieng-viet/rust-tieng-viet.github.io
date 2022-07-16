@@ -1,4 +1,4 @@
-# `format!()`
+# `format!`
 
 Đây là một trong những macro được dùng nhiều nhất trong Rust.
 
