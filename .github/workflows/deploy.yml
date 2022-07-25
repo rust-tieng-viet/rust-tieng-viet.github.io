@@ -1,8 +1,13 @@
 name: Deploy Book
+
 on:
   push:
     branches:
       - main
+  pull_request:
+    types:
+      - opened
+
 jobs:
   pages:
     name: GitHub Pages
@@ -30,7 +35,9 @@ jobs:
           npx static-sitemap-cli --base https://rust-tieng-viet.github.io
 
       - name: Deploy to GitHub
+        if: ${{ github.event_name == 'push'}}
         uses: JamesIves/github-pages-deploy-action@v4.3.4
         with:
           branch: gh-pages
           folder: book
+
