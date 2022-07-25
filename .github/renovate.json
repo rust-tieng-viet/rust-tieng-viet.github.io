@@ -4,5 +4,6 @@
     "config:base"
   ],
   "automerge": true,
-  "assignAutomerge": true
+  "assignAutomerge": true,
+  "assignees": ["duyet", "duyetbot"]
 }
