@@ -1,7 +1,11 @@
 # Who is using Rust?
 
-Công ty sử dụng Rust tại Việt Nam.
+Công ty hoặc cộng đồng sử dụng Rust tại Việt Nam.
 
 | Organization   | Contact (GitHub User Name)          | Environment | Description of Use |
 | -------------  | ----------------------------------- | ----------- | ------------------ |
 | Fossil Vietnam | [@duyet](https://github.com/duyet)  | Staging     | Data Platform      |
+
+Đóng góp bổ sung [tại đây].
+
+[tại đây]: https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/who-is-using.md
