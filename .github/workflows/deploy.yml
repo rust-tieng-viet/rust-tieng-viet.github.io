@@ -27,10 +27,10 @@ jobs:
       - name: Generate sitemap
         run: |
           cd book
-          npx static-sitemap-cli --base https://rust-tieng-viet.github.io
+          npx static-sitemap-cli --base https://${{ github.event.repository.name }}.github.io
           cat sitemap.xml
 
-      - name: Comment
+      - name: Comment PR
         if: github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@v1
         with:
@@ -40,9 +40,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       - name: Deploy to GitHub
-        if: ${{ github.event_name == 'push'}}
+        if: github.event_name == 'push'
+        id: deploy
         uses: JamesIves/github-pages-deploy-action@v4.4.0
         with:
           branch: gh-pages
           folder: book
 
+      - name: Comment Commit
+        if: github.event_name == 'push' && steps.deploy.outputs.deployment-status == 'success'
+        uses: peter-evans/commit-comment@v2
+        with:
+          body: Deploy successfully https://${{ github.event.repository.name }}.github.io!
+          token: ${{ secrets.BOT_TOKEN }}
