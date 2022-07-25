@@ -7,6 +7,7 @@ on:
   pull_request:
     types:
       - opened
+      - synchronize
 
 jobs:
   pages:
@@ -15,16 +16,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install toolchain
-        uses: actions-rs/toolchain@v1
+      - name: Setup mdBook
+        uses: peaceiris/actions-mdbook@v1
         with:
-          profile: minimal
-          toolchain: stable
-          
-      - uses: Swatinem/rust-cache@v1
-
-      - name: Install mdBook
-        run: (test -x $HOME/.cargo/bin/mdbook || cargo install mdbook --no-default-features --features search)
+          mdbook-version: 'latest'
 
       - name: Build mdBook
         run: mdbook build
@@ -39,8 +34,9 @@ jobs:
         if: github.event_name == 'pull_request' && github.event.action == 'opened'
         uses: thollander/actions-comment-pull-request@v1
         with:
-          message: |
-            Build book successfully!
+          message: Build book successfully!
+          reactions: tada
+          comment_includes: Build book
           GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       - name: Deploy to GitHub
