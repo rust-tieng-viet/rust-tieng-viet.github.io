@@ -152,7 +152,9 @@
                         <h1 id="supertraits"><a class="header" href="#supertraits">Supertraits</a></h1>
 <p>Rust không có khái niệm &quot;kế thừa&quot; như trong OOP. 
 Nhưng bạn có thể định nghĩa một trait là một tập hợp của các trait khác.</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">trait Person {
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Person {
   fn name(&amp;self) -&gt; String;
 }
 
@@ -184,7 +186,8 @@ fn comp_sci_student_greeting(student: &amp;dyn CompSciStudent) -&gt; String {
     )
 }
 
-</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 
