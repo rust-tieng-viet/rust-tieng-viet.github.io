@@ -10,8 +10,8 @@ on:
       - synchronize
 
 jobs:
-  pages:
-    name: GitHub Pages
+  book:
+    name: Build mdBook and Deploy 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,7 +19,7 @@ jobs:
       - name: Setup mdBook
         uses: peaceiris/actions-mdbook@v1
         with:
-          mdbook-version: 'latest'
+          mdbook-version: latest
 
       - name: Build mdBook
         run: mdbook build
@@ -31,7 +31,7 @@ jobs:
           cat sitemap.xml
 
       - name: Comment
-        if: github.event_name == 'pull_request' && github.event.action == 'opened'
+        if: github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@v1
         with:
           message: Build book successfully!
