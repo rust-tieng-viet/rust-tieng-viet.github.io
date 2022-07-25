@@ -3,7 +3,7 @@
 Rust không có khái niệm "kế thừa" như trong OOP. 
 Nhưng bạn có thể định nghĩa một trait là một tập hợp của các trait khác.
 
-```rust,editable
+```rust
 trait Person {
   fn name(&self) -> String;
 }
