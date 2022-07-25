@@ -21,13 +21,23 @@ jobs:
         with:
           mdbook-version: latest
 
+      - name: Get site url
+        env:
+          repo: ${{ github.event.repository.name }}
+        run: |
+          # Construct $url from repo name 
+          # Repo name can be "rust-tieng-viet" or "rust-tieng-viet.github.io"
+          export url="https://${repo//.github.io/}.github.io"
+          echo $url
+          echo "url=$url" >> $GITHUB_ENV
+
       - name: Build mdBook
         run: mdbook build
 
       - name: Generate sitemap
         run: |
           cd book
-          npx static-sitemap-cli --base https://${{ github.event.repository.name }}.github.io
+          npx static-sitemap-cli --base ${{ env.url }} 
           cat sitemap.xml
 
       - name: Comment PR
@@ -51,5 +61,5 @@ jobs:
         if: github.event_name == 'push' && steps.deploy.outputs.deployment-status == 'success'
         uses: peter-evans/commit-comment@v2
         with:
-          body: Deploy successfully https://${{ github.event.repository.name }}.github.io!
+          body: Deploy successfully ${{ env.url }}!
           token: ${{ secrets.BOT_TOKEN }}
