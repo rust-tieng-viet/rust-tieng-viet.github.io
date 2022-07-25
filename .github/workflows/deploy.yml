@@ -30,7 +30,7 @@ jobs:
           npx static-sitemap-cli --base https://rust-tieng-viet.github.io
 
       - name: Deploy to GitHub
-        uses: JamesIves/github-pages-deploy-action@v4.3.4
+        uses: JamesIves/github-pages-deploy-action@v4.4.0
         with:
           branch: gh-pages
           folder: book
