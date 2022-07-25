@@ -33,6 +33,7 @@ jobs:
         run: |
           cd book
           npx static-sitemap-cli --base https://rust-tieng-viet.github.io
+          cat sitemap.xml
 
       - name: Deploy to GitHub
         if: ${{ github.event_name == 'push'}}
