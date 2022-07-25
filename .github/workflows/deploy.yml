@@ -33,8 +33,9 @@ jobs:
         if: github.event_name == 'pull_request' && github.event.action == 'opened'
         uses: thollander/actions-comment-pull-request@v1
         with:
-          message: |
-            Build book successfully!
+          message: Build book successfully!
+          reactions: tada
+          comment_includes: Build book
           GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       - name: Deploy to GitHub
