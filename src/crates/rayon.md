@@ -33,6 +33,13 @@ có thể chủ động điều khiển việc parallel tasks.
 Để tìm hiểu thêm về cách [`rayon`] hoạt động bạn có thể đọc thêm bài blog từ tác giả: 
 <https://smallcultfollowing.com/babysteps/blog/2015/12/18/rayon-data-parallelism-in-rust/>
 
+[`rayon`] performance demo, gõ `s` để chạy tuần tự và `p` để parallel
+
+```bash
+git clone https://github.com/rayon-rs/rayon && cd rayon
+cd rayon-demo 
+cargo run --release -- nbody visualize
+```
 
 ## References
 
