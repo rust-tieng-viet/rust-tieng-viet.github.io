@@ -145,7 +145,7 @@
 - [config]()
 - [async_trait](./crates/async_trait.md)
 - [lazy_static](./crates/lazy_static.md)
-- [indoc]()
+- [indoc](./crates/indoc.md)
 - [rayon](./crates/rayon.md)
 
 ---
