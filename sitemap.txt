@@ -21,6 +21,7 @@ https://rust-tieng-viet.github.io/basic/turbofish
 https://rust-tieng-viet.github.io/basic/variables
 https://rust-tieng-viet.github.io/crates/anyhow
 https://rust-tieng-viet.github.io/crates/async_trait
+https://rust-tieng-viet.github.io/crates/indoc
 https://rust-tieng-viet.github.io/crates/lazy_static
 https://rust-tieng-viet.github.io/crates/log
 https://rust-tieng-viet.github.io/crates/rayon
