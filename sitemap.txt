@@ -23,6 +23,7 @@ https://rust-tieng-viet.github.io/crates/anyhow
 https://rust-tieng-viet.github.io/crates/async_trait
 https://rust-tieng-viet.github.io/crates/lazy_static
 https://rust-tieng-viet.github.io/crates/log
+https://rust-tieng-viet.github.io/crates/rayon
 https://rust-tieng-viet.github.io/design-pattern/behavioural
 https://rust-tieng-viet.github.io/design-pattern/creational
 https://rust-tieng-viet.github.io/design-pattern/structural
