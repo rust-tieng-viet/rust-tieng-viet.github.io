@@ -175,11 +175,46 @@ Ngoài ra, Rayon cũng cung cấp 2 function <a href="https://docs.rs/rayon/*/ra
 có thể chủ động điều khiển việc parallel tasks.</p>
 <p>Để tìm hiểu thêm về cách <a href="https://github.com/rayon-rs/rayon"><code>rayon</code></a> hoạt động bạn có thể đọc thêm bài blog từ tác giả: 
 <a href="https://smallcultfollowing.com/babysteps/blog/2015/12/18/rayon-data-parallelism-in-rust/">https://smallcultfollowing.com/babysteps/blog/2015/12/18/rayon-data-parallelism-in-rust/</a></p>
-<p><a href="https://github.com/rayon-rs/rayon"><code>rayon</code></a> performance demo, gõ <code>s</code> để chạy tuần tự và <code>p</code> để parallel</p>
-<pre><code class="language-bash">git clone https://github.com/rayon-rs/rayon &amp;&amp; cd rayon
-cd rayon-demo 
-cargo run --release -- nbody visualize
+<h2 id="demo--bench"><a class="header" href="#demo--bench">demo &amp; bench</a></h2>
+<p>Trong repo của <a href="https://github.com/rayon-rs/rayon"><code>rayon</code></a> có rất nhiều demo và bench, để xem danh sách demo hoặc bench:</p>
+<pre><code class="language-bash">$ git clone https://github.com/rayon-rs/rayon &amp;&amp; cd rayon/rayon-demo 
+$ cargo run --release -- --help
+
+Usage: rayon-demo bench
+       rayon-demo &lt;demo-name&gt; [ options ]
+       rayon-demo --help
+
+A collection of different benchmarks of Rayon. You can run the full
+benchmark suite by executing `cargo bench` or `rayon-demo bench`.
+
+Alternatively, you can run individual benchmarks by running
+`rayon-demo foo`, where `foo` is the name of a benchmark. Each
+benchmark has its own options and modes, so try `rayon-demo foo
+--help`.
+
+Benchmarks:
+
+  - life : Conway's Game of Life.
+  - nbody: A physics simulation of multiple bodies attracting and repelling
+           one another.
+  - sieve: Finding primes using a Sieve of Eratosthenes.
+  - matmul: Parallel matrix multiplication.
+  - mergesort: Parallel mergesort.
+  - noop: Launch empty tasks to measure CPU usage.
+  - quicksort: Parallel quicksort.
+  - tsp: Traveling salesman problem solver (sample data sets in `data/tsp`).
 </code></pre>
+<p><strong>Quicksort</strong> benchmark:</p>
+<pre><code class="language-bash">$ cargo run --release quicksort bench
+
+seq: sorted 250000000 ints: 22.268583 s
+par: sorted 250000000 ints: 4.172599 s
+speedup: 5.34x
+</code></pre>
+<p><strong>Demo nbody visualize</strong>: gõ <code>s</code> để chạy tuần tự và <code>p</code> để parallel</p>
+<pre><code class="language-bash">cargo run --release -- nbody visualize
+</code></pre>
+<p><img src="https://i.imgur.com/cF6Euyf.png" alt="" /></p>
 <h2 id="references"><a class="header" href="#references">References</a></h2>
 <ul>
 <li><a href="https://smallcultfollowing.com/babysteps/blog/2015/12/18/rayon-data-parallelism-in-rust/">Rayon: data parallelism in Rust</a></li>
