@@ -4999,6 +4999,11 @@ Ngoài ra, Rayon cũng cung cấp 2 function <a href="https://docs.rs/rayon/*/ra
 có thể chủ động điều khiển việc parallel tasks.</p>
 <p>Để tìm hiểu thêm về cách <a href="https://github.com/rayon-rs/rayon"><code>rayon</code></a> hoạt động bạn có thể đọc thêm bài blog từ tác giả: 
 <a href="https://smallcultfollowing.com/babysteps/blog/2015/12/18/rayon-data-parallelism-in-rust/">https://smallcultfollowing.com/babysteps/blog/2015/12/18/rayon-data-parallelism-in-rust/</a></p>
+<p><a href="https://github.com/rayon-rs/rayon"><code>rayon</code></a> performance demo, gõ <code>s</code> để chạy tuần tự và <code>p</code> để parallel</p>
+<pre><code class="language-bash">git clone https://github.com/rayon-rs/rayon &amp;&amp; cd rayon
+cd rayon-demo 
+cargo run --release -- nbody visualize
+</code></pre>
 <h2 id="references-22"><a class="header" href="#references-22">References</a></h2>
 <ul>
 <li><a href="https://smallcultfollowing.com/babysteps/blog/2015/12/18/rayon-data-parallelism-in-rust/">Rayon: data parallelism in Rust</a></li>
