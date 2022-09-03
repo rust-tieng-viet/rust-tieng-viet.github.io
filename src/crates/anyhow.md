@@ -6,7 +6,7 @@ File: Cargo.toml
 
 ```toml
 [dependencies]
-anyhow = "1.0"
+anyhow = "1"
 ```
 
 Cách sử dụng
