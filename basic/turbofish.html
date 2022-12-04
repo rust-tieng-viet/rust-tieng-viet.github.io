@@ -14,7 +14,6 @@
 
   gtag('config', 'G-88RKF7DLPY');
 </script>
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -37,13 +36,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -59,7 +58,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -71,7 +70,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -102,7 +101,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -139,7 +138,7 @@
                     </div>
                 </div>
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -153,61 +152,47 @@
 <p><img src="https://blog.duyet.net/static/a4e75d7d370caf2b035a94ab66138e47/3fe5e/rust-turbofish.webp" alt="Rust Turbofish" /></p>
 <p>Trong trường hợp bạn cần chỉ định kiểu dữ liệu cho một generic function, method, struct, hoặc enum, 
 Rust có một cú pháp đặc biệt để làm điều này gọi là turbofish. Quy tắc là khi nào bạn thấy</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">$ident&lt;T&gt;
-</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable edition2021">$ident&lt;T&gt;</code></pre></pre>
 <p>trong bất kỳ định nghĩa nào, thì bạn có thể sử dụng nó dưới dạng</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">$ident::&lt;T&gt;
-</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable edition2021">$ident::&lt;T&gt;</code></pre></pre>
 <p>để chỉ định kiểu dữ liệu cho generic parameter. Sau đây là một số ví dụ để làm rõ hơn.</p>
 <h1 id="generic-function"><a class="header" href="#generic-function">Generic Function</a></h1>
 <p>Ví dụ function <code>std::mem::size_of()</code> có definition như sau:</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">pub fn size_of&lt;T&gt;() -&gt; usize
-</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable edition2021">pub fn size_of&lt;T&gt;() -&gt; usize</code></pre></pre>
 <p>Khi gọi <code>size_of</code> với turbofish:</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">std::mem::size_of::&lt;u32&gt;()
-// 4
-</code></pre></pre>
+// 4</code></pre></pre>
 <p>sẽ cho ta biết size của u32 theo số bytes.</p>
 <h1 id="generic-method"><a class="header" href="#generic-method">Generic Method</a></h1>
 <p>Phương thức <code>parse()</code> của <code>str</code> bạn cũng sẽ hay gặp cách sử dụng với cú pháp turbofish:</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">fn parse&lt;F&gt;(&amp;self) -&gt; Result&lt;F, F::Err&gt; where F: FromStr
-</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable edition2021">fn parse&lt;F&gt;(&amp;self) -&gt; Result&lt;F, F::Err&gt; where F: FromStr</code></pre></pre>
 <p>Chúng ta có thể sử dụng turbofish để mô tả kiểu dữ liệu sẽ được parsed từ <code>str</code></p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">&quot;1234&quot;.parse::&lt;u32&gt;()
-</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable edition2021">&quot;1234&quot;.parse::&lt;u32&gt;()</code></pre></pre>
 <p>Một ví dụ phổ biến nữa là <code>collect()</code> của <code>Iterator</code></p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">fn collect&lt;B&gt;(self) -&gt; B where B: FromIterator&lt;Self::Item&gt; 
-</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable edition2021">fn collect&lt;B&gt;(self) -&gt; B where B: FromIterator&lt;Self::Item&gt; </code></pre></pre>
 <p>Bởi vì compiler đã biết kiểu dữ liệu của <code>Self::Item</code> mà ta đang collect rồi, 
 chúng ta thường không cần ghi ra. Thay vào đó là sử dụng <code>_</code> để compiler tự động infer ra. Ví dụ:</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">let a = vec![1u8, 2, 3, 4];
 
-a.iter().collect::&lt;Vec&lt;_&gt;&gt;();
-</code></pre></pre>
+a.iter().collect::&lt;Vec&lt;_&gt;&gt;();</code></pre></pre>
 <p>Sẵn tiện nói về <code>Iterator</code> chúng ta cũng có thể sử dụng turbofish syntax với <code>sum()</code> và <code>product()</code>.</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">fn sum&lt;S&gt;(self) -&gt; S where S: Sum&lt;Self::Item&gt;
-fn product&lt;P&gt;(self) -&gt; P where P: Product&lt;Self::Item&gt;
-</code></pre></pre>
+fn product&lt;P&gt;(self) -&gt; P where P: Product&lt;Self::Item&gt;</code></pre></pre>
 <p>Cú pháp như sau:</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">[1, 2, 3, 4].iter().sum::&lt;u32&gt;()
-[1, 2, 3, 4].iter().product::&lt;u32&gt;()
-</code></pre></pre>
+[1, 2, 3, 4].iter().product::&lt;u32&gt;()</code></pre></pre>
 <h1 id="generic-struct"><a class="header" href="#generic-struct">Generic Struct</a></h1>
 <p>Trong trường hợp compiler không có đủ thông tin để infer khi tạo generic struct, 
 chúng ta cũng có thể sử dụng turbofish syntax. Ví dụ struct <code>Vec</code> có định nghĩa như sau</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">pub struct Vec&lt;T&gt; { /* fields omitted */ }
-</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable edition2021">pub struct Vec&lt;T&gt; { /* fields omitted */ }</code></pre></pre>
 <p>Ví dụ để khởi tạo <code>Vec</code> mới với <code>Vec::new()</code> ta có thể viết</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">Vec::&lt;u8&gt;::new()
-</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable edition2021">Vec::&lt;u8&gt;::new()</code></pre></pre>
 <p>Nhớ là ta bỏ turbofish sau <code>Vec::</code> không phải sau method <code>new</code> 
 bởi vì struct sử dụng generic type chứ không phải method <code>new</code>. 
 Hơi bựa nhưng nó vẫn thỏa quy tắc của turbofish. Một ví dụ khác</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">std::collections::HashSet::&lt;u8&gt;::with_capacity(10) 
-</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable edition2021">std::collections::HashSet::&lt;u8&gt;::with_capacity(10) </code></pre></pre>
 <p>Ta đang tạo một <code>Hashset</code> với 10 phần tử, bởi vì <code>Hashset</code> struct có định nghĩa như sau</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">pub struct HashSet&lt;T, S = RandomState&gt; { /* fields omitted */ } 
-</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable edition2021">pub struct HashSet&lt;T, S = RandomState&gt; { /* fields omitted */ } </code></pre></pre>
 <p>Chúng ta có thể sử dụng cú pháp này với mọi Rust collections.</p>
 <h1 id="generic-enum"><a class="header" href="#generic-enum">Generic Enum</a></h1>
 <p>Tuy nhiên Enum lại không theo quy tắc trên, bởi vì enum trong Rust không được 
@@ -217,17 +202,14 @@ Ví dụ hãy xem enum <code>Result</code> được dùng rất nhiều trong Ru
 pub enum Result&lt;T, E&gt; {
   Ok(T),
   Err(E),
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Chúng ta sử dụng như thế này:</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">Result::Ok::&lt;u8, ()&gt;(10)
-Result::Err::&lt;u8, ()&gt;(())
-</code></pre></pre>
+Result::Err::&lt;u8, ()&gt;(())</code></pre></pre>
 <p>Và bởi vì <code>Result</code> thường được prelude (import sẵn)
 trong Rust, thực tế mọi người sẽ viết như thế này:</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">Ok::&lt;u8, ()&gt;(10)
-Err::&lt;u8, ()&gt;(()) 
-</code></pre></pre>
+Err::&lt;u8, ()&gt;(()) </code></pre></pre>
 <h1 id="references"><a class="header" href="#references">References</a></h1>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch10-00-generics.html#generic-types-traits-and-lifetimes">Generic Types, Traits, and Lifetimes</a></li>
@@ -263,20 +245,20 @@ Err::&lt;u8, ()&gt;(())
 
         </div>
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
     </body>

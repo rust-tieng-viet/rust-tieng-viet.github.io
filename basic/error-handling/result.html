@@ -14,7 +14,6 @@
 
   gtag('config', 'G-88RKF7DLPY');
 </script>
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -37,13 +36,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -59,7 +58,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -71,7 +70,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -102,7 +101,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -139,7 +138,7 @@
                     </div>
                 </div>
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -165,8 +164,7 @@ Nó mô tả <em>lỗi gì</em> đang xảy ra thay vì khả năng <em>tồn t�
   Ok(T),
   Err(E),
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Ví dụ</p>
 <pre><pre class="playground"><code class="language-rust edition2021">fn get_id_from_name(name: &amp;str) -&gt; Result&lt;i32, &amp;str&gt; {
     if !name.starts_with('d') {
@@ -185,8 +183,7 @@ fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
     };
 
     Ok(())
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Như bạn thấy thì <code>main()</code> cũng có thể return về <code>Result&lt;(), &amp;'static str&gt;</code></p>
 <h3 id="unwrap"><a class="header" href="#unwrap"><code>.unwrap()</code></a></h3>
 <p>Ví dụ trên nhưng sử dụng <code>.unwrap()</code> , chủ động panic (crash) dừng chương trình nếu gặp lỗi.</p>
@@ -196,8 +193,7 @@ fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
   println!(&quot;{} is {}&quot;, who, age);
 
   Ok(())
-}
-</code></pre></pre>
+}</code></pre></pre>
 <h3 id="expect"><a class="header" href="#expect"><code>.expect()</code></a></h3>
 <p>Giống như <code>unwrap()</code>: chủ động panic (crash) dừng chương trình nếu gặp lỗi và kèm theo message. Sẽ rất có ích, nhất là khi có quá nhiều unwrap, bạn sẽ không biết nó panic ở đâu.</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
@@ -206,8 +202,7 @@ fn main() -&gt; Result&lt;(), &amp;'static str&gt; {
   println!(&quot;{} is {}&quot;, who, age);
 
   Ok(())
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Xem thêm mọi method khác của <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> <a href="https://doc.rust-lang.org/std/result/enum.Result.html">tại đây</a>.</p>
 <h1 id="convert-result-sang-option"><a class="header" href="#convert-result-sang-option">Convert <code>Result</code> sang <code>Option</code></a></h1>
 <p>Đôi khi bạn sẽ cần convert từ </p>
@@ -221,16 +216,14 @@ let x: Result&lt;u32, &amp;str&gt; = Ok(2);
 assert_eq!(x.ok(), Some(2));
 
 let x: Result&lt;u32, &amp;str&gt; = Err(&quot;Nothing here&quot;);
-assert_eq!(x.ok(), None);
-</code></pre></pre>
+assert_eq!(x.ok(), None);</code></pre></pre>
 <h2 id="err"><a class="header" href="#err"><code>.err()</code></a></h2>
 <pre><pre class="playground"><code class="language-rust editable edition2021">// .err()
 let x: Result&lt;u32, &amp;str&gt; = Ok(2);
 assert_eq!(x.err(), None);
 
 let x: Result&lt;u32, &amp;str&gt; = Err(&quot;Nothing here&quot;);
-assert_eq!(x.err(), Some(&quot;Nothing here&quot;));
-</code></pre></pre>
+assert_eq!(x.err(), Some(&quot;Nothing here&quot;));</code></pre></pre>
 <h1 id="toán-tử-"><a class="header" href="#toán-tử-">Toán tử <code>?</code></a></h1>
 <p>Khi viết code mà có quá nhiều functions trả về <a href="./result.html"><code>Result</code></a>, việc handle Err sẽ khá nhàm chán. Toán tử chấm hỏi <a href="https://doc.rust-lang.org/std/ops/trait.Try.html">?</a> cho phép dừng function tại vị trí đó và return cho function cha nếu <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ở vị trí đó là Err.</p>
 <p>Nó sẽ thay thế đoạn code sau:</p>
@@ -260,8 +253,7 @@ fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
     return Err(e)
   }
   Ok(())
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>thành</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">use std::fs::File;
 use std::io::prelude::*;
@@ -280,8 +272,7 @@ fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
   file.write_all(format!(&quot;age: {}\n&quot;, info.age).as_bytes())?;
   file.write_all(format!(&quot;rating: {}\n&quot;, info.rating).as_bytes())?;
   Ok(())
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Gọn đẹp hơn rất nhiều.</p>
 <p>Toán tử <code>?</code> sẽ unwrap giá trị <code>Ok</code>, hoặc return giá trị <code>Err</code> ở vị trí gần toán tử đó.</p>
 <p><code>?</code> chỉ có thể được dùng trong function có kiểu dữ liệu trả về là <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a>.</p>
@@ -312,20 +303,20 @@ fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
 
         </div>
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
-        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
     </body>

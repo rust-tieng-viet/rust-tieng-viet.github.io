@@ -14,7 +14,6 @@
 
   gtag('config', 'G-88RKF7DLPY');
 </script>
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -37,13 +36,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -59,7 +58,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -71,7 +70,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -102,7 +101,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -139,7 +138,7 @@
                     </div>
                 </div>
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -229,8 +228,7 @@ fn main() {
 
   assert_eq!(vec![&quot;create table&quot;, &quot;add field&quot;], schema.execute());
   assert_eq!(vec![&quot;remove field&quot;, &quot;drop table&quot;], schema.rollback());
-}
-</code></pre></pre>
+}</code></pre></pre>
 <h1 id="cách-2-sử-dụng-function-pointers"><a class="header" href="#cách-2-sử-dụng-function-pointers">Cách 2: sử dụng function pointers</a></h1>
 <p>Chúng ta có thể thực hiện theo một cách khác là tách mỗi 
 command thành một function và lưu lại function pointer để thực thi sau.</p>
@@ -279,8 +277,7 @@ fn main() {
 
   assert_eq!(vec![&quot;create table&quot;, &quot;add field&quot;], schema.execute());
   assert_eq!(vec![&quot;remove field&quot;, &quot;drop table&quot;], schema.rollback());
-}
-</code></pre></pre>
+}</code></pre></pre>
 <h1 id="cách-3-sử-dụng-fn-trait-objects"><a class="header" href="#cách-3-sử-dụng-fn-trait-objects">Cách 3: sử dụng <code>Fn</code> trait objects</a></h1>
 <p>Thay vì định nghĩa một command trait theo cách 1, 
 ta có thể lưu tất cả command được implement <code>trait Fn</code> trong một vector.</p>
@@ -332,8 +329,7 @@ fn main() {
 
   assert_eq!(vec![&quot;create table&quot;, &quot;add field&quot;], schema.execute());
   assert_eq!(vec![&quot;remove field&quot;, &quot;drop table&quot;], schema.rollback());
-}
-</code></pre></pre>
+}</code></pre></pre>
 <h1 id="thảo-luận"><a class="header" href="#thảo-luận">Thảo luận</a></h1>
 <p>Trong các ví dụ trên thì command của chúng ta khá nhỏ, 
 nên thường được define dưới dạng function hoặc closure 
@@ -373,20 +369,20 @@ trong các module khác nhau, việc sử dụng <code>trait</code> và <code>Bo
 
         </div>
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
-        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
     </body>
