@@ -48,28 +48,26 @@ and in addition re-exports:
 * <code>[std::iter]::[FromIterator]</code>.
 
 [`std`]: https://doc.rust-lang.org/std/index.html
-[`Option`](https://doc.rust-lang.org/std/option/enum.Option.html), 
-[`Result`](https://doc.rust-lang.org/std/result/enum.Result.html), 
-[`Ok`](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Ok),
-[`Err`](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err), ...
-[mem::drop]: https://doc.rust-lang.org/std/mem/fn.drop.html
-[std::borrow]: https://doc.rust-lang.org/std/borrow
-[std::boxed]: https://doc.rust-lang.org/std/boxed
-[std::clone]: https://doc.rust-lang.org/std/clone
-[std::cmp]: https://doc.rust-lang.org/std/cmp
-[std::convert]: https://doc.rust-lang.org/std/convert
-[std::default]: https://doc.rust-lang.org/std/default
-[std::iter]: https://doc.rust-lang.org/std/iter
-[std::marker]: https://doc.rust-lang.org/std/marker
-[std::mem]: https://doc.rust-lang.org/std/mem
-[std::ops]: https://doc.rust-lang.org/std/ops
-[std::option]: https://doc.rust-lang.org/std/option
-[std::result]: https://doc.rust-lang.org/std/result
-[std::slice]: https://doc.rust-lang.org/std/slice
-[std::string]: https://doc.rust-lang.org/std/string
-[std::vec]: https://doc.rust-lang.org/std/vec
-[TryFrom]: https://doc.rust-lang.org/std/convert/trait.TryFrom.html
-[TryInto]: https://doc.rust-lang.org/std/convert/trait.TryInto.html
-[FromIterator]: https://doc.rust-lang.org/std/iter/trait.FromIterator.html
-
-
+[`Option`](https://doc.rust-lang.org/std/option/enum.Option.html)
+[`Result`](https://doc.rust-lang.org/std/result/enum.Result.html)
+[`Ok`](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Ok)
+[`Err`](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err)
+[`mem::drop`]: https://doc.rust-lang.org/std/mem/fn.drop.html
+[`std::borrow`]: https://doc.rust-lang.org/std/borrow
+[`std::boxed`]: https://doc.rust-lang.org/std/boxed
+[`std::clone`]: https://doc.rust-lang.org/std/clone
+[`std::cmp`]: https://doc.rust-lang.org/std/cmp
+[`std::convert`]: https://doc.rust-lang.org/std/convert
+[`std::default`]: https://doc.rust-lang.org/std/default
+[`std::iter`]: https://doc.rust-lang.org/std/iter
+[`std::marker`]: https://doc.rust-lang.org/std/marker
+[`std::mem`]: https://doc.rust-lang.org/std/mem
+[`std::ops`]: https://doc.rust-lang.org/std/ops
+[`std::option`]: https://doc.rust-lang.org/std/option
+[`std::result`]: https://doc.rust-lang.org/std/result
+[`std::slice`]: https://doc.rust-lang.org/std/slice
+[`std::string`]: https://doc.rust-lang.org/std/string
+[`std::vec`]: https://doc.rust-lang.org/std/vec
+[`TryFrom`]: https://doc.rust-lang.org/std/convert/trait.TryFrom.html
+[`TryInto`]: https://doc.rust-lang.org/std/convert/trait.TryInto.html
+[`FromIterator`]: https://doc.rust-lang.org/std/iter/trait.FromIterator.html
