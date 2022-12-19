@@ -48,10 +48,10 @@ and in addition re-exports:
 * <code>[std::iter]::[FromIterator]</code>.
 
 [`std`]: https://doc.rust-lang.org/std/index.html
-[`Option`](https://doc.rust-lang.org/std/option/enum.Option.html)
-[`Result`](https://doc.rust-lang.org/std/result/enum.Result.html)
-[`Ok`](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Ok)
-[`Err`](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err)
+[`Option`]: https://doc.rust-lang.org/std/option/enum.Option.html
+[`Result`]: https://doc.rust-lang.org/std/result/enum.Result.html
+[`Ok`]: https://doc.rust-lang.org/std/result/enum.Result.html#variant.Ok
+[`Err`]: https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err
 [`mem::drop`]: https://doc.rust-lang.org/std/mem/fn.drop.html
 [`std::borrow`]: https://doc.rust-lang.org/std/borrow
 [`std::boxed`]: https://doc.rust-lang.org/std/boxed
