@@ -1,7 +1,7 @@
 # [Preludes](https://doc.rust-lang.org/std/prelude/)
 
 [Preludes](https://doc.rust-lang.org/std/prelude/) là những thứ được định nghĩa trong [`std`],
-và được import sẵn, vì chúng thường sẽ phải được dùng trong mọi chương trình Rust. đư
+và được import sẵn, vì chúng thường sẽ phải được dùng trong mọi chương trình Rust.
 Bạn có thể sử dụng mà không cần phải import, ví dụ như: [`Option`], 
 [`Result`], [`Ok`], [`Err`], ...
 
