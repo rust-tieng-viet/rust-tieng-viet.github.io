@@ -5,6 +5,11 @@
 
 ---
 
+# Bắt đầu
+
+- [Cài đặt Rust](./getting-started/installation.md)
+- [Project đầu tiên](./getting-started/first-project.md)
+
 # Cơ bản
 
 - [Variables](./basic/variables/README.md)
@@ -159,3 +164,10 @@
 - [The Default Trait]()
 - [Finalisation in destructors]()
 - [Temporary mutability]()
+
+# Rust for Data Engineering
+
+- [Using Rust for efficient data processing and analysis](./data-engineering/data-processing.md)
+- [First high-performance data pipelines in Rust](./data-engineering/first-data-pipeline.md)
+- [Building scalable data-driven applications using Rust](./data-engineering/data-driven.md)
+- [Rust as an alternative to Python for data engineering tasks](./data-engineering/rust-as-alternative-python.md)
