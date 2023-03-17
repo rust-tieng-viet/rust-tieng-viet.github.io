@@ -82,6 +82,7 @@
 
 - [macros!](./basic/macro/README.md)
 
+  - [Khác nhau giữa Macros và Functions](./basic/macro/macros-vs-functions.md)
   - [Macros mặc định](./basic/macro/standard-macros.md)
   - [println!](./basic/macro/println.md)
   - [format!](./basic/macro/format.md)

@@ -8,8 +8,6 @@ Thực chất có 3 loại macro trong Rust.
 - Attribute-like macros that define custom attributes usable on any item
 - Function-like macros that look like function calls but operate on the tokens specified as their argument
 
-# Sự khác nhau giữa Macros và Functions
-
-TODO
+{{#include ./macros-vs-functions.md}}
 
 {{#include ./standard-macros.md}}
