@@ -53,6 +53,7 @@ https://rust-tieng-viet.github.io/basic/generics/struct
 https://rust-tieng-viet.github.io/basic/generics/trait
 https://rust-tieng-viet.github.io/basic/generics/where
 https://rust-tieng-viet.github.io/basic/macro/format
+https://rust-tieng-viet.github.io/basic/macro/macros-vs-functions
 https://rust-tieng-viet.github.io/basic/macro/println
 https://rust-tieng-viet.github.io/basic/macro/standard-macros
 https://rust-tieng-viet.github.io/basic/macro/todo
