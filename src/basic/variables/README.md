@@ -1,7 +1,7 @@
 # Variables
 
-Variables trong Rust có kiểu dữ liệu tĩnh. 
-Ta khai báo kiểu dữ liệu trong lúc khai báo biến. 
+Variables trong Rust có kiểu dữ liệu tĩnh.
+Ta khai báo kiểu dữ liệu trong lúc khai báo biến.
 Trong đa số các trường hợp compiler có thể đoán được kiểu dữ liệu
 nên đôi khi ta có thể bỏ qua.
 
@@ -20,6 +20,7 @@ Mọi biến đều phải được sử dụng, nếu không, compiler sẽ war
 Để skip warning, thêm dấu underscore ở đầu tên biến.
 
 ```rust
+# fn check_error() {}
 # fn main() {
 // The compiler warns about unused variable bindings; these warnings can
 // be silenced by prefixing the variable name with an underscore

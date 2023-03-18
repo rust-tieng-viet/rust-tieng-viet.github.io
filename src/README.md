@@ -4,7 +4,7 @@
 
 > The book is published at <https://rust-tieng-viet.github.io>.
 
-```
+```plantext
     _~^~^~_
 \) /  o o  \ (/
   '_   _   _'

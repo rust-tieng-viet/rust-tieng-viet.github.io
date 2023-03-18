@@ -1,6 +1,6 @@
 # Supertraits
 
-Rust không có khái niệm "kế thừa" như trong OOP. 
+Rust không có khái niệm "kế thừa" như trong OOP.
 Nhưng bạn có thể định nghĩa một trait là một tập hợp của các trait khác.
 
 ```rust
@@ -18,8 +18,8 @@ trait Programmer {
     fn fav_language(&self) -> String;
 }
 
-// CompSciStudent (computer science student) là một subtrait 
-// của cả Programmer và Student. 
+// CompSciStudent (computer science student) là một subtrait
+// của cả Programmer và Student.
 //
 // Implement CompSciStudent yêu cầu bạn phải impl tất cả supertraits.
 trait CompSciStudent: Programmer + Student {

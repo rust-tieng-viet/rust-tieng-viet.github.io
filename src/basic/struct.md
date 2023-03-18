@@ -22,7 +22,7 @@ Unit struct là một struct mà không có gì cả:
 
 ```rust,editable
 struct FileDirectory;
-fn main() {} 
+fn main() {}
 ```
 
 # Tuple struct

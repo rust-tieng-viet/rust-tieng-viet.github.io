@@ -2,7 +2,7 @@
 
 Variable mà chưa được gán giá trị được gọi là uninitialized variable.
 
-```rust,editable
+```rust,editable,compile_fail
 fn main() {
   let my_variable; // ⚠️
 }

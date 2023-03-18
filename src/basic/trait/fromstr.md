@@ -1,7 +1,7 @@
 # `FromStr`
 
-[FromStr](https://doc.rust-lang.org/std/str/trait.FromStr.html) 
-là một trait để khởi tạo instance từ string trong Rust, 
+[FromStr](https://doc.rust-lang.org/std/str/trait.FromStr.html)
+là một trait để khởi tạo instance từ string trong Rust,
 nó tương đương abstract class nếu bạn có background OOP.
 
 ```rust,editable
@@ -11,9 +11,9 @@ pub trait FromStr {
 }
 ```
 
-Thường phương thức `from_str` của `FromStr` thường được ngầm định 
-sử dụng thông qua phương thức 
-[parse](https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse) 
+Thường phương thức `from_str` của `FromStr` thường được ngầm định
+sử dụng thông qua phương thức
+[parse](https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse)
 của [str](https://doc.rust-lang.org/nightly/std/primitive.str.html). Ví dụ:
 
 ```rust,editable
@@ -25,7 +25,7 @@ let one: u32 = "1".parse().unwrap();
 assert_eq!(1, one);
 
 // parse() sử dụng turbofish ::<>
-let two = "2".parse::<u32>(); 
+let two = "2".parse::<u32>();
 assert_eq!(Ok(2), two);
 
 let nope = "j".parse::<u32>();
@@ -75,7 +75,7 @@ assert_eq!(p.unwrap(), Point{ x: 1, y: 2} )
 
 # Parse `str` to `Enum`
 
-Một điều mình nhận thấy để code dễ đọc, dễ maintain hơn là 
+Một điều mình nhận thấy để code dễ đọc, dễ maintain hơn là
 ta nên sử dụng Enum thay cho string để so sánh giá trị. Ví dụ:
 
 ```rust,editable
@@ -102,7 +102,7 @@ Thay vào đó hãy tự định nghĩa enum cho các ngữ cảnh khác nhau đ
 
 ```rust,editable
 enum EnvVars { Clear, Inherit }
-enum DisplayStyle { Color, Monochrome } 
+enum DisplayStyle { Color, Monochrome }
 ```
 
 Chúng ta implement [std::str::FromStr](https://doc.rust-lang.org/std/str/trait.FromStr.html) trait như sau:

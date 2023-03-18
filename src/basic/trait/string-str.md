@@ -14,7 +14,7 @@ fn main() {
 }
 ```
 
-`&str` là một kiểu hơi phức tạp. 
+`&str` là một kiểu hơi phức tạp.
 
-- Nó có thể vừa là String literals `let s = "I am &str";`. Trường hợp này `s` có kiểu `&'static` bởi vì nó được ghi trực tiếp vào binary. 
+- Nó có thể vừa là String literals `let s = "I am &str";`. Trường hợp này `s` có kiểu `&'static` bởi vì nó được ghi trực tiếp vào binary.
 - `&str` cũng có thể là borrowed của `str` hoặc `String`.

@@ -1,9 +1,9 @@
 ## `mut`
 
-Mọi biến trong Rust mặc định là immutable, có nghĩa là không thể thay đổi, 
-không thể gán bằng một giá trị khác. 
+Mọi biến trong Rust mặc định là immutable, có nghĩa là không thể thay đổi,
+không thể gán bằng một giá trị khác.
 
-```rust
+```rust,compile_fail
 # fn main() {
 let a = 1;
 a = 2;
@@ -21,8 +21,7 @@ a = 2;
 //   | ^^^^^ cannot assign twice to immutable variable
 ```
 
-
-Để có thể thay đổi giá trị của biến, ta thêm từ khóa `mut` sau `let`. 
+Để có thể thay đổi giá trị của biến, ta thêm từ khóa `mut` sau `let`.
 
 ```rust
 # fn main() {
