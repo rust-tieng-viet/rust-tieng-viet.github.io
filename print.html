@@ -2893,6 +2893,22 @@ fn main() {
 <li>Macros có thể truy cập vào AST của code được viết, cho phép thay đổi code theo cách động.</li>
 <li>Functions không có quyền truy cập vào AST của code được viết.</li>
 </ul>
+<h2 id="input--output"><a class="header" href="#input--output">Input / Output</a></h2>
+<div class="table-wrapper"><table><thead><tr><th></th><th><strong>Rust Macros</strong></th><th><strong>Rust Functions</strong></th></tr></thead><tbody>
+<tr><td>Input</td><td>Token stream</td><td>Tham số và đối số của hàm</td></tr>
+<tr><td>Output</td><td>Đoạn mã Rust được mở rộng</td><td>Giá trị hoặc hiệu ứng sẽ được trả về</td></tr>
+</tbody></table>
+</div>
+<pre><pre class="playground"><code class="language-rust edition2021">macro_rules! math {
+    ($x:expr + $y:expr) =&gt; { $x * $y };
+}
+
+fn main() {
+    let result = math!(4 + 5);
+    println!(&quot;4 * 5 = {}&quot;, result);
+}</code></pre></pre>
+<p>Khi biên dịch, macro <code>math!</code> sẽ được mở rộng và tạo ra đoạn mã <code>4 * 5</code> được tính toán thành <code>20</code>.
+Tham số của macro lúc này là <code>$x:expr + $y:expr</code> là <a href="https://doc.rust-lang.org/reference/macros-by-example.html">token stream</a>, cho phép khả năng mở rộng cú pháp không giới hạn.</p>
 <h2 id="sử-dụng-và-ứng-dụng"><a class="header" href="#sử-dụng-và-ứng-dụng">Sử dụng và ứng dụng</a></h2>
 <ul>
 <li>Functions được sử dụng để đóng gói một khối lệnh nhất định, giúp tái sử dụng và quản lý code dễ dàng hơn.</li>
@@ -2951,6 +2967,22 @@ fn main() {
 <li>Macros có thể truy cập vào AST của code được viết, cho phép thay đổi code theo cách động.</li>
 <li>Functions không có quyền truy cập vào AST của code được viết.</li>
 </ul>
+<h2 id="input--output-1"><a class="header" href="#input--output-1">Input / Output</a></h2>
+<div class="table-wrapper"><table><thead><tr><th></th><th><strong>Rust Macros</strong></th><th><strong>Rust Functions</strong></th></tr></thead><tbody>
+<tr><td>Input</td><td>Token stream</td><td>Tham số và đối số của hàm</td></tr>
+<tr><td>Output</td><td>Đoạn mã Rust được mở rộng</td><td>Giá trị hoặc hiệu ứng sẽ được trả về</td></tr>
+</tbody></table>
+</div>
+<pre><pre class="playground"><code class="language-rust edition2021">macro_rules! math {
+    ($x:expr + $y:expr) =&gt; { $x * $y };
+}
+
+fn main() {
+    let result = math!(4 + 5);
+    println!(&quot;4 * 5 = {}&quot;, result);
+}</code></pre></pre>
+<p>Khi biên dịch, macro <code>math!</code> sẽ được mở rộng và tạo ra đoạn mã <code>4 * 5</code> được tính toán thành <code>20</code>.
+Tham số của macro lúc này là <code>$x:expr + $y:expr</code> là <a href="https://doc.rust-lang.org/reference/macros-by-example.html">token stream</a>, cho phép khả năng mở rộng cú pháp không giới hạn.</p>
 <h2 id="sử-dụng-và-ứng-dụng-1"><a class="header" href="#sử-dụng-và-ứng-dụng-1">Sử dụng và ứng dụng</a></h2>
 <ul>
 <li>Functions được sử dụng để đóng gói một khối lệnh nhất định, giúp tái sử dụng và quản lý code dễ dàng hơn.</li>
