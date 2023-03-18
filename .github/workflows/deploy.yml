@@ -46,7 +46,7 @@ jobs:
 
       - name: Generate sitemap
         run: |
-          cd book
+          cd book/html
           npx static-sitemap-cli --base ${{ env.url }}
           cat sitemap.xml
 
@@ -65,7 +65,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
           branch: gh-pages
-          folder: book
+          folder: book/html
 
       - name: Comment Commit
         if: github.event_name == 'push' && steps.deploy.outputs.deployment-status == 'success'
