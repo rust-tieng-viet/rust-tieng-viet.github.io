@@ -75,5 +75,5 @@ let size_and_colour = SizeAndColour {
 };
 ```
 
-Xem về [Trait](./trait.md)
+Xem về [Trait](./trait/README.md)
 

@@ -104,7 +104,7 @@ enum Message {
 
 Quay lại với Cons List, bộ nhớ mà Rust tính toán được có thể đến vô tận.
 
-![](/media/2022/03/cons.svg)
+![](./box-cons.svg)
 
 Theo như gợi ý của compiler, chúng ta có thể sử dụng `Box<T>` để có một Recursive Type với một kích thước bộ nhớ xác định:
 
@@ -117,7 +117,7 @@ help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to make `List` repre
 
 Bởi vì `Box<T>` là một pointer, Rust luôn biết chính xác bao nhiêu bộ nhớ mà một `Box<T>` **pointer** cần.
 
-![](/media/2022/03/cons-box.png)
+![](./box-cons-box.png)
 
 Chương trình của chúng ta lúc này sẽ là:
 

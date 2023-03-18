@@ -35,7 +35,7 @@ Do `i32` được Copy nên chúng ta có thể sử dụng `my_number` nhiều 
 
 Nếu bạn đọc document của String: [https://doc.rust-lang.org/std/string/struct.String.html](https://doc.rust-lang.org/std/string/struct.String.html)
 
-![](/media/2022/02/duyet-clone-trait.png)
+![](clone-trait.png)
 
 String không được implement **Copy**, thay vào đó là **Clone**. Clone cũng giúp copy giá trị nhưng sẽ cần rất nhiều memory, và ta phải tự gọi method `.clone()` chứ Rust sẽ không tự Clone.
 

@@ -1,7 +1,7 @@
 ## Doc comments
 
 Doc comments sẽ được Compiler parse thành [HTML documentation](https://doc.rust-lang.org/rust-by-example/meta/doc.html)
-khi render document bằng [`cargo doc`](./cargo-doc.md).
+khi render document bằng `cargo doc`.
 
 ```rust
 /// Generate library docs for the following item.

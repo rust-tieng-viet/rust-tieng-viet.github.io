@@ -117,4 +117,4 @@ Do đó Rust bắt được mọi lỗi lúc compile time và force chúng ta ph
 Do đó chúng ta không cần phải viết thêm code để kiểm tra behavior (hay sự tồn tại của method)
 trước khi sử dụng lúc runtime nữa, tăng cường được performance mà không phải từ bỏ tính flexibility của generics.
 
-Xem về [Struct](./struct.md).
+Xem về [Struct](../struct.md).

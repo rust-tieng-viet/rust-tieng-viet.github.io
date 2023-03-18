@@ -11,7 +11,7 @@ on:
 
 jobs:
   book:
-    name: Build mdBook and Deploy 
+    name: Build mdBook and Deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,15 +21,25 @@ jobs:
         with:
           mdbook-version: latest
 
+      - name: Setup mbBook linkcheck
+        run: |
+          mkdir -p mdbook-linkcheck && cd "$_" && \
+            curl -L https://github.com/Michael-F-Bryan/mdbook-linkcheck/releases/latest/download/mdbook-linkcheck.x86_64-unknown-linux-gnu.zip -o mdbook-linkcheck.zip && \
+            unzip "$_" && \
+            chmod +x mdbook-linkcheck && \
+            export PATH=$PWD:$PATH && \
+            echo "$PWD" >> $GITHUB_PATH
+
       - name: Get site url
         env:
           repo: ${{ github.event.repository.name }}
         run: |
-          # Construct $url from repo name 
+          # Construct $url from repo name
           # Repo name can be "rust-tieng-viet" or "rust-tieng-viet.github.io"
           export url="https://${repo//.github.io/}.github.io"
           echo $url
           echo "url=$url" >> $GITHUB_ENV
+          echo "Book URL: $url" >> $GITHUB_STEP_SUMMARY
 
       - name: Build mdBook
         run: mdbook build
@@ -37,7 +47,7 @@ jobs:
       - name: Generate sitemap
         run: |
           cd book
-          npx static-sitemap-cli --base ${{ env.url }} 
+          npx static-sitemap-cli --base ${{ env.url }}
           cat sitemap.xml
 
       - name: Comment PR
@@ -46,7 +56,7 @@ jobs:
         with:
           message: Build book successfully!
           reactions: tada
-          comment_includes: Build book
+          comment_tag: build_book
           GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       - name: Deploy to GitHub
