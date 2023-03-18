@@ -64,6 +64,7 @@ $ RUST_LOG=main cargo run
 ```
 
 [`env_logger`]: https://docs.rs/env_logger
+[`log`]: https://docs.rs/log
 
 ### References
 

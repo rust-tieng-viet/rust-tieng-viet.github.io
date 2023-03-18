@@ -33,7 +33,7 @@ assert!(nope.is_err());
 ```
 
 `parse` là một phương thức general nên thường được sử dụng với kiểu dữ liệu
-như trên hoặc sử dụng [turbofish](./turbofish.md) `::<>` để thuật toán inference
+như trên hoặc sử dụng [turbofish](../turbofish.md) `::<>` để thuật toán inference
 có thể hiểu để parse thành đúng kiểu bạn cần.
 
 # Parse `str` to `Struct`
@@ -136,6 +136,6 @@ assert_eq!(c, Color::Red);
 
 # References
 
-- [Trait](./trait.md)
+- [Trait](../trait/README.md)
 - [https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse](https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse)
 - [https://doc.rust-lang.org/nightly/std/str/trait.FromStr.html](https://doc.rust-lang.org/nightly/std/str/trait.FromStr.html)

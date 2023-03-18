@@ -1,10 +1,11 @@
 # Toán tử `?`
 
-Khi viết code mà có quá nhiều functions trả về [`Result`](./result.md), việc handle Err sẽ khá nhàm chán. Toán tử chấm hỏi [?](https://doc.rust-lang.org/std/ops/trait.Try.html) cho phép dừng function tại vị trí đó và return cho function cha nếu [`Result`](https://doc.rust-lang.org/std/result/enum.Result.html) ở vị trí đó là Err.
+Khi viết code mà có quá nhiều functions trả về [`Result`], việc handle `Err` sẽ khá nhàm chán.
+Toán tử chấm hỏi [`?`] cho phép dừng function tại vị trí đó và return cho function cha nếu [`Result`] ở vị trí đó là `Err`.
 
 Nó sẽ thay thế đoạn code sau:
 
-```rust,editable
+```rust
 use std::fs::File;
 use std::io::prelude::*;
 use std::io;
@@ -36,7 +37,7 @@ fn write_info(info: &Info) -> io::Result<()> {
 
 thành
 
-```rust,editable
+```rust
 use std::fs::File;
 use std::io::prelude::*;
 use std::io;
@@ -61,4 +62,7 @@ Gọn đẹp hơn rất nhiều.
 
 Toán tử `?` sẽ unwrap giá trị `Ok`, hoặc return giá trị `Err` ở vị trí gần toán tử đó.
 
-`?` chỉ có thể được dùng trong function có kiểu dữ liệu trả về là [`Result`](https://doc.rust-lang.org/std/result/enum.Result.html).
+`?` chỉ có thể được dùng trong function có kiểu dữ liệu trả về là [`Result`].
+
+[`result`]: https://doc.rust-lang.org/std/result/enum.Result.html
+[`?`]: https://doc.rust-lang.org/std/ops/trait.Try.html
