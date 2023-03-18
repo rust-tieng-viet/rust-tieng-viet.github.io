@@ -685,8 +685,8 @@ fn main() {
 <p>Pattern này được sử dụng khá nhiều ở các thư viện lớn. 
 Nó giúp ẩn đi các internal module phức tạp của library đối với user.
 Bởi vì user sẽ không cần quan tâm đến cấu trúc directory phức tạp khi sử dụng một library nào đó.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="preludes"><a class="header" href="#preludes"><a href="https://doc.rust-lang.org/std/prelude/">Preludes</a></a></h1>
-<p><a href="https://doc.rust-lang.org/std/prelude/">Preludes</a> là những thứ được định nghĩa trong <a href="https://doc.rust-lang.org/std/index.html"><code>std</code></a>,
+<div style="break-before: page; page-break-before: always;"></div><h1 id="preludes"><a class="header" href="#preludes"><a href="https://doc.rust-lang.org/std/prelude/"><code>Preludes</code></a></a></h1>
+<p><a href="https://doc.rust-lang.org/std/prelude/"><code>Preludes</code></a> là những thứ được định nghĩa trong <a href="https://doc.rust-lang.org/std/index.html"><code>std</code></a>,
 và được import sẵn, vì chúng thường sẽ phải được dùng trong mọi chương trình Rust.
 Bạn có thể sử dụng mà không cần phải import, ví dụ như: <a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a>, 
 <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a>, <a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Ok"><code>Ok</code></a>, <a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err"><code>Err</code></a>, ...</p>
@@ -694,41 +694,41 @@ Bạn có thể sử dụng mà không cần phải import, ví dụ như: <a hr
 <p>Đây là danh sách những thứ được preludes: <a href="https://doc.rust-lang.org/std/prelude/#prelude-contents">https://doc.rust-lang.org/std/prelude/#prelude-contents</a></p>
 <hr />
 <ul>
-<li><code>[std::marker]::{[Copy], [Send], [Sized], [Sync], [Unpin]}</code>,
+<li><code><a href="https://doc.rust-lang.org/std/marker"><code>std::marker</code></a>::{<a href="https://doc.rust-lang.org/stable/std/marker/trait.Copy.html"><code>Copy</code></a>, <a href="https://doc.rust-lang.org/stable/std/marker/trait.Send.html"><code>Send</code></a>, <a href="https://doc.rust-lang.org/stable/std/marker/trait.Sized.html"><code>Sized</code></a>, <a href="https://doc.rust-lang.org/stable/std/marker/trait.Sync.html"><code>Sync</code></a>, <a href="https://doc.rust-lang.org/stable/std/marker/trait.Unpin.html"><code>Unpin</code></a>}</code>,
 marker traits that indicate fundamental properties of types.</li>
-<li><code>[std::ops]::{[Drop], [Fn], [FnMut], [FnOnce]}</code>, various
+<li><code><a href="https://doc.rust-lang.org/std/ops"><code>std::ops</code></a>::{<a href="https://doc.rust-lang.org/stable/std/ops/trait.Drop.html"><code>Drop</code></a>, <a href="https://doc.rust-lang.org/stable/std/ops/trait.Fn.html"><code>Fn</code></a>, <a href="https://doc.rust-lang.org/stable/std/ops/trait.FnMut.html"><code>FnMut</code></a>, <a href="https://doc.rust-lang.org/stable/std/ops/trait.FnOnce.html"><code>FnOnce</code></a>}</code>, various
 operations for both destructors and overloading <code>()</code>.</li>
-<li><code>[std::mem]::[drop][mem::drop]</code>, a convenience function for explicitly
+<li><code><a href="https://doc.rust-lang.org/std/mem"><code>std::mem</code></a>::<a href="https://doc.rust-lang.org/std/mem/fn.drop.html"><code>drop</code></a></code>, a convenience function for explicitly
 dropping a value.</li>
-<li><code>[std::boxed]::[Box]</code>, a way to allocate values on the heap.</li>
-<li><code>[std::borrow]::[ToOwned]</code>, the conversion trait that defines
-[<code>to_owned</code>], the generic method for creating an owned type from a
+<li><code><a href="https://doc.rust-lang.org/std/boxed"><code>std::boxed</code></a>::<a href="https://doc.rust-lang.org/stable/std/boxed/struct.Box.html"><code>Box</code></a></code>, a way to allocate values on the heap.</li>
+<li><code><a href="https://doc.rust-lang.org/std/borrow"><code>std::borrow</code></a>::<a href="https://doc.rust-lang.org/stable/std/borrow/trait.ToOwned.html"><code>ToOwned</code></a></code>, the conversion trait that defines
+<a href="https://doc.rust-lang.org/stable/std/borrow/trait.ToOwned.html#tymethod.to_owned"><code>to_owned</code></a>, the generic method for creating an owned type from a
 borrowed type.</li>
-<li><code>[std::clone]::[Clone]</code>, the ubiquitous trait that defines
-[<code>clone</code>][Clone::clone], the method for producing a copy of a value.</li>
-<li><code>[std::cmp]::{[PartialEq], [PartialOrd], [Eq], [Ord]}</code>, the
+<li><code><a href="https://doc.rust-lang.org/std/clone"><code>std::clone</code></a>::<a href="https://doc.rust-lang.org/stable/std/clone/trait.Clone.html"><code>Clone</code></a></code>, the ubiquitous trait that defines
+<a href="https://doc.rust-lang.org/stable/std/clone/trait.Clone.html#tymethod.clone"><code>clone</code></a>, the method for producing a copy of a value.</li>
+<li><code><a href="https://doc.rust-lang.org/std/cmp"><code>std::cmp</code></a>::{<a href="https://doc.rust-lang.org/stable/std/cmp/trait.PartialEq.html"><code>PartialEq</code></a>, <a href="https://doc.rust-lang.org/stable/std/cmp/trait.PartialOrd.html"><code>PartialOrd</code></a>, <a href="https://doc.rust-lang.org/stable/std/cmp/trait.Eq.html"><code>Eq</code></a>, <a href="https://doc.rust-lang.org/stable/std/cmp/trait.Ord.html"><code>Ord</code></a>}</code>, the
 comparison traits, which implement the comparison operators and are often
 seen in trait bounds.</li>
-<li><code>[std::convert]::{[AsRef], [AsMut], [Into], [From]}</code>, generic
+<li><code><a href="https://doc.rust-lang.org/std/convert"><code>std::convert</code></a>::{<a href="https://doc.rust-lang.org/stable/std/convert/trait.AsRef.html"><code>AsRef</code></a>, <a href="https://doc.rust-lang.org/stable/std/convert/trait.AsMut.html"><code>AsMut</code></a>, <a href="https://doc.rust-lang.org/stable/std/convert/trait.Into.html"><code>Into</code></a>, <a href="https://doc.rust-lang.org/stable/std/convert/trait.From.html"><code>From</code></a>}</code>, generic
 conversions, used by savvy API authors to create overloaded methods.</li>
-<li><code>[std::default]::[Default]</code>, types that have default values.</li>
-<li><code>[std::iter]::{[Iterator], [Extend], [IntoIterator], [DoubleEndedIterator], [ExactSizeIterator]}</code>,
+<li><code><a href="https://doc.rust-lang.org/std/default"><code>std::default</code></a>::<a href="https://doc.rust-lang.org/stable/std/default/trait.Default.html"><code>Default</code></a></code>, types that have default values.</li>
+<li><code><a href="https://doc.rust-lang.org/std/iter"><code>std::iter</code></a>::{<a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html"><code>Iterator</code></a>, <a href="https://doc.rust-lang.org/stable/std/iter/trait.Extend.html"><code>Extend</code></a>, <a href="https://doc.rust-lang.org/stable/std/iter/trait.IntoIterator.html"><code>IntoIterator</code></a>, <a href="https://doc.rust-lang.org/stable/std/iter/trait.DoubleEndedIterator.html"><code>DoubleEndedIterator</code></a>, <a href="https://doc.rust-lang.org/stable/std/iter/trait.ExactSizeIterator.html"><code>ExactSizeIterator</code></a>}</code>,
 iterators of various
 kinds.</li>
-<li><code>[std::option]::[Option]::{[self][Option], [Some], [None]}</code>, a
+<li><code><a href="https://doc.rust-lang.org/std/option"><code>std::option</code></a>::<a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a>::{<a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>self</code></a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html#variant.Some"><code>Some</code></a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html#variant.None"><code>None</code></a>}</code>, a
 type which expresses the presence or absence of a value. This type is so
 commonly used, its variants are also exported.</li>
-<li><code>[std::result]::[Result]::{[self][Result], [Ok], [Err]}</code>, a type
+<li><code><a href="https://doc.rust-lang.org/std/result"><code>std::result</code></a>::<a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a>::{<a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>self</code></a>, <a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Ok"><code>Ok</code></a>, <a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err"><code>Err</code></a>}</code>, a type
 for functions that may succeed or fail. Like <a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a>, its variants are
 exported as well.</li>
-<li><code>[std::string]::{[String], [ToString]}</code>, heap-allocated strings.</li>
-<li><code>[std::vec]::[Vec]</code>, a growable, heap-allocated vector.</li>
+<li><code><a href="https://doc.rust-lang.org/std/string"><code>std::string</code></a>::{<a href="https://doc.rust-lang.org/stable/std/string/struct.String.html"><code>String</code></a>, <a href="https://doc.rust-lang.org/stable/std/string/trait.ToString.html"><code>ToString</code></a>}</code>, heap-allocated strings.</li>
+<li><code><a href="https://doc.rust-lang.org/std/vec"><code>std::vec</code></a>::<a href="https://doc.rust-lang.org/stable/std/vec/struct.Vec.html"><code>Vec</code></a></code>, a growable, heap-allocated vector.</li>
 </ul>
-<p>The prelude used in Rust 2021, [<code>std::prelude::rust_2021</code>], includes all of the above,
+<p>The prelude used in Rust 2021, <a href="https://doc.rust-lang.org/std/prelude/rust_2021/index.html"><code>std::prelude::rust_2021</code></a>, includes all of the above,
 and in addition re-exports:</p>
 <ul>
-<li><code>[std::convert]::{[TryFrom], [TryInto]}</code>,</li>
-<li><code>[std::iter]::[FromIterator]</code>.</li>
+<li><code><a href="https://doc.rust-lang.org/std/convert"><code>std::convert</code></a>::{<a href="https://doc.rust-lang.org/std/convert/trait.TryFrom.html"><code>TryFrom</code></a>, <a href="https://doc.rust-lang.org/std/convert/trait.TryInto.html"><code>TryInto</code></a>}</code>,</li>
+<li><code><a href="https://doc.rust-lang.org/std/iter"><code>std::iter</code></a>::<a href="https://doc.rust-lang.org/std/iter/trait.FromIterator.html"><code>FromIterator</code></a></code>.</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ownership"><a class="header" href="#ownership">Ownership</a></h1>
 <p><em>Ownership</em> là một trong những tính năng đặc trưng của Rust, đây là cách giúp Rust đảm bảo memory safety mà không cần đến garbage collector.</p>
@@ -877,7 +877,7 @@ fn main() {
   size: 150,
   colour
 };</code></pre></pre>
-<p>Xem về <a href="basic/./trait.html">Trait</a></p>
+<p>Xem về <a href="basic/./trait/README.html">Trait</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="trait"><a class="header" href="#trait">Trait</a></h1>
 <p>Rust có nhiều loại data types như primitives (<code>i8</code>, <code>i32</code>, <code>str</code>, ...), struct, enum và các loại kết hợp (aggregate) như tuples và array. Mọi types không có mối liên hệ nào với nhau. Các data types có các phương thức (methods) để tính toán hay convert từ loại này sang loại khác, nhưng chỉ để cho tiện lợi hơn, method chỉ là các function. Bạn sẽ làm gì nếu một tham số là nhiều loại kiểu dữ liệu? Một số ngôn ngữ như Typescript hay Python sẽ có cách sử dụng Union type như thế này:</p>
 <pre><code class="language-typescript">function notify(data: string | number) {
@@ -974,7 +974,7 @@ print_it(&quot;what&quot;)
 <p>Do đó Rust bắt được mọi lỗi lúc compile time và force chúng ta phải fix hết trước khi chương trình chạy.
 Do đó chúng ta không cần phải viết thêm code để kiểm tra behavior (hay sự tồn tại của method)
 trước khi sử dụng lúc runtime nữa, tăng cường được performance mà không phải từ bỏ tính flexibility của generics.</p>
-<p>Xem về <a href="basic/trait/./struct.html">Struct</a>.</p>
+<p>Xem về <a href="basic/trait/../struct.html">Struct</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="khai-báo--định-nghĩa-một-trait"><a class="header" href="#khai-báo--định-nghĩa-một-trait">Khai báo / định nghĩa một Trait</a></h1>
 <p>Nhắc lại là Trait định nghĩa các hành vi (behavior).
 Các types khác nhau có thể chia sẻ cùng cá hành vi.
@@ -1320,7 +1320,7 @@ fn main() {
 <p>Do <code>i32</code> được Copy nên chúng ta có thể sử dụng <code>my_number</code> nhiều lần mà không cần borrow <code>&amp;</code> như struct.</p>
 <h1 id="clone-trait"><a class="header" href="#clone-trait">Clone trait</a></h1>
 <p>Nếu bạn đọc document của String: <a href="https://doc.rust-lang.org/std/string/struct.String.html">https://doc.rust-lang.org/std/string/struct.String.html</a></p>
-<p><img src="basic/trait//media/2022/02/duyet-clone-trait.png" alt="" /></p>
+<p><img src="basic/trait/clone-trait.png" alt="" /></p>
 <p>String không được implement <strong>Copy</strong>, thay vào đó là <strong>Clone</strong>. Clone cũng giúp copy giá trị nhưng sẽ cần rất nhiều memory, và ta phải tự gọi method <code>.clone()</code> chứ Rust sẽ không tự Clone.</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">fn prints_country(country_name: String) {
   println!(&quot;{}&quot;, country_name);
@@ -1423,7 +1423,7 @@ assert_eq!(Ok(2), two);
 let nope = &quot;j&quot;.parse::&lt;u32&gt;();
 assert!(nope.is_err());</code></pre></pre>
 <p><code>parse</code> là một phương thức general nên thường được sử dụng với kiểu dữ liệu
-như trên hoặc sử dụng <a href="basic/trait/./turbofish.html">turbofish</a> <code>::&lt;&gt;</code> để thuật toán inference
+như trên hoặc sử dụng <a href="basic/trait/../turbofish.html">turbofish</a> <code>::&lt;&gt;</code> để thuật toán inference
 có thể hiểu để parse thành đúng kiểu bạn cần.</p>
 <h1 id="parse-str-to-struct"><a class="header" href="#parse-str-to-struct">Parse <code>str</code> to <code>Struct</code></a></h1>
 <p>Bạn có 1 struct và muốn parse 1 str thành struct đó, bạn sẽ cần impl trait <code>FromStr</code></p>
@@ -1499,7 +1499,7 @@ let c: Color = &quot;red&quot;.parse().unwrap();
 assert_eq!(c, Color::Red);</code></pre></pre>
 <h1 id="references-3"><a class="header" href="#references-3">References</a></h1>
 <ul>
-<li><a href="basic/trait/./trait.html">Trait</a></li>
+<li><a href="basic/trait/../trait/README.html">Trait</a></li>
 <li><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse">https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse</a></li>
 <li><a href="https://doc.rust-lang.org/nightly/std/str/trait.FromStr.html">https://doc.rust-lang.org/nightly/std/str/trait.FromStr.html</a></li>
 </ul>
@@ -1962,14 +1962,14 @@ if let Some(data) = get_data() {
 }
 <span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="result"><a class="header" href="#result"><a href="https://doc.rust-lang.org/std/result/"><code>Result</code></a></a></h1>
-<p>Tương tự như <a href="basic/enum/result/./option.html"><code>Option</code></a>. 
+<p>Tương tự như <code>Option</code>.
 Một kết quả trả về (<a href="https://doc.rust-lang.org/std/result/"><code>Result</code></a>)
 của một function thường sẽ có hai trường hợp:</p>
 <ul>
 <li>thành công (<a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Ok"><code>Ok</code></a>) và trả về kết quả</li>
 <li>hoặc lỗi (<a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err"><code>Err</code></a>) và trả về thông tin lỗi.</li>
 </ul>
-<p><a href="https://doc.rust-lang.org/std/result/"><code>Result</code></a> là một phiên bản cao cấp hơn của <a href="basic/enum/result/../option/README.html"><code>Option</code></a>.
+<p><a href="https://doc.rust-lang.org/std/result/"><code>Result</code></a> là một phiên bản cao cấp hơn của <code>Option</code>.
 Nó mô tả <em>lỗi gì</em> đang xảy ra thay vì khả năng <em>tồn tại</em> giá trị hay không.</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2038,9 +2038,12 @@ assert_eq!(x.err(), None);
 let x: Result&lt;u32, &amp;str&gt; = Err(&quot;Nothing here&quot;);
 assert_eq!(x.err(), Some(&quot;Nothing here&quot;));</code></pre></pre>
 <h1 id="toán-tử-"><a class="header" href="#toán-tử-">Toán tử <code>?</code></a></h1>
-<p>Khi viết code mà có quá nhiều functions trả về <a href="basic/enum/result/./result.html"><code>Result</code></a>, việc handle Err sẽ khá nhàm chán. Toán tử chấm hỏi <a href="https://doc.rust-lang.org/std/ops/trait.Try.html">?</a> cho phép dừng function tại vị trí đó và return cho function cha nếu <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ở vị trí đó là Err.</p>
+<p>Khi viết code mà có quá nhiều functions trả về <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a>, việc handle <code>Err</code> sẽ khá nhàm chán.
+Toán tử chấm hỏi <a href="https://doc.rust-lang.org/std/ops/trait.Try.html"><code>?</code></a> cho phép dừng function tại vị trí đó và return cho function cha nếu <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ở vị trí đó là <code>Err</code>.</p>
 <p>Nó sẽ thay thế đoạn code sau:</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">use std::fs::File;
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fs::File;
 use std::io::prelude::*;
 use std::io;
 
@@ -2066,9 +2069,12 @@ fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
     return Err(e)
   }
   Ok(())
-}</code></pre></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p>thành</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">use std::fs::File;
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fs::File;
 use std::io::prelude::*;
 use std::io;
 
@@ -2085,7 +2091,8 @@ fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
   file.write_all(format!(&quot;age: {}\n&quot;, info.age).as_bytes())?;
   file.write_all(format!(&quot;rating: {}\n&quot;, info.rating).as_bytes())?;
   Ok(())
-}</code></pre></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p>Gọn đẹp hơn rất nhiều.</p>
 <p>Toán tử <code>?</code> sẽ unwrap giá trị <code>Ok</code>, hoặc return giá trị <code>Err</code> ở vị trí gần toán tử đó.</p>
 <p><code>?</code> chỉ có thể được dùng trong function có kiểu dữ liệu trả về là <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a>.</p>
@@ -2110,9 +2117,12 @@ assert_eq!(x.err(), None);
 let x: Result&lt;u32, &amp;str&gt; = Err(&quot;Nothing here&quot;);
 assert_eq!(x.err(), Some(&quot;Nothing here&quot;));</code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="toán-tử--1"><a class="header" href="#toán-tử--1">Toán tử <code>?</code></a></h1>
-<p>Khi viết code mà có quá nhiều functions trả về <a href="basic/enum/result/./result.html"><code>Result</code></a>, việc handle Err sẽ khá nhàm chán. Toán tử chấm hỏi <a href="https://doc.rust-lang.org/std/ops/trait.Try.html">?</a> cho phép dừng function tại vị trí đó và return cho function cha nếu <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ở vị trí đó là Err.</p>
+<p>Khi viết code mà có quá nhiều functions trả về <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a>, việc handle <code>Err</code> sẽ khá nhàm chán.
+Toán tử chấm hỏi <a href="https://doc.rust-lang.org/std/ops/trait.Try.html"><code>?</code></a> cho phép dừng function tại vị trí đó và return cho function cha nếu <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ở vị trí đó là <code>Err</code>.</p>
 <p>Nó sẽ thay thế đoạn code sau:</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">use std::fs::File;
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fs::File;
 use std::io::prelude::*;
 use std::io;
 
@@ -2138,9 +2148,12 @@ fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
     return Err(e)
   }
   Ok(())
-}</code></pre></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p>thành</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">use std::fs::File;
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fs::File;
 use std::io::prelude::*;
 use std::io;
 
@@ -2157,7 +2170,8 @@ fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
   file.write_all(format!(&quot;age: {}\n&quot;, info.age).as_bytes())?;
   file.write_all(format!(&quot;rating: {}\n&quot;, info.rating).as_bytes())?;
   Ok(())
-}</code></pre></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p>Gọn đẹp hơn rất nhiều.</p>
 <p>Toán tử <code>?</code> sẽ unwrap giá trị <code>Ok</code>, hoặc return giá trị <code>Err</code> ở vị trí gần toán tử đó.</p>
 <p><code>?</code> chỉ có thể được dùng trong function có kiểu dữ liệu trả về là <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a>.</p>
@@ -2547,7 +2561,7 @@ error: could not compile `cons-list` due to 2 previous errors
 <span class="boring">}</span></code></pre></pre>
 <p>Để xác định bao nhiêu bộ nhớ cần để allocate cho <code>Message</code>, Rust sẽ kiểm tra từng variant (biến thể của enum) để xem variant nào cần bộ nhớ nhiều nhất. Rust thấy rằng <code>Message::Quit</code> không cần, <code>Message::Move</code> phải cần ít nhất bộ nhớ để lưu hai giá trị <code>i32</code>. Tương tự với các variant còn lại. Bởi vì một thời điểm cho có một variant được sử dụng, do đó bộ nhớ tối đa mà <code>Message</code> cần sẽ là một nhớ cần để lưu trữ variant lớn nhất.</p>
 <p>Quay lại với Cons List, bộ nhớ mà Rust tính toán được có thể đến vô tận.</p>
-<p><img src="basic//media/2022/03/cons.svg" alt="" /></p>
+<p><img src="basic/./box-cons.svg" alt="" /></p>
 <p>Theo như gợi ý của compiler, chúng ta có thể sử dụng <code>Box&lt;T&gt;</code> để có một Recursive Type với một kích thước bộ nhớ xác định:</p>
 <pre><code class="language-bash">help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to make `List` representable
   |
@@ -2555,7 +2569,7 @@ error: could not compile `cons-list` due to 2 previous errors
   |               ++++    +
 </code></pre>
 <p>Bởi vì <code>Box&lt;T&gt;</code> là một pointer, Rust luôn biết chính xác bao nhiêu bộ nhớ mà một <code>Box&lt;T&gt;</code> <strong>pointer</strong> cần.</p>
-<p><img src="basic//media/2022/03/cons-box.png" alt="" /></p>
+<p><img src="basic/./box-cons-box.png" alt="" /></p>
 <p>Chương trình của chúng ta lúc này sẽ là:</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">enum List {
   Cons(i32, Box&lt;List&gt;),
@@ -2709,7 +2723,7 @@ hãy ngắt nó thành nhiều dòng -.-</p>
 }</code></pre></pre>
 <h2 id="doc-comments"><a class="header" href="#doc-comments">Doc comments</a></h2>
 <p>Doc comments sẽ được Compiler parse thành <a href="https://doc.rust-lang.org/rust-by-example/meta/doc.html">HTML documentation</a>
-khi render document bằng <a href="basic/code-comment/./cargo-doc.html"><code>cargo doc</code></a>.</p>
+khi render document bằng <code>cargo doc</code>.</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Generate library docs for the following item.
@@ -2780,7 +2794,7 @@ pub fn add_one(x: i32) -&gt; i32 {
 <span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="doc-comments-1"><a class="header" href="#doc-comments-1">Doc comments</a></h2>
 <p>Doc comments sẽ được Compiler parse thành <a href="https://doc.rust-lang.org/rust-by-example/meta/doc.html">HTML documentation</a>
-khi render document bằng <a href="basic/code-comment/./cargo-doc.html"><code>cargo doc</code></a>.</p>
+khi render document bằng <code>cargo doc</code>.</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Generate library docs for the following item.
@@ -3521,14 +3535,14 @@ if let Some(data) = get_data() {
 }
 <span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="result-1"><a class="header" href="#result-1"><a href="https://doc.rust-lang.org/std/result/"><code>Result</code></a></a></h1>
-<p>Tương tự như <a href="basic/error-handling/./option.html"><code>Option</code></a>. 
+<p>Tương tự như <code>Option</code>.
 Một kết quả trả về (<a href="https://doc.rust-lang.org/std/result/"><code>Result</code></a>)
 của một function thường sẽ có hai trường hợp:</p>
 <ul>
 <li>thành công (<a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Ok"><code>Ok</code></a>) và trả về kết quả</li>
 <li>hoặc lỗi (<a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err"><code>Err</code></a>) và trả về thông tin lỗi.</li>
 </ul>
-<p><a href="https://doc.rust-lang.org/std/result/"><code>Result</code></a> là một phiên bản cao cấp hơn của <a href="basic/error-handling/../option/README.html"><code>Option</code></a>.
+<p><a href="https://doc.rust-lang.org/std/result/"><code>Result</code></a> là một phiên bản cao cấp hơn của <code>Option</code>.
 Nó mô tả <em>lỗi gì</em> đang xảy ra thay vì khả năng <em>tồn tại</em> giá trị hay không.</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3597,9 +3611,12 @@ assert_eq!(x.err(), None);
 let x: Result&lt;u32, &amp;str&gt; = Err(&quot;Nothing here&quot;);
 assert_eq!(x.err(), Some(&quot;Nothing here&quot;));</code></pre></pre>
 <h1 id="toán-tử--2"><a class="header" href="#toán-tử--2">Toán tử <code>?</code></a></h1>
-<p>Khi viết code mà có quá nhiều functions trả về <a href="basic/error-handling/./result.html"><code>Result</code></a>, việc handle Err sẽ khá nhàm chán. Toán tử chấm hỏi <a href="https://doc.rust-lang.org/std/ops/trait.Try.html">?</a> cho phép dừng function tại vị trí đó và return cho function cha nếu <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ở vị trí đó là Err.</p>
+<p>Khi viết code mà có quá nhiều functions trả về <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a>, việc handle <code>Err</code> sẽ khá nhàm chán.
+Toán tử chấm hỏi <a href="https://doc.rust-lang.org/std/ops/trait.Try.html"><code>?</code></a> cho phép dừng function tại vị trí đó và return cho function cha nếu <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ở vị trí đó là <code>Err</code>.</p>
 <p>Nó sẽ thay thế đoạn code sau:</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">use std::fs::File;
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fs::File;
 use std::io::prelude::*;
 use std::io;
 
@@ -3625,9 +3642,12 @@ fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
     return Err(e)
   }
   Ok(())
-}</code></pre></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p>thành</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">use std::fs::File;
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fs::File;
 use std::io::prelude::*;
 use std::io;
 
@@ -3644,7 +3664,8 @@ fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
   file.write_all(format!(&quot;age: {}\n&quot;, info.age).as_bytes())?;
   file.write_all(format!(&quot;rating: {}\n&quot;, info.rating).as_bytes())?;
   Ok(())
-}</code></pre></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p>Gọn đẹp hơn rất nhiều.</p>
 <p>Toán tử <code>?</code> sẽ unwrap giá trị <code>Ok</code>, hoặc return giá trị <code>Err</code> ở vị trí gần toán tử đó.</p>
 <p><code>?</code> chỉ có thể được dùng trong function có kiểu dữ liệu trả về là <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a>.</p>
@@ -4182,7 +4203,7 @@ và <a href="basic/rustdoc/../code-comment/doc-comment.html">Doc comments</a>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="doc-comments-2"><a class="header" href="#doc-comments-2">Doc comments</a></h2>
 <p>Doc comments sẽ được Compiler parse thành <a href="https://doc.rust-lang.org/rust-by-example/meta/doc.html">HTML documentation</a>
-khi render document bằng <a href="basic/code-comment/./cargo-doc.html"><code>cargo doc</code></a>.</p>
+khi render document bằng <code>cargo doc</code>.</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Generate library docs for the following item.
@@ -4876,7 +4897,7 @@ env_logger = &quot;0.8.4&quot;
 <li>Github: <a href="https://github.com/rust-lang/log">https://github.com/rust-lang/log</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="env_logger-1"><a class="header" href="#env_logger-1"><a href="https://docs.rs/env_logger"><code>env_logger</code></a></a></h2>
-<p>[<code>log</code>] thường được sử dụng với <a href="https://docs.rs/env_logger"><code>env_logger</code></a> để cấu hình logging
+<p><a href="https://docs.rs/log"><code>log</code></a> thường được sử dụng với <a href="https://docs.rs/env_logger"><code>env_logger</code></a> để cấu hình logging
 thông qua biến môi trường.</p>
 <p>Mặc định, <code>env_logger</code> ghi log ra <code>stderr</code>.</p>
 <p>File: Cargo.toml</p>

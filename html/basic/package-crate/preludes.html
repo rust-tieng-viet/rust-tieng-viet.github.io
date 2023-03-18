@@ -159,8 +159,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="preludes"><a class="header" href="#preludes"><a href="https://doc.rust-lang.org/std/prelude/">Preludes</a></a></h1>
-<p><a href="https://doc.rust-lang.org/std/prelude/">Preludes</a> là những thứ được định nghĩa trong <a href="https://doc.rust-lang.org/std/index.html"><code>std</code></a>,
+                        <h1 id="preludes"><a class="header" href="#preludes"><a href="https://doc.rust-lang.org/std/prelude/"><code>Preludes</code></a></a></h1>
+<p><a href="https://doc.rust-lang.org/std/prelude/"><code>Preludes</code></a> là những thứ được định nghĩa trong <a href="https://doc.rust-lang.org/std/index.html"><code>std</code></a>,
 và được import sẵn, vì chúng thường sẽ phải được dùng trong mọi chương trình Rust.
 Bạn có thể sử dụng mà không cần phải import, ví dụ như: <a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a>, 
 <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a>, <a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Ok"><code>Ok</code></a>, <a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err"><code>Err</code></a>, ...</p>
@@ -168,41 +168,41 @@ Bạn có thể sử dụng mà không cần phải import, ví dụ như: <a hr
 <p>Đây là danh sách những thứ được preludes: <a href="https://doc.rust-lang.org/std/prelude/#prelude-contents">https://doc.rust-lang.org/std/prelude/#prelude-contents</a></p>
 <hr />
 <ul>
-<li><code>[std::marker]::{[Copy], [Send], [Sized], [Sync], [Unpin]}</code>,
+<li><code><a href="https://doc.rust-lang.org/std/marker"><code>std::marker</code></a>::{<a href="https://doc.rust-lang.org/stable/std/marker/trait.Copy.html"><code>Copy</code></a>, <a href="https://doc.rust-lang.org/stable/std/marker/trait.Send.html"><code>Send</code></a>, <a href="https://doc.rust-lang.org/stable/std/marker/trait.Sized.html"><code>Sized</code></a>, <a href="https://doc.rust-lang.org/stable/std/marker/trait.Sync.html"><code>Sync</code></a>, <a href="https://doc.rust-lang.org/stable/std/marker/trait.Unpin.html"><code>Unpin</code></a>}</code>,
 marker traits that indicate fundamental properties of types.</li>
-<li><code>[std::ops]::{[Drop], [Fn], [FnMut], [FnOnce]}</code>, various
+<li><code><a href="https://doc.rust-lang.org/std/ops"><code>std::ops</code></a>::{<a href="https://doc.rust-lang.org/stable/std/ops/trait.Drop.html"><code>Drop</code></a>, <a href="https://doc.rust-lang.org/stable/std/ops/trait.Fn.html"><code>Fn</code></a>, <a href="https://doc.rust-lang.org/stable/std/ops/trait.FnMut.html"><code>FnMut</code></a>, <a href="https://doc.rust-lang.org/stable/std/ops/trait.FnOnce.html"><code>FnOnce</code></a>}</code>, various
 operations for both destructors and overloading <code>()</code>.</li>
-<li><code>[std::mem]::[drop][mem::drop]</code>, a convenience function for explicitly
+<li><code><a href="https://doc.rust-lang.org/std/mem"><code>std::mem</code></a>::<a href="https://doc.rust-lang.org/std/mem/fn.drop.html"><code>drop</code></a></code>, a convenience function for explicitly
 dropping a value.</li>
-<li><code>[std::boxed]::[Box]</code>, a way to allocate values on the heap.</li>
-<li><code>[std::borrow]::[ToOwned]</code>, the conversion trait that defines
-[<code>to_owned</code>], the generic method for creating an owned type from a
+<li><code><a href="https://doc.rust-lang.org/std/boxed"><code>std::boxed</code></a>::<a href="https://doc.rust-lang.org/stable/std/boxed/struct.Box.html"><code>Box</code></a></code>, a way to allocate values on the heap.</li>
+<li><code><a href="https://doc.rust-lang.org/std/borrow"><code>std::borrow</code></a>::<a href="https://doc.rust-lang.org/stable/std/borrow/trait.ToOwned.html"><code>ToOwned</code></a></code>, the conversion trait that defines
+<a href="https://doc.rust-lang.org/stable/std/borrow/trait.ToOwned.html#tymethod.to_owned"><code>to_owned</code></a>, the generic method for creating an owned type from a
 borrowed type.</li>
-<li><code>[std::clone]::[Clone]</code>, the ubiquitous trait that defines
-[<code>clone</code>][Clone::clone], the method for producing a copy of a value.</li>
-<li><code>[std::cmp]::{[PartialEq], [PartialOrd], [Eq], [Ord]}</code>, the
+<li><code><a href="https://doc.rust-lang.org/std/clone"><code>std::clone</code></a>::<a href="https://doc.rust-lang.org/stable/std/clone/trait.Clone.html"><code>Clone</code></a></code>, the ubiquitous trait that defines
+<a href="https://doc.rust-lang.org/stable/std/clone/trait.Clone.html#tymethod.clone"><code>clone</code></a>, the method for producing a copy of a value.</li>
+<li><code><a href="https://doc.rust-lang.org/std/cmp"><code>std::cmp</code></a>::{<a href="https://doc.rust-lang.org/stable/std/cmp/trait.PartialEq.html"><code>PartialEq</code></a>, <a href="https://doc.rust-lang.org/stable/std/cmp/trait.PartialOrd.html"><code>PartialOrd</code></a>, <a href="https://doc.rust-lang.org/stable/std/cmp/trait.Eq.html"><code>Eq</code></a>, <a href="https://doc.rust-lang.org/stable/std/cmp/trait.Ord.html"><code>Ord</code></a>}</code>, the
 comparison traits, which implement the comparison operators and are often
 seen in trait bounds.</li>
-<li><code>[std::convert]::{[AsRef], [AsMut], [Into], [From]}</code>, generic
+<li><code><a href="https://doc.rust-lang.org/std/convert"><code>std::convert</code></a>::{<a href="https://doc.rust-lang.org/stable/std/convert/trait.AsRef.html"><code>AsRef</code></a>, <a href="https://doc.rust-lang.org/stable/std/convert/trait.AsMut.html"><code>AsMut</code></a>, <a href="https://doc.rust-lang.org/stable/std/convert/trait.Into.html"><code>Into</code></a>, <a href="https://doc.rust-lang.org/stable/std/convert/trait.From.html"><code>From</code></a>}</code>, generic
 conversions, used by savvy API authors to create overloaded methods.</li>
-<li><code>[std::default]::[Default]</code>, types that have default values.</li>
-<li><code>[std::iter]::{[Iterator], [Extend], [IntoIterator], [DoubleEndedIterator], [ExactSizeIterator]}</code>,
+<li><code><a href="https://doc.rust-lang.org/std/default"><code>std::default</code></a>::<a href="https://doc.rust-lang.org/stable/std/default/trait.Default.html"><code>Default</code></a></code>, types that have default values.</li>
+<li><code><a href="https://doc.rust-lang.org/std/iter"><code>std::iter</code></a>::{<a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html"><code>Iterator</code></a>, <a href="https://doc.rust-lang.org/stable/std/iter/trait.Extend.html"><code>Extend</code></a>, <a href="https://doc.rust-lang.org/stable/std/iter/trait.IntoIterator.html"><code>IntoIterator</code></a>, <a href="https://doc.rust-lang.org/stable/std/iter/trait.DoubleEndedIterator.html"><code>DoubleEndedIterator</code></a>, <a href="https://doc.rust-lang.org/stable/std/iter/trait.ExactSizeIterator.html"><code>ExactSizeIterator</code></a>}</code>,
 iterators of various
 kinds.</li>
-<li><code>[std::option]::[Option]::{[self][Option], [Some], [None]}</code>, a
+<li><code><a href="https://doc.rust-lang.org/std/option"><code>std::option</code></a>::<a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a>::{<a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>self</code></a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html#variant.Some"><code>Some</code></a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html#variant.None"><code>None</code></a>}</code>, a
 type which expresses the presence or absence of a value. This type is so
 commonly used, its variants are also exported.</li>
-<li><code>[std::result]::[Result]::{[self][Result], [Ok], [Err]}</code>, a type
+<li><code><a href="https://doc.rust-lang.org/std/result"><code>std::result</code></a>::<a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a>::{<a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>self</code></a>, <a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Ok"><code>Ok</code></a>, <a href="https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err"><code>Err</code></a>}</code>, a type
 for functions that may succeed or fail. Like <a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a>, its variants are
 exported as well.</li>
-<li><code>[std::string]::{[String], [ToString]}</code>, heap-allocated strings.</li>
-<li><code>[std::vec]::[Vec]</code>, a growable, heap-allocated vector.</li>
+<li><code><a href="https://doc.rust-lang.org/std/string"><code>std::string</code></a>::{<a href="https://doc.rust-lang.org/stable/std/string/struct.String.html"><code>String</code></a>, <a href="https://doc.rust-lang.org/stable/std/string/trait.ToString.html"><code>ToString</code></a>}</code>, heap-allocated strings.</li>
+<li><code><a href="https://doc.rust-lang.org/std/vec"><code>std::vec</code></a>::<a href="https://doc.rust-lang.org/stable/std/vec/struct.Vec.html"><code>Vec</code></a></code>, a growable, heap-allocated vector.</li>
 </ul>
-<p>The prelude used in Rust 2021, [<code>std::prelude::rust_2021</code>], includes all of the above,
+<p>The prelude used in Rust 2021, <a href="https://doc.rust-lang.org/std/prelude/rust_2021/index.html"><code>std::prelude::rust_2021</code></a>, includes all of the above,
 and in addition re-exports:</p>
 <ul>
-<li><code>[std::convert]::{[TryFrom], [TryInto]}</code>,</li>
-<li><code>[std::iter]::[FromIterator]</code>.</li>
+<li><code><a href="https://doc.rust-lang.org/std/convert"><code>std::convert</code></a>::{<a href="https://doc.rust-lang.org/std/convert/trait.TryFrom.html"><code>TryFrom</code></a>, <a href="https://doc.rust-lang.org/std/convert/trait.TryInto.html"><code>TryInto</code></a>}</code>,</li>
+<li><code><a href="https://doc.rust-lang.org/std/iter"><code>std::iter</code></a>::<a href="https://doc.rust-lang.org/std/iter/trait.FromIterator.html"><code>FromIterator</code></a></code>.</li>
 </ul>
 
                     </main>

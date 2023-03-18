@@ -243,7 +243,7 @@ error: could not compile `cons-list` due to 2 previous errors
 <span class="boring">}</span></code></pre></pre>
 <p>Để xác định bao nhiêu bộ nhớ cần để allocate cho <code>Message</code>, Rust sẽ kiểm tra từng variant (biến thể của enum) để xem variant nào cần bộ nhớ nhiều nhất. Rust thấy rằng <code>Message::Quit</code> không cần, <code>Message::Move</code> phải cần ít nhất bộ nhớ để lưu hai giá trị <code>i32</code>. Tương tự với các variant còn lại. Bởi vì một thời điểm cho có một variant được sử dụng, do đó bộ nhớ tối đa mà <code>Message</code> cần sẽ là một nhớ cần để lưu trữ variant lớn nhất.</p>
 <p>Quay lại với Cons List, bộ nhớ mà Rust tính toán được có thể đến vô tận.</p>
-<p><img src="/media/2022/03/cons.svg" alt="" /></p>
+<p><img src="./box-cons.svg" alt="" /></p>
 <p>Theo như gợi ý của compiler, chúng ta có thể sử dụng <code>Box&lt;T&gt;</code> để có một Recursive Type với một kích thước bộ nhớ xác định:</p>
 <pre><code class="language-bash">help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to make `List` representable
   |
@@ -251,7 +251,7 @@ error: could not compile `cons-list` due to 2 previous errors
   |               ++++    +
 </code></pre>
 <p>Bởi vì <code>Box&lt;T&gt;</code> là một pointer, Rust luôn biết chính xác bao nhiêu bộ nhớ mà một <code>Box&lt;T&gt;</code> <strong>pointer</strong> cần.</p>
-<p><img src="/media/2022/03/cons-box.png" alt="" /></p>
+<p><img src="./box-cons-box.png" alt="" /></p>
 <p>Chương trình của chúng ta lúc này sẽ là:</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">enum List {
   Cons(i32, Box&lt;List&gt;),

@@ -185,7 +185,7 @@ assert_eq!(Ok(2), two);
 let nope = &quot;j&quot;.parse::&lt;u32&gt;();
 assert!(nope.is_err());</code></pre></pre>
 <p><code>parse</code> là một phương thức general nên thường được sử dụng với kiểu dữ liệu
-như trên hoặc sử dụng <a href="./turbofish.html">turbofish</a> <code>::&lt;&gt;</code> để thuật toán inference
+như trên hoặc sử dụng <a href="../turbofish.html">turbofish</a> <code>::&lt;&gt;</code> để thuật toán inference
 có thể hiểu để parse thành đúng kiểu bạn cần.</p>
 <h1 id="parse-str-to-struct"><a class="header" href="#parse-str-to-struct">Parse <code>str</code> to <code>Struct</code></a></h1>
 <p>Bạn có 1 struct và muốn parse 1 str thành struct đó, bạn sẽ cần impl trait <code>FromStr</code></p>
@@ -261,7 +261,7 @@ let c: Color = &quot;red&quot;.parse().unwrap();
 assert_eq!(c, Color::Red);</code></pre></pre>
 <h1 id="references"><a class="header" href="#references">References</a></h1>
 <ul>
-<li><a href="./trait.html">Trait</a></li>
+<li><a href="../trait/README.html">Trait</a></li>
 <li><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse">https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse</a></li>
 <li><a href="https://doc.rust-lang.org/nightly/std/str/trait.FromStr.html">https://doc.rust-lang.org/nightly/std/str/trait.FromStr.html</a></li>
 </ul>

@@ -160,9 +160,12 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="toán-tử-"><a class="header" href="#toán-tử-">Toán tử <code>?</code></a></h1>
-<p>Khi viết code mà có quá nhiều functions trả về <a href="./result.html"><code>Result</code></a>, việc handle Err sẽ khá nhàm chán. Toán tử chấm hỏi <a href="https://doc.rust-lang.org/std/ops/trait.Try.html">?</a> cho phép dừng function tại vị trí đó và return cho function cha nếu <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ở vị trí đó là Err.</p>
+<p>Khi viết code mà có quá nhiều functions trả về <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a>, việc handle <code>Err</code> sẽ khá nhàm chán.
+Toán tử chấm hỏi <a href="https://doc.rust-lang.org/std/ops/trait.Try.html"><code>?</code></a> cho phép dừng function tại vị trí đó và return cho function cha nếu <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ở vị trí đó là <code>Err</code>.</p>
 <p>Nó sẽ thay thế đoạn code sau:</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">use std::fs::File;
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fs::File;
 use std::io::prelude::*;
 use std::io;
 
@@ -188,9 +191,12 @@ fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
     return Err(e)
   }
   Ok(())
-}</code></pre></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p>thành</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">use std::fs::File;
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fs::File;
 use std::io::prelude::*;
 use std::io;
 
@@ -207,7 +213,8 @@ fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
   file.write_all(format!(&quot;age: {}\n&quot;, info.age).as_bytes())?;
   file.write_all(format!(&quot;rating: {}\n&quot;, info.rating).as_bytes())?;
   Ok(())
-}</code></pre></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p>Gọn đẹp hơn rất nhiều.</p>
 <p>Toán tử <code>?</code> sẽ unwrap giá trị <code>Ok</code>, hoặc return giá trị <code>Err</code> ở vị trí gần toán tử đó.</p>
 <p><code>?</code> chỉ có thể được dùng trong function có kiểu dữ liệu trả về là <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a>.</p>

@@ -187,7 +187,7 @@ fn main() {
 <p>Do <code>i32</code> được Copy nên chúng ta có thể sử dụng <code>my_number</code> nhiều lần mà không cần borrow <code>&amp;</code> như struct.</p>
 <h1 id="clone-trait"><a class="header" href="#clone-trait">Clone trait</a></h1>
 <p>Nếu bạn đọc document của String: <a href="https://doc.rust-lang.org/std/string/struct.String.html">https://doc.rust-lang.org/std/string/struct.String.html</a></p>
-<p><img src="/media/2022/02/duyet-clone-trait.png" alt="" /></p>
+<p><img src="clone-trait.png" alt="" /></p>
 <p>String không được implement <strong>Copy</strong>, thay vào đó là <strong>Clone</strong>. Clone cũng giúp copy giá trị nhưng sẽ cần rất nhiều memory, và ta phải tự gọi method <code>.clone()</code> chứ Rust sẽ không tự Clone.</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">fn prints_country(country_name: String) {
   println!(&quot;{}&quot;, country_name);
