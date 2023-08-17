@@ -4,7 +4,7 @@ Công ty hoặc cộng đồng sử dụng Rust tại Việt Nam.
 
 | Organization   | Contact (GitHub User Name)          | Environment | Description of Use |
 | -------------  | ----------------------------------- | ----------- | ------------------ |
-| Fossil Vietnam | [@duyet](https://github.com/duyet)  | Staging     | Data Platform      |
+| Fossil Vietnam | [@duyet](https://github.com/duyet)  | Production  | Data Platform      |
 
 Đóng góp bổ sung [tại đây].
 
