@@ -15,6 +15,7 @@ edit-url-template = "https://github.com/rust-tieng-viet/rust-tieng-viet.github.i
 [output.linkcheck]
 # Check links on the internet
 follow-web-links = false
+optional = true
 
 [output.html.playground]
 editable = true
