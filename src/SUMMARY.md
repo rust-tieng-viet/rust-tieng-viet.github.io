@@ -82,10 +82,6 @@
   - [Iter]()
   - [Sử dụng Enum để chứa nhiều loại dữ liệu]()
 
-- [Box](./basic/box.md)
-
-- [Cow](./basic/cow.md)
-
 - [`/// Viết code comment`](./basic/code-comment/README.md)
 
   - [Doc comments](./basic/code-comment/doc-comment.md)
@@ -132,12 +128,13 @@
   - [Doc comments](./basic/code-comment/doc-comment.md)
   - [Sử dụng README.md làm crate document](./basic/rustdoc/doc-README.md)
 
-- [Smart Pointers]()
-  - [`Box<T>`]()
-  - [`Rc<T>`, Reference Counted]()
 
 # Nâng cao
 
+- [Smart Pointers]()
+  - [`Box<T>`](./advanced/box.md)
+  - [`Rc<T>`, Reference Counted](./advanced/rc.md)
+  - [Cow](./advanced/cow.md)
 - [`Saturating<T>`](./advanced/saturating.md)
 
 ---

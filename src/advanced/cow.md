@@ -1,7 +1,7 @@
 # [`Cow`]
 
-[`Cow`] là một enum cực kỳ tiện dụng, được định nghĩa là "clone on write".
-Tức ra nó sẽ trả về `&str` nếu bạn không cần một `String`, hoặc trả về một
+[`Cow`] là một smart pointer enum cực kỳ tiện dụng, được định nghĩa là "clone on write".
+Nó sẽ trả về `&str` nếu bạn không cần một `String`, hoặc trả về một
 `String` nếu bạn cần `String`. Tương tự với array `&[]` và `Vec`, v.v.
 
 Đây là định nghĩa của [`Cow`]:

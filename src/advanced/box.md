@@ -1,4 +1,4 @@
-# Box
+# `Box<T>`
 
 Tất cả giá trị trên Rust mặc định đều được allocated trên stack. Giá trị có thể được _boxed_, allocated trên heap bằng cách sử dụng `Box<T>`.
 `Box<T>` là một smart pointer của Rust cho phép allocated trên heap giá trị có kiểu `T`, còn pointer trỏ đến giá trị đó sẽ nằm trên stack.
