@@ -11,6 +11,12 @@
   / '-----' \
 ```
 
+# View the book locally
+
+```bash
+./dev.sh
+```
+
 # Build the book from source
 
 This book is using [mdBook](https://rust-lang.github.io/mdBook/), please install
