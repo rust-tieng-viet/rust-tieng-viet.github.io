@@ -157,7 +157,9 @@
 - [actix-web]()
 - [anyhow](./crates/anyhow.md)
 - [serde](./crates/serde.md)
-  - [serde_json](./crates/serde_json.md)
+  - [serde_json](./crates/serde/serde_json.md)
+  - [serde_toml](./crates/serde/serde_toml.md)
+  - [serde_csv](./crates/serde/serde_csv.md)
 - [clap]()
 - [log](./crates/log/README.md)
   - [env_logger](./crates/log/env_logger.md)
@@ -166,6 +168,21 @@
 - [lazy_static](./crates/lazy_static.md)
 - [indoc](./crates/indoc.md)
 - [rayon](./crates/rayon.md)
+- [polars](./crates/polars.md)
+
+---
+
+# Data Engineering
+
+- [Xử lý và phân tích dữ liệu](./data-engineering/data-processing.md)
+  - [Polars](./crates/polars.md)
+  - [serde](./crates/serde.md)
+    - [serde_json](./crates/serde/serde_json.md)
+    - [serde_toml](./crates/serde/serde_toml.md)
+    - [serde_csv](./crates/serde/serde_csv.md)
+- [High-performance data pipeline](./data-engineering/first-data-pipeline.md)
+- [Building scalable data-driven applications using Rust](./data-engineering/data-driven.md)
+- [Rust as an alternative to Python for data engineering tasks](./data-engineering/rust-as-alternative-python.md)
 
 ---
 
@@ -178,10 +195,3 @@
 - [The Default Trait]()
 - [Finalisation in destructors]()
 - [Temporary mutability]()
-
-# Rust for Data Engineering
-
-- [Using Rust for efficient data processing and analysis](./data-engineering/data-processing.md)
-- [First high-performance data pipelines in Rust](./data-engineering/first-data-pipeline.md)
-- [Building scalable data-driven applications using Rust](./data-engineering/data-driven.md)
-- [Rust as an alternative to Python for data engineering tasks](./data-engineering/rust-as-alternative-python.md)
