@@ -1,6 +1,8 @@
 # serde_json
 
-JSON đã trở thành một trong những định dạng trao đổi dữ liệu phổ biến, đa số các ngữ lập trình server-side đều có thể xử lý chúng. Nhờ vào [serde](https://crates.io/crates/serde) và [serde_json](https://crates.io/crates/serde_json) việc xử lý JSON cũng vô cùng dễ dàng với Rust. Các crate này cũng đã được test một cách kỹ càng và nhiều examples vô cùng phong phú dễ sử dụng.
+JSON đã trở thành một trong những định dạng trao đổi dữ liệu phổ biến, đa số các ngữ lập trình server-side đều có thể xử lý chúng.
+Nhờ vào [serde](https://crates.io/crates/serde) và [serde_json](https://crates.io/crates/serde_json) việc xử lý JSON cũng vô cùng dễ dàng với Rust.
+Các crate này cũng đã được test một cách kỹ càng và nhiều examples vô cùng phong phú dễ sử dụng.
 
 ```toml
 [dependencies]
@@ -8,7 +10,7 @@ serde = "1"
 serde_json = "1"
 ```
 
-# Parse JSON String into Rust
+# Parse chuỗi JSON thành Rust
 
 Giả sử chúng ta có đoạn JSON như sau:
 
@@ -167,7 +169,10 @@ fn print_an_address() -> Result<()> {
 
 ## References
 
+- [`serde`]
 - [JSON API documentation](https://docs.rs/serde_json)
 - [Serde API documentation](https://docs.rs/serde)
 - [Detailed documentation about Serde](https://serde.rs/)
 - [Setting up `#[derive(Serialize, Deserialize)]`](https://serde.rs/derive.html)
+
+[`serde`]: ../serde.md

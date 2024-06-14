@@ -30,4 +30,12 @@ fn main() {
 
 # Data formats
 
-- [serde_json](./serde_json.md)
+- [serde_json](./serde/serde_json.md)
+- [serde_yaml](./serde/serde_yaml.md)
+- [serde_toml](./serde/serde_toml.md)
+- [serde_csv](./serde/serde_csv.md)
+
+
+# References
+
+- http://serde.rs
