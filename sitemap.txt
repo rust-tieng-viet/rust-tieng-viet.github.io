@@ -38,6 +38,11 @@ https://rust-tieng-viet.github.io/design-pattern/creational
 https://rust-tieng-viet.github.io/design-pattern/structural
 https://rust-tieng-viet.github.io/getting-started/first-project
 https://rust-tieng-viet.github.io/getting-started/installation
+https://rust-tieng-viet.github.io/idioms/aim-for-immutability
+https://rust-tieng-viet.github.io/idioms/constructor
+https://rust-tieng-viet.github.io/idioms/default-trait
+https://rust-tieng-viet.github.io/idioms/format
+https://rust-tieng-viet.github.io/idioms/temporary-mutability
 https://rust-tieng-viet.github.io/basic/code-comment/doc-comment
 https://rust-tieng-viet.github.io/basic/enum/impl
 https://rust-tieng-viet.github.io/basic/enum/match
