@@ -26,3 +26,4 @@ Chạy tập tin [rustup-init.exe](https://forge.rust-lang.org/infra/other-insta
 ## References
 
 - [https://www.rust-lang.org/learn/get-started](https://www.rust-lang.org/learn/get-started)
+- [Rust Playground](./rust-playground.md)
