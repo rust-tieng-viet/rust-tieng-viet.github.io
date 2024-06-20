@@ -4,14 +4,22 @@ Xử lý DataFrame lớn, dễ sử dụng, hiệu năng cao và có nhiều ưu
 
 ![](./polars.png)
 
-File: Cargo.toml
+## Cài đặt
+
+```bash
+cargo add polars
+```
+
+Hoặc
 
 ```toml
+# File: Cargo.toml
+
 [dependencies]
 polars = { version = "x", features = ["lazy", ...]}
 ```
 
-Ví dụ:
+## Ví dụ
 
 ```rust
 use std::fs::File;
@@ -33,7 +41,7 @@ let mut df: DataFrame = df!(
 println!("{}", df);
 ```
 
-# Reference
+## References
 
 - https://pola.rs
 

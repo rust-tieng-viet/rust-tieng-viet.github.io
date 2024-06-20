@@ -1,6 +1,23 @@
-# serde
+# [`serde`]
 
 A generic serialization/deserialization framework
+
+## Cài đặt
+
+```bash
+cargo add serde
+```
+
+Hoặc
+
+```toml
+# File: Cargo.toml
+
+[dependencies]
+serde = "*"
+```
+
+## Sử dụng
 
 ```rust
 use serde::{Deserialize, Serialize};
@@ -28,7 +45,7 @@ fn main() {
 }
 ```
 
-# Data formats
+## Data formats
 
 - [serde_json](./serde/serde_json.md)
 - [serde_yaml](./serde/serde_yaml.md)
@@ -36,6 +53,9 @@ fn main() {
 - [serde_csv](./serde/serde_csv.md)
 
 
-# References
+## References
 
 - http://serde.rs
+
+
+[`serde`]: http://serde.rs
