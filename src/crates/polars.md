@@ -1,4 +1,4 @@
-# [`polars`]
+# [``polars``]
 
 Xử lý DataFrame lớn, dễ sử dụng, hiệu năng cao và có nhiều ưu điểm giống với Pandas nổi tiếng. Polars cũng được hỗ trợ trên Python.
 
@@ -10,8 +10,6 @@ File: Cargo.toml
 [dependencies]
 polars = { version = "x", features = ["lazy", ...]}
 ```
-
-
 
 Ví dụ:
 
@@ -35,7 +33,8 @@ let mut df: DataFrame = df!(
 println!("{}", df);
 ```
 
-
 # Reference
 
 - https://pola.rs
+
+[``polars``]: ttps://pola.rs

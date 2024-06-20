@@ -192,8 +192,9 @@
 
 - [Functional programming]()
 - [Use borrowed types for arguments]()
-- [Concatenating strings with `format!`]()
-- [Constructor]()
-- [The Default Trait]()
+- [Concatenating strings with `format!`](./idioms/format.md)
+- [Constructor](./idioms/constructor.md)
+  - [The Default Trait](./idioms/default-trait.md)
 - [Finalisation in destructors]()
-- [Temporary mutability]()
+- [Temporary mutability](./idioms/temporary-mutability.md)
+- [Aim For Immutability in Rust](./idioms/aim-for-immutability.md)
