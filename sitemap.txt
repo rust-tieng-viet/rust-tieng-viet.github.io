@@ -23,12 +23,15 @@ https://rust-tieng-viet.github.io/basic/turbofish
 https://rust-tieng-viet.github.io/basic/variables
 https://rust-tieng-viet.github.io/crates/anyhow
 https://rust-tieng-viet.github.io/crates/async_trait
+https://rust-tieng-viet.github.io/crates/chrono
 https://rust-tieng-viet.github.io/crates/indoc
 https://rust-tieng-viet.github.io/crates/lazy_static
 https://rust-tieng-viet.github.io/crates/log
 https://rust-tieng-viet.github.io/crates/polars
 https://rust-tieng-viet.github.io/crates/rayon
+https://rust-tieng-viet.github.io/crates/regex
 https://rust-tieng-viet.github.io/crates/serde
+https://rust-tieng-viet.github.io/crates/tokio
 https://rust-tieng-viet.github.io/data-engineering/data-driven
 https://rust-tieng-viet.github.io/data-engineering/data-processing
 https://rust-tieng-viet.github.io/data-engineering/first-data-pipeline
