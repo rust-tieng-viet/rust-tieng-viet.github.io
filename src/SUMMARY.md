@@ -166,6 +166,7 @@
 - [log](./crates/log/README.md)
   - [env_logger](./crates/log/env_logger.md)
 - [config]()
+- [chrono](./crates/chrono.md)
 - [async_trait](./crates/async_trait.md)
 - [lazy_static](./crates/lazy_static.md)
 - [indoc](./crates/indoc.md)
