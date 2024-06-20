@@ -3,15 +3,22 @@
 [`rayon`] là thư viện data-parallelism cho Rust, gọn nhẹ và dễ dàng convert từ
 code tính toán tuần tự sang song song mà vẫn đảm bảo không lỗi data-race. 
 
+## Cài đặt
 
-File: Cargo.toml
+```bash
+cargo add rayon
+```
+
+Hoặc
 
 ```toml
+# File: Cargo.toml
+
 [dependencies]
 rayon = "1.5"
 ```
 
-Ví dụ:
+## Ví dụ
 
 ```rust
 use rayon::prelude::*;

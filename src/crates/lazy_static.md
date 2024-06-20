@@ -2,16 +2,24 @@
 
 [`lazy_static`] là một macro cho phép khởi tạo biến `static` nhưng chứa giá trị
 được thực thi lúc runtime. Các giá trị này có thể là bất kỳ cái gì cần heap allocations,
-ví dụ như `Vector`, `HashMap` hoặc function call.
+ví dụ như [`Vec`], [`HashMap`] hoặc function call.
 
-File: Cargo.toml
+## Cài đặt
+
+```bash
+cargo add lazy_static
+```
+
+Hoặc
 
 ```toml
+# File: Cargo.toml
+
 [dependencies]
 lazy_static = "1"
 ```
 
-Ví dụ:
+## Ví dụ
 
 ```rust
 use lazy_static::lazy_static;
@@ -38,11 +46,11 @@ fn main() {
 }
 ```
 
-### References
+## References
 
 - Doc: <https://docs.rs/lazy_static>
 - Github: <https://github.com/rust-lang-nursery/lazy-static.rs>
 
-
-
 [`lazy_static`]: https://docs.rs/lazy_static
+[`Vec`]: https://doc.rust-lang.org/std/vec/struct.Vec.html
+[`HashMap`]: https://doc.rust-lang.org/std/collections/struct.HashMap.html

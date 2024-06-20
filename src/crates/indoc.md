@@ -4,17 +4,22 @@
 `indoc!()` macro nhận multiline string và un-indents lúc compile time,
 xoá tất cả khoảng trắng đầu tiên trên cách dòng dựa theo dòng đầu tiên.
 
+## Cài đặt
 
-File: Cargo.toml
+```bash
+cargo add indoc
+```
+
+Hoặc
 
 ```toml
+# File: Cargo.toml
+
 [dependencies]
 indoc = "1"
 ```
 
-
-
-Ví dụ:
+## Ví dụ
 
 ```rust
 use indoc::indoc;
