@@ -8,6 +8,7 @@
 # Bắt đầu
 
 - [Cài đặt Rust](./getting-started/installation.md)
+- [Rust Playground](./getting-started/rust-playground.md)
 - [Project đầu tiên](./getting-started/first-project.md)
 
 # Cơ bản
