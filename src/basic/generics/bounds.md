@@ -1,7 +1,7 @@
 # Bounds
 
 Cái này rất khó giải thích bằng tiếng Việt bằng một từ đơn giản.
-Khi sử dụng tổng quát hóa, type parameter thường phải sử dụng các trait
+Khi sử dụng genenic, type parameter thường phải sử dụng các trait
 như các ràng buộc, giới hạn (bounds) để quy định chức năng (functionality) của kiểu
 đang được implement.
 

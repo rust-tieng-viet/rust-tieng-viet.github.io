@@ -6,6 +6,4 @@ Công ty hoặc cộng đồng sử dụng Rust tại Việt Nam.
 | -------------  | ----------------------------------- | ----------- | ------------------ |
 | Fossil Vietnam | [@duyet](https://github.com/duyet)  | Production  | Data Platform      |
 
-Đóng góp bổ sung [tại đây].
-
-[tại đây]: https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/who-is-using.md
+[+ thêm](https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/who-is-using.md)

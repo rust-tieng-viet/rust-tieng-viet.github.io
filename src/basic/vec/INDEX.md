@@ -35,7 +35,6 @@ d.pop();
 
 ## Kiểm tra kích thước của vector
 
-
 ```rust
 let d = vec![0; 10];
 
