@@ -17,7 +17,7 @@ $ident::<T>
 
 để chỉ định kiểu dữ liệu cho generic parameter. Sau đây là một số ví dụ để làm rõ hơn.
 
-# Generic Function
+## Generic Function
 
 Ví dụ function `std::mem::size_of()` có definition như sau:
 
@@ -34,7 +34,7 @@ std::mem::size_of::<u32>()
 
 sẽ cho ta biết size của u32 theo số bytes.
 
-# Generic Method
+## Generic Method
 
 Phương thức `parse()` của `str` bạn cũng sẽ hay gặp cách sử dụng với cú pháp turbofish:
 
@@ -77,7 +77,7 @@ Cú pháp như sau:
 [1, 2, 3, 4].iter().product::<u32>()
 ```
 
-# Generic Struct
+## Generic Struct
 
 Trong trường hợp compiler không có đủ thông tin để infer khi tạo generic struct, 
 chúng ta cũng có thể sử dụng turbofish syntax. Ví dụ struct `Vec` có định nghĩa như sau
@@ -108,7 +108,7 @@ pub struct HashSet<T, S = RandomState> { /* fields omitted */ }
 
 Chúng ta có thể sử dụng cú pháp này với mọi Rust collections.
 
-# Generic Enum
+## Generic Enum
 
 Tuy nhiên Enum lại không theo quy tắc trên, bởi vì enum trong Rust không được 
 scoped tại enum name, do đó ta đặt turbofish sau enum variant. 
@@ -137,7 +137,7 @@ Ok::<u8, ()>(10)
 Err::<u8, ()>(()) 
 ```
 
-# References
+## References
 
 - [Generic Types, Traits, and Lifetimes](https://doc.rust-lang.org/book/ch10-00-generics.html#generic-types-traits-and-lifetimes)
 - [Generics in the rust book](https://doc.rust-lang.org/book/generics.html)

@@ -22,7 +22,6 @@
 - [Cargo](./basic/cargo/README.md)
 
 - [Packages và Crates](./basic/package-crate/README.md)
-
   - [Package layout](./basic/package-crate/package-layout.md)
   - [Crate](./basic/package-crate/crate.md)
   - [use crate](./basic/package-crate/use-crate/README.md)
@@ -35,7 +34,6 @@
 - [Struct](./basic/struct.md)
 
 - [Trait](./basic/trait/README.md)
-
   - [Khai báo Trait](./basic/trait/define-a-trait.md)
   - [Implement Trait cho một Type](./basic/trait/impl-trait.md)
   - [Default Implementations](./basic/trait/default-impls.md)
@@ -55,7 +53,6 @@
   - [Display]()
 
 - [Enum](./basic/enum/README.md)
-
   - [match Enum](./basic/enum/match.md)
   - [Mang Variants ra ngoài scope của Enum](./basic/enum/use-variants.md)
   - [impl Enum](./basic/enum/impl.md)
@@ -65,11 +62,10 @@
     - [`unwrap_or_default()`](./basic/enum/option/unwrap_or_default.md)
     - [if let Some(x) = x](./basic/enum/option/if_let_some.md)
   - [`Result<T, E>`](./basic/enum/result/README.md)
-    - [Convert `Result` sang `Option`](./basic/enum/result/result-to-option.md)
+    - [`Result` -> `Option`](./basic/enum/result/result-to-option.md)
     - [Toán tử `?`](./basic/enum/result/question-mark.md)
 
 - [Generics](./basic/generics/README.md)
-
   - [Generic Functions](./basic/generics/functions.md)
   - [Generic Struct](./basic/generics/struct.md)
   - [Generic Enum](./basic/generics/enum.md)
@@ -79,12 +75,11 @@
   - [where](./basic/generics/where.md)
 
 - [Vec](./basic/vec/INDEX.md)
-
-  - [Iter]()
+  - [Iter](./basic/vec/iter.md)
   - [Sử dụng Enum để chứa nhiều loại dữ liệu]()
 
-- [`/// Viết code comment`](./basic/code-comment/README.md)
-
+- [`Code comment`](./basic/code-comment/README.md)
+  - [Regular comments](./basic/code-comment/regular-comment.md)
   - [Doc comments](./basic/code-comment/doc-comment.md)
 
 - [Turbofish `::<>`](./basic/turbofish.md)
@@ -92,11 +87,11 @@
 - [macros!](./basic/macro/README.md)
 
   - [Khác nhau giữa Macros và Functions](./basic/macro/macros-vs-functions.md)
-  - [Macros mặc định](./basic/macro/standard-macros.md)
-  - [println!](./basic/macro/println.md)
-  - [format!](./basic/macro/format.md)
-  - [todo!](./basic/macro/todo.md)
-  - [macro_rules!](./basic/macro/macro_rules.md)
+  - [Standard Macros](./basic/macro/standard-macros.md)
+  - [`println!`](./basic/macro/println.md)
+  - [`format!`](./basic/macro/format.md)
+  - [`todo!`](./basic/macro/todo.md)
+  - [`macro_rules!`](./basic/macro/macro_rules.md)
 
 - [match](./basic/match/README.md)
 
@@ -107,14 +102,13 @@
 - [#[attributes]](./basic/attr.md)
 
 - [Xử lý lỗi](./basic/error-handling/README.md)
-
   - [panic](./basic/error-handling/panic.md)
   - [Option](./basic/error-handling/option.md)
   - [Result](./basic/error-handling/result.md)
     - [Result map](./basic/error-handling/result-map.md)
     - [Result alias](./basic/error-handling/result-alias.md)
-  - [Custom error]()
-  - [Boxing error]()
+  - [Boxing error](./basic/error-handling/boxing-error.md)
+  - [Custom error](./basic/error-handling/custom-error.md)
 
 - [Viết Tests](./basic/testing/README.md)
 
@@ -132,10 +126,12 @@
 
 # Nâng cao
 
-- [Smart Pointers]()
-  - [`Box<T>`](./advanced/box.md)
-  - [`Rc<T>`, Reference Counted](./advanced/rc.md)
-  - [Cow](./advanced/cow.md)
+- [Smart Pointers](./advanced/smart-pointer/README.md)
+  - [`Box<T>`](./advanced/smart-pointer/box.md)
+  - [`Rc<T>`, Reference Counted](./advanced/smart-pointer/rc.md)
+  - [Cow](./advanced/smart-pointer/cow.md)
+  - [Ref<T>](./advanced/smart-pointer/ref.md)
+  - [RefMut<T>](./advanced/smart-pointer/refmut.md)
 - [`Saturating<T>`](./advanced/saturating.md)
 
 ---

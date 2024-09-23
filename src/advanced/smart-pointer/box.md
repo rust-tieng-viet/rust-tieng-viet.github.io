@@ -24,7 +24,7 @@ Lưu một giá trị đơn giản trên Box không mang lại lợi ích gì c�
 
 Chúng ta sẽ làm rõ ngay sau đây.
 
-# 1. Recursive types với `Box`
+## 1. Recursive types với `Box`
 
 Tại compile time, Rust cần biết cần phải biết cần bao nhiêu bộ nhớ. Một trong những kiểu dữ liệu mà Rust không biết trước được size là _recursive type._ Giá trị có thể là một phần của giá trị khác có cùng một kiểu. Bởi vì nesting of values theo lý thuyết có thể kéo dài đến vô hạn. Trong trường hợp này ta có thể dùng `Box`.
 
@@ -134,7 +134,7 @@ fn main() {
 }
 ```
 
-# 2. Sử dụng _trait objects_ cho phép sử dụng giá trị từ nhiều kiểu dữ liệu khác nhau
+## 2. Sử dụng _trait objects_ cho phép sử dụng giá trị từ nhiều kiểu dữ liệu khác nhau
 
 Một giới hạn của `Vec` là chỉ có thể lưu trữ các thành phần có kiểu dữ liệu giống nhau mà thôi. Ta có thể lách luật trong một số trường hợp bằng cách sử dụng enum có nhiều variant giữ nhiều kiểu dữ liệu khác nhau
 
@@ -185,7 +185,7 @@ Sử dụng trait object, Rust type system sẽ chắc chắn là tại thời �
 
 Lý do cần sử dụng pointer reference `&` hoặc smart pointer `Box<T>` bởi vì compiler không biết chính xác về kiểu dữ liệu, Rust sẽ dùng pointer của trait object để biết được method nào để cần được gọi. Xem thêm về **[Trait Objects Perform Dynamic Dispatch](https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch).**
 
-# References
+## References
 
 - [Using Box<T> to Point to Data on the Heap](https://doc.rust-lang.org/book/ch15-01-box.html)
 - [Box, stack and heap - Rust By Example](https://doc.rust-lang.org/rust-by-example/std/box.html#box-stack-and-heap)

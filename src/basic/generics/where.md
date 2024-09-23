@@ -1,8 +1,7 @@
 # Mệnh đề `where`
 
-Một bound có thể được chỉ dẫn sau mệnh đề `where` ngay trước `{` của function.
-
-`where` giúp cho việc định nghĩa các generic types và bounds một cách rõ ràng hơn.
+Mệnh đề `where` được sử dụng để làm rõ ràng hơn trong việc định nghĩa các generic types và bounds.
+Nó cho phép chúng ta chỉ định các bound một cách tường minh ngay trước hàm, giúp cho mã nguồn trở nên dễ đọc và hiểu hơn.
 
 ```rust
 # use std::fmt::Display;

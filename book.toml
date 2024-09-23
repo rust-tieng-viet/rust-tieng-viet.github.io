@@ -12,10 +12,17 @@ edition = "2021"
 git-repository-url = "https://github.com/rust-tieng-viet/rust-tieng-viet.github.io"
 edit-url-template = "https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/{path}"
 
+[output.html.playground]
+editable = true
+
+[output.html.print]
+enable = true    # include support for printable output
+page-break = true # insert page-break after each chapter
+
+[output.html.search]
+enable = true            # enables the search feature
+
 [output.linkcheck]
 # Check links on the internet
 follow-web-links = false
 optional = true
-
-[output.html.playground]
-editable = true

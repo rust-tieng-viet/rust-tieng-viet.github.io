@@ -9,3 +9,12 @@ phần này mình sẽ không bàn đến việc viết good tests như thế n�
 chúng ta sẽ bàn về những gì mà Rust cung cấp để giúp chúng ta viết tests, 
 những công cụ, macros, chạy tests, cách tổ chức unit tests 
 và integration tests.
+
+
+### Nội dung
+
+- [Tổ chức Tests](./test-organization.md)
+  - [Unit Tests](./unit-tests.md)
+  - [Integration Tests](./integration-tests.md)
+  - [Doc Tests](./doc-tests.md)
+- [Xung đột biến môi trường](./env-conflict.md)

@@ -1,4 +1,4 @@
-# [`Cow`]
+# [`Cow`] - clone-on-write smart pointer
 
 [`Cow`] là một smart pointer enum cực kỳ tiện dụng, được định nghĩa là "clone on write".
 Nó sẽ trả về `&str` nếu bạn không cần một `String`, hoặc trả về một
@@ -59,7 +59,7 @@ fn cow_function() -> Cow<'static, str> {
 lúc này kết quả trả về sẽ là `String`, bởi vì `format!()` trả về `String`. 
 Variant sẽ là `Cow::Owned`.
 
-### Lợi ích của `Cow`
+## Lợi ích của `Cow`
 
 *Copy on write* là một kỹ thuật giúp tối ưu hoá, nhất là trong các 
 trường hợp reading nhiều hơn writing. Ý tưởng chính là không copy
@@ -70,7 +70,7 @@ object trong bộ nhớ là một tác vụ nặng, tốn kém. Do đó, ưu đi
 các tác vụ reading object rất nhanh do chỉ sử dụng reference (borrow) đến giá trị gốc.
 
 
-### References
+## References
 - <https://doc.rust-lang.org/std/borrow/enum.Cow.html>
 - <https://github.com/Dhghomon/easy_rust#cow>
 
