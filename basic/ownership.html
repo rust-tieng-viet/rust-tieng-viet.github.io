@@ -201,18 +201,15 @@
                         <h1 id="ownership"><a class="header" href="#ownership">Ownership</a></h1>
 <p><em>Ownership</em> là một trong những tính năng đặc trưng của Rust, đây là cách giúp Rust đảm bảo memory safety mà không cần đến garbage collector.</p>
 <h1 id="ownership-là-gì"><a class="header" href="#ownership-là-gì">Ownership là gì?</a></h1>
-<p>Ownership là một concept mới. Tất cả programs đều cần phải quản lý
-memory mà nó sử dụng trong lúc thực thi. Một vài ngôn ngữ sử dụng
-garbage collection để tìm và giải phóng bộ nhớ lúc runtime, một số
-ngôn ngữ khác thì lập trình viên phải tự chi định (allocate) và giải
-phóng (free) bộ nhớ. Rust đi theo một hướng khác, memory được quản lý
-bởi một ownership system gồm tập rules được compiler sử dụng để kiểm
-tra (check) lúc compile. Bằng cách này thì Rust ép chúng ta viết code theo một
-cách an toàn memory-safe, Rust sẽ bắt lỗi ở lúc complie.
-Càng hiểu được concept của ownership, thì dần
-dần chúng ta có thể viết được code an toàn và hiệu quả hơn.</p>
-<p>Để tìm hiểu kỹ hơn về Ownership, bạn có thể đọc Rust Book tại
-đây cực kỳ chi tiết:
+<p><strong>Ownership</strong> là một khái niệm mới. Tất cả các chương trình đều cần phải quản lý
+bộ nhớ mà chúng sử dụng trong quá trình thực thi. Một số ngôn ngữ sử dụng garbage collection
+để tìm và giải phóng bộ nhớ trong thời gian chạy, trong khi một số ngôn ngữ khác yêu cầu
+lập trình viên tự cấp phát (allocate) và giải phóng (free) bộ nhớ. Rust đi theo một hướng khác,
+trong đó bộ nhớ được quản lý bởi một hệ thống ownership với các quy tắc mà trình biên dịch
+sử dụng để kiểm tra (check) trong quá trình biên dịch. Bằng cách này, Rust buộc chúng ta
+phải viết mã theo cách an toàn cho bộ nhớ, và sẽ phát hiện lỗi ngay trong quá trình biên dịch.
+Càng hiểu rõ về khái niệm ownership, chúng ta càng có thể viết mã an toàn và hiệu quả hơn.</p>
+<p>Để tìm hiểu kỹ hơn về Ownership, bạn có thể đọc Rust Book tại đây cực kỳ chi tiết:
 <a href="https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#ownership-rules">https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html</a></p>
 <h3 id="ownership-rules"><a class="header" href="#ownership-rules">Ownership Rules</a></h3>
 <p>Nói đơn giản về <em>ownership rules</em> thì có một số điều cơ bản sau:</p>
@@ -275,10 +272,10 @@ fn main() {
   let z = x.get(0);
   println!("Got: {:?}", z);
 }</code></pre></pre>
-<p>Trong trường hợp này thì function <code>hold_my_vec</code> không làm gì ngoài
-việc take ownership. Có một cách tốt hơn là <strong>references.</strong> Thay vì
-để function take ownership, ta có thể cho nó mượn giá trị.
-Chúng ta sẽ truyền vào một reference — a borrowed value.</p>
+<p>Trong trường hợp này, function <code>hold_my_vec</code> không làm gì ngoài việc nhận ownership.
+Có một cách tốt hơn là <strong>references.</strong>
+Thay vì để function nhận ownership, ta có thể cho nó mượn giá trị.
+Chúng ta sẽ truyền vào một reference — một giá trị được mượn.</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">fn hold_my_vec&lt;T&gt;(_: &amp;Vec&lt;T&gt;) {}
 
 fn main() {
