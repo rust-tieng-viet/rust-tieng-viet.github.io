@@ -4,19 +4,17 @@ _Ownership_ là một trong những tính năng đặc trưng của Rust, đây 
 
 # Ownership là gì?
 
-Ownership là một concept mới. Tất cả programs đều cần phải quản lý
-memory mà nó sử dụng trong lúc thực thi. Một vài ngôn ngữ sử dụng
-garbage collection để tìm và giải phóng bộ nhớ lúc runtime, một số
-ngôn ngữ khác thì lập trình viên phải tự chi định (allocate) và giải
-phóng (free) bộ nhớ. Rust đi theo một hướng khác, memory được quản lý
-bởi một ownership system gồm tập rules được compiler sử dụng để kiểm
-tra (check) lúc compile. Bằng cách này thì Rust ép chúng ta viết code theo một
-cách an toàn memory-safe, Rust sẽ bắt lỗi ở lúc complie.
-Càng hiểu được concept của ownership, thì dần
-dần chúng ta có thể viết được code an toàn và hiệu quả hơn.
+**Ownership** là một khái niệm mới. Tất cả các chương trình đều cần phải quản lý
+bộ nhớ mà chúng sử dụng trong quá trình thực thi. Một số ngôn ngữ sử dụng garbage collection
+để tìm và giải phóng bộ nhớ trong thời gian chạy, trong khi một số ngôn ngữ khác yêu cầu 
+lập trình viên tự cấp phát (allocate) và giải phóng (free) bộ nhớ. Rust đi theo một hướng khác, 
+trong đó bộ nhớ được quản lý bởi một hệ thống ownership với các quy tắc mà trình biên dịch 
+sử dụng để kiểm tra (check) trong quá trình biên dịch. Bằng cách này, Rust buộc chúng ta 
+phải viết mã theo cách an toàn cho bộ nhớ, và sẽ phát hiện lỗi ngay trong quá trình biên dịch. 
+Càng hiểu rõ về khái niệm ownership, chúng ta càng có thể viết mã an toàn và hiệu quả hơn.
 
-Để tìm hiểu kỹ hơn về Ownership, bạn có thể đọc Rust Book tại
-đây cực kỳ chi tiết:
+
+Để tìm hiểu kỹ hơn về Ownership, bạn có thể đọc Rust Book tại đây cực kỳ chi tiết:
 [https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#ownership-rules)
 
 ### Ownership Rules
@@ -96,10 +94,10 @@ fn main() {
 }
 ```
 
-Trong trường hợp này thì function `hold_my_vec` không làm gì ngoài
-việc take ownership. Có một cách tốt hơn là **references.** Thay vì
-để function take ownership, ta có thể cho nó mượn giá trị.
-Chúng ta sẽ truyền vào một reference — a borrowed value.
+Trong trường hợp này, function `hold_my_vec` không làm gì ngoài việc nhận ownership.
+Có một cách tốt hơn là **references.** 
+Thay vì để function nhận ownership, ta có thể cho nó mượn giá trị. 
+Chúng ta sẽ truyền vào một reference — một giá trị được mượn.
 
 ```rust,editable
 fn hold_my_vec<T>(_: &Vec<T>) {}
