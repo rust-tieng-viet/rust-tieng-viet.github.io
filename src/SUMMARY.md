@@ -120,7 +120,6 @@
 
 - [Viết Docs](./basic/rustdoc/README.md)
 
-  - [Doc comments](./basic/code-comment/doc-comment.md)
   - [Sử dụng README.md làm crate document](./basic/rustdoc/doc-README.md)
 
 
