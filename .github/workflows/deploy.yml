@@ -69,7 +69,7 @@ jobs:
 
       - name: Comment Commit
         if: github.event_name == 'push' && steps.deploy.outputs.deployment-status == 'success'
-        uses: peter-evans/commit-comment@v3
+        uses: peter-evans/commit-comment@v4
         with:
           body: Deploy successfully ${{ env.url }}!
           token: ${{ secrets.BOT_TOKEN }}
