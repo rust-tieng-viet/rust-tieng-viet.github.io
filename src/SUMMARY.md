@@ -174,12 +174,6 @@
 # Data Engineering
 
 - [Xử lý và phân tích dữ liệu](./data-engineering/data-processing.md)
-  - [Polars](./crates/polars.md)
-  - [serde](./crates/serde.md)
-    - [serde_json](./crates/serde/serde_json.md)
-    - [serde_toml](./crates/serde/serde_toml.md)
-    - [serde_csv](./crates/serde/serde_csv.md)
-    - [serde_yaml](./crates/serde/serde_yaml.md)
 - [High-performance data pipeline](./data-engineering/first-data-pipeline.md)
 - [Building scalable data-driven applications using Rust](./data-engineering/data-driven.md)
 - [Rust as an alternative to Python for data engineering tasks](./data-engineering/rust-as-alternative-python.md)
