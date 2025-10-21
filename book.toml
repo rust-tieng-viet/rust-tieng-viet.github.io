@@ -1,7 +1,6 @@
 [book]
 authors = ["Duyet Le"]
 language = "vi"
-multilingual = false
 src = "src"
 title = "Rust Tiếng Việt"
 
