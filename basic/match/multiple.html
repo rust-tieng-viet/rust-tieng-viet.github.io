@@ -51,21 +51,34 @@
         <!-- Custom theme stylesheets -->
 
 
-        <!-- Provide site root to javascript -->
+        <!-- Provide site root and default themes to javascript -->
         <script>
-            var path_to_root = "../../";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc.js"></script>
     </head>
     <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
     <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -79,7 +92,8 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -92,17 +106,20 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -129,13 +146,14 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -149,7 +167,7 @@
                         <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/basic/match/multiple.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/basic/match/multiple.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -158,7 +176,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -179,6 +202,175 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="matching-multiple"><a class="header" href="#matching-multiple">Matching Multiple</a></h1>
+<p>Trong Rust, bạn có thể match nhiều pattern trong cùng một arm của <code>match</code> expression. Điều này giúp code ngắn gọn và dễ đọc hơn khi nhiều giá trị cần được xử lý giống nhau.</p>
+<h2 id="match-nhiều-giá-trị-với--or-pattern"><a class="header" href="#match-nhiều-giá-trị-với--or-pattern">Match nhiều giá trị với <code>|</code> (OR pattern)</a></h2>
+<p>Toán tử <code>|</code> (pipe) cho phép bạn match nhiều pattern trong cùng một arm:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn describe_number(x: i32) {
+    match x {
+        1 | 2 =&gt; println!("Một hoặc hai"),
+        3 | 4 | 5 =&gt; println!("Ba, bốn hoặc năm"),
+        _ =&gt; println!("Số khác"),
+    }
+}
+
+fn main() {
+    describe_number(1);  // In ra: Một hoặc hai
+    describe_number(4);  // In ra: Ba, bốn hoặc năm
+    describe_number(7);  // In ra: Số khác
+}</code></pre></pre>
+<h2 id="kết-hợp-or-pattern-với-range"><a class="header" href="#kết-hợp-or-pattern-với-range">Kết hợp OR pattern với range</a></h2>
+<p>Bạn có thể kết hợp nhiều pattern và range trong cùng một arm:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn categorize_number(x: i32) {
+    match x {
+        0 =&gt; println!("Số không"),
+        1..=10 | 100 =&gt; println!("Từ 1 đến 10, hoặc 100"),
+        -1 | -2 | -3 =&gt; println!("Số âm nhỏ"),
+        _ =&gt; println!("Số khác"),
+    }
+}
+
+fn main() {
+    categorize_number(5);    // In ra: Từ 1 đến 10, hoặc 100
+    categorize_number(100);  // In ra: Từ 1 đến 10, hoặc 100
+    categorize_number(-2);   // In ra: Số âm nhỏ
+}</code></pre></pre>
+<h2 id="match-với-ký-tự"><a class="header" href="#match-với-ký-tự">Match với ký tự</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn is_vowel(c: char) -&gt; bool {
+    match c {
+        'a' | 'e' | 'i' | 'o' | 'u' =&gt; true,
+        'A' | 'E' | 'I' | 'O' | 'U' =&gt; true,
+        _ =&gt; false,
+    }
+}
+
+fn main() {
+    println!("{}", is_vowel('a'));  // true
+    println!("{}", is_vowel('b'));  // false
+    println!("{}", is_vowel('E'));  // true
+}</code></pre></pre>
+<p>Hoặc ngắn gọn hơn:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn is_vowel(c: char) -&gt; bool {
+    match c {
+        'a' | 'e' | 'i' | 'o' | 'u' | 'A' | 'E' | 'I' | 'O' | 'U' =&gt; true,
+        _ =&gt; false,
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="match-với-enum"><a class="header" href="#match-với-enum">Match với enum</a></h2>
+<p>OR pattern rất hữu ích khi làm việc với enum:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">enum Direction {
+    North,
+    South,
+    East,
+    West,
+}
+
+fn is_horizontal(dir: Direction) -&gt; bool {
+    match dir {
+        Direction::East | Direction::West =&gt; true,
+        Direction::North | Direction::South =&gt; false,
+    }
+}
+
+fn main() {
+    println!("{}", is_horizontal(Direction::East));   // true
+    println!("{}", is_horizontal(Direction::North));  // false
+}</code></pre></pre>
+<h2 id="ví-dụ-thực-tế-http-status-codes"><a class="header" href="#ví-dụ-thực-tế-http-status-codes">Ví dụ thực tế: HTTP status codes</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn handle_status_code(code: u16) {
+    match code {
+        200 | 201 | 202 | 204 =&gt; println!("Success"),
+        301 | 302 | 303 | 307 | 308 =&gt; println!("Redirect"),
+        400 | 401 | 403 | 404 =&gt; println!("Client error"),
+        500 | 501 | 502 | 503 =&gt; println!("Server error"),
+        _ =&gt; println!("Unknown status"),
+    }
+}
+
+fn main() {
+    handle_status_code(200);  // In ra: Success
+    handle_status_code(404);  // In ra: Client error
+    handle_status_code(500);  // In ra: Server error
+}</code></pre></pre>
+<p>Hoặc kết hợp với range để ngắn gọn hơn:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn handle_status_code(code: u16) {
+    match code {
+        200..=299 =&gt; println!("Success"),
+        300..=399 =&gt; println!("Redirect"),
+        400..=499 =&gt; println!("Client error"),
+        500..=599 =&gt; println!("Server error"),
+        _ =&gt; println!("Unknown status"),
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="so-sánh-với-ngôn-ngữ-khác"><a class="header" href="#so-sánh-với-ngôn-ngữ-khác">So sánh với ngôn ngữ khác</a></h2>
+<p>Trong JavaScript, bạn có thể sử dụng multiple <code>case</code> statements mà không có <code>break</code>:</p>
+<pre><code class="language-javascript">// JavaScript
+function describeNumber(x) {
+  switch (x) {
+    case 1:
+    case 2:
+      console.log("Một hoặc hai");
+      break;
+    case 3:
+    case 4:
+    case 5:
+      console.log("Ba, bốn hoặc năm");
+      break;
+    default:
+      console.log("Số khác");
+  }
+}
+</code></pre>
+<p>Trong Python (từ version 3.10), bạn có thể dùng <code>|</code> trong <code>match</code>:</p>
+<pre><code class="language-python"># Python 3.10+
+def describe_number(x):
+    match x:
+        case 1 | 2:
+            print("Một hoặc hai")
+        case 3 | 4 | 5:
+            print("Ba, bốn hoặc năm")
+        case _:
+            print("Số khác")
+</code></pre>
+<p>Rust's OR pattern (<code>|</code>) tương tự như Python, nhưng được kiểm tra tại compile time để đảm bảo type safety.</p>
+<h2 id="match-với-tuple"><a class="header" href="#match-với-tuple">Match với tuple</a></h2>
+<p>Bạn cũng có thể sử dụng OR pattern với tuple:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn describe_point(point: (i32, i32)) {
+    match point {
+        (0, 0) =&gt; println!("Gốc tọa độ"),
+        (0, _) | (_, 0) =&gt; println!("Nằm trên trục"),
+        (x, y) if x == y =&gt; println!("Nằm trên đường chéo"),
+        _ =&gt; println!("Điểm thông thường"),
+    }
+}
+
+fn main() {
+    describe_point((0, 0));  // In ra: Gốc tọa độ
+    describe_point((0, 5));  // In ra: Nằm trên trục
+    describe_point((3, 0));  // In ra: Nằm trên trục
+    describe_point((4, 4));  // In ra: Nằm trên đường chéo
+    describe_point((2, 3));  // In ra: Điểm thông thường
+}</code></pre></pre>
+<h2 id="lưu-ý-quan-trọng"><a class="header" href="#lưu-ý-quan-trọng">Lưu ý quan trọng</a></h2>
+<p>Khi sử dụng OR pattern, tất cả các pattern phải bind (gán) cùng một tập hợp các biến. Ví dụ sau sẽ <strong>không</strong> compile:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ❌ Lỗi: variable `x` is not bound in all patterns
+match (1, 2) {
+    (x, _) | (_, x) =&gt; println!("{}", x),  // lỗi!
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Lý do là trong pattern đầu tiên <code>(x, _)</code>, <code>x</code> được bind với phần tử đầu tiên, nhưng trong pattern thứ hai <code>(_, x)</code>, <code>x</code> được bind với phần tử thứ hai. Compiler không thể xác định <code>x</code> nên lấy giá trị nào.</p>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html#multiple-patterns">Multiple Patterns - The Rust Programming Language</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch18-00-patterns.html">Patterns and Matching</a></li>
+</ul>
 
                     </main>
 
@@ -217,8 +409,8 @@
         </script>
 
         <script src="../../ace.js"></script>
-        <script src="../../editor.js"></script>
         <script src="../../mode-rust.js"></script>
+        <script src="../../editor.js"></script>
         <script src="../../theme-dawn.js"></script>
         <script src="../../theme-tomorrow_night.js"></script>
 
@@ -231,6 +423,7 @@
         <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

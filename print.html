@@ -52,21 +52,34 @@
         <!-- Custom theme stylesheets -->
 
 
-        <!-- Provide site root to javascript -->
+        <!-- Provide site root and default themes to javascript -->
         <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
     </head>
     <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
     <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -80,7 +93,8 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -93,17 +107,20 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -130,13 +147,14 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -156,7 +174,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -3119,8 +3142,508 @@ khi đó macro sẽ không còn gọi lại chính nó nữa.</p>
 <li><a href="basic/match/./multiple.html">Matching Multiple</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="matching-giá-trị"><a class="header" href="#matching-giá-trị">Matching giá trị</a></h1>
+<p>Pattern matching với literals (giá trị cụ thể) là cách sử dụng phổ biến nhất của <code>match</code> trong Rust. Bạn có thể match trực tiếp với các giá trị cụ thể như số, ký tự, hay chuỗi.</p>
+<h2 id="match-với-số-nguyên"><a class="header" href="#match-với-số-nguyên">Match với số nguyên</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn describe_number(x: i32) {
+    match x {
+        1 =&gt; println!("Một"),
+        2 =&gt; println!("Hai"),
+        3 =&gt; println!("Ba"),
+        _ =&gt; println!("Số khác"),
+    }
+}
+
+fn main() {
+    describe_number(1);  // In ra: Một
+    describe_number(5);  // In ra: Số khác
+}</code></pre></pre>
+<p>Pattern <code>_</code> (underscore) là một wildcard pattern, match với mọi giá trị còn lại. Nó giống như <code>default</code> case trong <code>switch</code> của C/Java.</p>
+<h2 id="match-với-ký-tự"><a class="header" href="#match-với-ký-tự">Match với ký tự</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn describe_char(c: char) {
+    match c {
+        'a' =&gt; println!("Chữ a"),
+        'b' =&gt; println!("Chữ b"),
+        '0'..='9' =&gt; println!("Một chữ số"),
+        _ =&gt; println!("Ký tự khác"),
+    }
+}
+
+fn main() {
+    describe_char('a');  // In ra: Chữ a
+    describe_char('5');  // In ra: Một chữ số
+    describe_char('z');  // In ra: Ký tự khác
+}</code></pre></pre>
+<p>Ở ví dụ trên, <code>'0'..='9'</code> là range pattern, match với mọi ký tự từ '0' đến '9'.</p>
+<h2 id="match-với-boolean"><a class="header" href="#match-với-boolean">Match với boolean</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn is_true(b: bool) -&gt; &amp;'static str {
+    match b {
+        true =&gt; "Đúng rồi!",
+        false =&gt; "Sai rồi!",
+    }
+}
+
+fn main() {
+    println!("{}", is_true(true));   // In ra: Đúng rồi!
+    println!("{}", is_true(false));  // In ra: Sai rồi!
+}</code></pre></pre>
+<p>Với boolean, bạn không cần dùng <code>_</code> vì chỉ có 2 giá trị: <code>true</code> và <code>false</code>.</p>
+<h2 id="match-với-range"><a class="header" href="#match-với-range">Match với range</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn categorize_age(age: u32) {
+    match age {
+        0 =&gt; println!("Trẻ sơ sinh"),
+        1..=12 =&gt; println!("Trẻ em"),
+        13..=19 =&gt; println!("Thiếu niên"),
+        20..=64 =&gt; println!("Người trưởng thành"),
+        65..=u32::MAX =&gt; println!("Người cao tuổi"),
+    }
+}
+
+fn main() {
+    categorize_age(5);   // In ra: Trẻ em
+    categorize_age(25);  // In ra: Người trưởng thành
+    categorize_age(70);  // In ra: Người cao tuổi
+}</code></pre></pre>
+<p>Cú pháp <code>1..=12</code> là inclusive range (bao gồm cả 1 và 12). Nếu dùng <code>1..12</code> thì sẽ là exclusive range (từ 1 đến 11, không bao gồm 12).</p>
+<h2 id="exhaustiveness-checking"><a class="header" href="#exhaustiveness-checking">Exhaustiveness Checking</a></h2>
+<p>Một điểm mạnh của <code>match</code> trong Rust là compiler sẽ kiểm tra xem bạn đã xử lý hết tất cả các trường hợp chưa. Điều này giúp tránh bugs.</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn check_number(x: i32) {
+    match x {
+        1 =&gt; println!("Một"),
+        2 =&gt; println!("Hai"),
+        // ❌ Compiler sẽ báo lỗi: pattern `i32::MIN..=0_i32` and `3_i32..=i32::MAX` not covered
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Bạn phải xử lý tất cả các trường hợp, hoặc sử dụng <code>_</code> để bắt các trường hợp còn lại:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn check_number(x: i32) {
+    match x {
+        1 =&gt; println!("Một"),
+        2 =&gt; println!("Hai"),
+        _ =&gt; println!("Số khác"),  // ✅ OK
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="so-sánh-với-if-else"><a class="header" href="#so-sánh-với-if-else">So sánh với <code>if-else</code></a></h2>
+<p>Trong một số ngôn ngữ khác như JavaScript hay Python, bạn có thể dùng <code>if-else</code> để làm việc tương tự:</p>
+<pre><code class="language-javascript">// JavaScript
+function describeNumber(x) {
+  if (x === 1) {
+    console.log("Một");
+  } else if (x === 2) {
+    console.log("Hai");
+  } else if (x === 3) {
+    console.log("Ba");
+  } else {
+    console.log("Số khác");
+  }
+}
+</code></pre>
+<p>Tuy nhiên <code>match</code> trong Rust có nhiều ưu điểm hơn:</p>
+<ul>
+<li>Compiler kiểm tra exhaustiveness (đã xử lý hết tất cả trường hợp chưa)</li>
+<li>Dễ đọc và rõ ràng hơn với nhiều trường hợp</li>
+<li>Có thể match với pattern phức tạp (struct, enum, ...)</li>
+</ul>
+<h2 id="trả-về-giá-trị"><a class="header" href="#trả-về-giá-trị">Trả về giá trị</a></h2>
+<p><code>match</code> là một expression, có nghĩa là nó có thể trả về giá trị:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn number_to_string(x: i32) -&gt; String {
+    match x {
+        1 =&gt; "một".to_string(),
+        2 =&gt; "hai".to_string(),
+        3 =&gt; "ba".to_string(),
+        _ =&gt; format!("số {}", x),
+    }
+}
+
+fn main() {
+    let result = number_to_string(2);
+    println!("{}", result);  // In ra: hai
+}</code></pre></pre>
+<p>Tất cả các arm (nhánh) của <code>match</code> phải trả về cùng một kiểu dữ liệu.</p>
+<h2 id="references-11"><a class="header" href="#references-11">References</a></h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/ch06-02-match.html">Match - The Rust Programming Language</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch18-00-patterns.html">Patterns and Matching</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="matching-named-variables"><a class="header" href="#matching-named-variables">Matching Named Variables</a></h1>
+<p>Named variables trong pattern matching cho phép bạn bind (gán) giá trị vào một biến mới trong match arm. Đây là một tính năng mạnh mẽ giúp bạn trích xuất và sử dụng giá trị từ các kiểu dữ liệu phức tạp.</p>
+<h2 id="cơ-bản-về-named-variables"><a class="header" href="#cơ-bản-về-named-variables">Cơ bản về Named Variables</a></h2>
+<p>Khi bạn sử dụng một tên biến trong pattern, Rust sẽ tạo một biến mới và gán giá trị match được vào biến đó:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let x = 5;
+
+    match x {
+        value =&gt; println!("Giá trị là: {}", value),
+    }
+    // In ra: Giá trị là: 5
+}</code></pre></pre>
+<p>Ở ví dụ trên, <code>value</code> là một named variable, nó sẽ match với bất kỳ giá trị nào và bind giá trị đó vào biến <code>value</code>.</p>
+<h2 id="shadowing-trong-match"><a class="header" href="#shadowing-trong-match">Shadowing trong Match</a></h2>
+<p>Một điểm cần lưu ý là named variable trong match có thể shadow (che khuất) biến bên ngoài:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let x = Some(5);
+    let y = 10;
+
+    match x {
+        Some(50) =&gt; println!("Bằng 50"),
+        Some(y) =&gt; println!("Matched, y = {}", y),  // y ở đây là biến mới!
+        _ =&gt; println!("Default case, x = {:?}", x),
+    }
+
+    println!("Kết thúc: x = {:?}, y = {}", x, y);
+}</code></pre></pre>
+<p>Output:</p>
+<pre><code>Matched, y = 5
+Kết thúc: x = Some(5), y = 10
+</code></pre>
+<p>Lưu ý rằng <code>y</code> trong pattern <code>Some(y)</code> là một biến mới, <strong>không phải</strong> là biến <code>y = 10</code> ở ngoài. Biến <code>y</code> trong match arm có giá trị là <code>5</code> (được extract từ <code>Some(5)</code>), còn biến <code>y</code> bên ngoài vẫn giữ nguyên giá trị <code>10</code>.</p>
+<h2 id="match-với-struct"><a class="header" href="#match-với-struct">Match với Struct</a></h2>
+<p>Named variables rất hữu ích khi destructure struct:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let point = Point { x: 0, y: 7 };
+
+    match point {
+        Point { x, y: 0 } =&gt; println!("Trên trục x tại x = {}", x),
+        Point { x: 0, y } =&gt; println!("Trên trục y tại y = {}", y),
+        Point { x, y } =&gt; println!("Tại ({}, {})", x, y),
+    }
+    // In ra: Trên trục y tại y = 7
+}</code></pre></pre>
+<p>Bạn có thể đặt tên khác cho biến:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let point = Point { x: 5, y: 10 };
+
+    match point {
+        Point { x: horizontal, y: vertical } =&gt; {
+            println!("Tọa độ ngang: {}, tọa độ dọc: {}", horizontal, vertical);
+        }
+    }
+    // In ra: Tọa độ ngang: 5, tọa độ dọc: 10
+}</code></pre></pre>
+<h2 id="match-với-enum"><a class="header" href="#match-với-enum">Match với Enum</a></h2>
+<p>Named variables cho phép extract giá trị từ enum variants:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+fn process_message(msg: Message) {
+    match msg {
+        Message::Quit =&gt; println!("Thoát"),
+        Message::Move { x, y } =&gt; println!("Di chuyển đến ({}, {})", x, y),
+        Message::Write(text) =&gt; println!("Văn bản: {}", text),
+        Message::ChangeColor(r, g, b) =&gt; println!("Đổi màu RGB({}, {}, {})", r, g, b),
+    }
+}
+
+fn main() {
+    let msg1 = Message::Move { x: 10, y: 20 };
+    let msg2 = Message::Write(String::from("Hello"));
+    let msg3 = Message::ChangeColor(255, 0, 0);
+
+    process_message(msg1);  // In ra: Di chuyển đến (10, 20)
+    process_message(msg2);  // In ra: Văn bản: Hello
+    process_message(msg3);  // In ra: Đổi màu RGB(255, 0, 0)
+}</code></pre></pre>
+<h2 id="match-với-tuple"><a class="header" href="#match-với-tuple">Match với Tuple</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let tuple = (1, 2, 3);
+
+    match tuple {
+        (0, y, z) =&gt; println!("Phần tử đầu là 0, y = {}, z = {}", y, z),
+        (x, 0, z) =&gt; println!("Phần tử giữa là 0, x = {}, z = {}", x, z),
+        (x, y, 0) =&gt; println!("Phần tử cuối là 0, x = {}, y = {}", x, y),
+        (x, y, z) =&gt; println!("x = {}, y = {}, z = {}", x, y, z),
+    }
+    // In ra: x = 1, y = 2, z = 3
+}</code></pre></pre>
+<h2 id="sử-dụng--binding"><a class="header" href="#sử-dụng--binding">Sử dụng <code>@</code> binding</a></h2>
+<p><code>@</code> operator cho phép bạn vừa test một giá trị với pattern, vừa bind giá trị đó vào một biến:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let age = 25;
+
+    match age {
+        n @ 0..=12 =&gt; println!("Trẻ em, tuổi: {}", n),
+        n @ 13..=19 =&gt; println!("Thiếu niên, tuổi: {}", n),
+        n @ 20..=64 =&gt; println!("Người trưởng thành, tuổi: {}", n),
+        n @ 65.. =&gt; println!("Người cao tuổi, tuổi: {}", n),
+    }
+    // In ra: Người trưởng thành, tuổi: 25
+}</code></pre></pre>
+<p>Không có <code>@</code>, bạn sẽ không có biến để sử dụng:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>match age {
+    0..=12 =&gt; println!("Trẻ em"),  // không biết tuổi cụ thể
+    // ...
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="-với-enum"><a class="header" href="#-với-enum"><code>@</code> với enum</a></h2>
+<p><code>@</code> binding rất hữu ích khi làm việc với enum:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">enum Message {
+    Hello { id: i32 },
+}
+
+fn main() {
+    let msg = Message::Hello { id: 5 };
+
+    match msg {
+        Message::Hello { id: id_var @ 3..=7 } =&gt; {
+            println!("ID trong khoảng 3-7: {}", id_var);
+        }
+        Message::Hello { id: 10..=12 } =&gt; {
+            println!("ID trong khoảng 10-12");
+        }
+        Message::Hello { id } =&gt; {
+            println!("ID khác: {}", id);
+        }
+    }
+    // In ra: ID trong khoảng 3-7: 5
+}</code></pre></pre>
+<h2 id="phân-biệt-với-_"><a class="header" href="#phân-biệt-với-_">Phân biệt với <code>_</code></a></h2>
+<p>Named variable sẽ match và bind giá trị, trong khi <code>_</code> chỉ match mà không bind:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let x = 5;
+
+    match x {
+        value =&gt; println!("Có giá trị: {}", value),  // OK, có thể dùng value
+    }
+
+    match x {
+        _ =&gt; println!("Có giá trị: {}", x),  // Dùng x từ outer scope
+    }
+}</code></pre></pre>
+<p>Sử dụng <code>_</code> khi bạn không quan tâm đến giá trị:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">struct Point {
+    x: i32,
+    y: i32,
+    z: i32,
+}
+
+fn main() {
+    let point = Point { x: 0, y: 0, z: 8 };
+
+    match point {
+        Point { x: 0, y: 0, z } =&gt; println!("Trên trục z tại z = {}", z),
+        Point { x: 0, y, z: _ } =&gt; println!("Trên mặt phẳng yz, y = {}", y),
+        Point { x, y: _, z: _ } =&gt; println!("x = {}, không quan tâm y và z", x),
+        _ =&gt; println!("Điểm khác"),
+    }
+}</code></pre></pre>
+<h2 id="ví-dụ-thực-tế-parse-kết-quả"><a class="header" href="#ví-dụ-thực-tế-parse-kết-quả">Ví dụ thực tế: Parse kết quả</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn parse_config(input: &amp;str) -&gt; Result&lt;(String, u16), String&gt; {
+    let parts: Vec&lt;&amp;str&gt; = input.split(':').collect();
+
+    match parts.as_slice() {
+        [host, port] =&gt; {
+            match port.parse::&lt;u16&gt;() {
+                Ok(port_num) =&gt; Ok((host.to_string(), port_num)),
+                Err(_) =&gt; Err("Port không hợp lệ".to_string()),
+            }
+        }
+        _ =&gt; Err("Format không đúng".to_string()),
+    }
+}
+
+fn main() {
+    match parse_config("localhost:8080") {
+        Ok((host, port)) =&gt; println!("Server: {} trên port {}", host, port),
+        Err(e) =&gt; println!("Lỗi: {}", e),
+    }
+    // In ra: Server: localhost trên port 8080
+}</code></pre></pre>
+<h2 id="references-12"><a class="header" href="#references-12">References</a></h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html#destructuring-to-break-apart-values">Destructuring to Break Apart Values</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html#-bindings">@ Bindings</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch18-00-patterns.html">Patterns and Matching</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="matching-multiple"><a class="header" href="#matching-multiple">Matching Multiple</a></h1>
+<p>Trong Rust, bạn có thể match nhiều pattern trong cùng một arm của <code>match</code> expression. Điều này giúp code ngắn gọn và dễ đọc hơn khi nhiều giá trị cần được xử lý giống nhau.</p>
+<h2 id="match-nhiều-giá-trị-với--or-pattern"><a class="header" href="#match-nhiều-giá-trị-với--or-pattern">Match nhiều giá trị với <code>|</code> (OR pattern)</a></h2>
+<p>Toán tử <code>|</code> (pipe) cho phép bạn match nhiều pattern trong cùng một arm:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn describe_number(x: i32) {
+    match x {
+        1 | 2 =&gt; println!("Một hoặc hai"),
+        3 | 4 | 5 =&gt; println!("Ba, bốn hoặc năm"),
+        _ =&gt; println!("Số khác"),
+    }
+}
+
+fn main() {
+    describe_number(1);  // In ra: Một hoặc hai
+    describe_number(4);  // In ra: Ba, bốn hoặc năm
+    describe_number(7);  // In ra: Số khác
+}</code></pre></pre>
+<h2 id="kết-hợp-or-pattern-với-range"><a class="header" href="#kết-hợp-or-pattern-với-range">Kết hợp OR pattern với range</a></h2>
+<p>Bạn có thể kết hợp nhiều pattern và range trong cùng một arm:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn categorize_number(x: i32) {
+    match x {
+        0 =&gt; println!("Số không"),
+        1..=10 | 100 =&gt; println!("Từ 1 đến 10, hoặc 100"),
+        -1 | -2 | -3 =&gt; println!("Số âm nhỏ"),
+        _ =&gt; println!("Số khác"),
+    }
+}
+
+fn main() {
+    categorize_number(5);    // In ra: Từ 1 đến 10, hoặc 100
+    categorize_number(100);  // In ra: Từ 1 đến 10, hoặc 100
+    categorize_number(-2);   // In ra: Số âm nhỏ
+}</code></pre></pre>
+<h2 id="match-với-ký-tự-1"><a class="header" href="#match-với-ký-tự-1">Match với ký tự</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn is_vowel(c: char) -&gt; bool {
+    match c {
+        'a' | 'e' | 'i' | 'o' | 'u' =&gt; true,
+        'A' | 'E' | 'I' | 'O' | 'U' =&gt; true,
+        _ =&gt; false,
+    }
+}
+
+fn main() {
+    println!("{}", is_vowel('a'));  // true
+    println!("{}", is_vowel('b'));  // false
+    println!("{}", is_vowel('E'));  // true
+}</code></pre></pre>
+<p>Hoặc ngắn gọn hơn:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn is_vowel(c: char) -&gt; bool {
+    match c {
+        'a' | 'e' | 'i' | 'o' | 'u' | 'A' | 'E' | 'I' | 'O' | 'U' =&gt; true,
+        _ =&gt; false,
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="match-với-enum-1"><a class="header" href="#match-với-enum-1">Match với enum</a></h2>
+<p>OR pattern rất hữu ích khi làm việc với enum:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">enum Direction {
+    North,
+    South,
+    East,
+    West,
+}
+
+fn is_horizontal(dir: Direction) -&gt; bool {
+    match dir {
+        Direction::East | Direction::West =&gt; true,
+        Direction::North | Direction::South =&gt; false,
+    }
+}
+
+fn main() {
+    println!("{}", is_horizontal(Direction::East));   // true
+    println!("{}", is_horizontal(Direction::North));  // false
+}</code></pre></pre>
+<h2 id="ví-dụ-thực-tế-http-status-codes"><a class="header" href="#ví-dụ-thực-tế-http-status-codes">Ví dụ thực tế: HTTP status codes</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn handle_status_code(code: u16) {
+    match code {
+        200 | 201 | 202 | 204 =&gt; println!("Success"),
+        301 | 302 | 303 | 307 | 308 =&gt; println!("Redirect"),
+        400 | 401 | 403 | 404 =&gt; println!("Client error"),
+        500 | 501 | 502 | 503 =&gt; println!("Server error"),
+        _ =&gt; println!("Unknown status"),
+    }
+}
+
+fn main() {
+    handle_status_code(200);  // In ra: Success
+    handle_status_code(404);  // In ra: Client error
+    handle_status_code(500);  // In ra: Server error
+}</code></pre></pre>
+<p>Hoặc kết hợp với range để ngắn gọn hơn:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn handle_status_code(code: u16) {
+    match code {
+        200..=299 =&gt; println!("Success"),
+        300..=399 =&gt; println!("Redirect"),
+        400..=499 =&gt; println!("Client error"),
+        500..=599 =&gt; println!("Server error"),
+        _ =&gt; println!("Unknown status"),
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="so-sánh-với-ngôn-ngữ-khác"><a class="header" href="#so-sánh-với-ngôn-ngữ-khác">So sánh với ngôn ngữ khác</a></h2>
+<p>Trong JavaScript, bạn có thể sử dụng multiple <code>case</code> statements mà không có <code>break</code>:</p>
+<pre><code class="language-javascript">// JavaScript
+function describeNumber(x) {
+  switch (x) {
+    case 1:
+    case 2:
+      console.log("Một hoặc hai");
+      break;
+    case 3:
+    case 4:
+    case 5:
+      console.log("Ba, bốn hoặc năm");
+      break;
+    default:
+      console.log("Số khác");
+  }
+}
+</code></pre>
+<p>Trong Python (từ version 3.10), bạn có thể dùng <code>|</code> trong <code>match</code>:</p>
+<pre><code class="language-python"># Python 3.10+
+def describe_number(x):
+    match x:
+        case 1 | 2:
+            print("Một hoặc hai")
+        case 3 | 4 | 5:
+            print("Ba, bốn hoặc năm")
+        case _:
+            print("Số khác")
+</code></pre>
+<p>Rust's OR pattern (<code>|</code>) tương tự như Python, nhưng được kiểm tra tại compile time để đảm bảo type safety.</p>
+<h2 id="match-với-tuple-1"><a class="header" href="#match-với-tuple-1">Match với tuple</a></h2>
+<p>Bạn cũng có thể sử dụng OR pattern với tuple:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn describe_point(point: (i32, i32)) {
+    match point {
+        (0, 0) =&gt; println!("Gốc tọa độ"),
+        (0, _) | (_, 0) =&gt; println!("Nằm trên trục"),
+        (x, y) if x == y =&gt; println!("Nằm trên đường chéo"),
+        _ =&gt; println!("Điểm thông thường"),
+    }
+}
+
+fn main() {
+    describe_point((0, 0));  // In ra: Gốc tọa độ
+    describe_point((0, 5));  // In ra: Nằm trên trục
+    describe_point((3, 0));  // In ra: Nằm trên trục
+    describe_point((4, 4));  // In ra: Nằm trên đường chéo
+    describe_point((2, 3));  // In ra: Điểm thông thường
+}</code></pre></pre>
+<h2 id="lưu-ý-quan-trọng"><a class="header" href="#lưu-ý-quan-trọng">Lưu ý quan trọng</a></h2>
+<p>Khi sử dụng OR pattern, tất cả các pattern phải bind (gán) cùng một tập hợp các biến. Ví dụ sau sẽ <strong>không</strong> compile:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ❌ Lỗi: variable `x` is not bound in all patterns
+match (1, 2) {
+    (x, _) | (_, x) =&gt; println!("{}", x),  // lỗi!
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Lý do là trong pattern đầu tiên <code>(x, _)</code>, <code>x</code> được bind với phần tử đầu tiên, nhưng trong pattern thứ hai <code>(_, x)</code>, <code>x</code> được bind với phần tử thứ hai. Compiler không thể xác định <code>x</code> nên lấy giá trị nào.</p>
+<h2 id="references-13"><a class="header" href="#references-13">References</a></h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html#multiple-patterns">Multiple Patterns - The Rust Programming Language</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch18-00-patterns.html">Patterns and Matching</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="attributes"><a class="header" href="#attributes"><code>#[attributes]</code></a></h1>
 <p>Attribute là metadata được apply cho một số module, crate hoặc item.
 Metadata này được dùng cho việc:</p>
@@ -3641,7 +4164,7 @@ fn main() {
     print(double_first(empty));
     print(double_first(strings));
 }</code></pre></pre>
-<h2 id="references-11"><a class="header" href="#references-11">References</a></h2>
+<h2 id="references-14"><a class="header" href="#references-14">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/rust-by-example/error/multiple_error_types/boxing_errors.html">Rust by Example</a></li>
 <li><a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">Dynamic dispatch</a></li>
@@ -3728,7 +4251,7 @@ fn main() {
     print(double_first(empty));
     print(double_first(strings));
 }</code></pre></pre>
-<h2 id="references-12"><a class="header" href="#references-12">References</a></h2>
+<h2 id="references-15"><a class="header" href="#references-15">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/rust-by-example/error/multiple_error_types/wrap_error.html">Rust by Example</a></li>
 <li><a href="https://crates.io/keywords/error-handling">Crates for handling errors</a></li>
@@ -3861,7 +4384,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <p>Do integration tests phải import thư viện để chạy test code, crate bắt buộc phải có <code>src/lib.rs</code>.
 Các binary crates không thể test theo cách này.</p>
 <p>Do đó các project Rust họ thường tổ chức theo kiểu build binary từ <code>src/main.rs</code> và import trực tiếp logic từ <code>src/lib.rs</code>.</p>
-<h4 id="references-13"><a class="header" href="#references-13">References</a></h4>
+<h4 id="references-16"><a class="header" href="#references-16">References</a></h4>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch11-03-test-organization.html#submodules-in-integration-tests">Submodules in Integration Tests</a></li>
 <li><a href="https://doc.rust-lang.org/book/ch11-03-test-organization.html#integration-tests-for-binary-crates">Integration Tests for Binary Crates</a></li>
@@ -3935,7 +4458,7 @@ nó vẫn sẽ được compile như mình thường.</p>
 /// # }
 /// ```
 </code></pre>
-<h3 id="references-14"><a class="header" href="#references-14">References</a></h3>
+<h3 id="references-17"><a class="header" href="#references-17">References</a></h3>
 <ul>
 <li><a href="https://doc.rust-lang.org/rustdoc/write-documentation/documentation-tests.html">https://doc.rust-lang.org/rustdoc/write-documentation/documentation-tests.html</a></li>
 </ul>
@@ -4040,7 +4563,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <p>Do integration tests phải import thư viện để chạy test code, crate bắt buộc phải có <code>src/lib.rs</code>.
 Các binary crates không thể test theo cách này.</p>
 <p>Do đó các project Rust họ thường tổ chức theo kiểu build binary từ <code>src/main.rs</code> và import trực tiếp logic từ <code>src/lib.rs</code>.</p>
-<h4 id="references-15"><a class="header" href="#references-15">References</a></h4>
+<h4 id="references-18"><a class="header" href="#references-18">References</a></h4>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch11-03-test-organization.html#submodules-in-integration-tests">Submodules in Integration Tests</a></li>
 <li><a href="https://doc.rust-lang.org/book/ch11-03-test-organization.html#integration-tests-for-binary-crates">Integration Tests for Binary Crates</a></li>
@@ -4114,7 +4637,7 @@ nó vẫn sẽ được compile như mình thường.</p>
 /// # }
 /// ```
 </code></pre>
-<h3 id="references-16"><a class="header" href="#references-16">References</a></h3>
+<h3 id="references-19"><a class="header" href="#references-19">References</a></h3>
 <ul>
 <li><a href="https://doc.rust-lang.org/rustdoc/write-documentation/documentation-tests.html">https://doc.rust-lang.org/rustdoc/write-documentation/documentation-tests.html</a></li>
 </ul>
@@ -4163,7 +4686,7 @@ fn test_one() {
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Các tests có <code>#[serial]</code> sẽ được thực hiện tuần tự nhau, tránh trường hợp xung đột như trước.</p>
-<h2 id="references-17"><a class="header" href="#references-17">References</a></h2>
+<h2 id="references-20"><a class="header" href="#references-20">References</a></h2>
 <ul>
 <li><a href="https://crates.io/crates/serial_test">https://crates.io/crates/serial_test</a></li>
 <li><a href="https://docs.rs/serial_test">https://docs.rs/serial_test</a></li>
@@ -4190,82 +4713,11 @@ Nôi dung của document được viết bằng Markdown.</p>
 <p>Hãy xem trang <a href="basic/rustdoc/../code-comment/README.html">viết comment sao cho đúng</a>
 và <a href="basic/rustdoc/../code-comment/doc-comment.html">Doc comments</a>
 để biết thêm về cách viết comment doc sao cho chuẩn.</p>
-<h2 id="references-18"><a class="header" href="#references-18">References</a></h2>
+<h2 id="references-21"><a class="header" href="#references-21">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/rustdoc/what-is-rustdoc.html">What is rustdoc?</a></li>
 <li><a href="https://doc.rust-lang.org/rustdoc/how-to-write-documentation.html">How to write documentation</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="doc-comments-2"><a class="header" href="#doc-comments-2">Doc comments</a></h2>
-<p>Doc comments sẽ được Compiler parse thành <a href="https://doc.rust-lang.org/rust-by-example/meta/doc.html">HTML documentation</a>
-khi render document bằng <code>cargo doc</code>.</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>/// Generate library docs for the following item.
-//! Generate library docs for the enclosing item.
-<span class="boring">}</span></code></pre></pre>
-<p>Doc comments sẽ cực kỳ hữu ích cho project lớn và cần một hệ thống document chính xác và up to date.</p>
-<p><code>//!</code> sẽ generate doc cho crate/mod trong file hiện tại.</p>
-<pre><pre class="playground"><code class="language-rust edition2021">#![crate_name = "playground"]
-
-/// A human being is represented here
-pub struct Person {
-    /// A person must have a name, no matter how much Juliet may hate it
-    name: String,
-}
-
-impl Person {
-    /// Returns a person with the name given them
-    ///
-    /// # Arguments
-    ///
-    /// * `name` - A string slice that holds the name of the person
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// // You can have rust code between fences inside the comments
-    /// // If you pass --test to `rustdoc`, it will even test it for you!
-    /// use doc::Person;
-    /// let person = Person::new("name");
-    /// ```
-    pub fn new(name: &amp;str) -&gt; Person {
-        Person {
-            name: name.to_string(),
-        }
-    }
-
-    /// Gives a friendly hello!
-    ///
-    /// Says "Hello, [name]" to the `Person` it is called on.
-    pub fn hello(&amp;self) {
-        println!("Hello, {}!", self.name);
-    }
-}
-
-fn main() {
-    let john = Person::new("John");
-
-    john.hello();
-}</code></pre></pre>
-<p>Chúng ta có thể thậm chí comment lại example code hoặc cách sử dụng một function nào đó,
-code này cũng sẽ được compile và test, đảm bảo được code và document
-luôn luôn chính xác với nhau, một giải pháp khá thông minh.</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>/// Adds one to the number given.
-///
-/// # Examples
-///
-/// ```
-/// let arg = 5;
-/// let answer = my_crate::add_one(arg);
-///
-/// assert_eq!(6, answer);
-/// ```
-pub fn add_one(x: i32) -&gt; i32 {
-    x + 1
-}
-<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="sử-dụng-readmemd-làm-crate-document"><a class="header" href="#sử-dụng-readmemd-làm-crate-document">Sử dụng README.md làm crate document</a></h1>
 <p>Nội dung comment dưới đây trong <code>src/lib.rs</code> được gọi là crate document,
 được render thành nội dung trong trang chủ doc của library.</p>
@@ -4460,7 +4912,7 @@ impl Screen {
 </ul>
 <p>Sử dụng trait object, Rust type system sẽ chắc chắn là tại thời điểm compile, tất cả các giá trị sử dụng tại ngữ cảnh đó đều phải được implement trai của <em>trait object</em> đó. Nói tóm lại, chúng ta sẽ không cần quan tâm đó là kiểu dữ liệu gì, chỉ cần biết kiểu dữ liệu đó phải được implement <em>trait</em> chúng ta cần là được.</p>
 <p>Lý do cần sử dụng pointer reference <code>&amp;</code> hoặc smart pointer <code>Box&lt;T&gt;</code> bởi vì compiler không biết chính xác về kiểu dữ liệu, Rust sẽ dùng pointer của trait object để biết được method nào để cần được gọi. Xem thêm về <strong><a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">Trait Objects Perform Dynamic Dispatch</a>.</strong></p>
-<h2 id="references-19"><a class="header" href="#references-19">References</a></h2>
+<h2 id="references-22"><a class="header" href="#references-22">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch15-01-box.html">Using Box<T> to Point to Data on the Heap</a></li>
 <li><a href="https://doc.rust-lang.org/rust-by-example/std/box.html#box-stack-and-heap">Box, stack and heap - Rust By Example</a></li>
@@ -4567,7 +5019,7 @@ một lượng lớn tác vụ reading. Và chỉ khi cần đến tác vụ wri
 object mới được copy và thay đổi. Tác vụ để thay đổi giá trị object sẽ copy, di chuyển
 object trong bộ nhớ là một tác vụ nặng, tốn kém. Do đó, ưu điểm của kỹ thuật này là
 các tác vụ reading object rất nhanh do chỉ sử dụng reference (borrow) đến giá trị gốc.</p>
-<h2 id="references-20"><a class="header" href="#references-20">References</a></h2>
+<h2 id="references-23"><a class="header" href="#references-23">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/borrow/enum.Cow.html">https://doc.rust-lang.org/std/borrow/enum.Cow.html</a></li>
 <li><a href="https://github.com/Dhghomon/easy_rust#cow">https://github.com/Dhghomon/easy_rust#cow</a></li>
@@ -4956,7 +5408,7 @@ rồi bỏ thẳng function pointer vào Vec, rồi thực thi theo thứ tự.
 Trong thực tế các command có thể phức tạp hơn,
 có thể là một struct với hàng loạt các function và variable
 trong các module khác nhau, việc sử dụng <code>trait</code> và <code>Box</code> ở cách 1 sẽ hiệu quả hơn.</p>
-<h1 id="references-21"><a class="header" href="#references-21">References</a></h1>
+<h1 id="references-24"><a class="header" href="#references-24">References</a></h1>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Command_pattern">https://en.wikipedia.org/wiki/Command_pattern</a></li>
 <li><a href="https://web.archive.org/web/20210223131236/https://chercher.tech/rust/command-design-pattern-rust">https://web.archive.org/web/20210223131236/https://chercher.tech/rust/command-design-pattern-rust</a></li>
@@ -5049,7 +5501,7 @@ fn builder_test() {
 </ul>
 <h1 id="nhược-điểm"><a class="header" href="#nhược-điểm">Nhược điểm</a></h1>
 <p>Phức tạp hơn so với việc init object trực tiếp, hoặc so với object có constructor đơn giản.</p>
-<h1 id="references-22"><a class="header" href="#references-22">References</a></h1>
+<h1 id="references-25"><a class="header" href="#references-25">References</a></h1>
 <ul>
 <li><a href="https://doc.rust-lang.org/1.0.0/style/ownership/builders.html">https://doc.rust-lang.org/1.0.0/style/ownership/builders.html</a></li>
 <li><a href="https://crates.io/crates/derive_builder">derive_builder</a>, một crate cho phép tự động tạo builder.</li>
@@ -5132,7 +5584,7 @@ fn main() {
       ("2014", "10", "14"),
     ]);
 }</code></pre></pre>
-<h2 id="references-23"><a class="header" href="#references-23">References</a></h2>
+<h2 id="references-26"><a class="header" href="#references-26">References</a></h2>
 <ul>
 <li>https://docs.rs/regex</li>
 <li>https://crates.io/crates/regex</li>
@@ -5263,7 +5715,7 @@ impl Advertisement for AutoplayingVideo {
     }
 }
 <span class="boring">}</span></code></pre></pre>
-<h3 id="references-24"><a class="header" href="#references-24">References</a></h3>
+<h3 id="references-27"><a class="header" href="#references-27">References</a></h3>
 <ul>
 <li>Doc: <a href="https://docs.rs/anyhow">https://docs.rs/anyhow</a></li>
 <li>Github: <a href="https://github.com/dtolnay/anyhow">https://github.com/dtolnay/anyhow</a></li>
@@ -5305,7 +5757,7 @@ fn main() {
     println!("The entry for `0` is \"{}\".", HASHMAP.get(&amp;0).unwrap());
     println!("A expensive calculation on a static results in: {}.", *NUMBER);
 }</code></pre></pre>
-<h2 id="references-25"><a class="header" href="#references-25">References</a></h2>
+<h2 id="references-28"><a class="header" href="#references-28">References</a></h2>
 <ul>
 <li>Doc: <a href="https://docs.rs/lazy_static">https://docs.rs/lazy_static</a></li>
 <li>Github: <a href="https://github.com/rust-lang-nursery/lazy-static.rs">https://github.com/rust-lang-nursery/lazy-static.rs</a></li>
@@ -5352,7 +5804,7 @@ fn main() {
 <li><a href="crates/./serde/serde_toml.html">serde_toml</a></li>
 <li><a href="crates/./serde/serde_csv.html">serde_csv</a></li>
 </ul>
-<h2 id="references-26"><a class="header" href="#references-26">References</a></h2>
+<h2 id="references-29"><a class="header" href="#references-29">References</a></h2>
 <ul>
 <li>http://serde.rs</li>
 </ul>
@@ -5505,7 +5957,7 @@ fn print_an_address() -&gt; Result&lt;()&gt; {
     Ok(())
 }
 <span class="boring">}</span></code></pre></pre>
-<h2 id="references-27"><a class="header" href="#references-27">References</a></h2>
+<h2 id="references-30"><a class="header" href="#references-30">References</a></h2>
 <ul>
 <li><a href="crates/serde/../serde.html"><code>serde</code></a></li>
 <li><a href="https://docs.rs/serde_json">JSON API documentation</a></li>
@@ -5751,7 +6203,7 @@ async fn process(socket: TcpStream) {
 <p>Trên một terminal khác:</p>
 <pre><code class="language-bash">(printf "PING\r\n";) | nc localhost 6379
 </code></pre>
-<h2 id="references-28"><a class="header" href="#references-28">References</a></h2>
+<h2 id="references-31"><a class="header" href="#references-31">References</a></h2>
 <ul>
 <li><a href="https://tokio.rs/tokio/tutorial">Tokio Tutorial</a></li>
 <li><a href="https://tokio.rs/tokio/tutorial/setup">Tokio Mini-Redis</a></li>
@@ -5811,7 +6263,7 @@ Caused by:
 <span class="boring">}</span></code></pre></pre>
 </li>
 </ul>
-<h3 id="references-29"><a class="header" href="#references-29">References</a></h3>
+<h3 id="references-32"><a class="header" href="#references-32">References</a></h3>
 <ul>
 <li>Doc: <a href="https://docs.rs/anyhow">https://docs.rs/anyhow</a></li>
 <li>Github: <a href="https://github.com/dtolnay/anyhow">https://github.com/dtolnay/anyhow</a></li>
@@ -5885,13 +6337,13 @@ env_logger = "0.8.4"
 [2022-07-11T02:12:24Z ERROR main] this is error
 [2022-07-11T02:12:24Z DEBUG main] this is debug message!
 </code></pre>
-<h3 id="references-30"><a class="header" href="#references-30">References</a></h3>
+<h3 id="references-33"><a class="header" href="#references-33">References</a></h3>
 <ul>
 <li>Doc: <a href="https://docs.rs/env_logger">https://docs.rs/env_logger</a></li>
 <li>Github: <a href="https://github.com/env-logger-rs/env_logger/">https://github.com/env-logger-rs/env_logger/</a></li>
 <li><a href="https://docs.rs/env_logger/">https://docs.rs/env_logger/</a></li>
 </ul>
-<h3 id="references-31"><a class="header" href="#references-31">References</a></h3>
+<h3 id="references-34"><a class="header" href="#references-34">References</a></h3>
 <ul>
 <li>Doc: <a href="https://docs.rs/log">https://docs.rs/log</a></li>
 <li>Github: <a href="https://github.com/rust-lang/log">https://github.com/rust-lang/log</a></li>
@@ -5937,7 +6389,7 @@ env_logger = "0.8.4"
 [2022-07-11T02:12:24Z ERROR main] this is error
 [2022-07-11T02:12:24Z DEBUG main] this is debug message!
 </code></pre>
-<h3 id="references-32"><a class="header" href="#references-32">References</a></h3>
+<h3 id="references-35"><a class="header" href="#references-35">References</a></h3>
 <ul>
 <li>Doc: <a href="https://docs.rs/env_logger">https://docs.rs/env_logger</a></li>
 <li>Github: <a href="https://github.com/env-logger-rs/env_logger/">https://github.com/env-logger-rs/env_logger/</a></li>
@@ -5971,7 +6423,7 @@ fn main() {
     assert_eq!(testing, expected);
 }</code></pre></pre>
 <p><a href="https://github.com/dtolnay/indoc"><code>indoc</code></a> cũng hoạt động với raw string <code>r# ... #</code> và byte string <code>b" ... "</code>.</p>
-<h2 id="references-33"><a class="header" href="#references-33">References</a></h2>
+<h2 id="references-36"><a class="header" href="#references-36">References</a></h2>
 <ul>
 <li><a href="https://docs.rs/indoc/latest/indoc/">https://docs.rs/indoc/latest/indoc/</a></li>
 <li><a href="https://github.com/dtolnay/indoc">https://github.com/dtolnay/indoc</a></li>
@@ -6046,7 +6498,7 @@ speedup: 5.34x
 <pre><code class="language-bash">cargo run --release -- nbody visualize
 </code></pre>
 <p><img src="https://i.imgur.com/cF6Euyf.png" alt="" /></p>
-<h2 id="references-34"><a class="header" href="#references-34">References</a></h2>
+<h2 id="references-37"><a class="header" href="#references-37">References</a></h2>
 <ul>
 <li><a href="https://smallcultfollowing.com/babysteps/blog/2015/12/18/rayon-data-parallelism-in-rust/">Rayon: data parallelism in Rust</a></li>
 <li><a href="https://www.youtube.com/watch?v=gof_OEv71Aw">https://www.youtube.com/watch?v=gof_OEv71Aw</a></li>
@@ -6085,7 +6537,7 @@ let mut df: DataFrame = df!(
 .unwrap();
 println!("{}", df);
 <span class="boring">}</span></code></pre></pre>
-<h2 id="references-35"><a class="header" href="#references-35">References</a></h2>
+<h2 id="references-38"><a class="header" href="#references-38">References</a></h2>
 <ul>
 <li>https://pola.rs</li>
 </ul>
@@ -6107,437 +6559,1338 @@ println!("{}", df);
 <li><a href="https://github.com/seanmonstar/reqwest">reqwest</a>: Rust HTTP client.</li>
 <li><a href="https://vector.dev">vector.dev</a>: ultra-fast tool for building observability pipelines.</li>
 </ul>
-<h1 id="references-36"><a class="header" href="#references-36">References</a></h1>
+<h1 id="references-39"><a class="header" href="#references-39">References</a></h1>
 <ul>
 <li>https://blog.duyet.net/2023/01/data-engineering-rust-tools.html</li>
 <li>https://arewedatayet.com</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="polars-1"><a class="header" href="#polars-1"><a href="ttps://pola.rs"><code>polars</code></a></a></h1>
-<p>Xử lý DataFrame lớn, dễ sử dụng, hiệu năng cao và có nhiều ưu điểm giống với Pandas nổi tiếng. Polars cũng được hỗ trợ trên Python.</p>
-<p><img src="crates/./polars.png" alt="" /></p>
-<h2 id="cài-đặt-7"><a class="header" href="#cài-đặt-7">Cài đặt</a></h2>
-<pre><code class="language-bash">cargo add polars
+<div style="break-before: page; page-break-before: always;"></div><h1 id="first-high-performance-data-pipelines-in-rust"><a class="header" href="#first-high-performance-data-pipelines-in-rust">First high-performance data pipelines in Rust</a></h1>
+<p>Xây dựng data pipeline hiệu năng cao là một trong những use case phổ biến của Rust trong lĩnh vực data engineering. Với tốc độ gần như C/C++, memory safety, và hệ sinh thái phong phú, Rust là lựa chọn tuyệt vời để xây dựng các data pipeline xử lý lượng lớn dữ liệu.</p>
+<p>Trong bài này, chúng ta sẽ xây dựng một data pipeline đơn giản nhưng mạnh mẽ để:</p>
+<ol>
+<li>Đọc dữ liệu từ CSV file</li>
+<li>Xử lý và transform dữ liệu</li>
+<li>Ghi kết quả ra Parquet format (columnar storage hiệu năng cao)</li>
+</ol>
+<h2 id="cài-đặt-dependencies"><a class="header" href="#cài-đặt-dependencies">Cài đặt dependencies</a></h2>
+<p>Tạo project mới:</p>
+<pre><code class="language-bash">cargo new data-pipeline
+cd data-pipeline
 </code></pre>
-<p>Hoặc</p>
-<pre><code class="language-toml"># File: Cargo.toml
-
-[dependencies]
-polars = { version = "x", features = ["lazy", ...]}
-</code></pre>
-<h2 id="ví-dụ-7"><a class="header" href="#ví-dụ-7">Ví dụ</a></h2>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::fs::File;
-
-use chrono::prelude::*;
-use polars::prelude::*;
-
-let mut df: DataFrame = df!(
-    "integer" =&gt; &amp;[1, 2, 3],
-    "date" =&gt; &amp;[
-            NaiveDate::from_ymd_opt(2025, 1, 1).unwrap().and_hms_opt(0, 0, 0).unwrap(),
-            NaiveDate::from_ymd_opt(2025, 1, 2).unwrap().and_hms_opt(0, 0, 0).unwrap(),
-            NaiveDate::from_ymd_opt(2025, 1, 3).unwrap().and_hms_opt(0, 0, 0).unwrap(),
-    ],
-    "float" =&gt; &amp;[4.0, 5.0, 6.0],
-    "string" =&gt; &amp;["a", "b", "c"],
-)
-.unwrap();
-println!("{}", df);
-<span class="boring">}</span></code></pre></pre>
-<h2 id="references-37"><a class="header" href="#references-37">References</a></h2>
-<ul>
-<li>https://pola.rs</li>
-</ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="serde-1"><a class="header" href="#serde-1"><a href="http://serde.rs"><code>serde</code></a></a></h1>
-<p>A generic serialization/deserialization framework</p>
-<h2 id="cài-đặt-8"><a class="header" href="#cài-đặt-8">Cài đặt</a></h2>
-<pre><code class="language-bash">cargo add serde
-</code></pre>
-<p>Hoặc</p>
-<pre><code class="language-toml"># File: Cargo.toml
-
-[dependencies]
-serde = "*"
-</code></pre>
-<h2 id="sử-dụng-2"><a class="header" href="#sử-dụng-2">Sử dụng</a></h2>
-<pre><pre class="playground"><code class="language-rust edition2021">use serde::{Deserialize, Serialize};
-
-#[derive(Serialize, Deserialize, Debug)]
-struct Point {
-    x: i32,
-    y: i32,
-}
-
-fn main() {
-    let point = Point { x: 1, y: 2 };
-
-    // Convert the Point to a JSON string.
-    let serialized = serde_json::to_string(&amp;point).unwrap();
-
-    // Prints serialized = {"x":1,"y":2}
-    println!("serialized = {}", serialized);
-
-    // Convert the JSON string back to a Point.
-    let deserialized: Point = serde_json::from_str(&amp;serialized).unwrap();
-
-    // Prints deserialized = Point { x: 1, y: 2 }
-    println!("deserialized = {:?}", deserialized);
-}</code></pre></pre>
-<h2 id="data-formats-1"><a class="header" href="#data-formats-1">Data formats</a></h2>
-<ul>
-<li><a href="crates/./serde/serde_json.html">serde_json</a></li>
-<li><a href="crates/./serde/serde_yaml.html">serde_yaml</a></li>
-<li><a href="crates/./serde/serde_toml.html">serde_toml</a></li>
-<li><a href="crates/./serde/serde_csv.html">serde_csv</a></li>
-</ul>
-<h2 id="references-38"><a class="header" href="#references-38">References</a></h2>
-<ul>
-<li>http://serde.rs</li>
-</ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="serde_json-1"><a class="header" href="#serde_json-1">serde_json</a></h1>
-<p>JSON đã trở thành một trong những định dạng trao đổi dữ liệu phổ biến, đa số các ngữ lập trình server-side đều có thể xử lý chúng.
-Nhờ vào <a href="https://crates.io/crates/serde">serde</a> và <a href="https://crates.io/crates/serde_json">serde_json</a> việc xử lý JSON cũng vô cùng dễ dàng với Rust.
-Các crate này cũng đã được test một cách kỹ càng và nhiều examples vô cùng phong phú dễ sử dụng.</p>
+<p>Thêm dependencies vào <code>Cargo.toml</code>:</p>
 <pre><code class="language-toml">[dependencies]
-serde = "1"
-serde_json = "1"
+polars = { version = "0.43", features = ["lazy", "parquet", "csv"] }
+anyhow = "1.0"
 </code></pre>
-<h1 id="parse-chuỗi-json-thành-rust-1"><a class="header" href="#parse-chuỗi-json-thành-rust-1">Parse chuỗi JSON thành Rust</a></h1>
-<p>Giả sử chúng ta có đoạn JSON như sau:</p>
-<pre><code class="language-json">{
-	"name": "Duyet Le",
-	"age": 27,
-	"phones": [
-		"+60 1234567",
-		"+84 2345678"
-	]
-}
-</code></pre>
-<p>Chúng ta sẽ parse thành một giá trị trong Rust:</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use serde_json::{Result, Value};
+<ul>
+<li><a href="data-engineering/../crates/polars.html"><code>polars</code></a>: DataFrame library hiệu năng cao, tương tự như Pandas</li>
+<li><code>anyhow</code>: Error handling đơn giản và tiện lợi</li>
+</ul>
+<h2 id="ví-dụ-1-pipeline-cơ-bản"><a class="header" href="#ví-dụ-1-pipeline-cơ-bản">Ví dụ 1: Pipeline cơ bản</a></h2>
+<p>Tạo file <code>src/main.rs</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use polars::prelude::*;
+use anyhow::Result;
 
-fn untyped_example() -&gt; Result&lt;()&gt; {
-    // Some JSON input data as a &amp;str. Maybe this comes from the user.
-    let data = r#"
-        {
-			"name": "Duyet Le",
-			"age": 27,
-			"phones": [
-				"+60 1234567",
-				"+84 2345678"
-			]
-        }"#;
+fn main() -&gt; Result&lt;()&gt; {
+    // Đọc CSV file
+    let df = CsvReader::from_path("sales_data.csv")?
+        .has_header(true)
+        .finish()?;
 
-    // Parse the string of data into serde_json::Value.
-    let v: Value = serde_json::from_str(data)?;
+    println!("Dữ liệu gốc:");
+    println!("{:?}", df);
 
-    // Access parts of the data by indexing with square brackets.
-    println!("Please call {} at the number {}", v["name"], v["phones"][0]);
+    // Transform: tính tổng revenue theo category
+    let result = df
+        .lazy()
+        .group_by([col("category")])
+        .agg([
+            col("revenue").sum().alias("total_revenue"),
+            col("quantity").sum().alias("total_quantity"),
+            col("revenue").mean().alias("avg_revenue"),
+        ])
+        .sort("total_revenue", Default::default())
+        .collect()?;
+
+    println!("\nKết quả sau khi xử lý:");
+    println!("{:?}", result);
+
+    // Ghi ra Parquet file
+    let mut file = std::fs::File::create("output.parquet")?;
+    ParquetWriter::new(&amp;mut file).finish(&amp;mut result.clone())?;
+
+    println!("\n✅ Đã ghi kết quả vào output.parquet");
 
     Ok(())
-}
-<span class="boring">}</span></code></pre></pre>
-<p><code>v</code> được parse từ JSON là một enum <a href="https://docs.rs/serde_json/1/serde_json/value/enum.Value.html"><code>serde_json::Value</code></a> cho phép biểu diễn mọi thuộc tính của JSON.</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enum Value {
-    Null,
-    Bool(bool),
-    Number(Number),
-    String(String),
-    Array(Vec&lt;Value&gt;),
-    Object(Map&lt;String, Value&gt;),
-}
-<span class="boring">}</span></code></pre></pre>
-<p>Để truy xuất đến từng thuộc tính:</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>v["name"]
-v["phones"]
-v["phones"][0 ]
-<span class="boring">}</span></code></pre></pre>
-<h1 id="parse-json-into-strongly-typed-1"><a class="header" href="#parse-json-into-strongly-typed-1">Parse JSON into Strongly Typed</a></h1>
-<p>Serde cho phép chúng ta map một JSON data vào một kiểu dữ liệu của Rust và có thể do chúng ta tự định nghĩa, một cách tự động:</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use serde::{Deserialize, Serialize};
-use serde_json::Result;
-
-#[derive(Serialize, Deserialize)]
-struct Person {
-    name: String,
-    age: u8,
-    phones: Vec&lt;String&gt;,
-}
-
-fn typed_example() -&gt; Result&lt;()&gt; {
-    let data = r#"
-        {
-			"name": "Duyet Le",
-			"age": 27,
-			"phones": [
-				"+60 1234567",
-				"+84 2345678"
-			]
-        }"#;
-
-    // Parse the string of data into a Person object. This is exactly the
-    // same function as the one that produced serde_json::Value above, but
-    // now we are asking it for a Person as output.
-    let p: Person = serde_json::from_str(data)?;
-
-    // Do things just like with any other Rust data structure.
-    println!("Please call {} at the number {}", p.name, p.phones[0]);
-
-    Ok(())
-}
-<span class="boring">}</span></code></pre></pre>
-<h1 id="constructing-json-values-1"><a class="header" href="#constructing-json-values-1">Constructing JSON values</a></h1>
-<p><code>json!</code> macro giúp chúng ta khởi tạo <code>serde_json::Value</code> objects với cú pháp giống hệt JSON string:</p>
-<pre><pre class="playground"><code class="language-rust edition2021">use serde_json::json;
-
-fn main() {
-    // The type of `john` is `serde_json::Value`
-    let duyet = json!({
-        "name": "Duyet Le",
-		"age": 27,
-		"phones": [
-			"+60 1234567",
-			"+84 2345678"
-		]
-    });
-
-    println!("first phone number: {}", duyet["phones"][0]);
-
-    // Convert to a string of JSON and print it out
-    println!("{}", duyet.to_string());
 }</code></pre></pre>
-<h1 id="convert-a-struct-to-json-1"><a class="header" href="#convert-a-struct-to-json-1">Convert a Struct to JSON</a></h1>
-<p>Một kiểu dữ liệu có thể được convert thành JSON string bởi <a href="https://docs.rs/serde_json/1/serde_json/ser/fn.to_string.html"><code>serde_json::to_string</code></a>. Kiểu dữ liệu này có thể là Struct hoặc Enum có có implement <code>#[derive(Serialize)]</code>:</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use serde::{Deserialize, Serialize};
-use serde_json::Result;
+<p>Tạo file dữ liệu mẫu <code>sales_data.csv</code>:</p>
+<pre><code class="language-csv">category,product,revenue,quantity
+Electronics,Laptop,1200,2
+Electronics,Mouse,25,10
+Books,Novel,15,5
+Books,Textbook,80,3
+Electronics,Keyboard,75,4
+Books,Magazine,5,20
+</code></pre>
+<p>Chạy pipeline:</p>
+<pre><code class="language-bash">cargo run
+</code></pre>
+<h2 id="ví-dụ-2-pipeline-với-lazy-evaluation"><a class="header" href="#ví-dụ-2-pipeline-với-lazy-evaluation">Ví dụ 2: Pipeline với Lazy Evaluation</a></h2>
+<p>Lazy evaluation giúp tối ưu performance bằng cách chỉ thực hiện computation khi cần thiết:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use polars::prelude::*;
+use anyhow::Result;
 
-#[derive(Serialize, Deserialize)]
-struct Address {
-    street: String,
-    city: String,
+fn process_large_dataset() -&gt; Result&lt;()&gt; {
+    let lazy_df = LazyCsvReader::new("large_dataset.csv")
+        .has_header(true)
+        .finish()?;
+
+    // Định nghĩa pipeline (chưa thực thi)
+    let result = lazy_df
+        .filter(col("revenue").gt(100))  // Lọc revenue &gt; 100
+        .select([
+            col("date"),
+            col("category"),
+            col("revenue"),
+            (col("revenue") * lit(0.1)).alias("tax"),  // Tính 10% tax
+            (col("revenue") * lit(0.9)).alias("net_revenue"),
+        ])
+        .group_by([col("category")])
+        .agg([
+            col("net_revenue").sum().alias("total_net_revenue"),
+            col("revenue").count().alias("transaction_count"),
+        ])
+        .sort("total_net_revenue", SortOptions::default().with_order_descending(true))
+        .collect()?;  // Thực thi tại đây
+
+    println!("{:?}", result);
+    Ok(())
 }
 
-fn print_an_address() -&gt; Result&lt;()&gt; {
-    // Some data structure.
-    let address = Address {
-        street: "Dist 1 Street".to_owned(),
-        city: "Ho Chi Minh".to_owned(),
+fn main() -&gt; Result&lt;()&gt; {
+    process_large_dataset()?;
+    Ok(())
+}</code></pre></pre>
+<p><strong>Ưu điểm của lazy evaluation:</strong></p>
+<ul>
+<li>Polars tự động tối ưu query plan</li>
+<li>Chỉ đọc columns cần thiết</li>
+<li>Có thể parallel processing tự động</li>
+<li>Giảm memory usage</li>
+</ul>
+<h2 id="ví-dụ-3-pipeline-với-error-handling"><a class="header" href="#ví-dụ-3-pipeline-với-error-handling">Ví dụ 3: Pipeline với Error Handling</a></h2>
+<p>Trong production, error handling rất quan trọng:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use polars::prelude::*;
+use anyhow::{Context, Result};
+
+fn read_and_validate_data(path: &amp;str) -&gt; Result&lt;DataFrame&gt; {
+    let df = CsvReader::from_path(path)
+        .context(format!("Không thể đọc file: {}", path))?
+        .has_header(true)
+        .finish()
+        .context("Lỗi parse CSV")?;
+
+    // Validate schema
+    if !df.get_column_names().contains(&amp;"revenue") {
+        anyhow::bail!("Thiếu column 'revenue'");
+    }
+
+    Ok(df)
+}
+
+fn transform_data(df: DataFrame) -&gt; Result&lt;DataFrame&gt; {
+    df.lazy()
+        .select([
+            col("category"),
+            col("revenue"),
+            col("quantity"),
+        ])
+        .filter(col("revenue").gt(0))  // Lọc bỏ invalid data
+        .filter(col("quantity").gt(0))
+        .collect()
+        .context("Lỗi transform data")
+}
+
+fn save_to_parquet(df: &amp;mut DataFrame, path: &amp;str) -&gt; Result&lt;()&gt; {
+    let file = std::fs::File::create(path)
+        .context(format!("Không thể tạo file: {}", path))?;
+
+    ParquetWriter::new(&amp;file)
+        .finish(df)
+        .context("Lỗi ghi Parquet file")?;
+
+    Ok(())
+}
+
+fn main() -&gt; Result&lt;()&gt; {
+    println!("🚀 Bắt đầu data pipeline...");
+
+    let df = read_and_validate_data("sales_data.csv")?;
+    println!("✅ Đọc dữ liệu thành công: {} rows", df.height());
+
+    let mut result = transform_data(df)?;
+    println!("✅ Transform thành công: {} rows", result.height());
+
+    save_to_parquet(&amp;mut result, "output.parquet")?;
+    println!("✅ Đã lưu vào output.parquet");
+
+    Ok(())
+}</code></pre></pre>
+<h2 id="ví-dụ-4-parallel-processing-với-rayon"><a class="header" href="#ví-dụ-4-parallel-processing-với-rayon">Ví dụ 4: Parallel Processing với Rayon</a></h2>
+<p>Xử lý nhiều files cùng lúc:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use polars::prelude::*;
+use rayon::prelude::*;
+use anyhow::Result;
+use std::path::PathBuf;
+
+fn process_file(path: PathBuf) -&gt; Result&lt;DataFrame&gt; {
+    let df = CsvReader::from_path(&amp;path)?
+        .has_header(true)
+        .finish()?;
+
+    let result = df
+        .lazy()
+        .group_by([col("category")])
+        .agg([col("revenue").sum()])
+        .collect()?;
+
+    Ok(result)
+}
+
+fn main() -&gt; Result&lt;()&gt; {
+    let files = vec![
+        PathBuf::from("data1.csv"),
+        PathBuf::from("data2.csv"),
+        PathBuf::from("data3.csv"),
+    ];
+
+    // Xử lý parallel
+    let results: Vec&lt;Result&lt;DataFrame&gt;&gt; = files
+        .into_par_iter()
+        .map(process_file)
+        .collect();
+
+    // Kết hợp kết quả
+    let mut combined = DataFrame::default();
+    for result in results {
+        match result {
+            Ok(df) =&gt; {
+                if combined.is_empty() {
+                    combined = df;
+                } else {
+                    combined = combined.vstack(&amp;df)?;
+                }
+            }
+            Err(e) =&gt; eprintln!("Lỗi xử lý file: {}", e),
+        }
+    }
+
+    println!("Tổng hợp: {:?}", combined);
+    Ok(())
+}</code></pre></pre>
+<h2 id="so-sánh-với-python"><a class="header" href="#so-sánh-với-python">So sánh với Python</a></h2>
+<p>Pipeline tương tự trong Python với Pandas:</p>
+<pre><code class="language-python">import pandas as pd
+
+# Đọc CSV
+df = pd.read_csv('sales_data.csv')
+
+# Transform
+result = df.groupby('category').agg({
+    'revenue': ['sum', 'mean'],
+    'quantity': 'sum'
+}).reset_index()
+
+# Ghi Parquet
+result.to_parquet('output.parquet')
+</code></pre>
+<p><strong>Ưu điểm của Rust + Polars:</strong></p>
+<ul>
+<li>Nhanh hơn 5-10x so với Pandas</li>
+<li>Memory efficient hơn nhiều</li>
+<li>Type safety tại compile time</li>
+<li>Không cần GIL (Global Interpreter Lock) như Python</li>
+<li>Binary nhỏ gọn, dễ deploy</li>
+</ul>
+<p><strong>Nhược điểm:</strong></p>
+<ul>
+<li>Compile time lâu hơn</li>
+<li>Ecosystem nhỏ hơn Python (nhưng đang phát triển nhanh)</li>
+<li>Learning curve cao hơn</li>
+</ul>
+<h2 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h2>
+<ol>
+<li>
+<p><strong>Sử dụng Lazy Evaluation khi làm việc với large datasets:</strong></p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let result = LazyCsvReader::new("large.csv")
+    .finish()?
+    .filter(...)
+    .select(...)
+    .collect()?;
+<span class="boring">}</span></code></pre></pre>
+</li>
+<li>
+<p><strong>Streaming cho data quá lớn:</strong></p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let reader = CsvReader::from_path("huge.csv")?
+    .has_header(true)
+    .with_chunk_size(10_000);  // Đọc từng chunk
+<span class="boring">}</span></code></pre></pre>
+</li>
+<li>
+<p><strong>Sử dụng Parquet thay vì CSV cho storage:</strong></p>
+<ul>
+<li>Nhanh hơn nhiều khi đọc</li>
+<li>Tiết kiệm storage (compressed)</li>
+<li>Preserve data types</li>
+</ul>
+</li>
+<li>
+<p><strong>Error handling với <code>anyhow</code> hoặc <code>thiserror</code>:</strong></p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn process() -&gt; Result&lt;()&gt; {
+    let df = read_csv("data.csv")
+        .context("Failed to read CSV")?;
+    Ok(())
+}
+<span class="boring">}</span></code></pre></pre>
+</li>
+</ol>
+<h2 id="monitoring-và-logging"><a class="header" href="#monitoring-và-logging">Monitoring và Logging</a></h2>
+<p>Thêm logging để theo dõi pipeline:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use polars::prelude::*;
+use anyhow::Result;
+
+fn main() -&gt; Result&lt;()&gt; {
+    let start = std::time::Instant::now();
+
+    let df = CsvReader::from_path("data.csv")?
+        .has_header(true)
+        .finish()?;
+
+    println!("⏱️  Đọc CSV: {:?}", start.elapsed());
+
+    let transform_start = std::time::Instant::now();
+    let result = df.lazy()
+        .group_by([col("category")])
+        .agg([col("revenue").sum()])
+        .collect()?;
+
+    println!("⏱️  Transform: {:?}", transform_start.elapsed());
+    println!("📊 Số rows: {}", result.height());
+
+    Ok(())
+}</code></pre></pre>
+<h2 id="tổng-kết"><a class="header" href="#tổng-kết">Tổng kết</a></h2>
+<p>Rust + Polars là một stack mạnh mẽ để xây dựng data pipeline:</p>
+<ul>
+<li>✅ Performance cao</li>
+<li>✅ Memory safe</li>
+<li>✅ Dễ deploy (single binary)</li>
+<li>✅ Ecosystem đang phát triển mạnh</li>
+</ul>
+<p>Bắt đầu với các pipeline đơn giản, sau đó mở rộng với streaming, parallel processing, và distributed computing với các tools như DataFusion và Ballista.</p>
+<h2 id="references-40"><a class="header" href="#references-40">References</a></h2>
+<ul>
+<li><a href="https://docs.pola.rs/">Polars Documentation</a></li>
+<li><a href="https://docs.pola.rs/user-guide/">Polars User Guide</a></li>
+<li><a href="https://arewedatayet.com">Are We Data Yet?</a></li>
+<li><a href="https://arrow.apache.org/">Apache Arrow</a></li>
+<li><a href="https://datafusion.apache.org/">DataFusion</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="building-scalable-data-driven-applications-using-rust"><a class="header" href="#building-scalable-data-driven-applications-using-rust">Building scalable data-driven applications using Rust</a></h1>
+<p>Data-driven applications cần xử lý, phân tích và serve dữ liệu một cách nhanh chóng và đáng tin cậy. Rust với performance cao, memory safety và concurrency mạnh mẽ là lựa chọn tuyệt vời để xây dựng các ứng dụng data-driven có khả năng scale.</p>
+<p>Trong bài này, chúng ta sẽ tìm hiểu cách xây dựng một ứng dụng data-driven hoàn chỉnh với các thành phần:</p>
+<ul>
+<li>Data ingestion và processing</li>
+<li>Storage và indexing</li>
+<li>Query engine</li>
+<li>API để serve data</li>
+</ul>
+<h2 id="kiến-trúc-ứng-dụng-data-driven"><a class="header" href="#kiến-trúc-ứng-dụng-data-driven">Kiến trúc ứng dụng Data-Driven</a></h2>
+<pre><code>┌─────────────┐
+│ Data Sources│ (CSV, JSON, API, Database)
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│  Ingestion  │ (tokio, reqwest, async-std)
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│ Processing  │ (polars, arrow, datafusion)
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│   Storage   │ (parquet, sled, rocksdb)
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│ Query Engine│ (datafusion, tantivy)
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│  API Server │ (actix-web, axum, rocket)
+└─────────────┘
+</code></pre>
+<h2 id="ví-dụ-1-data-ingestion-với-tokio"><a class="header" href="#ví-dụ-1-data-ingestion-với-tokio">Ví dụ 1: Data Ingestion với Tokio</a></h2>
+<p>Xây dựng service để ingest data từ nhiều nguồn:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use tokio::fs::File;
+use tokio::io::AsyncReadExt;
+use reqwest;
+use anyhow::Result;
+
+/// Đọc data từ file
+async fn ingest_from_file(path: &amp;str) -&gt; Result&lt;Vec&lt;u8&gt;&gt; {
+    let mut file = File::open(path).await?;
+    let mut contents = Vec::new();
+    file.read_to_end(&amp;mut contents).await?;
+    Ok(contents)
+}
+
+/// Fetch data từ HTTP API
+async fn ingest_from_api(url: &amp;str) -&gt; Result&lt;String&gt; {
+    let response = reqwest::get(url).await?;
+    let body = response.text().await?;
+    Ok(body)
+}
+
+/// Ingest data từ nhiều nguồn đồng thời
+async fn ingest_all() -&gt; Result&lt;()&gt; {
+    // Chạy parallel
+    let (file_data, api_data) = tokio::join!(
+        ingest_from_file("data.csv"),
+        ingest_from_api("https://api.example.com/data")
+    );
+
+    println!("File data size: {}", file_data?.len());
+    println!("API data: {}", api_data?);
+
+    Ok(())
+}
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;()&gt; {
+    ingest_all().await?;
+    Ok(())
+}</code></pre></pre>
+<h2 id="ví-dụ-2-processing-với-datafusion"><a class="header" href="#ví-dụ-2-processing-với-datafusion">Ví dụ 2: Processing với DataFusion</a></h2>
+<p>DataFusion là SQL query engine sử dụng Apache Arrow, cực kỳ nhanh:</p>
+<pre><code class="language-toml">[dependencies]
+datafusion = "43.0"
+tokio = { version = "1.48", features = ["full"] }
+</code></pre>
+<pre><pre class="playground"><code class="language-rust edition2021">use datafusion::prelude::*;
+use anyhow::Result;
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;()&gt; {
+    // Tạo SessionContext
+    let ctx = SessionContext::new();
+
+    // Đăng ký Parquet file như một table
+    ctx.register_parquet("sales", "sales_data.parquet", ParquetReadOptions::default())
+        .await?;
+
+    // Chạy SQL query
+    let df = ctx.sql(
+        "SELECT
+            category,
+            SUM(revenue) as total_revenue,
+            AVG(revenue) as avg_revenue,
+            COUNT(*) as num_transactions
+        FROM sales
+        WHERE revenue &gt; 100
+        GROUP BY category
+        ORDER BY total_revenue DESC"
+    ).await?;
+
+    // Hiển thị kết quả
+    df.show().await?;
+
+    // Hoặc lưu lại thành Parquet
+    df.write_parquet("output.parquet", None, None).await?;
+
+    Ok(())
+}</code></pre></pre>
+<p><strong>Ưu điểm của DataFusion:</strong></p>
+<ul>
+<li>Tốc độ cực nhanh (columnar processing)</li>
+<li>Hỗ trợ SQL standard</li>
+<li>Có thể scale đến hàng TB dữ liệu</li>
+<li>Zero-copy reads với Arrow</li>
+</ul>
+<h2 id="ví-dụ-3-storage-với-parquet"><a class="header" href="#ví-dụ-3-storage-với-parquet">Ví dụ 3: Storage với Parquet</a></h2>
+<p>Parquet là format columnar storage rất hiệu quả:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use polars::prelude::*;
+use anyhow::Result;
+
+fn save_to_parquet(df: &amp;mut DataFrame, path: &amp;str) -&gt; Result&lt;()&gt; {
+    let file = std::fs::File::create(path)?;
+
+    ParquetWriter::new(&amp;file)
+        .with_compression(ParquetCompression::Snappy)  // Nén data
+        .finish(df)?;
+
+    Ok(())
+}
+
+fn read_from_parquet(path: &amp;str) -&gt; Result&lt;DataFrame&gt; {
+    let df = ParquetReader::new(std::fs::File::open(path)?)
+        .finish()?;
+    Ok(df)
+}
+
+fn main() -&gt; Result&lt;()&gt; {
+    // Tạo sample data
+    let mut df = df! {
+        "id" =&gt; &amp;[1, 2, 3, 4, 5],
+        "name" =&gt; &amp;["Alice", "Bob", "Charlie", "David", "Eve"],
+        "revenue" =&gt; &amp;[1200.50, 800.30, 1500.75, 950.20, 1100.00],
+    }?;
+
+    // Lưu
+    save_to_parquet(&amp;mut df, "users.parquet")?;
+    println!("✅ Đã lưu data");
+
+    // Đọc lại
+    let loaded = read_from_parquet("users.parquet")?;
+    println!("{:?}", loaded);
+
+    Ok(())
+}</code></pre></pre>
+<h2 id="ví-dụ-4-full-text-search-với-tantivy"><a class="header" href="#ví-dụ-4-full-text-search-với-tantivy">Ví dụ 4: Full-text Search với Tantivy</a></h2>
+<p>Tantivy là full-text search engine tương tự Lucene/Elasticsearch:</p>
+<pre><code class="language-toml">[dependencies]
+tantivy = "0.22"
+</code></pre>
+<pre><pre class="playground"><code class="language-rust edition2021">use tantivy::schema::*;
+use tantivy::{doc, Index, IndexWriter, ReloadPolicy};
+use tantivy::collector::TopDocs;
+use tantivy::query::QueryParser;
+use anyhow::Result;
+
+fn main() -&gt; Result&lt;()&gt; {
+    // Định nghĩa schema
+    let mut schema_builder = Schema::builder();
+    schema_builder.add_text_field("title", TEXT | STORED);
+    schema_builder.add_text_field("body", TEXT);
+    let schema = schema_builder.build();
+
+    // Tạo index
+    let index = Index::create_in_ram(schema.clone());
+    let mut index_writer: IndexWriter = index.writer(50_000_000)?;
+
+    // Index documents
+    let title = schema.get_field("title").unwrap();
+    let body = schema.get_field("body").unwrap();
+
+    index_writer.add_document(doc!(
+        title =&gt; "Rust Programming",
+        body =&gt; "Rust is a systems programming language that runs blazingly fast"
+    ))?;
+
+    index_writer.add_document(doc!(
+        title =&gt; "Data Engineering",
+        body =&gt; "Building scalable data pipelines with Rust and Polars"
+    ))?;
+
+    index_writer.commit()?;
+
+    // Search
+    let reader = index
+        .reader_builder()
+        .reload_policy(ReloadPolicy::OnCommitWithDelay)
+        .try_into()?;
+
+    let searcher = reader.searcher();
+
+    let query_parser = QueryParser::for_index(&amp;index, vec![title, body]);
+    let query = query_parser.parse_query("Rust")?;
+
+    let top_docs = searcher.search(&amp;query, &amp;TopDocs::with_limit(10))?;
+
+    println!("Tìm thấy {} kết quả:", top_docs.len());
+    for (_score, doc_address) in top_docs {
+        let retrieved_doc = searcher.doc(doc_address)?;
+        println!("{}", schema.to_json(&amp;retrieved_doc));
+    }
+
+    Ok(())
+}</code></pre></pre>
+<h2 id="ví-dụ-5-api-server-với-axum"><a class="header" href="#ví-dụ-5-api-server-với-axum">Ví dụ 5: API Server với Axum</a></h2>
+<p>Xây dựng REST API để serve data:</p>
+<pre><code class="language-toml">[dependencies]
+axum = "0.7"
+tokio = { version = "1.48", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+datafusion = "43.0"
+</code></pre>
+<pre><pre class="playground"><code class="language-rust edition2021">use axum::{
+    extract::{Query, State},
+    http::StatusCode,
+    routing::get,
+    Json, Router,
+};
+use datafusion::prelude::*;
+use serde::{Deserialize, Serialize};
+use std::sync::Arc;
+use anyhow::Result;
+
+#[derive(Clone)]
+struct AppState {
+    ctx: Arc&lt;SessionContext&gt;,
+}
+
+#[derive(Deserialize)]
+struct QueryParams {
+    category: Option&lt;String&gt;,
+    min_revenue: Option&lt;f64&gt;,
+}
+
+#[derive(Serialize)]
+struct SalesRecord {
+    category: String,
+    total_revenue: f64,
+    num_transactions: i64,
+}
+
+async fn query_sales(
+    State(state): State&lt;AppState&gt;,
+    Query(params): Query&lt;QueryParams&gt;,
+) -&gt; Result&lt;Json&lt;Vec&lt;SalesRecord&gt;&gt;, StatusCode&gt; {
+    // Build SQL query dựa trên params
+    let mut sql = String::from(
+        "SELECT category,
+         SUM(revenue) as total_revenue,
+         COUNT(*) as num_transactions
+         FROM sales WHERE 1=1"
+    );
+
+    if let Some(cat) = params.category {
+        sql.push_str(&amp;format!(" AND category = '{}'", cat));
+    }
+
+    if let Some(min_rev) = params.min_revenue {
+        sql.push_str(&amp;format!(" AND revenue &gt;= {}", min_rev));
+    }
+
+    sql.push_str(" GROUP BY category");
+
+    // Execute query
+    let df = state.ctx.sql(&amp;sql)
+        .await
+        .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    // Convert to JSON (simplified)
+    let records = vec![
+        SalesRecord {
+            category: "Electronics".to_string(),
+            total_revenue: 5000.0,
+            num_transactions: 100,
+        }
+    ];
+
+    Ok(Json(records))
+}
+
+async fn health_check() -&gt; &amp;'static str {
+    "OK"
+}
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;()&gt; {
+    // Setup DataFusion
+    let ctx = SessionContext::new();
+    ctx.register_parquet("sales", "sales_data.parquet", ParquetReadOptions::default())
+        .await?;
+
+    let state = AppState {
+        ctx: Arc::new(ctx),
     };
 
-    // Serialize it to a JSON string.
-    let j = serde_json::to_string(&amp;address)?;
+    // Build router
+    let app = Router::new()
+        .route("/health", get(health_check))
+        .route("/api/sales", get(query_sales))
+        .with_state(state);
 
-    // Print, write to a file, or send to an HTTP server.
-    println!("{}", j);
+    // Run server
+    println!("🚀 Server chạy tại http://localhost:3000");
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
+    axum::serve(listener, app).await?;
 
     Ok(())
-}
-<span class="boring">}</span></code></pre></pre>
-<h2 id="references-39"><a class="header" href="#references-39">References</a></h2>
-<ul>
-<li><a href="crates/serde/../serde.html"><code>serde</code></a></li>
-<li><a href="https://docs.rs/serde_json">JSON API documentation</a></li>
-<li><a href="https://docs.rs/serde">Serde API documentation</a></li>
-<li><a href="https://serde.rs/">Detailed documentation about Serde</a></li>
-<li><a href="https://serde.rs/derive.html">Setting up <code>#[derive(Serialize, Deserialize)]</code></a></li>
-</ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="serde_toml-2"><a class="header" href="#serde_toml-2">serde_toml</a></h1>
-<p><a href="crates/serde/../serde.html"><code>serde</code></a> đọc và xử lý TOML file.</p>
-<p>File: Cargo.toml</p>
-<pre><code class="language-toml">[dependencies]
-serde = "1"
-toml = "1"
+}</code></pre></pre>
+<p>Test API:</p>
+<pre><code class="language-bash"># Health check
+curl http://localhost:3000/health
+
+# Query với params
+curl "http://localhost:3000/api/sales?category=Electronics&amp;min_revenue=100"
 </code></pre>
-<p>Ví dụ deserialize từ TOML file:</p>
+<h2 id="ví-dụ-6-real-time-processing-với-channels"><a class="header" href="#ví-dụ-6-real-time-processing-với-channels">Ví dụ 6: Real-time Processing với Channels</a></h2>
+<p>Xử lý data streaming real-time:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use tokio::sync::mpsc;
+use tokio::time::{Duration, sleep};
+use anyhow::Result;
+
+#[derive(Debug, Clone)]
+struct DataPoint {
+    timestamp: i64,
+    value: f64,
+}
+
+async fn producer(tx: mpsc::Sender&lt;DataPoint&gt;) {
+    let mut counter = 0;
+    loop {
+        let data = DataPoint {
+            timestamp: counter,
+            value: (counter as f64) * 1.5,
+        };
+
+        if tx.send(data).await.is_err() {
+            println!("Receiver dropped");
+            break;
+        }
+
+        counter += 1;
+        sleep(Duration::from_millis(100)).await;
+    }
+}
+
+async fn processor(mut rx: mpsc::Receiver&lt;DataPoint&gt;) {
+    let mut buffer = Vec::new();
+    let batch_size = 10;
+
+    while let Some(data) = rx.recv().await {
+        buffer.push(data);
+
+        if buffer.len() &gt;= batch_size {
+            // Process batch
+            let sum: f64 = buffer.iter().map(|d| d.value).sum();
+            let avg = sum / buffer.len() as f64;
+
+            println!("📊 Batch processed: {} records, avg = {:.2}", buffer.len(), avg);
+
+            buffer.clear();
+        }
+    }
+}
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;()&gt; {
+    let (tx, rx) = mpsc::channel(100);
+
+    // Spawn producer và processor
+    let producer_handle = tokio::spawn(producer(tx));
+    let processor_handle = tokio::spawn(processor(rx));
+
+    // Chạy 5 giây
+    sleep(Duration::from_secs(5)).await;
+    producer_handle.abort();
+
+    processor_handle.await?;
+
+    Ok(())
+}</code></pre></pre>
+<h2 id="best-practices-1"><a class="header" href="#best-practices-1">Best Practices</a></h2>
+<h3 id="1-sử-dụng-columnar-format"><a class="header" href="#1-sử-dụng-columnar-format">1. Sử dụng Columnar Format</a></h3>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use serde::Deserialize;
+</span>// ✅ Tốt: Parquet (columnar)
+ParquetWriter::new(&amp;file).finish(&amp;mut df)?;
 
-#[derive(Deserialize)]
-struct Config {
-   ip: String,
-   port: Option&lt;u16&gt;,
-   keys: Keys,
-}
-
-#[derive(Deserialize)]
-struct Keys {
-   github: String,
-   travis: Option&lt;String&gt;,
-}
-
-let config: Config = toml::from_str(r#"
-   ip = '127.0.0.1'
-
-   [keys]
-   github = 'xxxxxxxxxxxxxxxxx'
-   travis = 'yyyyyyyyyyyyyyyyy'
-"#).unwrap();
-
-assert_eq!(config.ip, "127.0.0.1");
-assert_eq!(config.port, None);
-assert_eq!(config.keys.github, "xxxxxxxxxxxxxxxxx");
-assert_eq!(config.keys.travis.as_ref().unwrap(), "yyyyyyyyyyyyyyyyy");
+// ❌ Tránh: CSV cho large datasets
+// CSV rất chậm và tốn memory
 <span class="boring">}</span></code></pre></pre>
-<p>Ví dụ serialize sang TOML file:</p>
+<h3 id="2-lazy-evaluation"><a class="header" href="#2-lazy-evaluation">2. Lazy Evaluation</a></h3>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use serde::Serialize;
+</span>// ✅ Tốt: Lazy evaluation
+let result = df.lazy()
+    .filter(...)
+    .select(...)
+    .collect()?;  // Chỉ execute 1 lần
 
-#[derive(Serialize)]
-struct Config {
-   ip: String,
-   port: Option&lt;u16&gt;,
-   keys: Keys,
-}
-
-#[derive(Serialize)]
-struct Keys {
-   github: String,
-   travis: Option&lt;String&gt;,
-}
-
-let config = Config {
-   ip: "127.0.0.1".to_string(),
-   port: None,
-   keys: Keys {
-       github: "xxxxxxxxxxxxxxxxx".to_string(),
-       travis: Some("yyyyyyyyyyyyyyyyy".to_string()),
-   },
-};
-
-let toml = toml::to_string(&amp;config).unwrap();
-println!("{}", toml);
+// ❌ Tránh: Eager evaluation
+let df = df.filter(...)?;  // Execute ngay
+let df = df.select(...)?;  // Execute lại
 <span class="boring">}</span></code></pre></pre>
-<h1 id="reference-2"><a class="header" href="#reference-2">Reference</a></h1>
+<h3 id="3-batch-processing"><a class="header" href="#3-batch-processing">3. Batch Processing</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Tốt: Process theo batch
+for chunk in data.chunks(10_000) {
+    process_chunk(chunk);
+}
+
+// ❌ Tránh: Process từng item
+for item in data {
+    process_item(item);  // Chậm!
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="4-connection-pooling"><a class="header" href="#4-connection-pooling">4. Connection Pooling</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use deadpool_postgres::{Config, Pool};
+
+// ✅ Tốt: Dùng connection pool
+let pool = config.create_pool(None, NoTls)?;
+let client = pool.get().await?;
+
+// ❌ Tránh: Tạo connection mỗi lần query
+<span class="boring">}</span></code></pre></pre>
+<h2 id="monitoring-và-observability"><a class="header" href="#monitoring-và-observability">Monitoring và Observability</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::time::Instant;
+
+fn main() -&gt; Result&lt;()&gt; {
+    let start = Instant::now();
+
+    // Process data
+    let df = process_data()?;
+
+    println!("⏱️  Processing time: {:?}", start.elapsed());
+    println!("📊 Records processed: {}", df.height());
+    println!("💾 Memory used: {} MB", df.estimated_size() / 1_000_000);
+
+    Ok(())
+}</code></pre></pre>
+<h2 id="so-sánh-performance"><a class="header" href="#so-sánh-performance">So sánh Performance</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Operation</th><th>Python/Pandas</th><th>Rust/Polars</th><th>Speedup</th></tr></thead><tbody>
+<tr><td>Read CSV (1GB)</td><td>5.2s</td><td>0.8s</td><td>6.5x</td></tr>
+<tr><td>GroupBy + Agg</td><td>3.1s</td><td>0.4s</td><td>7.8x</td></tr>
+<tr><td>Join (10M rows)</td><td>12.5s</td><td>1.2s</td><td>10.4x</td></tr>
+<tr><td>Write Parquet</td><td>2.8s</td><td>0.5s</td><td>5.6x</td></tr>
+</tbody></table>
+</div>
+<h2 id="tổng-kết-1"><a class="header" href="#tổng-kết-1">Tổng kết</a></h2>
+<p>Rust cung cấp ecosystem mạnh mẽ để xây dựng data-driven applications:</p>
 <ul>
-<li><a href="crates/serde/../serde.html"><code>serde</code></a></li>
-<li><a href="https://docs.rs/toml">https://docs.rs/toml</a></li>
+<li>✅ <strong>DataFusion</strong>: SQL query engine cực nhanh</li>
+<li>✅ <strong>Polars</strong>: DataFrame library như Pandas nhưng nhanh hơn nhiều</li>
+<li>✅ <strong>Tantivy</strong>: Full-text search engine</li>
+<li>✅ <strong>Arrow</strong>: Columnar format chuẩn công nghiệp</li>
+<li>✅ <strong>Tokio</strong>: Async runtime cho concurrent processing</li>
+<li>✅ <strong>Axum/Actix</strong>: Web frameworks để serve data</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="serde_toml-3"><a class="header" href="#serde_toml-3">serde_toml</a></h1>
-<p><a href="crates/serde/../serde.html"><code>serde</code></a> đọc và xử lý CSV file.</p>
-<p>File: Cargo.toml</p>
-<pre><code class="language-toml">[dependencies]
-serde = "1"
-csv = "1"
+<p>Với Rust, bạn có thể xây dựng ứng dụng vừa nhanh, vừa safe, vừa dễ maintain và scale.</p>
+<h2 id="references-41"><a class="header" href="#references-41">References</a></h2>
+<ul>
+<li><a href="https://datafusion.apache.org/">DataFusion Documentation</a></li>
+<li><a href="https://docs.pola.rs/">Polars Documentation</a></li>
+<li><a href="https://docs.rs/tantivy/">Tantivy Documentation</a></li>
+<li><a href="https://arrow.apache.org/">Apache Arrow</a></li>
+<li><a href="https://arewedatayet.com">Are We Data Yet?</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rust-as-an-alternative-to-python-for-data-engineering-tasks"><a class="header" href="#rust-as-an-alternative-to-python-for-data-engineering-tasks">Rust as an alternative to Python for data engineering tasks</a></h1>
+<p>Python đã thống trị lĩnh vực data engineering trong nhiều năm với các tools như Pandas, Spark, và Airflow. Tuy nhiên, Rust đang nổi lên như một lựa chọn thay thế hấp dẫn với performance vượt trội, memory safety, và khả năng concurrent processing mạnh mẽ.</p>
+<p>Bài này sẽ so sánh chi tiết giữa Python và Rust trong các use case phổ biến của data engineering, giúp bạn quyết định khi nào nên dùng Rust thay vì Python.</p>
+<h2 id="so-sánh-tổng-quan"><a class="header" href="#so-sánh-tổng-quan">So sánh tổng quan</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Tiêu chí</th><th>Python</th><th>Rust</th></tr></thead><tbody>
+<tr><td><strong>Performance</strong></td><td>Chậm (interpreted)</td><td>Rất nhanh (compiled, gần C++)</td></tr>
+<tr><td><strong>Memory Usage</strong></td><td>Cao (GIL, GC overhead)</td><td>Thấp (no GC, zero-cost abstractions)</td></tr>
+<tr><td><strong>Type Safety</strong></td><td>Dynamic typing (runtime errors)</td><td>Static typing (compile-time checks)</td></tr>
+<tr><td><strong>Concurrency</strong></td><td>Hạn chế (GIL)</td><td>Excellent (no GIL, fearless concurrency)</td></tr>
+<tr><td><strong>Ecosystem</strong></td><td>Rất lớn (mature)</td><td>Đang phát triển nhanh</td></tr>
+<tr><td><strong>Learning Curve</strong></td><td>Dễ học</td><td>Khó hơn (ownership, lifetimes)</td></tr>
+<tr><td><strong>Development Speed</strong></td><td>Nhanh (scripting)</td><td>Chậm hơn (compile time)</td></tr>
+</tbody></table>
+</div>
+<h2 id="1-datafusion-vs-apache-spark"><a class="header" href="#1-datafusion-vs-apache-spark">1. DataFusion vs Apache Spark</a></h2>
+<h3 id="apache-spark-pythonscala"><a class="header" href="#apache-spark-pythonscala">Apache Spark (Python/Scala)</a></h3>
+<pre><code class="language-python">from pyspark.sql import SparkSession
+
+spark = SparkSession.builder.appName("example").getOrCreate()
+
+# Đọc data
+df = spark.read.parquet("sales.parquet")
+
+# Transform
+result = df.groupBy("category") \
+    .agg({"revenue": "sum", "quantity": "count"}) \
+    .orderBy("sum(revenue)", ascending=False)
+
+result.show()
 </code></pre>
-<p>Ví dụ parse file CSV:</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::io;
+<p><strong>Nhược điểm:</strong></p>
+<ul>
+<li>Overhead của JVM</li>
+<li>GC pauses</li>
+<li>Slow startup time</li>
+<li>Resource hungry (cần nhiều RAM)</li>
+</ul>
+<h3 id="datafusion-rust"><a class="header" href="#datafusion-rust">DataFusion (Rust)</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use datafusion::prelude::*;
 
-let mut rdr = csv::Reader::from_reader(io::stdin());
+#[tokio::main]
+async fn main() -&gt; Result&lt;()&gt; {
+    let ctx = SessionContext::new();
 
-for result in rdr.records() {
-   // An error may occur, so abort the program in an unfriendly way.
-   // We will make this more friendly later!
-   let record = result.expect("a CSV record");
-   // Print a debug version of the record.
-   println!("{:?}", record);
+    // Đọc data
+    ctx.register_parquet("sales", "sales.parquet", ParquetReadOptions::default())
+        .await?;
+
+    // Transform với SQL
+    let df = ctx.sql(
+        "SELECT category,
+         SUM(revenue) as total_revenue,
+         COUNT(quantity) as num_transactions
+         FROM sales
+         GROUP BY category
+         ORDER BY total_revenue DESC"
+    ).await?;
+
+    df.show().await?;
+    Ok(())
+}</code></pre></pre>
+<p><strong>Ưu điểm:</strong></p>
+<ul>
+<li>Nhanh hơn Spark 2-10x (tùy workload)</li>
+<li>Memory efficient hơn nhiều</li>
+<li>Không cần JVM</li>
+<li>Startup gần như instant</li>
+<li>Single binary, dễ deploy</li>
+</ul>
+<p><strong>Benchmark:</strong></p>
+<ul>
+<li>Query 1GB Parquet: DataFusion ~0.8s vs Spark ~5s</li>
+<li>GroupBy + Aggregation: DataFusion ~0.4s vs Spark ~3s</li>
+</ul>
+<h2 id="2-polars-vs-pandas"><a class="header" href="#2-polars-vs-pandas">2. Polars vs Pandas</a></h2>
+<h3 id="pandas-python"><a class="header" href="#pandas-python">Pandas (Python)</a></h3>
+<pre><code class="language-python">import pandas as pd
+
+# Đọc CSV
+df = pd.read_csv('sales.csv')
+
+# Transform
+result = df.groupby('category').agg({
+    'revenue': ['sum', 'mean', 'count'],
+    'quantity': 'sum'
+})
+
+# Filter
+filtered = df[df['revenue'] &gt; 100]
+
+# Save
+result.to_parquet('output.parquet')
+</code></pre>
+<p><strong>Vấn đề của Pandas:</strong></p>
+<ul>
+<li>Chậm với large datasets (&gt;1GB)</li>
+<li>Single-threaded (không tận dụng multi-core)</li>
+<li>High memory usage</li>
+<li>Chained operations không được optimize</li>
+</ul>
+<h3 id="polars-rust"><a class="header" href="#polars-rust">Polars (Rust)</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use polars::prelude::*;
+
+fn main() -&gt; Result&lt;()&gt; {
+    // Đọc CSV với lazy evaluation
+    let df = LazyCsvReader::new("sales.csv")
+        .has_header(true)
+        .finish()?
+        .filter(col("revenue").gt(100))
+        .group_by([col("category")])
+        .agg([
+            col("revenue").sum().alias("sum_revenue"),
+            col("revenue").mean().alias("avg_revenue"),
+            col("revenue").count().alias("count"),
+            col("quantity").sum().alias("sum_quantity"),
+        ])
+        .collect()?;
+
+    // Save
+    let mut file = std::fs::File::create("output.parquet")?;
+    ParquetWriter::new(&amp;mut file).finish(&amp;mut df.clone())?;
+
+    Ok(())
+}</code></pre></pre>
+<p><strong>Ưu điểm Polars:</strong></p>
+<ul>
+<li>Nhanh hơn Pandas 5-15x</li>
+<li>Multi-threaded by default</li>
+<li>Lazy evaluation (query optimization)</li>
+<li>Memory efficient (zero-copy operations)</li>
+<li>Syntax gần giống Pandas</li>
+</ul>
+<p><strong>Benchmark (1GB CSV):</strong></p>
+<pre><code>Read CSV:       Pandas 5.2s  | Polars 0.8s  (6.5x faster)
+GroupBy + Agg:  Pandas 3.1s  | Polars 0.4s  (7.8x faster)
+Filter + Sort:  Pandas 2.5s  | Polars 0.3s  (8.3x faster)
+Write Parquet:  Pandas 2.8s  | Polars 0.5s  (5.6x faster)
+</code></pre>
+<h2 id="3-search-meilisearch-vs-elasticsearch"><a class="header" href="#3-search-meilisearch-vs-elasticsearch">3. Search: Meilisearch vs Elasticsearch</a></h2>
+<h3 id="elasticsearch-javapython-client"><a class="header" href="#elasticsearch-javapython-client">Elasticsearch (Java/Python client)</a></h3>
+<pre><code class="language-python">from elasticsearch import Elasticsearch
+
+es = Elasticsearch(['localhost:9200'])
+
+# Index document
+es.index(index='products', body={
+    'name': 'Laptop',
+    'category': 'Electronics',
+    'price': 1200
+})
+
+# Search
+results = es.search(index='products', body={
+    'query': {
+        'match': {'category': 'Electronics'}
+    }
+})
+</code></pre>
+<p><strong>Nhược điểm:</strong></p>
+<ul>
+<li>Heavy (JVM, nhiều memory)</li>
+<li>Complex configuration</li>
+<li>Slow startup</li>
+<li>Resource intensive</li>
+</ul>
+<h3 id="meilisearch-rust"><a class="header" href="#meilisearch-rust">Meilisearch (Rust)</a></h3>
+<p>Meilisearch là full-text search engine viết bằng Rust, cực kỳ nhanh và dễ sử dụng:</p>
+<pre><code class="language-bash"># Cài đặt và chạy
+curl -L https://install.meilisearch.com | sh
+./meilisearch
+
+# Hoặc dùng Docker
+docker run -p 7700:7700 getmeili/meilisearch
+</code></pre>
+<pre><pre class="playground"><code class="language-rust edition2021">use meilisearch_sdk::client::*;
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Debug)]
+struct Product {
+    id: usize,
+    name: String,
+    category: String,
+    price: f64,
 }
-<span class="boring">}</span></code></pre></pre>
-<p>Ví dụ:</p>
-<pre><pre class="playground"><code class="language-rust edition2021">use std::{error::Error, io, process};
 
-#[derive(Debug, serde::Deserialize)]
-struct Record {
-    city: String,
-    region: String,
-    country: String,
-    population: Option&lt;u64&gt;,
+#[tokio::main]
+async fn main() {
+    let client = Client::new("http://localhost:7700", Some("masterKey"));
+
+    // Index documents
+    let products = vec![
+        Product { id: 1, name: "Laptop".to_string(), category: "Electronics".to_string(), price: 1200.0 },
+        Product { id: 2, name: "Mouse".to_string(), category: "Electronics".to_string(), price: 25.0 },
+    ];
+
+    let index = client.index("products");
+    index.add_documents(&amp;products, Some("id")).await.unwrap();
+
+    // Search
+    let results = index.search()
+        .with_query("Electronics")
+        .execute::&lt;Product&gt;()
+        .await
+        .unwrap();
+
+    println!("Found: {:?}", results.hits);
+}</code></pre></pre>
+<p><strong>Ưu điểm Meilisearch:</strong></p>
+<ul>
+<li>Cực nhanh (search &lt;50ms)</li>
+<li>Low memory footprint</li>
+<li>Instant startup</li>
+<li>Typo-tolerant search</li>
+<li>API đơn giản</li>
+<li>Single binary</li>
+</ul>
+<h2 id="4-etl-pipelines"><a class="header" href="#4-etl-pipelines">4. ETL Pipelines</a></h2>
+<h3 id="python-với-airflow"><a class="header" href="#python-với-airflow">Python với Airflow</a></h3>
+<pre><code class="language-python">from airflow import DAG
+from airflow.operators.python import PythonOperator
+from datetime import datetime
+import pandas as pd
+
+def extract():
+    df = pd.read_csv('source.csv')
+    df.to_pickle('/tmp/data.pkl')
+
+def transform():
+    df = pd.read_pickle('/tmp/data.pkl')
+    result = df.groupby('category').sum()
+    result.to_pickle('/tmp/transformed.pkl')
+
+def load():
+    df = pd.read_pickle('/tmp/transformed.pkl')
+    df.to_parquet('output.parquet')
+
+dag = DAG('etl_pipeline', start_date=datetime(2024, 1, 1))
+
+extract_task = PythonOperator(task_id='extract', python_callable=extract, dag=dag)
+transform_task = PythonOperator(task_id='transform', python_callable=transform, dag=dag)
+load_task = PythonOperator(task_id='load', python_callable=load, dag=dag)
+
+extract_task &gt;&gt; transform_task &gt;&gt; load_task
+</code></pre>
+<h3 id="rust-với-custom-pipeline"><a class="header" href="#rust-với-custom-pipeline">Rust với Custom Pipeline</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use polars::prelude::*;
+use anyhow::Result;
+
+struct Pipeline;
+
+impl Pipeline {
+    fn extract() -&gt; Result&lt;DataFrame&gt; {
+        let df = CsvReader::from_path("source.csv")?
+            .has_header(true)
+            .finish()?;
+        Ok(df)
+    }
+
+    fn transform(df: DataFrame) -&gt; Result&lt;DataFrame&gt; {
+        let result = df.lazy()
+            .group_by([col("category")])
+            .agg([col("revenue").sum()])
+            .collect()?;
+        Ok(result)
+    }
+
+    fn load(df: &amp;mut DataFrame) -&gt; Result&lt;()&gt; {
+        let file = std::fs::File::create("output.parquet")?;
+        ParquetWriter::new(&amp;file).finish(df)?;
+        Ok(())
+    }
+
+    fn run() -&gt; Result&lt;()&gt; {
+        println!("🚀 Starting ETL pipeline...");
+
+        let df = Self::extract()?;
+        println!("✅ Extract: {} rows", df.height());
+
+        let mut result = Self::transform(df)?;
+        println!("✅ Transform: {} rows", result.height());
+
+        Self::load(&amp;mut result)?;
+        println!("✅ Load complete");
+
+        Ok(())
+    }
 }
 
-fn example() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-    let mut rdr = csv::Reader::from_reader(io::stdin());
-    for result in rdr.deserialize() {
-        // Notice that we need to provide a type hint for automatic
-        // deserialization.
-        let record: Record = result?;
+fn main() -&gt; Result&lt;()&gt; {
+    Pipeline::run()
+}</code></pre></pre>
+<p><strong>Ưu điểm Rust ETL:</strong></p>
+<ul>
+<li>Nhanh hơn nhiều (5-10x)</li>
+<li>Type-safe (catch errors at compile time)</li>
+<li>Low resource usage</li>
+<li>Dễ deploy (single binary)</li>
+<li>No runtime dependencies</li>
+</ul>
+<p><strong>Khi nào dùng Rust thay vì Airflow:</strong></p>
+<ul>
+<li>Simple pipelines không cần UI</li>
+<li>Performance critical</li>
+<li>Resource constraints</li>
+<li>Need for type safety</li>
+</ul>
+<h2 id="5-data-validation"><a class="header" href="#5-data-validation">5. Data Validation</a></h2>
+<h3 id="pandera-python"><a class="header" href="#pandera-python">Pandera (Python)</a></h3>
+<pre><code class="language-python">import pandas as pd
+import pandera as pa
+
+schema = pa.DataFrameSchema({
+    "id": pa.Column(int, pa.Check.greater_than(0)),
+    "revenue": pa.Column(float, pa.Check.in_range(0, 1000000)),
+    "category": pa.Column(str, pa.Check.isin(["Electronics", "Books"]))
+})
+
+df = pd.read_csv("data.csv")
+validated = schema.validate(df)  # Runtime check
+</code></pre>
+<h3 id="rust-với-type-system"><a class="header" href="#rust-với-type-system">Rust với Type System</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use serde::Deserialize;
+
+#[derive(Deserialize, Debug)]
+struct SalesRecord {
+    id: u32,              // Always positive
+    revenue: f64,
+    category: Category,   // Only valid categories
+}
+
+#[derive(Deserialize, Debug)]
+enum Category {
+    Electronics,
+    Books,
+}
+
+fn main() -&gt; Result&lt;()&gt; {
+    let mut reader = csv::Reader::from_path("data.csv")?;
+
+    for result in reader.deserialize() {
+        let record: SalesRecord = result?;  // Compile-time + parse-time validation
         println!("{:?}", record);
     }
-    Ok(())
-}
 
-fn main() {
-    if let Err(err) = example() {
-        println!("error running example: {}", err);
-        process::exit(1);
-    }
+    Ok(())
 }</code></pre></pre>
-<h1 id="reference-3"><a class="header" href="#reference-3">Reference</a></h1>
+<p><strong>Ưu điểm Rust:</strong></p>
 <ul>
-<li><a href="crates/serde/../serde.html"><code>serde</code></a></li>
-<li><a href="https://docs.rs/csv">https://docs.rs/csv</a></li>
-<li><a href="https://docs.rs/csv/latest/csv/tutorial/index.html">https://docs.rs/csv/latest/csv/tutorial</a></li>
+<li>Validation at compile time</li>
+<li>Zero runtime overhead</li>
+<li>Impossible to have invalid data</li>
+<li>Better IDE support (autocomplete, type hints)</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="serde_yaml-1"><a class="header" href="#serde_yaml-1"><a href="https://github.com/dtolnay/serde-yaml"><code>serde_yaml</code></a></a></h1>
-<p><a href="crates/serde/../serde.html"><code>serde</code></a> đọc và xử lý file YAML.</p>
-<p>File: Cargo.toml</p>
-<pre><code class="language-toml">[dependencies]
-serde = { version = "1", features = ["derive"] }
-serde_yaml = "*"
-</code></pre>
-<p>Ví dụ</p>
-<pre><pre class="playground"><code class="language-rust edition2021">use std::collections::BTreeMap;
+<h2 id="khi-nào-nên-dùng-rust"><a class="header" href="#khi-nào-nên-dùng-rust">Khi nào nên dùng Rust?</a></h2>
+<h3 id="-rust-phù-hợp-khi"><a class="header" href="#-rust-phù-hợp-khi">✅ Rust phù hợp khi:</a></h3>
+<ol>
+<li>
+<p><strong>Performance critical:</strong></p>
+<ul>
+<li>Xử lý hàng TB data</li>
+<li>Real-time processing</li>
+<li>Low latency requirements</li>
+</ul>
+</li>
+<li>
+<p><strong>Long-running services:</strong></p>
+<ul>
+<li>Stream processing</li>
+<li>Data ingestion services</li>
+<li>API servers serving data</li>
+</ul>
+</li>
+<li>
+<p><strong>Resource constraints:</strong></p>
+<ul>
+<li>Limited memory</li>
+<li>Cost optimization (cloud)</li>
+<li>Edge computing</li>
+</ul>
+</li>
+<li>
+<p><strong>Type safety quan trọng:</strong></p>
+<ul>
+<li>Financial data</li>
+<li>Healthcare data</li>
+<li>Critical infrastructure</li>
+</ul>
+</li>
+<li>
+<p><strong>Deployment đơn giản:</strong></p>
+<ul>
+<li>Cần single binary</li>
+<li>No Python runtime dependency</li>
+<li>Container size nhỏ</li>
+</ul>
+</li>
+</ol>
+<h3 id="-python-vẫn-tốt-hơn-khi"><a class="header" href="#-python-vẫn-tốt-hơn-khi">❌ Python vẫn tốt hơn khi:</a></h3>
+<ol>
+<li>
+<p><strong>Rapid prototyping:</strong></p>
+<ul>
+<li>POC, experiments</li>
+<li>One-off scripts</li>
+</ul>
+</li>
+<li>
+<p><strong>Team không biết Rust:</strong></p>
+<ul>
+<li>Learning curve cao</li>
+<li>Hiring khó hơn</li>
+</ul>
+</li>
+<li>
+<p><strong>Rich ecosystem needed:</strong></p>
+<ul>
+<li>Specialized ML libraries</li>
+<li>Legacy integrations</li>
+</ul>
+</li>
+<li>
+<p><strong>Notebook-based workflows:</strong></p>
+<ul>
+<li>Jupyter notebooks</li>
+<li>Interactive analysis</li>
+</ul>
+</li>
+</ol>
+<h2 id="migration-strategy"><a class="header" href="#migration-strategy">Migration Strategy</a></h2>
+<p>Không cần migrate toàn bộ sang Rust cùng lúc:</p>
+<h3 id="phase-1-hot-paths"><a class="header" href="#phase-1-hot-paths">Phase 1: Hot paths</a></h3>
+<ul>
+<li>Identify performance bottlenecks</li>
+<li>Rewrite critical paths in Rust</li>
+<li>Call from Python via PyO3</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use pyo3::prelude::*;
 
-fn main() -&gt; Result&lt;(), serde_yaml::Error&gt; {
-    // You have some type.
-    let mut map = BTreeMap::new();
-    map.insert("x".to_string(), 1.0);
-    map.insert("y".to_string(), 2.0);
-
-    // Serialize it to a YAML string.
-    let yaml = serde_yaml::to_string(&amp;map)?;
-    assert_eq!(yaml, "x: 1.0\ny: 2.0\n");
-
-    // Deserialize it back to a Rust type.
-    let deserialized_map: BTreeMap&lt;String, f64&gt; = serde_yaml::from_str(&amp;yaml)?;
-    assert_eq!(map, deserialized_map);
-
-    println!("BTreeMap:\n{}", yaml);
-
-    Ok(())
-}</code></pre></pre>
-<p>Structs serialize in the obvious way:</p>
-<pre><pre class="playground"><code class="language-rust edition2021">use serde::{Serialize, Deserialize};
-
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
-struct Point {
-    x: f64,
-    y: f64,
+#[pyfunction]
+fn process_large_dataset(data: Vec&lt;f64&gt;) -&gt; PyResult&lt;f64&gt; {
+    // Rust implementation
+    Ok(data.iter().sum())
 }
 
-fn main() -&gt; Result&lt;(), serde_yaml::Error&gt; {
-    let point = Point { x: 1.0, y: 2.0 };
-
-    let yaml = serde_yaml::to_string(&amp;point)?;
-    assert_eq!(yaml, "x: 1.0\ny: 2.0\n");
-
-    let deserialized_point: Point = serde_yaml::from_str(&amp;yaml)?;
-    assert_eq!(point, deserialized_point);
+#[pymodule]
+fn my_module(_py: Python, m: &amp;PyModule) -&gt; PyResult&lt;()&gt; {
+    m.add_function(wrap_pyfunction!(process_large_dataset, m)?)?;
     Ok(())
-}</code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="first-high-performance-data-pipelines-in-rust"><a class="header" href="#first-high-performance-data-pipelines-in-rust">First high-performance data pipelines in Rust</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="building-scalable-data-driven-applications-using-rust"><a class="header" href="#building-scalable-data-driven-applications-using-rust">Building scalable data-driven applications using Rust</a></h1>
-<p>TBU</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="rust-as-an-alternative-to-python-for-data-engineering-tasks"><a class="header" href="#rust-as-an-alternative-to-python-for-data-engineering-tasks">Rust as an alternative to Python for data engineering tasks</a></h1>
-<p>TBU</p>
-<h2 id="ideas"><a class="header" href="#ideas">Ideas:</a></h2>
+}
+<span class="boring">}</span></code></pre></pre>
+<pre><code class="language-python"># Python code
+import my_module
+
+result = my_module.process_large_dataset(large_array)
+</code></pre>
+<h3 id="phase-2-new-services"><a class="header" href="#phase-2-new-services">Phase 2: New services</a></h3>
 <ul>
-<li>DataFusion vs Spark</li>
-<li>Polars vs Pandas</li>
+<li>Xây dựng services mới bằng Rust</li>
+<li>Integrate với existing Python code</li>
+</ul>
+<h3 id="phase-3-full-rewrite"><a class="header" href="#phase-3-full-rewrite">Phase 3: Full rewrite</a></h3>
+<ul>
+<li>Khi team đã quen với Rust</li>
+<li>Khi performance gain rõ ràng</li>
+</ul>
+<h2 id="ecosystem-so-sánh"><a class="header" href="#ecosystem-so-sánh">Ecosystem so sánh</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Category</th><th>Python</th><th>Rust</th></tr></thead><tbody>
+<tr><td><strong>DataFrame</strong></td><td>Pandas</td><td>Polars</td></tr>
+<tr><td><strong>SQL Engine</strong></td><td>DuckDB</td><td>DataFusion</td></tr>
+<tr><td><strong>Distributed Computing</strong></td><td>Spark</td><td>Ballista</td></tr>
+<tr><td><strong>Search</strong></td><td>Elasticsearch</td><td>Meilisearch, Tantivy</td></tr>
+<tr><td><strong>Serialization</strong></td><td>pickle, json</td><td>Serde</td></tr>
+<tr><td><strong>Async I/O</strong></td><td>asyncio</td><td>Tokio</td></tr>
+<tr><td><strong>Workflow</strong></td><td>Airflow</td><td>Custom (tokio tasks)</td></tr>
+<tr><td><strong>Web Framework</strong></td><td>Flask, FastAPI</td><td>Axum, Actix-web</td></tr>
+</tbody></table>
+</div>
+<h2 id="tổng-kết-2"><a class="header" href="#tổng-kết-2">Tổng kết</a></h2>
+<p>Rust không phải để thay thế hoàn toàn Python, mà là công cụ bổ sung:</p>
+<p><strong>Python:</strong> Rapid development, prototyping, glue code, notebooks
+<strong>Rust:</strong> Production systems, performance critical paths, long-running services</p>
+<p>Chiến lược tốt nhất:</p>
+<ol>
+<li>Prototype trong Python</li>
+<li>Identify bottlenecks</li>
+<li>Rewrite critical parts trong Rust</li>
+<li>Use PyO3 để integrate</li>
+</ol>
+<p>Trong 5-10 năm tới, Rust sẽ là lựa chọn phổ biến cho production data engineering workloads, tương tự như Go đã thay thế Python trong nhiều backend services.</p>
+<h2 id="references-42"><a class="header" href="#references-42">References</a></h2>
+<ul>
+<li><a href="https://arewedatayet.com">Are We Data Yet?</a> - Rust data ecosystem tracker</li>
+<li><a href="https://www.pola.rs/benchmarks.html">Polars Benchmarks</a></li>
+<li><a href="https://arrow.apache.org/datafusion/">DataFusion vs Spark</a></li>
 <li><a href="https://github.com/meilisearch/meilisearch">Meilisearch</a></li>
+<li><a href="https://pyo3.rs/">PyO3 Documentation</a> - Rust bindings for Python</li>
+<li><a href="https://github.com/apache/datafusion-ballista">Ballista</a> - Distributed DataFusion</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="concatenating-strings-with-format"><a class="header" href="#concatenating-strings-with-format">Concatenating strings with <code>format!</code></a></h1>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -6702,7 +8055,7 @@ fn main() {
 <p>Nếu bạn có sự lựa chọn giữa <code>mut</code> và <code>.copy()</code>, đôi khi copy không quá tệ như bạn nghĩ.</p>
 <p>Chương trình có thể chậm đi một chút, tuy nhiên immutability có thể giúp bạn tránh khỏi vài ngày debug và nhức đầu.</p>
 <p><a href="http://xion.io/post/code/rust-borrowchk-tricks.html">Tricks with ownership in Rust</a></p>
-<h1 id="references-40"><a class="header" href="#references-40">References</a></h1>
+<h1 id="references-43"><a class="header" href="#references-43">References</a></h1>
 <ul>
 <li>https://corrode.dev/blog/immutability/</li>
 <li>http://xion.io/post/code/rust-borrowchk-tricks.html</li>
@@ -6733,8 +8086,8 @@ fn main() {
         </script>
 
         <script src="ace.js"></script>
-        <script src="editor.js"></script>
         <script src="mode-rust.js"></script>
+        <script src="editor.js"></script>
         <script src="theme-dawn.js"></script>
         <script src="theme-tomorrow_night.js"></script>
 
@@ -6753,6 +8106,7 @@ fn main() {
             window.setTimeout(window.print, 100);
         });
         </script>
+
 
     </div>
     </body>
