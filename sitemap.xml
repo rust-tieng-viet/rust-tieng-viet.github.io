@@ -2,518 +2,518 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://rust-tieng-viet.github.io/</loc>
-        <lastmod>2025-10-21T14:25:56.839Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.960Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/who-is-using</loc>
-        <lastmod>2025-10-21T14:25:56.840Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.961Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/advanced/saturating</loc>
-        <lastmod>2025-10-21T14:25:56.927Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.047Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/advanced/smart-pointer</loc>
-        <lastmod>2025-10-21T14:25:56.921Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.042Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/attr</loc>
-        <lastmod>2025-10-21T14:25:56.905Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.026Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/cargo</loc>
-        <lastmod>2025-10-21T14:25:56.848Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.968Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/closure</loc>
-        <lastmod>2025-10-21T14:25:56.847Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.967Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/code-comment</loc>
-        <lastmod>2025-10-21T14:25:56.891Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.012Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/enum</loc>
-        <lastmod>2025-10-21T14:25:56.872Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.992Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/error-handling</loc>
-        <lastmod>2025-10-21T14:25:56.906Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.027Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/generics</loc>
-        <lastmod>2025-10-21T14:25:56.883Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.003Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/macro</loc>
-        <lastmod>2025-10-21T14:25:56.895Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.015Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/match</loc>
-        <lastmod>2025-10-21T14:25:56.901Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.021Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/ownership</loc>
-        <lastmod>2025-10-21T14:25:56.855Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.975Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/package-crate</loc>
-        <lastmod>2025-10-21T14:25:56.849Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.969Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/rustdoc</loc>
-        <lastmod>2025-10-21T14:25:56.919Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.040Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/struct</loc>
-        <lastmod>2025-10-21T14:25:56.856Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.976Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/testing</loc>
-        <lastmod>2025-10-21T14:25:56.913Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.034Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait</loc>
-        <lastmod>2025-10-21T14:25:56.857Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.977Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/turbofish</loc>
-        <lastmod>2025-10-21T14:25:56.894Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.015Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/variables</loc>
-        <lastmod>2025-10-21T14:25:56.844Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.965Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/anyhow</loc>
-        <lastmod>2025-10-21T14:25:56.943Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.064Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/async_trait</loc>
-        <lastmod>2025-10-21T14:25:56.936Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.056Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/chrono</loc>
-        <lastmod>2025-10-21T14:25:56.935Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.056Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/indoc</loc>
-        <lastmod>2025-10-21T14:25:56.946Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.068Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/lazy_static</loc>
-        <lastmod>2025-10-21T14:25:56.937Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.057Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/log</loc>
-        <lastmod>2025-10-21T14:25:56.944Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.066Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/polars</loc>
-        <lastmod>2025-10-21T14:25:56.948Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.070Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/rayon</loc>
-        <lastmod>2025-10-21T14:25:56.947Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.069Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/regex</loc>
-        <lastmod>2025-10-21T14:25:56.934Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.055Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/serde</loc>
-        <lastmod>2025-10-21T14:25:56.938Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.058Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/tokio</loc>
-        <lastmod>2025-10-21T14:25:56.942Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.063Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/data-engineering/data-driven</loc>
-        <lastmod>2025-10-21T14:25:56.952Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.073Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/data-engineering/data-processing</loc>
-        <lastmod>2025-10-21T14:25:56.949Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.071Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/data-engineering/first-data-pipeline</loc>
-        <lastmod>2025-10-21T14:25:56.950Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.072Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/data-engineering/rust-as-alternative-python</loc>
-        <lastmod>2025-10-21T14:25:56.953Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.075Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/design-pattern/behavioural</loc>
-        <lastmod>2025-10-21T14:25:56.928Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.048Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/design-pattern/creational</loc>
-        <lastmod>2025-10-21T14:25:56.930Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.051Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/design-pattern/structural</loc>
-        <lastmod>2025-10-21T14:25:56.932Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.053Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/getting-started/first-project</loc>
-        <lastmod>2025-10-21T14:25:56.843Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.964Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/getting-started/installation</loc>
-        <lastmod>2025-10-21T14:25:56.841Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.962Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/getting-started/rust-playground</loc>
-        <lastmod>2025-10-21T14:25:56.842Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.963Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/idioms/aim-for-immutability</loc>
-        <lastmod>2025-10-21T14:25:56.958Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.080Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/idioms/constructor</loc>
-        <lastmod>2025-10-21T14:25:56.955Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.077Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/idioms/default-trait</loc>
-        <lastmod>2025-10-21T14:25:56.956Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.078Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/idioms/format</loc>
-        <lastmod>2025-10-21T14:25:56.955Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.076Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/idioms/temporary-mutability</loc>
-        <lastmod>2025-10-21T14:25:56.957Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.079Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/advanced/smart-pointer/box</loc>
-        <lastmod>2025-10-21T14:25:56.922Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.043Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/advanced/smart-pointer/cow</loc>
-        <lastmod>2025-10-21T14:25:56.924Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.045Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/advanced/smart-pointer/rc</loc>
-        <lastmod>2025-10-21T14:25:56.923Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.044Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/advanced/smart-pointer/ref</loc>
-        <lastmod>2025-10-21T14:25:56.925Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.046Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/advanced/smart-pointer/refmut</loc>
-        <lastmod>2025-10-21T14:25:56.926Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.046Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/code-comment/doc-comment</loc>
-        <lastmod>2025-10-21T14:25:56.893Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.014Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/code-comment/regular-comment</loc>
-        <lastmod>2025-10-21T14:25:56.892Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.013Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/enum/impl</loc>
-        <lastmod>2025-10-21T14:25:56.874Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.995Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/enum/match</loc>
-        <lastmod>2025-10-21T14:25:56.873Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.993Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/enum/option</loc>
-        <lastmod>2025-10-21T14:25:56.875Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.996Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/enum/result</loc>
-        <lastmod>2025-10-21T14:25:56.880Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.000Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/enum/use-variants</loc>
-        <lastmod>2025-10-21T14:25:56.873Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.994Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/error-handling/boxing-error</loc>
-        <lastmod>2025-10-21T14:25:56.912Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.033Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/error-handling/custom-error</loc>
-        <lastmod>2025-10-21T14:25:56.913Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.034Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/error-handling/option</loc>
-        <lastmod>2025-10-21T14:25:56.908Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.029Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/error-handling/panic</loc>
-        <lastmod>2025-10-21T14:25:56.907Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.027Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/error-handling/result</loc>
-        <lastmod>2025-10-21T14:25:56.909Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.030Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/error-handling/result-alias</loc>
-        <lastmod>2025-10-21T14:25:56.911Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.032Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/error-handling/result-map</loc>
-        <lastmod>2025-10-21T14:25:56.910Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.031Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/generics/bounds</loc>
-        <lastmod>2025-10-21T14:25:56.888Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.008Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/generics/enum</loc>
-        <lastmod>2025-10-21T14:25:56.885Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.006Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/generics/functions</loc>
-        <lastmod>2025-10-21T14:25:56.883Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.004Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/generics/impl</loc>
-        <lastmod>2025-10-21T14:25:56.886Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.006Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/generics/struct</loc>
-        <lastmod>2025-10-21T14:25:56.884Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.005Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/generics/trait</loc>
-        <lastmod>2025-10-21T14:25:56.887Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.007Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/generics/where</loc>
-        <lastmod>2025-10-21T14:25:56.889Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.009Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/macro/format</loc>
-        <lastmod>2025-10-21T14:25:56.898Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.019Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/macro/macro_rules</loc>
-        <lastmod>2025-10-21T14:25:56.900Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.021Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/macro/macros-vs-functions</loc>
-        <lastmod>2025-10-21T14:25:56.896Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.016Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/macro/println</loc>
-        <lastmod>2025-10-21T14:25:56.897Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.018Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/macro/standard-macros</loc>
-        <lastmod>2025-10-21T14:25:56.897Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.017Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/macro/todo</loc>
-        <lastmod>2025-10-21T14:25:56.899Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.020Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/match/literals</loc>
-        <lastmod>2025-10-21T14:25:56.902Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.023Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/match/multiple</loc>
-        <lastmod>2025-10-21T14:25:56.904Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.025Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/match/named-vars</loc>
-        <lastmod>2025-10-21T14:25:56.903Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.024Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/package-crate/crate</loc>
-        <lastmod>2025-10-21T14:25:56.850Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.970Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/package-crate/package-layout</loc>
-        <lastmod>2025-10-21T14:25:56.849Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.970Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/package-crate/preludes</loc>
-        <lastmod>2025-10-21T14:25:56.854Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.974Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/package-crate/use-crate</loc>
-        <lastmod>2025-10-21T14:25:56.851Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.971Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/rustdoc/doc-README</loc>
-        <lastmod>2025-10-21T14:25:56.920Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.041Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/testing/doc-tests</loc>
-        <lastmod>2025-10-21T14:25:56.918Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.038Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/testing/env-conflict</loc>
-        <lastmod>2025-10-21T14:25:56.918Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.039Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/testing/integration-tests</loc>
-        <lastmod>2025-10-21T14:25:56.917Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.037Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/testing/test-organization</loc>
-        <lastmod>2025-10-21T14:25:56.915Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.036Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/testing/unit-tests</loc>
-        <lastmod>2025-10-21T14:25:56.915Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.036Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/auto-trait</loc>
-        <lastmod>2025-10-21T14:25:56.868Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.988Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/blanked-impl</loc>
-        <lastmod>2025-10-21T14:25:56.865Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.986Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/conditionally-impl</loc>
-        <lastmod>2025-10-21T14:25:56.865Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.985Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/copy-clone</loc>
-        <lastmod>2025-10-21T14:25:56.869Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.989Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/default-impls</loc>
-        <lastmod>2025-10-21T14:25:56.860Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.980Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/define-a-trait</loc>
-        <lastmod>2025-10-21T14:25:56.858Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.978Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/fromstr</loc>
-        <lastmod>2025-10-21T14:25:56.871Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.991Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/impl-trait</loc>
-        <lastmod>2025-10-21T14:25:56.859Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.979Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/multiple-trait-bound</loc>
-        <lastmod>2025-10-21T14:25:56.862Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.982Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/return-impl-trait</loc>
-        <lastmod>2025-10-21T14:25:56.864Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.984Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/string-str</loc>
-        <lastmod>2025-10-21T14:25:56.870Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.990Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/supertraits</loc>
-        <lastmod>2025-10-21T14:25:56.867Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.987Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/trait-as-params</loc>
-        <lastmod>2025-10-21T14:25:56.860Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.981Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/trait-bound</loc>
-        <lastmod>2025-10-21T14:25:56.861Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.981Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/trait-inheritance</loc>
-        <lastmod>2025-10-21T14:25:56.866Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.986Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/trait/where-clauses</loc>
-        <lastmod>2025-10-21T14:25:56.863Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.983Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/variables/mut</loc>
-        <lastmod>2025-10-21T14:25:56.845Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.965Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/variables/uninitialized</loc>
-        <lastmod>2025-10-21T14:25:56.846Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.966Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/vec/INDEX</loc>
-        <lastmod>2025-10-21T14:25:56.889Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.010Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/vec/iter</loc>
-        <lastmod>2025-10-21T14:25:56.890Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.011Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/log/env_logger</loc>
-        <lastmod>2025-10-21T14:25:56.945Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.067Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/serde/serde_csv</loc>
-        <lastmod>2025-10-21T14:25:56.940Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.061Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/serde/serde_json</loc>
-        <lastmod>2025-10-21T14:25:56.939Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.059Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/serde/serde_toml</loc>
-        <lastmod>2025-10-21T14:25:56.940Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.060Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/crates/serde/serde_yaml</loc>
-        <lastmod>2025-10-21T14:25:56.941Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.062Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/design-pattern/behavioural/command</loc>
-        <lastmod>2025-10-21T14:25:56.930Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.050Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/design-pattern/behavioural/strategy</loc>
-        <lastmod>2025-10-21T14:25:56.929Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.049Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/design-pattern/creational/builder</loc>
-        <lastmod>2025-10-21T14:25:56.931Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.052Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/design-pattern/structural/small-rates</loc>
-        <lastmod>2025-10-21T14:25:56.933Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.054Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/enum/option/expect</loc>
-        <lastmod>2025-10-21T14:25:56.877Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.998Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/enum/option/if_let_some</loc>
-        <lastmod>2025-10-21T14:25:56.879Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.999Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/enum/option/unwrap</loc>
-        <lastmod>2025-10-21T14:25:56.876Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.997Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/enum/option/unwrap_or_default</loc>
-        <lastmod>2025-10-21T14:25:56.878Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.998Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/enum/result/question-mark</loc>
-        <lastmod>2025-10-21T14:25:56.882Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.002Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/enum/result/result-to-option</loc>
-        <lastmod>2025-10-21T14:25:56.881Z</lastmod>
+        <lastmod>2025-10-21T17:21:53.001Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/package-crate/use-crate/pub-use</loc>
-        <lastmod>2025-10-21T14:25:56.853Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.973Z</lastmod>
     </url>
     <url>
         <loc>https://rust-tieng-viet.github.io/basic/package-crate/use-crate/self-super</loc>
-        <lastmod>2025-10-21T14:25:56.852Z</lastmod>
+        <lastmod>2025-10-21T17:21:52.972Z</lastmod>
     </url>
 </urlset>
