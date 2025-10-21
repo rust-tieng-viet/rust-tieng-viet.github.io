@@ -1,7 +1,6 @@
 # Table of Contents
 
 - [Introduction](README.md)
-- [Who is using?](who-is-using.md)
 
 ---
 
@@ -50,7 +49,7 @@
   - [Copy, Clone](./basic/trait/copy-clone.md)
   - [String và &str](./basic/trait/string-str.md)
   - [FromStr](./basic/trait/fromstr.md)
-  - [Display]()
+  - [Display](./basic/trait/display.md)
 
 - [Enum](./basic/enum/README.md)
   - [match Enum](./basic/enum/match.md)
@@ -120,7 +119,6 @@
 
 - [Viết Docs](./basic/rustdoc/README.md)
 
-  - [Doc comments](./basic/code-comment/doc-comment.md)
   - [Sử dụng README.md làm crate document](./basic/rustdoc/doc-README.md)
 
 
@@ -160,12 +158,12 @@
   - [serde_csv](./crates/serde/serde_csv.md)
   - [serde_yaml](./crates/serde/serde_yaml.md)
 - [tokio](./crates/tokio.md)
-- [actix-web]()
+- [actix-web](./crates/actix-web.md)
 - [anyhow](./crates/anyhow.md)
-- [clap]()
+- [clap](./crates/clap.md)
 - [log](./crates/log/README.md)
   - [env_logger](./crates/log/env_logger.md)
-- [config]()
+- [config](./crates/config.md)
 - [indoc](./crates/indoc.md)
 - [rayon](./crates/rayon.md)
 - [polars](./crates/polars.md)
@@ -175,12 +173,6 @@
 # Data Engineering
 
 - [Xử lý và phân tích dữ liệu](./data-engineering/data-processing.md)
-  - [Polars](./crates/polars.md)
-  - [serde](./crates/serde.md)
-    - [serde_json](./crates/serde/serde_json.md)
-    - [serde_toml](./crates/serde/serde_toml.md)
-    - [serde_csv](./crates/serde/serde_csv.md)
-    - [serde_yaml](./crates/serde/serde_yaml.md)
 - [High-performance data pipeline](./data-engineering/first-data-pipeline.md)
 - [Building scalable data-driven applications using Rust](./data-engineering/data-driven.md)
 - [Rust as an alternative to Python for data engineering tasks](./data-engineering/rust-as-alternative-python.md)
@@ -189,8 +181,8 @@
 
 # Rust Idioms
 
-- [Functional programming]()
-- [Use borrowed types for arguments]()
+- [Functional programming](./idioms/functional-programming.md)
+- [Use borrowed types for arguments](./idioms/borrowed-types.md)
 - [Concatenating strings with `format!`](./idioms/format.md)
 - [Constructor](./idioms/constructor.md)
   - [The Default Trait](./idioms/default-trait.md)
