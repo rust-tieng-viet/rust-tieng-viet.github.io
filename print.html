@@ -231,13 +231,6 @@ Vui lòng xem mục <strong>references</strong> ở cuối các trang nếu bạ
 <li><a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/issues/new?assignees=duyet%2Cduyetbot&amp;labels=request%2Ccontent&amp;template=request_content.yml&amp;title=%5BY%C3%AAu+c%E1%BA%A7u+n%E1%BB%99i+dung%5D">Yêu cầu thêm nội dung</a></li>
 <li><a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/blob/main/LICENCE">License</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="who-is-using-rust"><a class="header" href="#who-is-using-rust">Who is using Rust?</a></h1>
-<p>Công ty hoặc cộng đồng sử dụng Rust tại Việt Nam.</p>
-<div class="table-wrapper"><table><thead><tr><th>Organization</th><th>Contact (GitHub User Name)</th><th>Environment</th><th>Description of Use</th></tr></thead><tbody>
-<tr><td>Fossil Vietnam</td><td><a href="https://github.com/duyet">@duyet</a></td><td>Production</td><td>Data Platform</td></tr>
-</tbody></table>
-</div>
-<p><a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/who-is-using.md">+ thêm</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="cài-đặt-rust"><a class="header" href="#cài-đặt-rust">Cài đặt Rust</a></h1>
 <p>Dưới đây là hướng dẫn chi tiết về cách cài đặt Rust trên hệ điều hành Windows, macOS và Linux. Bạn cũng có thể tự tham khảo trên trang chủ của Rust: <a href="https://www.rust-lang.org/tools/install">https://www.rust-lang.org/tools/install</a></p>
 <h2 id="cài-đặt-rust-trên-macos-linux"><a class="header" href="#cài-đặt-rust-trên-macos-linux">Cài đặt Rust trên macOS, Linux</a></h2>
@@ -1555,6 +1548,352 @@ assert_eq!(c, Color::Red);</code></pre></pre>
 <li><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse">https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse</a></li>
 <li><a href="https://doc.rust-lang.org/nightly/std/str/trait.FromStr.html">https://doc.rust-lang.org/nightly/std/str/trait.FromStr.html</a></li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="display"><a class="header" href="#display">Display</a></h1>
+<p>Trait <a href="https://doc.rust-lang.org/std/fmt/trait.Display.html"><code>Display</code></a> cho phép bạn định nghĩa cách một type được hiển thị khi sử dụng format string <code>{}</code>. Đây là trait quan trọng để tạo ra output thân thiện với người dùng.</p>
+<h2 id="display-vs-debug"><a class="header" href="#display-vs-debug">Display vs Debug</a></h2>
+<p>Rust có hai trait chính cho việc formatting:</p>
+<div class="table-wrapper"><table><thead><tr><th>Trait</th><th>Format Specifier</th><th>Mục đích</th></tr></thead><tbody>
+<tr><td><code>Debug</code></td><td><code>{:?}</code> hoặc <code>{:#?}</code></td><td>Development, debugging (technical output)</td></tr>
+<tr><td><code>Display</code></td><td><code>{}</code></td><td>User-facing output (human-readable)</td></tr>
+</tbody></table>
+</div>
+<pre><pre class="playground"><code class="language-rust edition2021">#[derive(Debug)]
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let p = Point { x: 3, y: 4 };
+
+    // Debug - technical output
+    println!("{:?}", p);  // Point { x: 3, y: 4 }
+
+    // Display - compile error! Display không được derive tự động
+    // println!("{}", p);  // ❌ Error: `Point` doesn't implement `Display`
+}</code></pre></pre>
+<h2 id="implement-display"><a class="header" href="#implement-display">Implement Display</a></h2>
+<p>Để implement Display, bạn cần định nghĩa method <code>fmt</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::fmt;
+
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+impl fmt::Display for Point {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        write!(f, "({}, {})", self.x, self.y)
+    }
+}
+
+fn main() {
+    let p = Point { x: 3, y: 4 };
+    println!("{}", p);  // In ra: (3, 4)
+}</code></pre></pre>
+<h2 id="ví-dụ-với-enum"><a class="header" href="#ví-dụ-với-enum">Ví dụ với Enum</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::fmt;
+
+enum Status {
+    Active,
+    Inactive,
+    Pending,
+}
+
+impl fmt::Display for Status {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        match self {
+            Status::Active =&gt; write!(f, "Đang hoạt động"),
+            Status::Inactive =&gt; write!(f, "Không hoạt động"),
+            Status::Pending =&gt; write!(f, "Đang chờ xử lý"),
+        }
+    }
+}
+
+fn main() {
+    let status = Status::Active;
+    println!("Trạng thái: {}", status);  // In ra: Trạng thái: Đang hoạt động
+}</code></pre></pre>
+<h2 id="ví-dụ-với-struct-phức-tạp"><a class="header" href="#ví-dụ-với-struct-phức-tạp">Ví dụ với Struct phức tạp</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::fmt;
+
+struct Person {
+    name: String,
+    age: u32,
+    email: String,
+}
+
+impl fmt::Display for Person {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        write!(
+            f,
+            "{} (tuổi {}) - Email: {}",
+            self.name, self.age, self.email
+        )
+    }
+}
+
+fn main() {
+    let person = Person {
+        name: String::from("Nguyễn Văn A"),
+        age: 25,
+        email: String::from("nguyenvana@example.com"),
+    };
+
+    println!("{}", person);
+    // In ra: Nguyễn Văn A (tuổi 25) - Email: nguyenvana@example.com
+}</code></pre></pre>
+<h2 id="display-với-nhiều-format-options"><a class="header" href="#display-với-nhiều-format-options">Display với nhiều format options</a></h2>
+<p>Bạn có thể sử dụng các format options từ <code>Formatter</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::fmt;
+
+struct Currency {
+    amount: f64,
+    symbol: &amp;'static str,
+}
+
+impl fmt::Display for Currency {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        // Sử dụng precision từ format string
+        if let Some(precision) = f.precision() {
+            write!(f, "{}{:.precision$}", self.symbol, self.amount, precision = precision)
+        } else {
+            write!(f, "{}{:.2}", self.symbol, self.amount)
+        }
+    }
+}
+
+fn main() {
+    let price = Currency { amount: 1234.5678, symbol: "$" };
+
+    println!("{}", price);       // $1234.57 (mặc định 2 chữ số)
+    println!("{:.0}", price);    // $1235 (không có phần thập phân)
+    println!("{:.4}", price);    // $1234.5678 (4 chữ số thập phân)
+}</code></pre></pre>
+<h2 id="display-với-vec-và-collection"><a class="header" href="#display-với-vec-và-collection">Display với Vec và collection</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::fmt;
+
+struct NumberList {
+    numbers: Vec&lt;i32&gt;,
+}
+
+impl fmt::Display for NumberList {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        let numbers_str: Vec&lt;String&gt; = self.numbers
+            .iter()
+            .map(|n| n.to_string())
+            .collect();
+
+        write!(f, "[{}]", numbers_str.join(", "))
+    }
+}
+
+fn main() {
+    let list = NumberList {
+        numbers: vec![1, 2, 3, 4, 5],
+    };
+
+    println!("{}", list);  // In ra: [1, 2, 3, 4, 5]
+}</code></pre></pre>
+<h2 id="kết-hợp-debug-và-display"><a class="header" href="#kết-hợp-debug-và-display">Kết hợp Debug và Display</a></h2>
+<p>Thường thì bạn implement cả hai:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::fmt;
+
+#[derive(Debug)]
+struct User {
+    id: u32,
+    username: String,
+    is_active: bool,
+}
+
+impl fmt::Display for User {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        write!(f, "@{}", self.username)
+    }
+}
+
+fn main() {
+    let user = User {
+        id: 1,
+        username: String::from("duyet"),
+        is_active: true,
+    };
+
+    // Display - user-facing
+    println!("User: {}", user);
+    // In ra: User: @duyet
+
+    // Debug - developer-facing
+    println!("Debug: {:?}", user);
+    // In ra: Debug: User { id: 1, username: "duyet", is_active: true }
+}</code></pre></pre>
+<h2 id="error-handling-với-display"><a class="header" href="#error-handling-với-display">Error handling với Display</a></h2>
+<p>Display thường được sử dụng khi implement custom error types:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::fmt;
+use std::error::Error;
+
+#[derive(Debug)]
+enum MyError {
+    NotFound(String),
+    InvalidInput(String),
+    NetworkError,
+}
+
+impl fmt::Display for MyError {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        match self {
+            MyError::NotFound(item) =&gt; write!(f, "Không tìm thấy: {}", item),
+            MyError::InvalidInput(msg) =&gt; write!(f, "Dữ liệu không hợp lệ: {}", msg),
+            MyError::NetworkError =&gt; write!(f, "Lỗi kết nối mạng"),
+        }
+    }
+}
+
+impl Error for MyError {}
+
+fn main() {
+    let error = MyError::NotFound(String::from("user.txt"));
+    println!("Lỗi: {}", error);
+    // In ra: Lỗi: Không tìm thấy: user.txt
+}</code></pre></pre>
+<h2 id="display-với-nested-types"><a class="header" href="#display-với-nested-types">Display với nested types</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::fmt;
+
+struct Address {
+    street: String,
+    city: String,
+}
+
+impl fmt::Display for Address {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        write!(f, "{}, {}", self.street, self.city)
+    }
+}
+
+struct Company {
+    name: String,
+    address: Address,
+}
+
+impl fmt::Display for Company {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        write!(f, "{} tại {}", self.name, self.address)
+    }
+}
+
+fn main() {
+    let company = Company {
+        name: String::from("Rust Corp"),
+        address: Address {
+            street: String::from("123 Nguyễn Huệ"),
+            city: String::from("TP.HCM"),
+        },
+    };
+
+    println!("{}", company);
+    // In ra: Rust Corp tại 123 Nguyễn Huệ, TP.HCM
+}</code></pre></pre>
+<h2 id="so-sánh-với-các-ngôn-ngữ-khác"><a class="header" href="#so-sánh-với-các-ngôn-ngữ-khác">So sánh với các ngôn ngữ khác</a></h2>
+<h3 id="python"><a class="header" href="#python">Python</a></h3>
+<pre><code class="language-python">class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __str__(self):  # Tương đương Display
+        return f"({self.x}, {self.y})"
+
+    def __repr__(self):  # Tương đương Debug
+        return f"Point(x={self.x}, y={self.y})"
+
+p = Point(3, 4)
+print(p)       # Gọi __str__
+print(repr(p)) # Gọi __repr__
+</code></pre>
+<h3 id="java"><a class="header" href="#java">Java</a></h3>
+<pre><code class="language-java">class Point {
+    private int x, y;
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    @Override
+    public String toString() {  // Tương đương Display
+        return String.format("(%d, %d)", x, y);
+    }
+}
+
+Point p = new Point(3, 4);
+System.out.println(p);  // Gọi toString()
+</code></pre>
+<h3 id="rust---type-safe"><a class="header" href="#rust---type-safe">Rust - Type Safe</a></h3>
+<p>Ưu điểm của Rust:</p>
+<ul>
+<li>Compiler bắt buộc phải implement Display nếu muốn dùng <code>{}</code></li>
+<li>Không thể vô tình in ra kiểu dữ liệu chưa implement Display</li>
+<li>Phân biệt rõ ràng giữa Debug (technical) và Display (user-facing)</li>
+</ul>
+<h2 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h2>
+<h3 id="1-display-cho-user-debug-cho-developer"><a class="header" href="#1-display-cho-user-debug-cho-developer">1. Display cho user, Debug cho developer</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Tốt
+impl fmt::Display for User {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        write!(f, "{}", self.username)  // Simple, user-friendly
+    }
+}
+
+// ❌ Tránh
+impl fmt::Display for User {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        write!(f, "User {{ id: {}, username: {} }}", self.id, self.username)
+        // Quá technical, nên dùng Debug
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="2-concise-và-meaningful"><a class="header" href="#2-concise-và-meaningful">2. Concise và meaningful</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Tốt
+write!(f, "Error: File not found")
+
+// ❌ Tránh - quá dài dòng
+write!(f, "An error has occurred during the file reading operation: The specified file could not be found in the filesystem")
+<span class="boring">}</span></code></pre></pre>
+<h3 id="3-consistent-formatting"><a class="header" href="#3-consistent-formatting">3. Consistent formatting</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Tốt - consistent format cho cùng type
+impl fmt::Display for Date {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        write!(f, "{:04}-{:02}-{:02}", self.year, self.month, self.day)
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="tổng-kết"><a class="header" href="#tổng-kết">Tổng kết</a></h2>
+<p>Display trait là công cụ mạnh mẽ để:</p>
+<ul>
+<li>Tạo output thân thiện với người dùng</li>
+<li>Implement custom formatting cho types</li>
+<li>Tích hợp với error handling</li>
+<li>Cung cấp API nhất quán cho printing</li>
+</ul>
+<p>Khi implement Display:</p>
+<ul>
+<li>Giữ output đơn giản, dễ đọc</li>
+<li>Dùng cho user-facing messages</li>
+<li>Kết hợp với Debug cho developer output</li>
+<li>Follow consistent formatting conventions</li>
+</ul>
+<h2 id="references-4"><a class="header" href="#references-4">References</a></h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/std/fmt/trait.Display.html">std::fmt::Display</a></li>
+<li><a href="https://doc.rust-lang.org/std/fmt/">Formatting and Print</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch10-02-traits.html#using-trait-objects-that-allow-for-values-of-different-types">The Rust Programming Language - Display</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="enum"><a class="header" href="#enum">Enum</a></h1>
 <p>Giống như các ngôn ngữ khác, Enum là một kiểu giá trị đơn, chứa các biến thể (variants).</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -1625,7 +1964,7 @@ fn format_message(message: FlashMessage) -&gt; String {
 let m = format_message(FlashMessage::Error("something went wrong".to_string()));
 println!("{m}");
 <span class="boring">}</span></code></pre></pre>
-<h2 id="references-4"><a class="header" href="#references-4">References</a></h2>
+<h2 id="references-5"><a class="header" href="#references-5">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch06-02-match.html">https://doc.rust-lang.org/book/ch06-02-match.html</a></li>
 <li><a href="https://blog.logrocket.com/rust-enums-and-pattern-matching/">https://blog.logrocket.com/rust-enums-and-pattern-matching/</a></li>
@@ -1735,7 +2074,7 @@ fn format_message(message: FlashMessage) -&gt; String {
 let m = format_message(FlashMessage::Error("something went wrong".to_string()));
 println!("{m}");
 <span class="boring">}</span></code></pre></pre>
-<h2 id="references-5"><a class="header" href="#references-5">References</a></h2>
+<h2 id="references-6"><a class="header" href="#references-6">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch06-02-match.html">https://doc.rust-lang.org/book/ch06-02-match.html</a></li>
 <li><a href="https://blog.logrocket.com/rust-enums-and-pattern-matching/">https://blog.logrocket.com/rust-enums-and-pattern-matching/</a></li>
@@ -2586,7 +2925,7 @@ let v2: Vec&lt;_&gt; = v1.iter().map(|x| x + 1).collect();
 
 println!("{:?}", v2); // [2, 3, 4]
 <span class="boring">}</span></code></pre></pre>
-<h2 id="references-6"><a class="header" href="#references-6">References</a></h2>
+<h2 id="references-7"><a class="header" href="#references-7">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch13-02-iterators.html">Processing a Series of Items with Iterators</a></li>
 </ul>
@@ -2840,7 +3179,7 @@ Result::Err::&lt;u8, ()&gt;(())</code></pre></pre>
 trong Rust, thực tế mọi người sẽ viết như thế này:</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">Ok::&lt;u8, ()&gt;(10)
 Err::&lt;u8, ()&gt;(()) </code></pre></pre>
-<h2 id="references-7"><a class="header" href="#references-7">References</a></h2>
+<h2 id="references-8"><a class="header" href="#references-8">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch10-00-generics.html#generic-types-traits-and-lifetimes">Generic Types, Traits, and Lifetimes</a></li>
 <li><a href="https://doc.rust-lang.org/book/generics.html">Generics in the rust book</a></li>
@@ -2984,7 +3323,7 @@ format!("single string");
 // Sử dụng
 "single string".to_string();
 <span class="boring">}</span></code></pre></pre>
-<h1 id="references-8"><a class="header" href="#references-8">References</a></h1>
+<h1 id="references-9"><a class="header" href="#references-9">References</a></h1>
 <ul>
 <li>https://doc.rust-lang.org/std/macro.format.html</li>
 </ul>
@@ -3050,7 +3389,7 @@ fn delete_book(book: Book) -&gt; Result&lt;(), String&gt; {
 }
 
 fn main() {}</code></pre></pre>
-<h2 id="references-9"><a class="header" href="#references-9">References</a></h2>
+<h2 id="references-10"><a class="header" href="#references-10">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/macro.todo.html">https://doc.rust-lang.org/std/macro.todo.html</a></li>
 </ul>
@@ -3129,7 +3468,7 @@ Sau đó, chúng ta sử dụng cấu trúc <code>$($rest:expr),+</code> để l
 và gọi lại macro <code>countdown!</code> với danh sách này.
 Quá trình đệ quy này sẽ tiếp tục cho đến khi danh sách các biểu thức truyền vào rỗng,
 khi đó macro sẽ không còn gọi lại chính nó nữa.</p>
-<h2 id="references-10"><a class="header" href="#references-10">References</a></h2>
+<h2 id="references-11"><a class="header" href="#references-11">References</a></h2>
 <ul>
 <li>https://doc.rust-lang.org/rust-by-example/macros.html</li>
 </ul>
@@ -3264,7 +3603,7 @@ fn main() {
     println!("{}", result);  // In ra: hai
 }</code></pre></pre>
 <p>Tất cả các arm (nhánh) của <code>match</code> phải trả về cùng một kiểu dữ liệu.</p>
-<h2 id="references-11"><a class="header" href="#references-11">References</a></h2>
+<h2 id="references-12"><a class="header" href="#references-12">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch06-02-match.html">Match - The Rust Programming Language</a></li>
 <li><a href="https://doc.rust-lang.org/book/ch18-00-patterns.html">Patterns and Matching</a></li>
@@ -3468,7 +3807,7 @@ fn main() {
     }
     // In ra: Server: localhost trên port 8080
 }</code></pre></pre>
-<h2 id="references-12"><a class="header" href="#references-12">References</a></h2>
+<h2 id="references-13"><a class="header" href="#references-13">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html#destructuring-to-break-apart-values">Destructuring to Break Apart Values</a></li>
 <li><a href="https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html#-bindings">@ Bindings</a></li>
@@ -3639,7 +3978,7 @@ match (1, 2) {
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Lý do là trong pattern đầu tiên <code>(x, _)</code>, <code>x</code> được bind với phần tử đầu tiên, nhưng trong pattern thứ hai <code>(_, x)</code>, <code>x</code> được bind với phần tử thứ hai. Compiler không thể xác định <code>x</code> nên lấy giá trị nào.</p>
-<h2 id="references-13"><a class="header" href="#references-13">References</a></h2>
+<h2 id="references-14"><a class="header" href="#references-14">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html#multiple-patterns">Multiple Patterns - The Rust Programming Language</a></li>
 <li><a href="https://doc.rust-lang.org/book/ch18-00-patterns.html">Patterns and Matching</a></li>
@@ -4164,7 +4503,7 @@ fn main() {
     print(double_first(empty));
     print(double_first(strings));
 }</code></pre></pre>
-<h2 id="references-14"><a class="header" href="#references-14">References</a></h2>
+<h2 id="references-15"><a class="header" href="#references-15">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/rust-by-example/error/multiple_error_types/boxing_errors.html">Rust by Example</a></li>
 <li><a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">Dynamic dispatch</a></li>
@@ -4251,7 +4590,7 @@ fn main() {
     print(double_first(empty));
     print(double_first(strings));
 }</code></pre></pre>
-<h2 id="references-15"><a class="header" href="#references-15">References</a></h2>
+<h2 id="references-16"><a class="header" href="#references-16">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/rust-by-example/error/multiple_error_types/wrap_error.html">Rust by Example</a></li>
 <li><a href="https://crates.io/keywords/error-handling">Crates for handling errors</a></li>
@@ -4384,7 +4723,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <p>Do integration tests phải import thư viện để chạy test code, crate bắt buộc phải có <code>src/lib.rs</code>.
 Các binary crates không thể test theo cách này.</p>
 <p>Do đó các project Rust họ thường tổ chức theo kiểu build binary từ <code>src/main.rs</code> và import trực tiếp logic từ <code>src/lib.rs</code>.</p>
-<h4 id="references-16"><a class="header" href="#references-16">References</a></h4>
+<h4 id="references-17"><a class="header" href="#references-17">References</a></h4>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch11-03-test-organization.html#submodules-in-integration-tests">Submodules in Integration Tests</a></li>
 <li><a href="https://doc.rust-lang.org/book/ch11-03-test-organization.html#integration-tests-for-binary-crates">Integration Tests for Binary Crates</a></li>
@@ -4458,7 +4797,7 @@ nó vẫn sẽ được compile như mình thường.</p>
 /// # }
 /// ```
 </code></pre>
-<h3 id="references-17"><a class="header" href="#references-17">References</a></h3>
+<h3 id="references-18"><a class="header" href="#references-18">References</a></h3>
 <ul>
 <li><a href="https://doc.rust-lang.org/rustdoc/write-documentation/documentation-tests.html">https://doc.rust-lang.org/rustdoc/write-documentation/documentation-tests.html</a></li>
 </ul>
@@ -4563,7 +4902,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <p>Do integration tests phải import thư viện để chạy test code, crate bắt buộc phải có <code>src/lib.rs</code>.
 Các binary crates không thể test theo cách này.</p>
 <p>Do đó các project Rust họ thường tổ chức theo kiểu build binary từ <code>src/main.rs</code> và import trực tiếp logic từ <code>src/lib.rs</code>.</p>
-<h4 id="references-18"><a class="header" href="#references-18">References</a></h4>
+<h4 id="references-19"><a class="header" href="#references-19">References</a></h4>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch11-03-test-organization.html#submodules-in-integration-tests">Submodules in Integration Tests</a></li>
 <li><a href="https://doc.rust-lang.org/book/ch11-03-test-organization.html#integration-tests-for-binary-crates">Integration Tests for Binary Crates</a></li>
@@ -4637,7 +4976,7 @@ nó vẫn sẽ được compile như mình thường.</p>
 /// # }
 /// ```
 </code></pre>
-<h3 id="references-19"><a class="header" href="#references-19">References</a></h3>
+<h3 id="references-20"><a class="header" href="#references-20">References</a></h3>
 <ul>
 <li><a href="https://doc.rust-lang.org/rustdoc/write-documentation/documentation-tests.html">https://doc.rust-lang.org/rustdoc/write-documentation/documentation-tests.html</a></li>
 </ul>
@@ -4686,7 +5025,7 @@ fn test_one() {
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Các tests có <code>#[serial]</code> sẽ được thực hiện tuần tự nhau, tránh trường hợp xung đột như trước.</p>
-<h2 id="references-20"><a class="header" href="#references-20">References</a></h2>
+<h2 id="references-21"><a class="header" href="#references-21">References</a></h2>
 <ul>
 <li><a href="https://crates.io/crates/serial_test">https://crates.io/crates/serial_test</a></li>
 <li><a href="https://docs.rs/serial_test">https://docs.rs/serial_test</a></li>
@@ -4713,7 +5052,7 @@ Nôi dung của document được viết bằng Markdown.</p>
 <p>Hãy xem trang <a href="basic/rustdoc/../code-comment/README.html">viết comment sao cho đúng</a>
 và <a href="basic/rustdoc/../code-comment/doc-comment.html">Doc comments</a>
 để biết thêm về cách viết comment doc sao cho chuẩn.</p>
-<h2 id="references-21"><a class="header" href="#references-21">References</a></h2>
+<h2 id="references-22"><a class="header" href="#references-22">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/rustdoc/what-is-rustdoc.html">What is rustdoc?</a></li>
 <li><a href="https://doc.rust-lang.org/rustdoc/how-to-write-documentation.html">How to write documentation</a></li>
@@ -4912,7 +5251,7 @@ impl Screen {
 </ul>
 <p>Sử dụng trait object, Rust type system sẽ chắc chắn là tại thời điểm compile, tất cả các giá trị sử dụng tại ngữ cảnh đó đều phải được implement trai của <em>trait object</em> đó. Nói tóm lại, chúng ta sẽ không cần quan tâm đó là kiểu dữ liệu gì, chỉ cần biết kiểu dữ liệu đó phải được implement <em>trait</em> chúng ta cần là được.</p>
 <p>Lý do cần sử dụng pointer reference <code>&amp;</code> hoặc smart pointer <code>Box&lt;T&gt;</code> bởi vì compiler không biết chính xác về kiểu dữ liệu, Rust sẽ dùng pointer của trait object để biết được method nào để cần được gọi. Xem thêm về <strong><a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">Trait Objects Perform Dynamic Dispatch</a>.</strong></p>
-<h2 id="references-22"><a class="header" href="#references-22">References</a></h2>
+<h2 id="references-23"><a class="header" href="#references-23">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch15-01-box.html">Using Box<T> to Point to Data on the Heap</a></li>
 <li><a href="https://doc.rust-lang.org/rust-by-example/std/box.html#box-stack-and-heap">Box, stack and heap - Rust By Example</a></li>
@@ -5019,7 +5358,7 @@ một lượng lớn tác vụ reading. Và chỉ khi cần đến tác vụ wri
 object mới được copy và thay đổi. Tác vụ để thay đổi giá trị object sẽ copy, di chuyển
 object trong bộ nhớ là một tác vụ nặng, tốn kém. Do đó, ưu điểm của kỹ thuật này là
 các tác vụ reading object rất nhanh do chỉ sử dụng reference (borrow) đến giá trị gốc.</p>
-<h2 id="references-23"><a class="header" href="#references-23">References</a></h2>
+<h2 id="references-24"><a class="header" href="#references-24">References</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/borrow/enum.Cow.html">https://doc.rust-lang.org/std/borrow/enum.Cow.html</a></li>
 <li><a href="https://github.com/Dhghomon/easy_rust#cow">https://github.com/Dhghomon/easy_rust#cow</a></li>
@@ -5408,7 +5747,7 @@ rồi bỏ thẳng function pointer vào Vec, rồi thực thi theo thứ tự.
 Trong thực tế các command có thể phức tạp hơn,
 có thể là một struct với hàng loạt các function và variable
 trong các module khác nhau, việc sử dụng <code>trait</code> và <code>Box</code> ở cách 1 sẽ hiệu quả hơn.</p>
-<h1 id="references-24"><a class="header" href="#references-24">References</a></h1>
+<h1 id="references-25"><a class="header" href="#references-25">References</a></h1>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Command_pattern">https://en.wikipedia.org/wiki/Command_pattern</a></li>
 <li><a href="https://web.archive.org/web/20210223131236/https://chercher.tech/rust/command-design-pattern-rust">https://web.archive.org/web/20210223131236/https://chercher.tech/rust/command-design-pattern-rust</a></li>
@@ -5501,7 +5840,7 @@ fn builder_test() {
 </ul>
 <h1 id="nhược-điểm"><a class="header" href="#nhược-điểm">Nhược điểm</a></h1>
 <p>Phức tạp hơn so với việc init object trực tiếp, hoặc so với object có constructor đơn giản.</p>
-<h1 id="references-25"><a class="header" href="#references-25">References</a></h1>
+<h1 id="references-26"><a class="header" href="#references-26">References</a></h1>
 <ul>
 <li><a href="https://doc.rust-lang.org/1.0.0/style/ownership/builders.html">https://doc.rust-lang.org/1.0.0/style/ownership/builders.html</a></li>
 <li><a href="https://crates.io/crates/derive_builder">derive_builder</a>, một crate cho phép tự động tạo builder.</li>
@@ -5584,7 +5923,7 @@ fn main() {
       ("2014", "10", "14"),
     ]);
 }</code></pre></pre>
-<h2 id="references-26"><a class="header" href="#references-26">References</a></h2>
+<h2 id="references-27"><a class="header" href="#references-27">References</a></h2>
 <ul>
 <li>https://docs.rs/regex</li>
 <li>https://crates.io/crates/regex</li>
@@ -5715,7 +6054,7 @@ impl Advertisement for AutoplayingVideo {
     }
 }
 <span class="boring">}</span></code></pre></pre>
-<h3 id="references-27"><a class="header" href="#references-27">References</a></h3>
+<h3 id="references-28"><a class="header" href="#references-28">References</a></h3>
 <ul>
 <li>Doc: <a href="https://docs.rs/anyhow">https://docs.rs/anyhow</a></li>
 <li>Github: <a href="https://github.com/dtolnay/anyhow">https://github.com/dtolnay/anyhow</a></li>
@@ -5757,7 +6096,7 @@ fn main() {
     println!("The entry for `0` is \"{}\".", HASHMAP.get(&amp;0).unwrap());
     println!("A expensive calculation on a static results in: {}.", *NUMBER);
 }</code></pre></pre>
-<h2 id="references-28"><a class="header" href="#references-28">References</a></h2>
+<h2 id="references-29"><a class="header" href="#references-29">References</a></h2>
 <ul>
 <li>Doc: <a href="https://docs.rs/lazy_static">https://docs.rs/lazy_static</a></li>
 <li>Github: <a href="https://github.com/rust-lang-nursery/lazy-static.rs">https://github.com/rust-lang-nursery/lazy-static.rs</a></li>
@@ -5804,7 +6143,7 @@ fn main() {
 <li><a href="crates/./serde/serde_toml.html">serde_toml</a></li>
 <li><a href="crates/./serde/serde_csv.html">serde_csv</a></li>
 </ul>
-<h2 id="references-29"><a class="header" href="#references-29">References</a></h2>
+<h2 id="references-30"><a class="header" href="#references-30">References</a></h2>
 <ul>
 <li>http://serde.rs</li>
 </ul>
@@ -5957,7 +6296,7 @@ fn print_an_address() -&gt; Result&lt;()&gt; {
     Ok(())
 }
 <span class="boring">}</span></code></pre></pre>
-<h2 id="references-30"><a class="header" href="#references-30">References</a></h2>
+<h2 id="references-31"><a class="header" href="#references-31">References</a></h2>
 <ul>
 <li><a href="crates/serde/../serde.html"><code>serde</code></a></li>
 <li><a href="https://docs.rs/serde_json">JSON API documentation</a></li>
@@ -6203,10 +6542,447 @@ async fn process(socket: TcpStream) {
 <p>Trên một terminal khác:</p>
 <pre><code class="language-bash">(printf "PING\r\n";) | nc localhost 6379
 </code></pre>
-<h2 id="references-31"><a class="header" href="#references-31">References</a></h2>
+<h2 id="references-32"><a class="header" href="#references-32">References</a></h2>
 <ul>
 <li><a href="https://tokio.rs/tokio/tutorial">Tokio Tutorial</a></li>
 <li><a href="https://tokio.rs/tokio/tutorial/setup">Tokio Mini-Redis</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="actix-web"><a class="header" href="#actix-web">actix-web</a></h1>
+<p><a href="https://actix.rs/"><code>actix-web</code></a> là một powerful, pragmatic và extremely fast web framework cho Rust. Được xây dựng trên nền tảng <a href="https://actix.rs/"><code>actix</code></a> actor framework, actix-web là một trong những web framework nhanh nhất theo benchmark.</p>
+<h2 id="Đặc-điểm"><a class="header" href="#Đặc-điểm">Đặc điểm</a></h2>
+<ul>
+<li>⚡ <strong>Cực kỳ nhanh</strong> - Thường xuyên top đầu các benchmark web frameworks</li>
+<li>🔒 <strong>Type-safe</strong> - Tận dụng type system của Rust</li>
+<li>🚀 <strong>Async/await</strong> - Built-in async support</li>
+<li>🔧 <strong>Flexible</strong> - Middleware, extractors, routing mạnh mẽ</li>
+<li>🛠️ <strong>Batteries included</strong> - WebSocket, HTTP/2, TLS, compression...</li>
+</ul>
+<h2 id="cài-đặt-4"><a class="header" href="#cài-đặt-4">Cài đặt</a></h2>
+<pre><code class="language-toml">[dependencies]
+actix-web = "4"
+tokio = { version = "1", features = ["full"] }
+</code></pre>
+<p>Hoặc:</p>
+<pre><code class="language-bash">cargo add actix-web
+cargo add tokio --features full
+</code></pre>
+<h2 id="ví-dụ-cơ-bản-hello-world"><a class="header" href="#ví-dụ-cơ-bản-hello-world">Ví dụ cơ bản: Hello World</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
+
+#[get("/")]
+async fn hello() -&gt; impl Responder {
+    HttpResponse::Ok().body("Hello World!")
+}
+
+#[get("/hello/{name}")]
+async fn greet(name: web::Path&lt;String&gt;) -&gt; impl Responder {
+    HttpResponse::Ok().body(format!("Hello {}!", name))
+}
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+    println!("🚀 Server chạy tại http://localhost:8080");
+
+    HttpServer::new(|| {
+        App::new()
+            .service(hello)
+            .service(greet)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</code></pre></pre>
+<p>Chạy và test:</p>
+<pre><code class="language-bash">cargo run
+
+# Terminal khác:
+curl http://localhost:8080/
+# Hello World!
+
+curl http://localhost:8080/hello/Rust
+# Hello Rust!
+</code></pre>
+<h2 id="routing"><a class="header" href="#routing">Routing</a></h2>
+<h3 id="route-với-nhiều-http-methods"><a class="header" href="#route-với-nhiều-http-methods">Route với nhiều HTTP methods</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use actix_web::{get, post, put, delete, web, HttpResponse};
+
+#[get("/users")]
+async fn get_users() -&gt; HttpResponse {
+    HttpResponse::Ok().json(vec!["user1", "user2"])
+}
+
+#[post("/users")]
+async fn create_user() -&gt; HttpResponse {
+    HttpResponse::Created().json("User created")
+}
+
+#[put("/users/{id}")]
+async fn update_user(id: web::Path&lt;u32&gt;) -&gt; HttpResponse {
+    HttpResponse::Ok().json(format!("Updated user {}", id))
+}
+
+#[delete("/users/{id}")]
+async fn delete_user(id: web::Path&lt;u32&gt;) -&gt; HttpResponse {
+    HttpResponse::Ok().json(format!("Deleted user {}", id))
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="route-parameters"><a class="header" href="#route-parameters">Route parameters</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use actix_web::{get, web, HttpResponse};
+use serde::Deserialize;
+
+// Path parameters
+#[get("/posts/{id}")]
+async fn get_post(id: web::Path&lt;u32&gt;) -&gt; HttpResponse {
+    HttpResponse::Ok().json(format!("Post ID: {}", id))
+}
+
+// Multiple path parameters
+#[get("/posts/{id}/comments/{comment_id}")]
+async fn get_comment(path: web::Path&lt;(u32, u32)&gt;) -&gt; HttpResponse {
+    let (post_id, comment_id) = path.into_inner();
+    HttpResponse::Ok().json(format!("Post {}, Comment {}", post_id, comment_id))
+}
+
+// Query parameters
+#[derive(Deserialize)]
+struct Pagination {
+    page: Option&lt;u32&gt;,
+    limit: Option&lt;u32&gt;,
+}
+
+#[get("/posts")]
+async fn list_posts(query: web::Query&lt;Pagination&gt;) -&gt; HttpResponse {
+    let page = query.page.unwrap_or(1);
+    let limit = query.limit.unwrap_or(10);
+    HttpResponse::Ok().json(format!("Page {}, Limit {}", page, limit))
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="json-và-requestresponse"><a class="header" href="#json-và-requestresponse">JSON và Request/Response</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use actix_web::{post, web, HttpResponse};
+use serde::{Deserialize, Serialize};
+
+#[derive(Deserialize)]
+struct CreateUserRequest {
+    username: String,
+    email: String,
+}
+
+#[derive(Serialize)]
+struct UserResponse {
+    id: u32,
+    username: String,
+    email: String,
+}
+
+#[post("/users")]
+async fn create_user(user: web::Json&lt;CreateUserRequest&gt;) -&gt; HttpResponse {
+    // Process user data
+    let response = UserResponse {
+        id: 1,
+        username: user.username.clone(),
+        email: user.email.clone(),
+    };
+
+    HttpResponse::Created().json(response)
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Test với curl:</p>
+<pre><code class="language-bash">curl -X POST http://localhost:8080/users \
+  -H "Content-Type: application/json" \
+  -d '{"username":"duyet","email":"me@duyet.net"}'
+</code></pre>
+<h2 id="state-management"><a class="header" href="#state-management">State Management</a></h2>
+<p>Shared application state:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use actix_web::{get, web, App, HttpResponse, HttpServer};
+use std::sync::Mutex;
+
+struct AppState {
+    counter: Mutex&lt;i32&gt;,
+}
+
+#[get("/count")]
+async fn get_count(data: web::Data&lt;AppState&gt;) -&gt; HttpResponse {
+    let count = data.counter.lock().unwrap();
+    HttpResponse::Ok().json(*count)
+}
+
+#[get("/increment")]
+async fn increment(data: web::Data&lt;AppState&gt;) -&gt; HttpResponse {
+    let mut count = data.counter.lock().unwrap();
+    *count += 1;
+    HttpResponse::Ok().json(*count)
+}
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+    let app_state = web::Data::new(AppState {
+        counter: Mutex::new(0),
+    });
+
+    HttpServer::new(move || {
+        App::new()
+            .app_data(app_state.clone())
+            .service(get_count)
+            .service(increment)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</code></pre></pre>
+<h2 id="middleware"><a class="header" href="#middleware">Middleware</a></h2>
+<h3 id="custom-middleware"><a class="header" href="#custom-middleware">Custom Middleware</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use actix_web::{dev::ServiceRequest, Error, HttpMessage};
+use actix_web::middleware::Logger;
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+    env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
+
+    HttpServer::new(|| {
+        App::new()
+            // Logger middleware
+            .wrap(Logger::default())
+            // CORS
+            .wrap(
+                actix_cors::Cors::default()
+                    .allow_any_origin()
+                    .allow_any_method()
+                    .allow_any_header()
+            )
+            .service(hello)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</code></pre></pre>
+<h2 id="error-handling"><a class="header" href="#error-handling">Error Handling</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use actix_web::{get, web, HttpResponse, ResponseError};
+use std::fmt;
+
+#[derive(Debug)]
+enum MyError {
+    NotFound,
+    InternalError,
+}
+
+impl fmt::Display for MyError {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        match self {
+            MyError::NotFound =&gt; write!(f, "Resource not found"),
+            MyError::InternalError =&gt; write!(f, "Internal server error"),
+        }
+    }
+}
+
+impl ResponseError for MyError {
+    fn status_code(&amp;self) -&gt; actix_web::http::StatusCode {
+        match self {
+            MyError::NotFound =&gt; actix_web::http::StatusCode::NOT_FOUND,
+            MyError::InternalError =&gt; actix_web::http::StatusCode::INTERNAL_SERVER_ERROR,
+        }
+    }
+}
+
+#[get("/users/{id}")]
+async fn get_user(id: web::Path&lt;u32&gt;) -&gt; Result&lt;HttpResponse, MyError&gt; {
+    if *id == 0 {
+        return Err(MyError::NotFound);
+    }
+
+    Ok(HttpResponse::Ok().json(format!("User {}", id)))
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="database-integration-với-sqlx"><a class="header" href="#database-integration-với-sqlx">Database Integration (với sqlx)</a></h2>
+<pre><code class="language-toml">[dependencies]
+actix-web = "4"
+sqlx = { version = "0.7", features = ["runtime-tokio-native-tls", "postgres"] }
+serde = { version = "1.0", features = ["derive"] }
+</code></pre>
+<pre><pre class="playground"><code class="language-rust edition2021">use actix_web::{get, web, App, HttpResponse, HttpServer};
+use sqlx::{PgPool, postgres::PgPoolOptions};
+use serde::Serialize;
+
+#[derive(Serialize, sqlx::FromRow)]
+struct User {
+    id: i32,
+    username: String,
+}
+
+#[get("/users")]
+async fn get_users(pool: web::Data&lt;PgPool&gt;) -&gt; HttpResponse {
+    let users = sqlx::query_as::&lt;_, User&gt;("SELECT id, username FROM users")
+        .fetch_all(pool.get_ref())
+        .await;
+
+    match users {
+        Ok(users) =&gt; HttpResponse::Ok().json(users),
+        Err(_) =&gt; HttpResponse::InternalServerError().finish(),
+    }
+}
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+    let pool = PgPoolOptions::new()
+        .max_connections(5)
+        .connect("postgres://user:password@localhost/db")
+        .await
+        .expect("Failed to create pool");
+
+    let pool_data = web::Data::new(pool);
+
+    HttpServer::new(move || {
+        App::new()
+            .app_data(pool_data.clone())
+            .service(get_users)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</code></pre></pre>
+<h2 id="websocket"><a class="header" href="#websocket">WebSocket</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use actix_web::{web, App, HttpRequest, HttpResponse, HttpServer};
+use actix_web_actors::ws;
+
+struct MyWebSocket;
+
+impl actix::Actor for MyWebSocket {
+    type Context = ws::WebsocketContext&lt;Self&gt;;
+}
+
+impl actix::StreamHandler&lt;Result&lt;ws::Message, ws::ProtocolError&gt;&gt; for MyWebSocket {
+    fn handle(&amp;mut self, msg: Result&lt;ws::Message, ws::ProtocolError&gt;, ctx: &amp;mut Self::Context) {
+        match msg {
+            Ok(ws::Message::Ping(msg)) =&gt; ctx.pong(&amp;msg),
+            Ok(ws::Message::Text(text)) =&gt; ctx.text(format!("Echo: {}", text)),
+            Ok(ws::Message::Binary(bin)) =&gt; ctx.binary(bin),
+            _ =&gt; (),
+        }
+    }
+}
+
+async fn ws_index(req: HttpRequest, stream: web::Payload) -&gt; Result&lt;HttpResponse, actix_web::Error&gt; {
+    ws::start(MyWebSocket {}, &amp;req, stream)
+}
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+    HttpServer::new(|| {
+        App::new().route("/ws/", web::get().to(ws_index))
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</code></pre></pre>
+<h2 id="testing"><a class="header" href="#testing">Testing</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[cfg(test)]
+mod tests {
+    use super::*;
+    use actix_web::{test, App};
+
+    #[actix_web::test]
+    async fn test_hello() {
+        let app = test::init_service(App::new().service(hello)).await;
+        let req = test::TestRequest::get().uri("/").to_request();
+        let resp = test::call_service(&amp;app, req).await;
+
+        assert!(resp.status().is_success());
+    }
+
+    #[actix_web::test]
+    async fn test_greet() {
+        let app = test::init_service(App::new().service(greet)).await;
+        let req = test::TestRequest::get().uri("/hello/Rust").to_request();
+        let resp: String = test::read_body_json(test::call_service(&amp;app, req).await).await;
+
+        assert_eq!(resp, "Hello Rust!");
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="so-sánh-với-framework-khác"><a class="header" href="#so-sánh-với-framework-khác">So sánh với framework khác</a></h2>
+<h3 id="python-fastapi"><a class="header" href="#python-fastapi">Python (FastAPI)</a></h3>
+<pre><code class="language-python">from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def hello():
+    return {"message": "Hello World"}
+
+@app.get("/hello/{name}")
+def greet(name: str):
+    return {"message": f"Hello {name}"}
+</code></pre>
+<h3 id="nodejs-express"><a class="header" href="#nodejs-express">Node.js (Express)</a></h3>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
+
+app.get('/', (req, res) =&gt; {
+  res.send('Hello World!');
+});
+
+app.get('/hello/:name', (req, res) =&gt; {
+  res.send(`Hello ${req.params.name}!`);
+});
+
+app.listen(8080);
+</code></pre>
+<p><strong>Ưu điểm của actix-web:</strong></p>
+<ul>
+<li>Nhanh hơn 5-10x so với FastAPI/Express</li>
+<li>Type safety tại compile time</li>
+<li>Memory safe (no null pointer, data races)</li>
+<li>Low resource usage</li>
+</ul>
+<h2 id="performance-tips"><a class="header" href="#performance-tips">Performance Tips</a></h2>
+<ol>
+<li><strong>Sử dụng connection pooling cho database</strong></li>
+<li><strong>Enable compression middleware</strong></li>
+<li><strong>Configure worker threads:</strong></li>
+</ol>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>HttpServer::new(|| App::new())
+    .workers(4)  // Số lượng workers
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+<span class="boring">}</span></code></pre></pre>
+<ol start="4">
+<li><strong>Use <code>web::Data</code> thay vì <code>Arc</code> trực tiếp</strong></li>
+</ol>
+<h2 id="tổng-kết-1"><a class="header" href="#tổng-kết-1">Tổng kết</a></h2>
+<p>actix-web là lựa chọn tuyệt vời cho:</p>
+<ul>
+<li>✅ High-performance APIs</li>
+<li>✅ Real-time applications (WebSocket)</li>
+<li>✅ Microservices</li>
+<li>✅ RESTful APIs</li>
+<li>✅ Production-ready web services</li>
+</ul>
+<p>Ecosystem phong phú:</p>
+<ul>
+<li><code>actix-web</code> - Web framework</li>
+<li><code>actix-cors</code> - CORS middleware</li>
+<li><code>actix-session</code> - Session management</li>
+<li><code>actix-files</code> - Static file serving</li>
+<li><code>actix-web-actors</code> - WebSocket support</li>
+</ul>
+<h2 id="references-33"><a class="header" href="#references-33">References</a></h2>
+<ul>
+<li><a href="https://actix.rs/docs/">actix-web Documentation</a></li>
+<li><a href="https://github.com/actix/actix-web">actix-web GitHub</a></li>
+<li><a href="https://github.com/actix/examples">actix-web Examples</a></li>
+<li><a href="https://www.techempower.com/benchmarks/">Benchmarks</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="anyhow"><a class="header" href="#anyhow"><a href="https://docs.rs/anyhow"><code>anyhow</code></a></a></h1>
 <p><a href="https://docs.rs/anyhow"><code>anyhow</code></a> là thư viện giúp đơn giản hóa việc handle lỗi trong Rust application.</p>
@@ -6263,10 +7039,557 @@ Caused by:
 <span class="boring">}</span></code></pre></pre>
 </li>
 </ul>
-<h3 id="references-32"><a class="header" href="#references-32">References</a></h3>
+<h3 id="references-34"><a class="header" href="#references-34">References</a></h3>
 <ul>
 <li>Doc: <a href="https://docs.rs/anyhow">https://docs.rs/anyhow</a></li>
 <li>Github: <a href="https://github.com/dtolnay/anyhow">https://github.com/dtolnay/anyhow</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="clap"><a class="header" href="#clap">clap</a></h1>
+<p><a href="https://github.com/clap-rs/clap"><code>clap</code></a> (Command Line Argument Parser) là một trong những library phổ biến nhất để xây dựng command-line interfaces (CLI) trong Rust. Clap giúp parse arguments, generate help messages, và validate input một cách dễ dàng.</p>
+<h2 id="Đặc-điểm-1"><a class="header" href="#Đặc-điểm-1">Đặc điểm</a></h2>
+<ul>
+<li>🎯 <strong>Dễ sử dụng</strong> - Derive macros cho simple APIs</li>
+<li>✅ <strong>Type-safe</strong> - Compile-time validation</li>
+<li>📝 <strong>Auto-generated help</strong> - Beautiful help messages</li>
+<li>🔧 <strong>Flexible</strong> - Builder pattern hoặc derive macros</li>
+<li>🚀 <strong>Feature-rich</strong> - Subcommands, validation, custom types...</li>
+</ul>
+<h2 id="cài-đặt-5"><a class="header" href="#cài-đặt-5">Cài đặt</a></h2>
+<pre><code class="language-toml">[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+</code></pre>
+<p>Hoặc:</p>
+<pre><code class="language-bash">cargo add clap --features derive
+</code></pre>
+<h2 id="ví-dụ-cơ-bản-derive-api"><a class="header" href="#ví-dụ-cơ-bản-derive-api">Ví dụ cơ bản: Derive API</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use clap::Parser;
+
+/// Simple program to greet a person
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+    /// Name of the person to greet
+    #[arg(short, long)]
+    name: String,
+
+    /// Number of times to greet
+    #[arg(short, long, default_value_t = 1)]
+    count: u8,
+}
+
+fn main() {
+    let args = Args::parse();
+
+    for _ in 0..args.count {
+        println!("Hello {}!", args.name);
+    }
+}</code></pre></pre>
+<p>Sử dụng:</p>
+<pre><code class="language-bash">$ cargo run -- --help
+Simple program to greet a person
+
+Usage: myapp [OPTIONS] --name &lt;NAME&gt;
+
+Options:
+  -n, --name &lt;NAME&gt;    Name of the person to greet
+  -c, --count &lt;COUNT&gt;  Number of times to greet [default: 1]
+  -h, --help          Print help
+  -V, --version       Print version
+
+$ cargo run -- --name Rust
+Hello Rust!
+
+$ cargo run -- --name Rust --count 3
+Hello Rust!
+Hello Rust!
+Hello Rust!
+</code></pre>
+<h2 id="arguments-types"><a class="header" href="#arguments-types">Arguments Types</a></h2>
+<h3 id="required-arguments"><a class="header" href="#required-arguments">Required Arguments</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use clap::Parser;
+
+#[derive(Parser)]
+struct Args {
+    /// Required argument
+    name: String,
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="optional-arguments"><a class="header" href="#optional-arguments">Optional Arguments</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use clap::Parser;
+
+#[derive(Parser)]
+struct Args {
+    /// Optional argument
+    #[arg(short, long)]
+    name: Option&lt;String&gt;,
+}
+
+fn main() {
+    let args = Args::parse();
+
+    match args.name {
+        Some(name) =&gt; println!("Hello {}", name),
+        None =&gt; println!("Hello stranger!"),
+    }
+}</code></pre></pre>
+<h3 id="flags-boolean"><a class="header" href="#flags-boolean">Flags (Boolean)</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use clap::Parser;
+
+#[derive(Parser)]
+struct Args {
+    /// Enable verbose mode
+    #[arg(short, long)]
+    verbose: bool,
+
+    /// Enable debug mode
+    #[arg(short, long)]
+    debug: bool,
+}
+
+fn main() {
+    let args = Args::parse();
+
+    if args.verbose {
+        println!("Verbose mode enabled");
+    }
+
+    if args.debug {
+        println!("Debug mode enabled");
+    }
+}</code></pre></pre>
+<h3 id="multiple-values"><a class="header" href="#multiple-values">Multiple Values</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use clap::Parser;
+
+#[derive(Parser)]
+struct Args {
+    /// Input files
+    #[arg(short, long, num_args = 1..)]
+    files: Vec&lt;String&gt;,
+}
+
+fn main() {
+    let args = Args::parse();
+
+    for file in args.files {
+        println!("Processing: {}", file);
+    }
+}</code></pre></pre>
+<p>Sử dụng:</p>
+<pre><code class="language-bash">$ cargo run -- --files file1.txt file2.txt file3.txt
+Processing: file1.txt
+Processing: file2.txt
+Processing: file3.txt
+</code></pre>
+<h2 id="subcommands"><a class="header" href="#subcommands">Subcommands</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use clap::{Parser, Subcommand};
+
+#[derive(Parser)]
+#[command(author, version, about)]
+struct Cli {
+    #[command(subcommand)]
+    command: Commands,
+}
+
+#[derive(Subcommand)]
+enum Commands {
+    /// Add a new item
+    Add {
+        /// Name of the item
+        name: String,
+    },
+    /// List all items
+    List,
+    /// Remove an item
+    Remove {
+        /// ID of the item to remove
+        id: u32,
+    },
+}
+
+fn main() {
+    let cli = Cli::parse();
+
+    match cli.command {
+        Commands::Add { name } =&gt; {
+            println!("Adding: {}", name);
+        }
+        Commands::List =&gt; {
+            println!("Listing all items...");
+        }
+        Commands::Remove { id } =&gt; {
+            println!("Removing item with ID: {}", id);
+        }
+    }
+}</code></pre></pre>
+<p>Sử dụng:</p>
+<pre><code class="language-bash">$ cargo run -- add --help
+Add a new item
+
+Usage: myapp add &lt;NAME&gt;
+
+Arguments:
+  &lt;NAME&gt;  Name of the item
+
+$ cargo run -- add "New Item"
+Adding: New Item
+
+$ cargo run -- list
+Listing all items...
+
+$ cargo run -- remove 123
+Removing item with ID: 123
+</code></pre>
+<h2 id="value-validation"><a class="header" href="#value-validation">Value Validation</a></h2>
+<h3 id="possible-values"><a class="header" href="#possible-values">Possible Values</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use clap::Parser;
+
+#[derive(Parser)]
+struct Args {
+    /// Log level
+    #[arg(short, long, value_parser = ["debug", "info", "warn", "error"])]
+    level: String,
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="custom-validation"><a class="header" href="#custom-validation">Custom Validation</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use clap::Parser;
+
+fn validate_port(s: &amp;str) -&gt; Result&lt;u16, String&gt; {
+    let port: u16 = s.parse()
+        .map_err(|_| format!("`{}` isn't a valid port number", s))?;
+
+    if port &lt; 1024 {
+        return Err("Port must be &gt;= 1024".to_string());
+    }
+
+    Ok(port)
+}
+
+#[derive(Parser)]
+struct Args {
+    /// Port number (must be &gt;= 1024)
+    #[arg(short, long, value_parser = validate_port)]
+    port: u16,
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="range-validation"><a class="header" href="#range-validation">Range Validation</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use clap::Parser;
+
+#[derive(Parser)]
+struct Args {
+    /// Number of threads (1-16)
+    #[arg(short, long, value_parser = clap::value_parser!(u8).range(1..=16))]
+    threads: u8,
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="enum-arguments"><a class="header" href="#enum-arguments">Enum Arguments</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use clap::{Parser, ValueEnum};
+
+#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
+enum Mode {
+    /// Fast mode
+    Fast,
+    /// Normal mode
+    Normal,
+    /// Slow but accurate mode
+    Accurate,
+}
+
+#[derive(Parser)]
+struct Args {
+    /// Processing mode
+    #[arg(short, long, value_enum)]
+    mode: Mode,
+}
+
+fn main() {
+    let args = Args::parse();
+
+    match args.mode {
+        Mode::Fast =&gt; println!("Running in fast mode"),
+        Mode::Normal =&gt; println!("Running in normal mode"),
+        Mode::Accurate =&gt; println!("Running in accurate mode"),
+    }
+}</code></pre></pre>
+<h2 id="environment-variables"><a class="header" href="#environment-variables">Environment Variables</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use clap::Parser;
+
+#[derive(Parser)]
+struct Args {
+    /// API token
+    #[arg(short, long, env = "API_TOKEN")]
+    token: String,
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Sử dụng:</p>
+<pre><code class="language-bash">$ export API_TOKEN=abc123
+$ cargo run
+
+# Hoặc
+$ cargo run -- --token abc123
+</code></pre>
+<h2 id="configuration-files"><a class="header" href="#configuration-files">Configuration Files</a></h2>
+<p>Kết hợp clap với <code>config</code> crate:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use clap::Parser;
+use serde::Deserialize;
+
+#[derive(Parser)]
+struct Args {
+    /// Config file path
+    #[arg(short, long, default_value = "config.toml")]
+    config: String,
+
+    /// Override host from config
+    #[arg(long)]
+    host: Option&lt;String&gt;,
+}
+
+#[derive(Deserialize)]
+struct Config {
+    host: String,
+    port: u16,
+}
+
+fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    let args = Args::parse();
+
+    // Load config file
+    let config_content = std::fs::read_to_string(&amp;args.config)?;
+    let mut config: Config = toml::from_str(&amp;config_content)?;
+
+    // Override with CLI args if provided
+    if let Some(host) = args.host {
+        config.host = host;
+    }
+
+    println!("Host: {}", config.host);
+    println!("Port: {}", config.port);
+
+    Ok(())
+}</code></pre></pre>
+<h2 id="ví-dụ-thực-tế-file-processor"><a class="header" href="#ví-dụ-thực-tế-file-processor">Ví dụ thực tế: File processor</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use clap::{Parser, Subcommand};
+use std::path::PathBuf;
+
+#[derive(Parser)]
+#[command(name = "fileproc")]
+#[command(about = "A file processing tool", long_about = None)]
+struct Cli {
+    /// Enable verbose output
+    #[arg(short, long, global = true)]
+    verbose: bool,
+
+    #[command(subcommand)]
+    command: Commands,
+}
+
+#[derive(Subcommand)]
+enum Commands {
+    /// Convert file format
+    Convert {
+        /// Input file
+        #[arg(short, long, value_name = "FILE")]
+        input: PathBuf,
+
+        /// Output file
+        #[arg(short, long, value_name = "FILE")]
+        output: PathBuf,
+
+        /// Output format
+        #[arg(short, long, value_parser = ["json", "yaml", "toml"])]
+        format: String,
+    },
+    /// Validate file
+    Validate {
+        /// File to validate
+        file: PathBuf,
+    },
+}
+
+fn main() {
+    let cli = Cli::parse();
+
+    match &amp;cli.command {
+        Commands::Convert { input, output, format } =&gt; {
+            if cli.verbose {
+                println!("Converting {} to {}", input.display(), output.display());
+                println!("Format: {}", format);
+            }
+            // Conversion logic here
+        }
+        Commands::Validate { file } =&gt; {
+            if cli.verbose {
+                println!("Validating {}", file.display());
+            }
+            // Validation logic here
+        }
+    }
+}</code></pre></pre>
+<h2 id="so-sánh-với-các-ngôn-ngữ-khác-1"><a class="header" href="#so-sánh-với-các-ngôn-ngữ-khác-1">So sánh với các ngôn ngữ khác</a></h2>
+<h3 id="python-argparse"><a class="header" href="#python-argparse">Python (argparse)</a></h3>
+<pre><code class="language-python">import argparse
+
+parser = argparse.ArgumentParser(description='Simple program to greet')
+parser.add_argument('--name', type=str, required=True, help='Name to greet')
+parser.add_argument('--count', type=int, default=1, help='Number of times')
+
+args = parser.parse_args()
+
+for _ in range(args.count):
+    print(f"Hello {args.name}!")
+</code></pre>
+<h3 id="nodejs-commander"><a class="header" href="#nodejs-commander">Node.js (commander)</a></h3>
+<pre><code class="language-javascript">const { program } = require('commander');
+
+program
+  .option('--name &lt;name&gt;', 'Name to greet')
+  .option('--count &lt;number&gt;', 'Number of times', 1)
+  .parse();
+
+const options = program.opts();
+
+for (let i = 0; i &lt; options.count; i++) {
+  console.log(`Hello ${options.name}!`);
+}
+</code></pre>
+<p><strong>Ưu điểm của clap:</strong></p>
+<ul>
+<li>Type-safe at compile time</li>
+<li>Auto-generated help messages</li>
+<li>Better error messages</li>
+<li>No runtime type checking needed</li>
+</ul>
+<h2 id="best-practices-1"><a class="header" href="#best-practices-1">Best Practices</a></h2>
+<h3 id="1-sử-dụng-derive-api-cho-simple-cases"><a class="header" href="#1-sử-dụng-derive-api-cho-simple-cases">1. Sử dụng derive API cho simple cases</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Tốt - simple và clear
+#[derive(Parser)]
+struct Args {
+    #[arg(short, long)]
+    name: String,
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="2-group-related-options"><a class="header" href="#2-group-related-options">2. Group related options</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[derive(Parser)]
+struct Args {
+    #[command(flatten)]
+    database: DatabaseArgs,
+
+    #[command(flatten)]
+    server: ServerArgs,
+}
+
+#[derive(Args)]
+struct DatabaseArgs {
+    #[arg(long)]
+    db_host: String,
+
+    #[arg(long)]
+    db_port: u16,
+}
+
+#[derive(Args)]
+struct ServerArgs {
+    #[arg(long)]
+    server_port: u16,
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="3-provide-good-help-text"><a class="header" href="#3-provide-good-help-text">3. Provide good help text</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[derive(Parser)]
+#[command(about = "A comprehensive description of your tool")]
+struct Args {
+    /// Name of the user (used for personalization)
+    #[arg(short, long, help = "Your full name")]
+    name: String,
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="4-use-enums-for-fixed-choices"><a class="header" href="#4-use-enums-for-fixed-choices">4. Use enums for fixed choices</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Tốt - type safe
+#[derive(ValueEnum)]
+enum LogLevel {
+    Debug,
+    Info,
+    Warn,
+    Error,
+}
+
+// ❌ Tránh - string validation at runtime
+// level: String
+<span class="boring">}</span></code></pre></pre>
+<h2 id="advanced-features"><a class="header" href="#advanced-features">Advanced Features</a></h2>
+<h3 id="custom-help-template"><a class="header" href="#custom-help-template">Custom Help Template</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use clap::Parser;
+
+#[derive(Parser)]
+#[command(help_template = "\
+{before-help}{name} {version}
+{author-with-newline}{about-with-newline}
+{usage-heading} {usage}
+
+{all-args}{after-help}
+")]
+struct Args {
+    name: String,
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="argument-groups"><a class="header" href="#argument-groups">Argument Groups</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use clap::{ArgGroup, Parser};
+
+#[derive(Parser)]
+#[command(group(
+    ArgGroup::new("output")
+        .required(true)
+        .args(["json", "yaml"]),
+))]
+struct Args {
+    #[arg(long)]
+    json: bool,
+
+    #[arg(long)]
+    yaml: bool,
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="tổng-kết-2"><a class="header" href="#tổng-kết-2">Tổng kết</a></h2>
+<p>clap là lựa chọn tốt nhất cho CLI development trong Rust:</p>
+<ul>
+<li>✅ Type-safe và compile-time validation</li>
+<li>✅ Auto-generated help messages</li>
+<li>✅ Flexible (derive hoặc builder API)</li>
+<li>✅ Rich feature set</li>
+<li>✅ Great error messages</li>
+</ul>
+<p>Ecosystem:</p>
+<ul>
+<li><code>clap</code> - Core library</li>
+<li><code>clap_complete</code> - Shell completion generation</li>
+<li><code>clap_mangen</code> - Man page generation</li>
+</ul>
+<h2 id="references-35"><a class="header" href="#references-35">References</a></h2>
+<ul>
+<li><a href="https://docs.rs/clap/">clap Documentation</a></li>
+<li><a href="https://github.com/clap-rs/clap">clap GitHub</a></li>
+<li><a href="https://github.com/clap-rs/clap/tree/master/examples">clap Examples</a></li>
+<li><a href="https://docs.rs/clap/latest/clap/_derive/index.html">Derive Reference</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="log"><a class="header" href="#log">log</a></h1>
 <p><a href="https://docs.rs/log"><code>log</code></a> là thư viện logging lightweight cho Rust application.</p>
@@ -6337,13 +7660,13 @@ env_logger = "0.8.4"
 [2022-07-11T02:12:24Z ERROR main] this is error
 [2022-07-11T02:12:24Z DEBUG main] this is debug message!
 </code></pre>
-<h3 id="references-33"><a class="header" href="#references-33">References</a></h3>
+<h3 id="references-36"><a class="header" href="#references-36">References</a></h3>
 <ul>
 <li>Doc: <a href="https://docs.rs/env_logger">https://docs.rs/env_logger</a></li>
 <li>Github: <a href="https://github.com/env-logger-rs/env_logger/">https://github.com/env-logger-rs/env_logger/</a></li>
 <li><a href="https://docs.rs/env_logger/">https://docs.rs/env_logger/</a></li>
 </ul>
-<h3 id="references-34"><a class="header" href="#references-34">References</a></h3>
+<h3 id="references-37"><a class="header" href="#references-37">References</a></h3>
 <ul>
 <li>Doc: <a href="https://docs.rs/log">https://docs.rs/log</a></li>
 <li>Github: <a href="https://github.com/rust-lang/log">https://github.com/rust-lang/log</a></li>
@@ -6389,17 +7712,515 @@ env_logger = "0.8.4"
 [2022-07-11T02:12:24Z ERROR main] this is error
 [2022-07-11T02:12:24Z DEBUG main] this is debug message!
 </code></pre>
-<h3 id="references-35"><a class="header" href="#references-35">References</a></h3>
+<h3 id="references-38"><a class="header" href="#references-38">References</a></h3>
 <ul>
 <li>Doc: <a href="https://docs.rs/env_logger">https://docs.rs/env_logger</a></li>
 <li>Github: <a href="https://github.com/env-logger-rs/env_logger/">https://github.com/env-logger-rs/env_logger/</a></li>
 <li><a href="https://docs.rs/env_logger/">https://docs.rs/env_logger/</a></li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="config"><a class="header" href="#config">config</a></h1>
+<p><a href="https://github.com/mehcode/config-rs"><code>config</code></a> là một library mạnh mẽ để quản lý configuration trong Rust applications. Nó hỗ trợ đọc config từ nhiều nguồn khác nhau (files, environment variables, command line) và merge chúng lại theo thứ tự ưu tiên.</p>
+<h2 id="Đặc-điểm-2"><a class="header" href="#Đặc-điểm-2">Đặc điểm</a></h2>
+<ul>
+<li>📁 <strong>Multi-format</strong> - JSON, TOML, YAML, INI, RON, JSON5</li>
+<li>🔄 <strong>Layered configs</strong> - Merge từ nhiều nguồn</li>
+<li>🌍 <strong>Environment variables</strong> - Override config với env vars</li>
+<li>🎯 <strong>Type-safe</strong> - Deserialize vào Rust structs</li>
+<li>⚙️ <strong>Flexible</strong> - Custom sources và formats</li>
+</ul>
+<h2 id="cài-đặt-6"><a class="header" href="#cài-đặt-6">Cài đặt</a></h2>
+<pre><code class="language-toml">[dependencies]
+config = "0.14"
+serde = { version = "1.0", features = ["derive"] }
+</code></pre>
+<p>Hoặc:</p>
+<pre><code class="language-bash">cargo add config
+cargo add serde --features derive
+</code></pre>
+<h2 id="ví-dụ-cơ-bản"><a class="header" href="#ví-dụ-cơ-bản">Ví dụ cơ bản</a></h2>
+<h3 id="file-config-configtoml"><a class="header" href="#file-config-configtoml">File config: <code>config.toml</code></a></h3>
+<pre><code class="language-toml">[database]
+host = "localhost"
+port = 5432
+username = "admin"
+password = "secret"
+
+[server]
+host = "0.0.0.0"
+port = 8080
+workers = 4
+
+[logging]
+level = "info"
+</code></pre>
+<h3 id="code"><a class="header" href="#code">Code</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use config::{Config, ConfigError, File};
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+struct Database {
+    host: String,
+    port: u16,
+    username: String,
+    password: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct Server {
+    host: String,
+    port: u16,
+    workers: u8,
+}
+
+#[derive(Debug, Deserialize)]
+struct Logging {
+    level: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct Settings {
+    database: Database,
+    server: Server,
+    logging: Logging,
+}
+
+fn main() -&gt; Result&lt;(), ConfigError&gt; {
+    let settings = Config::builder()
+        .add_source(File::with_name("config"))
+        .build()?;
+
+    let settings: Settings = settings.try_deserialize()?;
+
+    println!("{:#?}", settings);
+
+    Ok(())
+}</code></pre></pre>
+<h2 id="nhiều-file-config-environments"><a class="header" href="#nhiều-file-config-environments">Nhiều file config (Environments)</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use config::{Config, ConfigError, File, Environment};
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+struct Settings {
+    debug: bool,
+    database: DatabaseSettings,
+}
+
+#[derive(Debug, Deserialize)]
+struct DatabaseSettings {
+    url: String,
+}
+
+fn main() -&gt; Result&lt;(), ConfigError&gt; {
+    let run_mode = std::env::var("RUN_MODE").unwrap_or_else(|_| "development".into());
+
+    let settings = Config::builder()
+        // Start with default config
+        .add_source(File::with_name("config/default"))
+        // Layer on environment-specific values
+        .add_source(File::with_name(&amp;format!("config/{}", run_mode)).required(false))
+        // Layer on local config (ignored by git)
+        .add_source(File::with_name("config/local").required(false))
+        // Add environment variables (with a prefix of APP and separator of __)
+        .add_source(Environment::with_prefix("APP").separator("__"))
+        .build()?;
+
+    let settings: Settings = settings.try_deserialize()?;
+
+    println!("{:#?}", settings);
+
+    Ok(())
+}</code></pre></pre>
+<p>File structure:</p>
+<pre><code>config/
+├── default.toml      # Base config
+├── development.toml  # Development overrides
+├── production.toml   # Production overrides
+└── local.toml        # Local overrides (gitignored)
+</code></pre>
+<p><strong><code>config/default.toml</code>:</strong></p>
+<pre><code class="language-toml">debug = false
+
+[database]
+url = "postgres://localhost/myapp"
+</code></pre>
+<p><strong><code>config/development.toml</code>:</strong></p>
+<pre><code class="language-toml">debug = true
+
+[database]
+url = "postgres://localhost/myapp_dev"
+</code></pre>
+<p><strong><code>config/production.toml</code>:</strong></p>
+<pre><code class="language-toml">[database]
+url = "postgres://prod-server/myapp"
+</code></pre>
+<h2 id="environment-variables-override"><a class="header" href="#environment-variables-override">Environment Variables Override</a></h2>
+<pre><code class="language-bash"># Override config với environment variables
+export APP__DEBUG=true
+export APP__DATABASE__URL="postgres://custom-host/db"
+
+cargo run
+</code></pre>
+<p>Pattern: <code>PREFIX__SECTION__KEY</code></p>
+<h2 id="nhiều-format-config"><a class="header" href="#nhiều-format-config">Nhiều format config</a></h2>
+<h3 id="json"><a class="header" href="#json">JSON</a></h3>
+<pre><code class="language-json">{
+  "server": {
+    "port": 8080,
+    "host": "localhost"
+  }
+}
+</code></pre>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let settings = Config::builder()
+    .add_source(File::with_name("config.json"))
+    .build()?;
+<span class="boring">}</span></code></pre></pre>
+<h3 id="yaml"><a class="header" href="#yaml">YAML</a></h3>
+<pre><code class="language-yaml">server:
+  port: 8080
+  host: localhost
+</code></pre>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let settings = Config::builder()
+    .add_source(File::with_name("config.yaml"))
+    .build()?;
+<span class="boring">}</span></code></pre></pre>
+<h3 id="hoặc-auto-detect-format"><a class="header" href="#hoặc-auto-detect-format">Hoặc auto-detect format:</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Sẽ tự động detect .json, .yaml, .toml, etc.
+let settings = Config::builder()
+    .add_source(File::with_name("config"))
+    .build()?;
+<span class="boring">}</span></code></pre></pre>
+<h2 id="set-default-values"><a class="header" href="#set-default-values">Set default values</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use config::{Config, ConfigError};
+
+fn main() -&gt; Result&lt;(), ConfigError&gt; {
+    let settings = Config::builder()
+        .set_default("server.port", 8080)?
+        .set_default("server.host", "127.0.0.1")?
+        .set_default("debug", false)?
+        .add_source(File::with_name("config").required(false))
+        .build()?;
+
+    Ok(())
+}</code></pre></pre>
+<h2 id="nested-configuration"><a class="header" href="#nested-configuration">Nested configuration</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+struct Settings {
+    database: DatabaseSettings,
+    cache: CacheSettings,
+    api: ApiSettings,
+}
+
+#[derive(Debug, Deserialize)]
+struct DatabaseSettings {
+    primary: ConnectionSettings,
+    replica: Option&lt;ConnectionSettings&gt;,
+}
+
+#[derive(Debug, Deserialize)]
+struct ConnectionSettings {
+    host: String,
+    port: u16,
+    pool_size: u32,
+}
+
+#[derive(Debug, Deserialize)]
+struct CacheSettings {
+    redis_url: String,
+    ttl: u64,
+}
+
+#[derive(Debug, Deserialize)]
+struct ApiSettings {
+    key: String,
+    timeout: u64,
+}
+<span class="boring">}</span></code></pre></pre>
+<p><strong>config.toml:</strong></p>
+<pre><code class="language-toml">[database.primary]
+host = "db-primary.example.com"
+port = 5432
+pool_size = 20
+
+[database.replica]
+host = "db-replica.example.com"
+port = 5432
+pool_size = 10
+
+[cache]
+redis_url = "redis://localhost:6379"
+ttl = 3600
+
+[api]
+key = "your-api-key"
+timeout = 30
+</code></pre>
+<h2 id="validation"><a class="header" href="#validation">Validation</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use config::{Config, ConfigError};
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+struct Settings {
+    port: u16,
+    workers: u8,
+}
+
+impl Settings {
+    pub fn new() -&gt; Result&lt;Self, ConfigError&gt; {
+        let settings = Config::builder()
+            .add_source(File::with_name("config"))
+            .build()?;
+
+        let mut settings: Settings = settings.try_deserialize()?;
+
+        // Validate
+        if settings.workers == 0 {
+            return Err(ConfigError::Message("workers must be &gt; 0".into()));
+        }
+
+        if settings.port &lt; 1024 {
+            return Err(ConfigError::Message("port must be &gt;= 1024".into()));
+        }
+
+        Ok(settings)
+    }
+}
+
+fn main() -&gt; Result&lt;(), ConfigError&gt; {
+    let settings = Settings::new()?;
+    println!("{:#?}", settings);
+    Ok(())
+}</code></pre></pre>
+<h2 id="ví-dụ-thực-tế-web-application-config"><a class="header" href="#ví-dụ-thực-tế-web-application-config">Ví dụ thực tế: Web application config</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use config::{Config, ConfigError, File, Environment};
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+pub struct Settings {
+    pub server: ServerSettings,
+    pub database: DatabaseSettings,
+    pub redis: RedisSettings,
+    pub logging: LoggingSettings,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ServerSettings {
+    pub host: String,
+    pub port: u16,
+    pub workers: usize,
+    pub keep_alive: u64,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DatabaseSettings {
+    pub url: String,
+    pub max_connections: u32,
+    pub min_connections: u32,
+    pub connect_timeout: u64,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct RedisSettings {
+    pub url: String,
+    pub pool_size: u32,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct LoggingSettings {
+    pub level: String,
+    pub format: String,
+}
+
+impl Settings {
+    pub fn new() -&gt; Result&lt;Self, ConfigError&gt; {
+        let env = std::env::var("APP_ENV").unwrap_or_else(|_| "development".into());
+
+        let config = Config::builder()
+            // Defaults
+            .set_default("server.host", "127.0.0.1")?
+            .set_default("server.port", 8080)?
+            .set_default("server.workers", 4)?
+            .set_default("server.keep_alive", 75)?
+            .set_default("logging.level", "info")?
+            .set_default("logging.format", "json")?
+            // Base config
+            .add_source(File::with_name("config/default"))
+            // Environment-specific
+            .add_source(File::with_name(&amp;format!("config/{}", env)).required(false))
+            // Local overrides
+            .add_source(File::with_name("config/local").required(false))
+            // Environment variables
+            .add_source(Environment::with_prefix("APP").separator("__"))
+            .build()?;
+
+        config.try_deserialize()
+    }
+}
+
+fn main() -&gt; Result&lt;(), ConfigError&gt; {
+    let settings = Settings::new()?;
+
+    println!("Server: {}:{}", settings.server.host, settings.server.port);
+    println!("Database: {}", settings.database.url);
+    println!("Redis: {}", settings.redis.url);
+    println!("Logging: {} ({})", settings.logging.level, settings.logging.format);
+
+    Ok(())
+}</code></pre></pre>
+<p><strong>config/default.toml:</strong></p>
+<pre><code class="language-toml">[database]
+max_connections = 100
+min_connections = 10
+connect_timeout = 30
+
+[redis]
+url = "redis://127.0.0.1:6379"
+pool_size = 10
+</code></pre>
+<p><strong>config/production.toml:</strong></p>
+<pre><code class="language-toml">[server]
+host = "0.0.0.0"
+workers = 8
+
+[database]
+url = "postgres://prod-db:5432/myapp"
+max_connections = 200
+
+[logging]
+level = "warn"
+</code></pre>
+<h2 id="integration-với-web-frameworks"><a class="header" href="#integration-với-web-frameworks">Integration với web frameworks</a></h2>
+<h3 id="actix-web-1"><a class="header" href="#actix-web-1">Actix-web</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use actix_web::{web, App, HttpServer};
+use config::{Config, ConfigError};
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize, Clone)]
+struct Settings {
+    server: ServerConfig,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+struct ServerConfig {
+    host: String,
+    port: u16,
+}
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+    let config = Config::builder()
+        .add_source(config::File::with_name("config"))
+        .build()
+        .unwrap();
+
+    let settings: Settings = config.try_deserialize().unwrap();
+    let server_config = settings.server.clone();
+
+    HttpServer::new(move || {
+        App::new()
+            .app_data(web::Data::new(settings.clone()))
+    })
+    .bind((server_config.host, server_config.port))?
+    .run()
+    .await
+}</code></pre></pre>
+<h2 id="best-practices-2"><a class="header" href="#best-practices-2">Best Practices</a></h2>
+<h3 id="1-separate-configs-by-environment"><a class="header" href="#1-separate-configs-by-environment">1. Separate configs by environment</a></h3>
+<pre><code>config/
+├── default.toml         # Shared defaults
+├── development.toml     # Dev settings
+├── production.toml      # Prod settings
+└── local.toml          # Local overrides (gitignore)
+</code></pre>
+<h3 id="2-use-environment-variables-for-secrets"><a class="header" href="#2-use-environment-variables-for-secrets">2. Use environment variables for secrets</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ❌ Không lưu secrets trong file
+[database]
+password = "secret123"
+
+// ✅ Dùng environment variable
+export APP__DATABASE__PASSWORD="secret123"
+<span class="boring">}</span></code></pre></pre>
+<h3 id="3-validate-config-at-startup"><a class="header" href="#3-validate-config-at-startup">3. Validate config at startup</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Settings {
+    pub fn new() -&gt; Result&lt;Self, ConfigError&gt; {
+        let settings = /* load config */;
+
+        // Validate early
+        settings.validate()?;
+
+        Ok(settings)
+    }
+
+    fn validate(&amp;self) -&gt; Result&lt;(), ConfigError&gt; {
+        if self.server.workers == 0 {
+            return Err(ConfigError::Message("workers must be &gt; 0".into()));
+        }
+        Ok(())
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="4-document-your-config"><a class="header" href="#4-document-your-config">4. Document your config</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Application settings
+#[derive(Debug, Deserialize)]
+pub struct Settings {
+    /// Server configuration
+    pub server: ServerSettings,
+    /// Database configuration
+    pub database: DatabaseSettings,
+}
+
+/// Server settings
+#[derive(Debug, Deserialize)]
+pub struct ServerSettings {
+    /// Bind address (default: 127.0.0.1)
+    pub host: String,
+    /// Bind port (default: 8080)
+    pub port: u16,
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="tổng-kết-3"><a class="header" href="#tổng-kết-3">Tổng kết</a></h2>
+<p>config-rs là lựa chọn tốt cho configuration management:</p>
+<ul>
+<li>✅ Multi-format support (JSON, TOML, YAML...)</li>
+<li>✅ Layered configuration (defaults → files → env vars)</li>
+<li>✅ Type-safe với serde</li>
+<li>✅ Environment-specific configs</li>
+<li>✅ Easy to test</li>
+</ul>
+<p>Best practices:</p>
+<ol>
+<li>Separate by environment</li>
+<li>Use env vars for secrets</li>
+<li>Validate early</li>
+<li>Provide sensible defaults</li>
+<li>Document your config structure</li>
+</ol>
+<h2 id="references-39"><a class="header" href="#references-39">References</a></h2>
+<ul>
+<li><a href="https://docs.rs/config/">config-rs Documentation</a></li>
+<li><a href="https://github.com/mehcode/config-rs">config-rs GitHub</a></li>
+<li><a href="https://12factor.net/config">12-Factor App Config</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="indoc"><a class="header" href="#indoc"><a href="https://github.com/dtolnay/indoc"><code>indoc</code></a></a></h1>
 <p><a href="https://github.com/dtolnay/indoc"><code>indoc</code></a> là một crate nhỏ nhưng hữu ích giúp canh lề (indented documents).
 <code>indoc!()</code> macro nhận multiline string và un-indents lúc compile time,
 xoá tất cả khoảng trắng đầu tiên trên cách dòng dựa theo dòng đầu tiên.</p>
-<h2 id="cài-đặt-4"><a class="header" href="#cài-đặt-4">Cài đặt</a></h2>
+<h2 id="cài-đặt-7"><a class="header" href="#cài-đặt-7">Cài đặt</a></h2>
 <pre><code class="language-bash">cargo add indoc
 </code></pre>
 <p>Hoặc</p>
@@ -6423,7 +8244,7 @@ fn main() {
     assert_eq!(testing, expected);
 }</code></pre></pre>
 <p><a href="https://github.com/dtolnay/indoc"><code>indoc</code></a> cũng hoạt động với raw string <code>r# ... #</code> và byte string <code>b" ... "</code>.</p>
-<h2 id="references-36"><a class="header" href="#references-36">References</a></h2>
+<h2 id="references-40"><a class="header" href="#references-40">References</a></h2>
 <ul>
 <li><a href="https://docs.rs/indoc/latest/indoc/">https://docs.rs/indoc/latest/indoc/</a></li>
 <li><a href="https://github.com/dtolnay/indoc">https://github.com/dtolnay/indoc</a></li>
@@ -6431,7 +8252,7 @@ fn main() {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rayon"><a class="header" href="#rayon"><a href="https://github.com/rayon-rs/rayon"><code>rayon</code></a></a></h1>
 <p><a href="https://github.com/rayon-rs/rayon"><code>rayon</code></a> là thư viện data-parallelism cho Rust, gọn nhẹ và dễ dàng convert từ
 code tính toán tuần tự sang song song mà vẫn đảm bảo không lỗi data-race.</p>
-<h2 id="cài-đặt-5"><a class="header" href="#cài-đặt-5">Cài đặt</a></h2>
+<h2 id="cài-đặt-8"><a class="header" href="#cài-đặt-8">Cài đặt</a></h2>
 <pre><code class="language-bash">cargo add rayon
 </code></pre>
 <p>Hoặc</p>
@@ -6498,7 +8319,7 @@ speedup: 5.34x
 <pre><code class="language-bash">cargo run --release -- nbody visualize
 </code></pre>
 <p><img src="https://i.imgur.com/cF6Euyf.png" alt="" /></p>
-<h2 id="references-37"><a class="header" href="#references-37">References</a></h2>
+<h2 id="references-41"><a class="header" href="#references-41">References</a></h2>
 <ul>
 <li><a href="https://smallcultfollowing.com/babysteps/blog/2015/12/18/rayon-data-parallelism-in-rust/">Rayon: data parallelism in Rust</a></li>
 <li><a href="https://www.youtube.com/watch?v=gof_OEv71Aw">https://www.youtube.com/watch?v=gof_OEv71Aw</a></li>
@@ -6507,7 +8328,7 @@ speedup: 5.34x
 <div style="break-before: page; page-break-before: always;"></div><h1 id="polars"><a class="header" href="#polars"><a href="ttps://pola.rs"><code>polars</code></a></a></h1>
 <p>Xử lý DataFrame lớn, dễ sử dụng, hiệu năng cao và có nhiều ưu điểm giống với Pandas nổi tiếng. Polars cũng được hỗ trợ trên Python.</p>
 <p><img src="crates/./polars.png" alt="" /></p>
-<h2 id="cài-đặt-6"><a class="header" href="#cài-đặt-6">Cài đặt</a></h2>
+<h2 id="cài-đặt-9"><a class="header" href="#cài-đặt-9">Cài đặt</a></h2>
 <pre><code class="language-bash">cargo add polars
 </code></pre>
 <p>Hoặc</p>
@@ -6537,7 +8358,7 @@ let mut df: DataFrame = df!(
 .unwrap();
 println!("{}", df);
 <span class="boring">}</span></code></pre></pre>
-<h2 id="references-38"><a class="header" href="#references-38">References</a></h2>
+<h2 id="references-42"><a class="header" href="#references-42">References</a></h2>
 <ul>
 <li>https://pola.rs</li>
 </ul>
@@ -6559,7 +8380,7 @@ println!("{}", df);
 <li><a href="https://github.com/seanmonstar/reqwest">reqwest</a>: Rust HTTP client.</li>
 <li><a href="https://vector.dev">vector.dev</a>: ultra-fast tool for building observability pipelines.</li>
 </ul>
-<h1 id="references-39"><a class="header" href="#references-39">References</a></h1>
+<h1 id="references-43"><a class="header" href="#references-43">References</a></h1>
 <ul>
 <li>https://blog.duyet.net/2023/01/data-engineering-rust-tools.html</li>
 <li>https://arewedatayet.com</li>
@@ -6818,7 +8639,7 @@ result.to_parquet('output.parquet')
 <li>Ecosystem nhỏ hơn Python (nhưng đang phát triển nhanh)</li>
 <li>Learning curve cao hơn</li>
 </ul>
-<h2 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h2>
+<h2 id="best-practices-3"><a class="header" href="#best-practices-3">Best Practices</a></h2>
 <ol>
 <li>
 <p><strong>Sử dụng Lazy Evaluation khi làm việc với large datasets:</strong></p>
@@ -6885,7 +8706,7 @@ fn main() -&gt; Result&lt;()&gt; {
 
     Ok(())
 }</code></pre></pre>
-<h2 id="tổng-kết"><a class="header" href="#tổng-kết">Tổng kết</a></h2>
+<h2 id="tổng-kết-4"><a class="header" href="#tổng-kết-4">Tổng kết</a></h2>
 <p>Rust + Polars là một stack mạnh mẽ để xây dựng data pipeline:</p>
 <ul>
 <li>✅ Performance cao</li>
@@ -6894,7 +8715,7 @@ fn main() -&gt; Result&lt;()&gt; {
 <li>✅ Ecosystem đang phát triển mạnh</li>
 </ul>
 <p>Bắt đầu với các pipeline đơn giản, sau đó mở rộng với streaming, parallel processing, và distributed computing với các tools như DataFusion và Ballista.</p>
-<h2 id="references-40"><a class="header" href="#references-40">References</a></h2>
+<h2 id="references-44"><a class="header" href="#references-44">References</a></h2>
 <ul>
 <li><a href="https://docs.pola.rs/">Polars Documentation</a></li>
 <li><a href="https://docs.pola.rs/user-guide/">Polars User Guide</a></li>
@@ -7303,7 +9124,7 @@ async fn main() -&gt; Result&lt;()&gt; {
 
     Ok(())
 }</code></pre></pre>
-<h2 id="best-practices-1"><a class="header" href="#best-practices-1">Best Practices</a></h2>
+<h2 id="best-practices-4"><a class="header" href="#best-practices-4">Best Practices</a></h2>
 <h3 id="1-sử-dụng-columnar-format"><a class="header" href="#1-sử-dụng-columnar-format">1. Sử dụng Columnar Format</a></h3>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -7373,7 +9194,7 @@ fn main() -&gt; Result&lt;()&gt; {
 <tr><td>Write Parquet</td><td>2.8s</td><td>0.5s</td><td>5.6x</td></tr>
 </tbody></table>
 </div>
-<h2 id="tổng-kết-1"><a class="header" href="#tổng-kết-1">Tổng kết</a></h2>
+<h2 id="tổng-kết-5"><a class="header" href="#tổng-kết-5">Tổng kết</a></h2>
 <p>Rust cung cấp ecosystem mạnh mẽ để xây dựng data-driven applications:</p>
 <ul>
 <li>✅ <strong>DataFusion</strong>: SQL query engine cực nhanh</li>
@@ -7384,7 +9205,7 @@ fn main() -&gt; Result&lt;()&gt; {
 <li>✅ <strong>Axum/Actix</strong>: Web frameworks để serve data</li>
 </ul>
 <p>Với Rust, bạn có thể xây dựng ứng dụng vừa nhanh, vừa safe, vừa dễ maintain và scale.</p>
-<h2 id="references-41"><a class="header" href="#references-41">References</a></h2>
+<h2 id="references-45"><a class="header" href="#references-45">References</a></h2>
 <ul>
 <li><a href="https://datafusion.apache.org/">DataFusion Documentation</a></li>
 <li><a href="https://docs.pola.rs/">Polars Documentation</a></li>
@@ -7871,7 +9692,7 @@ result = my_module.process_large_dataset(large_array)
 <tr><td><strong>Web Framework</strong></td><td>Flask, FastAPI</td><td>Axum, Actix-web</td></tr>
 </tbody></table>
 </div>
-<h2 id="tổng-kết-2"><a class="header" href="#tổng-kết-2">Tổng kết</a></h2>
+<h2 id="tổng-kết-6"><a class="header" href="#tổng-kết-6">Tổng kết</a></h2>
 <p>Rust không phải để thay thế hoàn toàn Python, mà là công cụ bổ sung:</p>
 <p><strong>Python:</strong> Rapid development, prototyping, glue code, notebooks
 <strong>Rust:</strong> Production systems, performance critical paths, long-running services</p>
@@ -7883,7 +9704,7 @@ result = my_module.process_large_dataset(large_array)
 <li>Use PyO3 để integrate</li>
 </ol>
 <p>Trong 5-10 năm tới, Rust sẽ là lựa chọn phổ biến cho production data engineering workloads, tương tự như Go đã thay thế Python trong nhiều backend services.</p>
-<h2 id="references-42"><a class="header" href="#references-42">References</a></h2>
+<h2 id="references-46"><a class="header" href="#references-46">References</a></h2>
 <ul>
 <li><a href="https://arewedatayet.com">Are We Data Yet?</a> - Rust data ecosystem tracker</li>
 <li><a href="https://www.pola.rs/benchmarks.html">Polars Benchmarks</a></li>
@@ -7891,6 +9712,844 @@ result = my_module.process_large_dataset(large_array)
 <li><a href="https://github.com/meilisearch/meilisearch">Meilisearch</a></li>
 <li><a href="https://pyo3.rs/">PyO3 Documentation</a> - Rust bindings for Python</li>
 <li><a href="https://github.com/apache/datafusion-ballista">Ballista</a> - Distributed DataFusion</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="functional-programming"><a class="header" href="#functional-programming">Functional Programming</a></h1>
+<p>Rust không phải là một pure functional programming language như Haskell hay ML, nhưng Rust có rất nhiều concepts từ functional programming, giúp code ngắn gọn, dễ maintain và ít bugs hơn.</p>
+<h2 id="các-đặc-điểm-functional-programming-trong-rust"><a class="header" href="#các-đặc-điểm-functional-programming-trong-rust">Các đặc điểm Functional Programming trong Rust</a></h2>
+<ul>
+<li><strong>Immutability by default</strong> - Variables mặc định là immutable</li>
+<li><strong>First-class functions</strong> - Functions là values</li>
+<li><strong>Higher-order functions</strong> - Functions nhận/trả về functions khác</li>
+<li><strong>Iterators</strong> - Lazy evaluation</li>
+<li><strong>Pattern matching</strong> - Declarative code</li>
+<li><strong>No null</strong> - <code>Option&lt;T&gt;</code> thay vì null</li>
+<li><strong>Algebraic data types</strong> - Enums với data</li>
+</ul>
+<h2 id="immutability"><a class="header" href="#immutability">Immutability</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Functional style - immutable by default
+let x = 5;
+let y = x + 1;  // Tạo giá trị mới thay vì modify
+let z = y * 2;
+
+println!("{}", z);  // 12
+
+// ❌ Imperative style - mutation
+let mut x = 5;
+x = x + 1;
+x = x * 2;
+println!("{}", x);  // 12
+<span class="boring">}</span></code></pre></pre>
+<h3 id="transform-thay-vì-mutate"><a class="header" href="#transform-thay-vì-mutate">Transform thay vì Mutate</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Functional - transform
+fn add_one_to_all(numbers: Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; {
+    numbers.into_iter()
+        .map(|n| n + 1)
+        .collect()
+}
+
+// ❌ Imperative - mutate
+fn add_one_to_all_mut(numbers: &amp;mut Vec&lt;i32&gt;) {
+    for n in numbers.iter_mut() {
+        *n += 1;
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="higher-order-functions"><a class="header" href="#higher-order-functions">Higher-Order Functions</a></h2>
+<p>Functions nhận functions khác làm arguments:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn apply_twice&lt;F&gt;(f: F, x: i32) -&gt; i32
+where
+    F: Fn(i32) -&gt; i32,
+{
+    f(f(x))
+}
+
+fn add_one(x: i32) -&gt; i32 {
+    x + 1
+}
+
+fn main() {
+    let result = apply_twice(add_one, 5);
+    println!("{}", result);  // 7
+}</code></pre></pre>
+<h3 id="returning-functions"><a class="header" href="#returning-functions">Returning Functions</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn make_adder(n: i32) -&gt; impl Fn(i32) -&gt; i32 {
+    move |x| x + n
+}
+
+fn main() {
+    let add_five = make_adder(5);
+    println!("{}", add_five(10));  // 15
+
+    let add_ten = make_adder(10);
+    println!("{}", add_ten(10));  // 20
+}</code></pre></pre>
+<h2 id="iterators-và-lazy-evaluation"><a class="header" href="#iterators-và-lazy-evaluation">Iterators và Lazy Evaluation</a></h2>
+<p>Iterators trong Rust là lazy - chỉ compute khi cần:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let numbers = vec![1, 2, 3, 4, 5];
+
+    // Lazy - chưa execute
+    let doubled = numbers.iter()
+        .map(|x| {
+            println!("Doubling {}", x);
+            x * 2
+        });
+
+    // Chỉ execute khi collect
+    let result: Vec&lt;_&gt; = doubled.collect();
+    println!("{:?}", result);
+}</code></pre></pre>
+<h3 id="chaining-operations"><a class="header" href="#chaining-operations">Chaining Operations</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let result: i32 = (1..=10)
+        .filter(|x| x % 2 == 0)  // Chỉ số chẵn
+        .map(|x| x * x)          // Bình phương
+        .sum();                  // Tổng
+
+    println!("{}", result);  // 220 (4 + 16 + 36 + 64 + 100)
+}</code></pre></pre>
+<h2 id="combinators"><a class="header" href="#combinators">Combinators</a></h2>
+<h3 id="map-filter-fold"><a class="header" href="#map-filter-fold"><code>map</code>, <code>filter</code>, <code>fold</code></a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let numbers = vec![1, 2, 3, 4, 5];
+
+    // map: transform từng phần tử
+    let doubled: Vec&lt;_&gt; = numbers.iter()
+        .map(|x| x * 2)
+        .collect();
+
+    // filter: lọc phần tử
+    let evens: Vec&lt;_&gt; = numbers.iter()
+        .filter(|x| *x % 2 == 0)
+        .collect();
+
+    // fold: reduce về một giá trị
+    let sum = numbers.iter()
+        .fold(0, |acc, x| acc + x);
+
+    println!("Doubled: {:?}", doubled);  // [2, 4, 6, 8, 10]
+    println!("Evens: {:?}", evens);      // [2, 4]
+    println!("Sum: {}", sum);             // 15
+}</code></pre></pre>
+<h3 id="option-combinators"><a class="header" href="#option-combinators"><code>Option</code> combinators</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let maybe_number: Option&lt;i32&gt; = Some(5);
+
+    // map: transform nếu có giá trị
+    let doubled = maybe_number.map(|x| x * 2);
+    println!("{:?}", doubled);  // Some(10)
+
+    // and_then: chain operations
+    let result = Some(5)
+        .and_then(|x| Some(x * 2))
+        .and_then(|x| if x &gt; 5 { Some(x) } else { None });
+    println!("{:?}", result);  // Some(10)
+
+    // filter: giữ nếu match condition
+    let filtered = Some(5)
+        .filter(|x| *x &gt; 3);
+    println!("{:?}", filtered);  // Some(5)
+}</code></pre></pre>
+<h3 id="result-combinators"><a class="header" href="#result-combinators"><code>Result</code> combinators</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn divide(a: f64, b: f64) -&gt; Result&lt;f64, String&gt; {
+    if b == 0.0 {
+        Err("Division by zero".to_string())
+    } else {
+        Ok(a / b)
+    }
+}
+
+fn main() {
+    let result = divide(10.0, 2.0)
+        .map(|x| x * 2.0)  // Transform OK value
+        .map_err(|e| format!("Error: {}", e));  // Transform Err value
+
+    println!("{:?}", result);  // Ok(10.0)
+}</code></pre></pre>
+<h2 id="pattern-matching"><a class="header" href="#pattern-matching">Pattern Matching</a></h2>
+<p>Declarative control flow:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+}
+
+fn process(msg: Message) -&gt; String {
+    match msg {
+        Message::Quit =&gt; "Quitting".to_string(),
+        Message::Move { x, y } =&gt; format!("Moving to ({}, {})", x, y),
+        Message::Write(text) =&gt; format!("Writing: {}", text),
+    }
+}
+
+fn main() {
+    let msg = Message::Move { x: 10, y: 20 };
+    println!("{}", process(msg));
+}</code></pre></pre>
+<h2 id="recursion"><a class="header" href="#recursion">Recursion</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">// Factorial
+fn factorial(n: u64) -&gt; u64 {
+    match n {
+        0 | 1 =&gt; 1,
+        n =&gt; n * factorial(n - 1),
+    }
+}
+
+// Tail-recursive (được optimize)
+fn factorial_tail(n: u64) -&gt; u64 {
+    fn helper(n: u64, acc: u64) -&gt; u64 {
+        match n {
+            0 | 1 =&gt; acc,
+            n =&gt; helper(n - 1, n * acc),
+        }
+    }
+    helper(n, 1)
+}
+
+fn main() {
+    println!("{}", factorial(5));       // 120
+    println!("{}", factorial_tail(5));  // 120
+}</code></pre></pre>
+<h2 id="functional-error-handling"><a class="header" href="#functional-error-handling">Functional Error Handling</a></h2>
+<h3 id="sử-dụng--operator"><a class="header" href="#sử-dụng--operator">Sử dụng <code>?</code> operator</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fs::File;
+use std::io::{self, Read};
+
+fn read_file(path: &amp;str) -&gt; io::Result&lt;String&gt; {
+    let mut file = File::open(path)?;
+    let mut contents = String::new();
+    file.read_to_string(&amp;mut contents)?;
+    Ok(contents)
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="chaining-với-and_then"><a class="header" href="#chaining-với-and_then">Chaining với <code>and_then</code></a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn parse_number(s: &amp;str) -&gt; Result&lt;i32, std::num::ParseIntError&gt; {
+    s.parse()
+}
+
+fn double(n: i32) -&gt; Result&lt;i32, String&gt; {
+    Ok(n * 2)
+}
+
+fn main() {
+    let result = parse_number("42")
+        .map_err(|e| e.to_string())
+        .and_then(double);
+
+    println!("{:?}", result);  // Ok(84)
+}</code></pre></pre>
+<h2 id="closure-capture"><a class="header" href="#closure-capture">Closure Capture</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let x = 5;
+
+    // Capture by reference
+    let print_x = || println!("x = {}", x);
+    print_x();
+
+    // Capture by move
+    let consume_x = move || println!("x = {}", x);
+    consume_x();
+    // x vẫn có thể dùng vì i32 impl Copy
+}</code></pre></pre>
+<h2 id="ví-dụ-thực-tế-data-processing"><a class="header" href="#ví-dụ-thực-tế-data-processing">Ví dụ thực tế: Data Processing</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">#[derive(Debug)]
+struct User {
+    id: u32,
+    name: String,
+    age: u32,
+    active: bool,
+}
+
+fn main() {
+    let users = vec![
+        User { id: 1, name: "Alice".to_string(), age: 25, active: true },
+        User { id: 2, name: "Bob".to_string(), age: 30, active: false },
+        User { id: 3, name: "Charlie".to_string(), age: 35, active: true },
+        User { id: 4, name: "Diana".to_string(), age: 28, active: true },
+    ];
+
+    // Functional pipeline
+    let active_user_names: Vec&lt;String&gt; = users.into_iter()
+        .filter(|u| u.active)                    // Chỉ active users
+        .filter(|u| u.age &gt;= 30)                 // Age &gt;= 30
+        .map(|u| u.name.to_uppercase())          // Uppercase names
+        .collect();
+
+    println!("{:?}", active_user_names);  // ["CHARLIE"]
+}</code></pre></pre>
+<h2 id="functional-vs-imperative"><a class="header" href="#functional-vs-imperative">Functional vs Imperative</a></h2>
+<h3 id="imperative-style"><a class="header" href="#imperative-style">Imperative style</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn sum_of_squares_imperative(numbers: &amp;[i32]) -&gt; i32 {
+    let mut sum = 0;
+    for &amp;n in numbers {
+        if n % 2 == 0 {
+            sum += n * n;
+        }
+    }
+    sum
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="functional-style"><a class="header" href="#functional-style">Functional style</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn sum_of_squares_functional(numbers: &amp;[i32]) -&gt; i32 {
+    numbers.iter()
+        .filter(|n| *n % 2 == 0)
+        .map(|n| n * n)
+        .sum()
+}
+
+fn main() {
+    let nums = vec![1, 2, 3, 4, 5, 6];
+
+    println!("{}", sum_of_squares_imperative(&amp;nums));  // 56
+    println!("{}", sum_of_squares_functional(&amp;nums));  // 56
+}</code></pre></pre>
+<p><strong>Ưu điểm của functional style:</strong></p>
+<ul>
+<li>Dễ đọc, dễ hiểu intent</li>
+<li>Ít bugs (không có mutable state)</li>
+<li>Dễ test</li>
+<li>Có thể parallel dễ dàng (với <code>rayon</code>)</li>
+</ul>
+<h2 id="parallel-processing-với-rayon"><a class="header" href="#parallel-processing-với-rayon">Parallel Processing với Rayon</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use rayon::prelude::*;
+
+fn main() {
+    let numbers: Vec&lt;i32&gt; = (1..=1000).collect();
+
+    // Sequential
+    let sum: i32 = numbers.iter().map(|x| x * x).sum();
+
+    // Parallel - chỉ cần thêm par_iter()!
+    let sum_parallel: i32 = numbers.par_iter().map(|x| x * x).sum();
+
+    println!("Sum: {}", sum);
+    println!("Sum (parallel): {}", sum_parallel);
+}</code></pre></pre>
+<h2 id="best-practices-5"><a class="header" href="#best-practices-5">Best Practices</a></h2>
+<h3 id="1-prefer-iterators-over-loops"><a class="header" href="#1-prefer-iterators-over-loops">1. Prefer iterators over loops</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Functional
+let sum: i32 = (1..=10).sum();
+
+// ❌ Imperative
+let mut sum = 0;
+for i in 1..=11 {
+    sum += i;
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="2-use-combinators"><a class="header" href="#2-use-combinators">2. Use combinators</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Functional
+let result = Some(5)
+    .map(|x| x * 2)
+    .filter(|x| *x &gt; 5);
+
+// ❌ Imperative
+let result = if let Some(x) = Some(5) {
+    let doubled = x * 2;
+    if doubled &gt; 5 {
+        Some(doubled)
+    } else {
+        None
+    }
+} else {
+    None
+};
+<span class="boring">}</span></code></pre></pre>
+<h3 id="3-immutability-when-possible"><a class="header" href="#3-immutability-when-possible">3. Immutability when possible</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Immutable
+let numbers = vec![1, 2, 3];
+let doubled: Vec&lt;_&gt; = numbers.iter().map(|x| x * 2).collect();
+
+// ❌ Mutable
+let mut numbers = vec![1, 2, 3];
+for n in &amp;mut numbers {
+    *n *= 2;
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="4-chain-operations"><a class="header" href="#4-chain-operations">4. Chain operations</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Chaining
+let result = data
+    .into_iter()
+    .filter(|x| x.is_valid())
+    .map(|x| x.process())
+    .collect();
+
+// ❌ Intermediate variables
+let filtered: Vec&lt;_&gt; = data.into_iter().filter(|x| x.is_valid()).collect();
+let processed: Vec&lt;_&gt; = filtered.into_iter().map(|x| x.process()).collect();
+<span class="boring">}</span></code></pre></pre>
+<h2 id="khi-nào-không-nên-dùng-fp"><a class="header" href="#khi-nào-không-nên-dùng-fp">Khi nào không nên dùng FP?</a></h2>
+<ol>
+<li><strong>Performance critical code</strong> - Imperative có thể nhanh hơn trong một số cases</li>
+<li><strong>Quá nhiều allocations</strong> - Iterator chains có thể allocate nhiều</li>
+<li><strong>Complex state management</strong> - Mutation có thể clear hơn</li>
+</ol>
+<h2 id="tổng-kết-7"><a class="header" href="#tổng-kết-7">Tổng kết</a></h2>
+<p>Functional programming trong Rust:</p>
+<ul>
+<li>✅ Immutability by default</li>
+<li>✅ Powerful iterators</li>
+<li>✅ Rich combinators (map, filter, fold...)</li>
+<li>✅ Pattern matching</li>
+<li>✅ Type-safe error handling</li>
+<li>✅ Easy parallelization</li>
+</ul>
+<p>Best practices:</p>
+<ol>
+<li>Prefer iterators và chaining</li>
+<li>Use combinators</li>
+<li>Immutability when possible</li>
+<li>Declarative over imperative</li>
+<li>Test pure functions</li>
+</ol>
+<h2 id="references-47"><a class="header" href="#references-47">References</a></h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/ch13-00-functional-features.html">Functional Programming - Rust Book</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch13-02-iterators.html">Iterators</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch13-01-closures.html">Closures</a></li>
+<li><a href="https://github.com/rayon-rs/rayon">Rayon</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="use-borrowed-types-for-arguments"><a class="header" href="#use-borrowed-types-for-arguments">Use borrowed types for arguments</a></h1>
+<p>Khi viết functions trong Rust, prefer sử dụng <strong>borrowed types</strong> (&amp;str, &amp;[T], &amp;Path) thay vì <strong>owned types</strong> (String, Vec<T>, PathBuf) cho function parameters. Điều này giúp code linh hoạt hơn và tránh unnecessary clones.</p>
+<h2 id="vấn-đề-với-owned-types"><a class="header" href="#vấn-đề-với-owned-types">Vấn đề với Owned Types</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">// ❌ Không tốt - chỉ nhận String
+fn print_message(message: String) {
+    println!("{}", message);
+}
+
+fn main() {
+    let msg = "Hello";
+
+    // Phải convert từ &amp;str sang String
+    print_message(msg.to_string());  // Allocate bộ nhớ không cần thiết
+
+    // Hoặc
+    print_message(String::from(msg));
+}</code></pre></pre>
+<h2 id="giải-pháp-borrowed-types"><a class="header" href="#giải-pháp-borrowed-types">Giải pháp: Borrowed Types</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">// ✅ Tốt - nhận &amp;str (borrowed)
+fn print_message(message: &amp;str) {
+    println!("{}", message);
+}
+
+fn main() {
+    // Có thể truyền &amp;str
+    print_message("Hello");
+
+    // Hoặc String (tự động coerce sang &amp;str)
+    let owned = String::from("World");
+    print_message(&amp;owned);
+}</code></pre></pre>
+<h2 id="string-vs-str"><a class="header" href="#string-vs-str">String vs &amp;str</a></h2>
+<h3 id="owned-string"><a class="header" href="#owned-string">Owned: String</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">// ❌ Hạn chế - chỉ nhận String
+fn process(s: String) {
+    println!("{}", s.to_uppercase());
+}
+
+fn main() {
+    let owned = String::from("hello");
+    process(owned);  // OK
+
+    // String literal phải convert
+    process("world".to_string());  // Phải allocate
+
+    // Không thể dùng owned sau khi pass
+    // println!("{}", owned);  // ❌ Error: value moved
+}</code></pre></pre>
+<h3 id="borrowed-str"><a class="header" href="#borrowed-str">Borrowed: &amp;str</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">// ✅ Linh hoạt - nhận cả &amp;str và &amp;String
+fn process(s: &amp;str) {
+    println!("{}", s.to_uppercase());
+}
+
+fn main() {
+    let owned = String::from("hello");
+    process(&amp;owned);  // OK, borrow
+
+    // String literal - không cần allocate
+    process("world");  // OK, zero-cost
+
+    // Có thể dùng owned sau đó
+    println!("{}", owned);  // ✅ OK
+}</code></pre></pre>
+<h2 id="vec-vs-t"><a class="header" href="#vec-vs-t">Vec<T> vs &amp;[T]</a></h2>
+<h3 id="owned-vec"><a class="header" href="#owned-vec">Owned: Vec<T></a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">// ❌ Hạn chế - chỉ nhận Vec
+fn sum(numbers: Vec&lt;i32&gt;) -&gt; i32 {
+    numbers.iter().sum()
+}
+
+fn main() {
+    let vec = vec![1, 2, 3];
+    let total = sum(vec);
+
+    // ❌ Error: vec đã bị moved
+    // println!("{:?}", vec);
+}</code></pre></pre>
+<h3 id="borrowed-t"><a class="header" href="#borrowed-t">Borrowed: &amp;[T]</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">// ✅ Linh hoạt - nhận slice
+fn sum(numbers: &amp;[i32]) -&gt; i32 {
+    numbers.iter().sum()
+}
+
+fn main() {
+    // Với Vec
+    let vec = vec![1, 2, 3];
+    let total = sum(&amp;vec);
+    println!("{:?}", vec);  // ✅ OK, vẫn dùng được
+
+    // Với array
+    let arr = [4, 5, 6];
+    let total2 = sum(&amp;arr);
+
+    // Với slice
+    let total3 = sum(&amp;vec[1..]);
+
+    println!("{}, {}, {}", total, total2, total3);
+}</code></pre></pre>
+<h2 id="pathbuf-vs-path"><a class="header" href="#pathbuf-vs-path">PathBuf vs &amp;Path</a></h2>
+<h3 id="owned-pathbuf"><a class="header" href="#owned-pathbuf">Owned: PathBuf</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::path::PathBuf;
+
+// ❌ Hạn chế
+fn read_config(path: PathBuf) -&gt; std::io::Result&lt;String&gt; {
+    std::fs::read_to_string(path)
+}
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let path = PathBuf::from("config.toml");
+    read_config(path)?;
+
+    // ❌ path đã moved, không dùng được nữa
+    Ok(())
+}</code></pre></pre>
+<h3 id="borrowed-path"><a class="header" href="#borrowed-path">Borrowed: &amp;Path</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::path::Path;
+
+// ✅ Linh hoạt
+fn read_config(path: &amp;Path) -&gt; std::io::Result&lt;String&gt; {
+    std::fs::read_to_string(path)
+}
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    // Với PathBuf
+    let path = std::path::PathBuf::from("config.toml");
+    read_config(&amp;path)?;
+
+    // Với &amp;str
+    read_config(Path::new("config.toml"))?;
+
+    // path vẫn dùng được
+    println!("{:?}", path);
+
+    Ok(())
+}</code></pre></pre>
+<h2 id="bảng-so-sánh"><a class="header" href="#bảng-so-sánh">Bảng so sánh</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Owned Type</th><th>Borrowed Type</th><th>Use Case</th></tr></thead><tbody>
+<tr><td><code>String</code></td><td><code>&amp;str</code></td><td>Text processing, không cần ownership</td></tr>
+<tr><td><code>Vec&lt;T&gt;</code></td><td><code>&amp;[T]</code></td><td>Read-only access to collection</td></tr>
+<tr><td><code>PathBuf</code></td><td><code>&amp;Path</code></td><td>File path operations</td></tr>
+<tr><td><code>OsString</code></td><td><code>&amp;OsStr</code></td><td>OS strings</td></tr>
+<tr><td><code>CString</code></td><td><code>&amp;CStr</code></td><td>C strings</td></tr>
+</tbody></table>
+</div>
+<h2 id="khi-nào-dùng-owned-types"><a class="header" href="#khi-nào-dùng-owned-types">Khi nào dùng Owned Types?</a></h2>
+<h3 id="1-function-cần-ownership"><a class="header" href="#1-function-cần-ownership">1. Function cần ownership</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Cần owned để store hoặc modify
+fn store_message(message: String) -&gt; Message {
+    Message { content: message }  // Move vào struct
+}
+
+struct Message {
+    content: String,
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="2-function-modify-data"><a class="header" href="#2-function-modify-data">2. Function modify data</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">// ✅ Cần owned để modify
+fn uppercase(mut s: String) -&gt; String {
+    s.make_ascii_uppercase();
+    s
+}
+
+fn main() {
+    let msg = "hello".to_string();
+    let upper = uppercase(msg);
+    println!("{}", upper);  // HELLO
+}</code></pre></pre>
+<h3 id="3-builder-pattern"><a class="header" href="#3-builder-pattern">3. Builder pattern</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">struct Request {
+    url: String,
+    method: String,
+}
+
+impl Request {
+    fn new(url: String) -&gt; Self {
+        Self {
+            url,
+            method: "GET".to_string(),
+        }
+    }
+
+    // Builder methods take ownership
+    fn method(mut self, method: String) -&gt; Self {
+        self.method = method;
+        self
+    }
+}
+
+fn main() {
+    let req = Request::new("https://example.com".to_string())
+        .method("POST".to_string());
+}</code></pre></pre>
+<h2 id="generic-over-borrowed-types"><a class="header" href="#generic-over-borrowed-types">Generic over Borrowed Types</a></h2>
+<p>Sử dụng generic bounds để accept cả owned và borrowed:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::borrow::Borrow;
+
+// Accept cả String và &amp;str
+fn print&lt;S: AsRef&lt;str&gt;&gt;(s: S) {
+    println!("{}", s.as_ref());
+}
+
+fn main() {
+    print("hello");                    // &amp;str
+    print(String::from("world"));      // String
+    print(&amp;String::from("rust"));      // &amp;String
+}</code></pre></pre>
+<h3 id="with-collections"><a class="header" href="#with-collections">With collections</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::borrow::Borrow;
+
+fn contains&lt;T, Q&gt;(slice: &amp;[T], item: &amp;Q) -&gt; bool
+where
+    T: Borrow&lt;Q&gt;,
+    Q: Eq + ?Sized,
+{
+    slice.iter().any(|x| x.borrow() == item)
+}
+
+fn main() {
+    let strings = vec![
+        String::from("hello"),
+        String::from("world"),
+    ];
+
+    // Tìm với &amp;str, không cần String
+    println!("{}", contains(&amp;strings, "hello"));  // true
+}</code></pre></pre>
+<h2 id="deref-coercion"><a class="header" href="#deref-coercion">Deref Coercion</a></h2>
+<p>Rust tự động convert owned → borrowed trong một số cases:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn print_str(s: &amp;str) {
+    println!("{}", s);
+}
+
+fn main() {
+    let owned = String::from("hello");
+
+    // Auto deref: &amp;String → &amp;str
+    print_str(&amp;owned);
+
+    // Tương đương với:
+    // print_str(&amp;*owned);
+    // print_str(owned.as_str());
+}</code></pre></pre>
+<h2 id="ví-dụ-thực-tế"><a class="header" href="#ví-dụ-thực-tế">Ví dụ thực tế</a></h2>
+<h3 id="file-operations"><a class="header" href="#file-operations">File operations</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::path::Path;
+use std::fs;
+
+// ✅ Linh hoạt với &amp;Path
+fn file_exists(path: &amp;Path) -&gt; bool {
+    path.exists()
+}
+
+fn read_file(path: &amp;Path) -&gt; std::io::Result&lt;String&gt; {
+    fs::read_to_string(path)
+}
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    // Nhiều cách gọi
+    println!("{}", file_exists(Path::new("config.toml")));
+
+    let path_buf = std::path::PathBuf::from("data.txt");
+    println!("{}", file_exists(&amp;path_buf));
+
+    Ok(())
+}</code></pre></pre>
+<h3 id="api-design"><a class="header" href="#api-design">API design</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::collections::HashMap;
+
+struct UserService {
+    users: HashMap&lt;String, User&gt;,
+}
+
+struct User {
+    name: String,
+    email: String,
+}
+
+impl UserService {
+    // ✅ Borrowed - không cần own the key
+    fn get_user(&amp;self, username: &amp;str) -&gt; Option&lt;&amp;User&gt; {
+        self.users.get(username)
+    }
+
+    // ✅ Owned - cần store the user
+    fn add_user(&amp;mut self, username: String, user: User) {
+        self.users.insert(username, user);
+    }
+}
+
+fn main() {
+    let mut service = UserService {
+        users: HashMap::new(),
+    };
+
+    // Add với owned
+    service.add_user(
+        "alice".to_string(),
+        User {
+            name: "Alice".to_string(),
+            email: "alice@example.com".to_string(),
+        },
+    );
+
+    // Get với borrowed
+    if let Some(user) = service.get_user("alice") {
+        println!("{}", user.name);
+    }
+}</code></pre></pre>
+<h2 id="performance-considerations"><a class="header" href="#performance-considerations">Performance Considerations</a></h2>
+<h3 id="zero-cost-với-borrowed-types"><a class="header" href="#zero-cost-với-borrowed-types">Zero-cost với borrowed types</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">// ✅ Zero allocations
+fn process(s: &amp;str) {
+    for c in s.chars() {
+        // Process character
+    }
+}
+
+fn main() {
+    process("hello");  // Không allocate memory
+}</code></pre></pre>
+<h3 id="unnecessary-allocations-với-owned"><a class="header" href="#unnecessary-allocations-với-owned">Unnecessary allocations với owned</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">// ❌ Allocates mỗi lần gọi
+fn process(s: String) {
+    for c in s.chars() {
+        // Process character
+    }
+}
+
+fn main() {
+    process("hello".to_string());  // Allocate memory
+}</code></pre></pre>
+<h2 id="best-practices-6"><a class="header" href="#best-practices-6">Best Practices</a></h2>
+<h3 id="1-default-to-borrowed"><a class="header" href="#1-default-to-borrowed">1. Default to borrowed</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Bắt đầu với borrowed
+fn process(data: &amp;str) { }
+
+// Chỉ dùng owned nếu thực sự cần
+fn store(data: String) -&gt; Storage {
+    Storage { data }
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="2-use-asrefborrow-traits"><a class="header" href="#2-use-asrefborrow-traits">2. Use AsRef/Borrow traits</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Generic over borrowed/owned
+fn process&lt;S: AsRef&lt;str&gt;&gt;(s: S) {
+    println!("{}", s.as_ref());
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="3-document-ownership-requirements"><a class="header" href="#3-document-ownership-requirements">3. Document ownership requirements</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Process data without taking ownership
+fn process(data: &amp;[u8]) { }
+
+/// Takes ownership and stores the data
+fn store(data: Vec&lt;u8&gt;) -&gt; DataStore {
+    DataStore { data }
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="4-consider-mut-for-in-place-modification"><a class="header" href="#4-consider-mut-for-in-place-modification">4. Consider &amp;mut for in-place modification</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Modify in-place
+fn uppercase_in_place(s: &amp;mut String) {
+    s.make_ascii_uppercase();
+}
+
+// ❌ Unnecessary allocation
+fn uppercase(s: String) -&gt; String {
+    s.to_uppercase()
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="common-patterns"><a class="header" href="#common-patterns">Common Patterns</a></h2>
+<h3 id="accepting-both-owned-and-borrowed"><a class="header" href="#accepting-both-owned-and-borrowed">Accepting both owned and borrowed</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Pattern 1: AsRef
+fn print1&lt;S: AsRef&lt;str&gt;&gt;(s: S) {
+    println!("{}", s.as_ref());
+}
+
+// Pattern 2: Into
+fn print2(s: impl Into&lt;String&gt;) {
+    let s: String = s.into();
+    println!("{}", s);
+}
+
+// Pattern 3: Borrow
+use std::borrow::Borrow;
+fn print3&lt;S: Borrow&lt;str&gt;&gt;(s: S) {
+    println!("{}", s.borrow());
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="tổng-kết-8"><a class="header" href="#tổng-kết-8">Tổng kết</a></h2>
+<p>Use borrowed types for arguments:</p>
+<ul>
+<li>✅ More flexible (accept owned và borrowed)</li>
+<li>✅ Better performance (avoid clones)</li>
+<li>✅ Clearer ownership semantics</li>
+<li>✅ Idiomatic Rust</li>
+</ul>
+<p>Guidelines:</p>
+<ol>
+<li><strong>Default to borrowed</strong> (&amp;str, &amp;[T], &amp;Path)</li>
+<li><strong>Use owned</strong> khi cần ownership (store, modify, return)</li>
+<li><strong>Use AsRef/Borrow</strong> cho flexible APIs</li>
+<li><strong>Document</strong> ownership requirements</li>
+</ol>
+<p>Common borrowed types:</p>
+<ul>
+<li><code>&amp;str</code> instead of <code>String</code></li>
+<li><code>&amp;[T]</code> instead of <code>Vec&lt;T&gt;</code></li>
+<li><code>&amp;Path</code> instead of <code>PathBuf</code></li>
+<li><code>&amp;T</code> instead of <code>T</code> (when possible)</li>
+</ul>
+<h2 id="references-48"><a class="header" href="#references-48">References</a></h2>
+<ul>
+<li><a href="https://rust-lang.github.io/api-guidelines/flexibility.html#c-borrowed-type">Rust API Guidelines - C-BORROWED</a></li>
+<li><a href="https://doc.rust-lang.org/std/convert/trait.AsRef.html">AsRef and Borrow traits</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch15-02-deref.html">Deref coercion</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="concatenating-strings-with-format"><a class="header" href="#concatenating-strings-with-format">Concatenating strings with <code>format!</code></a></h1>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -8055,7 +10714,7 @@ fn main() {
 <p>Nếu bạn có sự lựa chọn giữa <code>mut</code> và <code>.copy()</code>, đôi khi copy không quá tệ như bạn nghĩ.</p>
 <p>Chương trình có thể chậm đi một chút, tuy nhiên immutability có thể giúp bạn tránh khỏi vài ngày debug và nhức đầu.</p>
 <p><a href="http://xion.io/post/code/rust-borrowchk-tricks.html">Tricks with ownership in Rust</a></p>
-<h1 id="references-43"><a class="header" href="#references-43">References</a></h1>
+<h1 id="references-49"><a class="header" href="#references-49">References</a></h1>
 <ul>
 <li>https://corrode.dev/blog/immutability/</li>
 <li>http://xion.io/post/code/rust-borrowchk-tricks.html</li>

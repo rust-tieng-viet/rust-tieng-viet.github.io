@@ -1,5 +1,4 @@
 https://rust-tieng-viet.github.io/
-https://rust-tieng-viet.github.io/who-is-using
 https://rust-tieng-viet.github.io/advanced/saturating
 https://rust-tieng-viet.github.io/advanced/smart-pointer
 https://rust-tieng-viet.github.io/basic/attr
@@ -19,9 +18,12 @@ https://rust-tieng-viet.github.io/basic/testing
 https://rust-tieng-viet.github.io/basic/trait
 https://rust-tieng-viet.github.io/basic/turbofish
 https://rust-tieng-viet.github.io/basic/variables
+https://rust-tieng-viet.github.io/crates/actix-web
 https://rust-tieng-viet.github.io/crates/anyhow
 https://rust-tieng-viet.github.io/crates/async_trait
 https://rust-tieng-viet.github.io/crates/chrono
+https://rust-tieng-viet.github.io/crates/clap
+https://rust-tieng-viet.github.io/crates/config
 https://rust-tieng-viet.github.io/crates/indoc
 https://rust-tieng-viet.github.io/crates/lazy_static
 https://rust-tieng-viet.github.io/crates/log
@@ -41,9 +43,11 @@ https://rust-tieng-viet.github.io/getting-started/first-project
 https://rust-tieng-viet.github.io/getting-started/installation
 https://rust-tieng-viet.github.io/getting-started/rust-playground
 https://rust-tieng-viet.github.io/idioms/aim-for-immutability
+https://rust-tieng-viet.github.io/idioms/borrowed-types
 https://rust-tieng-viet.github.io/idioms/constructor
 https://rust-tieng-viet.github.io/idioms/default-trait
 https://rust-tieng-viet.github.io/idioms/format
+https://rust-tieng-viet.github.io/idioms/functional-programming
 https://rust-tieng-viet.github.io/idioms/temporary-mutability
 https://rust-tieng-viet.github.io/advanced/smart-pointer/box
 https://rust-tieng-viet.github.io/advanced/smart-pointer/cow
@@ -96,6 +100,7 @@ https://rust-tieng-viet.github.io/basic/trait/conditionally-impl
 https://rust-tieng-viet.github.io/basic/trait/copy-clone
 https://rust-tieng-viet.github.io/basic/trait/default-impls
 https://rust-tieng-viet.github.io/basic/trait/define-a-trait
+https://rust-tieng-viet.github.io/basic/trait/display
 https://rust-tieng-viet.github.io/basic/trait/fromstr
 https://rust-tieng-viet.github.io/basic/trait/impl-trait
 https://rust-tieng-viet.github.io/basic/trait/multiple-trait-bound

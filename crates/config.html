@@ -1,0 +1,759 @@
+<!DOCTYPE HTML>
+<html lang="vi" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>config - Rust Tiếng Việt</title>
+
+
+        <!-- Custom HTML head -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-88RKF7DLPY"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-88RKF7DLPY');
+        </script>
+        
+        <!-- pageview.js -->
+        <script>
+          !function(e,n,t){e.onload=function(){
+          let e=n.createElement("script");
+          e.src=t,n.body.appendChild(e)}}
+          (window,document,"https://pageview.duyet.net/pageview.js");
+        </script>
+        
+        <script async src="https://seline.duyet.workers.dev/seline.js" data-api-host="https://seline.duyet.workers.dev" data-token="d7c8002f8e40139"></script>
+        <script async src="https://cm43xj8zd00093b619ak2zfuc.d.jitsu.com/p.js"></script>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust Tiếng Việt</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/crates/config.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="config"><a class="header" href="#config">config</a></h1>
+<p><a href="https://github.com/mehcode/config-rs"><code>config</code></a> là một library mạnh mẽ để quản lý configuration trong Rust applications. Nó hỗ trợ đọc config từ nhiều nguồn khác nhau (files, environment variables, command line) và merge chúng lại theo thứ tự ưu tiên.</p>
+<h2 id="Đặc-điểm"><a class="header" href="#Đặc-điểm">Đặc điểm</a></h2>
+<ul>
+<li>📁 <strong>Multi-format</strong> - JSON, TOML, YAML, INI, RON, JSON5</li>
+<li>🔄 <strong>Layered configs</strong> - Merge từ nhiều nguồn</li>
+<li>🌍 <strong>Environment variables</strong> - Override config với env vars</li>
+<li>🎯 <strong>Type-safe</strong> - Deserialize vào Rust structs</li>
+<li>⚙️ <strong>Flexible</strong> - Custom sources và formats</li>
+</ul>
+<h2 id="cài-đặt"><a class="header" href="#cài-đặt">Cài đặt</a></h2>
+<pre><code class="language-toml">[dependencies]
+config = "0.14"
+serde = { version = "1.0", features = ["derive"] }
+</code></pre>
+<p>Hoặc:</p>
+<pre><code class="language-bash">cargo add config
+cargo add serde --features derive
+</code></pre>
+<h2 id="ví-dụ-cơ-bản"><a class="header" href="#ví-dụ-cơ-bản">Ví dụ cơ bản</a></h2>
+<h3 id="file-config-configtoml"><a class="header" href="#file-config-configtoml">File config: <code>config.toml</code></a></h3>
+<pre><code class="language-toml">[database]
+host = "localhost"
+port = 5432
+username = "admin"
+password = "secret"
+
+[server]
+host = "0.0.0.0"
+port = 8080
+workers = 4
+
+[logging]
+level = "info"
+</code></pre>
+<h3 id="code"><a class="header" href="#code">Code</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use config::{Config, ConfigError, File};
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+struct Database {
+    host: String,
+    port: u16,
+    username: String,
+    password: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct Server {
+    host: String,
+    port: u16,
+    workers: u8,
+}
+
+#[derive(Debug, Deserialize)]
+struct Logging {
+    level: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct Settings {
+    database: Database,
+    server: Server,
+    logging: Logging,
+}
+
+fn main() -&gt; Result&lt;(), ConfigError&gt; {
+    let settings = Config::builder()
+        .add_source(File::with_name("config"))
+        .build()?;
+
+    let settings: Settings = settings.try_deserialize()?;
+
+    println!("{:#?}", settings);
+
+    Ok(())
+}</code></pre></pre>
+<h2 id="nhiều-file-config-environments"><a class="header" href="#nhiều-file-config-environments">Nhiều file config (Environments)</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use config::{Config, ConfigError, File, Environment};
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+struct Settings {
+    debug: bool,
+    database: DatabaseSettings,
+}
+
+#[derive(Debug, Deserialize)]
+struct DatabaseSettings {
+    url: String,
+}
+
+fn main() -&gt; Result&lt;(), ConfigError&gt; {
+    let run_mode = std::env::var("RUN_MODE").unwrap_or_else(|_| "development".into());
+
+    let settings = Config::builder()
+        // Start with default config
+        .add_source(File::with_name("config/default"))
+        // Layer on environment-specific values
+        .add_source(File::with_name(&amp;format!("config/{}", run_mode)).required(false))
+        // Layer on local config (ignored by git)
+        .add_source(File::with_name("config/local").required(false))
+        // Add environment variables (with a prefix of APP and separator of __)
+        .add_source(Environment::with_prefix("APP").separator("__"))
+        .build()?;
+
+    let settings: Settings = settings.try_deserialize()?;
+
+    println!("{:#?}", settings);
+
+    Ok(())
+}</code></pre></pre>
+<p>File structure:</p>
+<pre><code>config/
+├── default.toml      # Base config
+├── development.toml  # Development overrides
+├── production.toml   # Production overrides
+└── local.toml        # Local overrides (gitignored)
+</code></pre>
+<p><strong><code>config/default.toml</code>:</strong></p>
+<pre><code class="language-toml">debug = false
+
+[database]
+url = "postgres://localhost/myapp"
+</code></pre>
+<p><strong><code>config/development.toml</code>:</strong></p>
+<pre><code class="language-toml">debug = true
+
+[database]
+url = "postgres://localhost/myapp_dev"
+</code></pre>
+<p><strong><code>config/production.toml</code>:</strong></p>
+<pre><code class="language-toml">[database]
+url = "postgres://prod-server/myapp"
+</code></pre>
+<h2 id="environment-variables-override"><a class="header" href="#environment-variables-override">Environment Variables Override</a></h2>
+<pre><code class="language-bash"># Override config với environment variables
+export APP__DEBUG=true
+export APP__DATABASE__URL="postgres://custom-host/db"
+
+cargo run
+</code></pre>
+<p>Pattern: <code>PREFIX__SECTION__KEY</code></p>
+<h2 id="nhiều-format-config"><a class="header" href="#nhiều-format-config">Nhiều format config</a></h2>
+<h3 id="json"><a class="header" href="#json">JSON</a></h3>
+<pre><code class="language-json">{
+  "server": {
+    "port": 8080,
+    "host": "localhost"
+  }
+}
+</code></pre>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let settings = Config::builder()
+    .add_source(File::with_name("config.json"))
+    .build()?;
+<span class="boring">}</span></code></pre></pre>
+<h3 id="yaml"><a class="header" href="#yaml">YAML</a></h3>
+<pre><code class="language-yaml">server:
+  port: 8080
+  host: localhost
+</code></pre>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let settings = Config::builder()
+    .add_source(File::with_name("config.yaml"))
+    .build()?;
+<span class="boring">}</span></code></pre></pre>
+<h3 id="hoặc-auto-detect-format"><a class="header" href="#hoặc-auto-detect-format">Hoặc auto-detect format:</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Sẽ tự động detect .json, .yaml, .toml, etc.
+let settings = Config::builder()
+    .add_source(File::with_name("config"))
+    .build()?;
+<span class="boring">}</span></code></pre></pre>
+<h2 id="set-default-values"><a class="header" href="#set-default-values">Set default values</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use config::{Config, ConfigError};
+
+fn main() -&gt; Result&lt;(), ConfigError&gt; {
+    let settings = Config::builder()
+        .set_default("server.port", 8080)?
+        .set_default("server.host", "127.0.0.1")?
+        .set_default("debug", false)?
+        .add_source(File::with_name("config").required(false))
+        .build()?;
+
+    Ok(())
+}</code></pre></pre>
+<h2 id="nested-configuration"><a class="header" href="#nested-configuration">Nested configuration</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+struct Settings {
+    database: DatabaseSettings,
+    cache: CacheSettings,
+    api: ApiSettings,
+}
+
+#[derive(Debug, Deserialize)]
+struct DatabaseSettings {
+    primary: ConnectionSettings,
+    replica: Option&lt;ConnectionSettings&gt;,
+}
+
+#[derive(Debug, Deserialize)]
+struct ConnectionSettings {
+    host: String,
+    port: u16,
+    pool_size: u32,
+}
+
+#[derive(Debug, Deserialize)]
+struct CacheSettings {
+    redis_url: String,
+    ttl: u64,
+}
+
+#[derive(Debug, Deserialize)]
+struct ApiSettings {
+    key: String,
+    timeout: u64,
+}
+<span class="boring">}</span></code></pre></pre>
+<p><strong>config.toml:</strong></p>
+<pre><code class="language-toml">[database.primary]
+host = "db-primary.example.com"
+port = 5432
+pool_size = 20
+
+[database.replica]
+host = "db-replica.example.com"
+port = 5432
+pool_size = 10
+
+[cache]
+redis_url = "redis://localhost:6379"
+ttl = 3600
+
+[api]
+key = "your-api-key"
+timeout = 30
+</code></pre>
+<h2 id="validation"><a class="header" href="#validation">Validation</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use config::{Config, ConfigError};
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+struct Settings {
+    port: u16,
+    workers: u8,
+}
+
+impl Settings {
+    pub fn new() -&gt; Result&lt;Self, ConfigError&gt; {
+        let settings = Config::builder()
+            .add_source(File::with_name("config"))
+            .build()?;
+
+        let mut settings: Settings = settings.try_deserialize()?;
+
+        // Validate
+        if settings.workers == 0 {
+            return Err(ConfigError::Message("workers must be &gt; 0".into()));
+        }
+
+        if settings.port &lt; 1024 {
+            return Err(ConfigError::Message("port must be &gt;= 1024".into()));
+        }
+
+        Ok(settings)
+    }
+}
+
+fn main() -&gt; Result&lt;(), ConfigError&gt; {
+    let settings = Settings::new()?;
+    println!("{:#?}", settings);
+    Ok(())
+}</code></pre></pre>
+<h2 id="ví-dụ-thực-tế-web-application-config"><a class="header" href="#ví-dụ-thực-tế-web-application-config">Ví dụ thực tế: Web application config</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use config::{Config, ConfigError, File, Environment};
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+pub struct Settings {
+    pub server: ServerSettings,
+    pub database: DatabaseSettings,
+    pub redis: RedisSettings,
+    pub logging: LoggingSettings,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ServerSettings {
+    pub host: String,
+    pub port: u16,
+    pub workers: usize,
+    pub keep_alive: u64,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DatabaseSettings {
+    pub url: String,
+    pub max_connections: u32,
+    pub min_connections: u32,
+    pub connect_timeout: u64,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct RedisSettings {
+    pub url: String,
+    pub pool_size: u32,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct LoggingSettings {
+    pub level: String,
+    pub format: String,
+}
+
+impl Settings {
+    pub fn new() -&gt; Result&lt;Self, ConfigError&gt; {
+        let env = std::env::var("APP_ENV").unwrap_or_else(|_| "development".into());
+
+        let config = Config::builder()
+            // Defaults
+            .set_default("server.host", "127.0.0.1")?
+            .set_default("server.port", 8080)?
+            .set_default("server.workers", 4)?
+            .set_default("server.keep_alive", 75)?
+            .set_default("logging.level", "info")?
+            .set_default("logging.format", "json")?
+            // Base config
+            .add_source(File::with_name("config/default"))
+            // Environment-specific
+            .add_source(File::with_name(&amp;format!("config/{}", env)).required(false))
+            // Local overrides
+            .add_source(File::with_name("config/local").required(false))
+            // Environment variables
+            .add_source(Environment::with_prefix("APP").separator("__"))
+            .build()?;
+
+        config.try_deserialize()
+    }
+}
+
+fn main() -&gt; Result&lt;(), ConfigError&gt; {
+    let settings = Settings::new()?;
+
+    println!("Server: {}:{}", settings.server.host, settings.server.port);
+    println!("Database: {}", settings.database.url);
+    println!("Redis: {}", settings.redis.url);
+    println!("Logging: {} ({})", settings.logging.level, settings.logging.format);
+
+    Ok(())
+}</code></pre></pre>
+<p><strong>config/default.toml:</strong></p>
+<pre><code class="language-toml">[database]
+max_connections = 100
+min_connections = 10
+connect_timeout = 30
+
+[redis]
+url = "redis://127.0.0.1:6379"
+pool_size = 10
+</code></pre>
+<p><strong>config/production.toml:</strong></p>
+<pre><code class="language-toml">[server]
+host = "0.0.0.0"
+workers = 8
+
+[database]
+url = "postgres://prod-db:5432/myapp"
+max_connections = 200
+
+[logging]
+level = "warn"
+</code></pre>
+<h2 id="integration-với-web-frameworks"><a class="header" href="#integration-với-web-frameworks">Integration với web frameworks</a></h2>
+<h3 id="actix-web"><a class="header" href="#actix-web">Actix-web</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use actix_web::{web, App, HttpServer};
+use config::{Config, ConfigError};
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize, Clone)]
+struct Settings {
+    server: ServerConfig,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+struct ServerConfig {
+    host: String,
+    port: u16,
+}
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+    let config = Config::builder()
+        .add_source(config::File::with_name("config"))
+        .build()
+        .unwrap();
+
+    let settings: Settings = config.try_deserialize().unwrap();
+    let server_config = settings.server.clone();
+
+    HttpServer::new(move || {
+        App::new()
+            .app_data(web::Data::new(settings.clone()))
+    })
+    .bind((server_config.host, server_config.port))?
+    .run()
+    .await
+}</code></pre></pre>
+<h2 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h2>
+<h3 id="1-separate-configs-by-environment"><a class="header" href="#1-separate-configs-by-environment">1. Separate configs by environment</a></h3>
+<pre><code>config/
+├── default.toml         # Shared defaults
+├── development.toml     # Dev settings
+├── production.toml      # Prod settings
+└── local.toml          # Local overrides (gitignore)
+</code></pre>
+<h3 id="2-use-environment-variables-for-secrets"><a class="header" href="#2-use-environment-variables-for-secrets">2. Use environment variables for secrets</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ❌ Không lưu secrets trong file
+[database]
+password = "secret123"
+
+// ✅ Dùng environment variable
+export APP__DATABASE__PASSWORD="secret123"
+<span class="boring">}</span></code></pre></pre>
+<h3 id="3-validate-config-at-startup"><a class="header" href="#3-validate-config-at-startup">3. Validate config at startup</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Settings {
+    pub fn new() -&gt; Result&lt;Self, ConfigError&gt; {
+        let settings = /* load config */;
+
+        // Validate early
+        settings.validate()?;
+
+        Ok(settings)
+    }
+
+    fn validate(&amp;self) -&gt; Result&lt;(), ConfigError&gt; {
+        if self.server.workers == 0 {
+            return Err(ConfigError::Message("workers must be &gt; 0".into()));
+        }
+        Ok(())
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="4-document-your-config"><a class="header" href="#4-document-your-config">4. Document your config</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Application settings
+#[derive(Debug, Deserialize)]
+pub struct Settings {
+    /// Server configuration
+    pub server: ServerSettings,
+    /// Database configuration
+    pub database: DatabaseSettings,
+}
+
+/// Server settings
+#[derive(Debug, Deserialize)]
+pub struct ServerSettings {
+    /// Bind address (default: 127.0.0.1)
+    pub host: String,
+    /// Bind port (default: 8080)
+    pub port: u16,
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="tổng-kết"><a class="header" href="#tổng-kết">Tổng kết</a></h2>
+<p>config-rs là lựa chọn tốt cho configuration management:</p>
+<ul>
+<li>✅ Multi-format support (JSON, TOML, YAML...)</li>
+<li>✅ Layered configuration (defaults → files → env vars)</li>
+<li>✅ Type-safe với serde</li>
+<li>✅ Environment-specific configs</li>
+<li>✅ Easy to test</li>
+</ul>
+<p>Best practices:</p>
+<ol>
+<li>Separate by environment</li>
+<li>Use env vars for secrets</li>
+<li>Validate early</li>
+<li>Provide sensible defaults</li>
+<li>Document your config structure</li>
+</ol>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ul>
+<li><a href="https://docs.rs/config/">config-rs Documentation</a></li>
+<li><a href="https://github.com/mehcode/config-rs">config-rs GitHub</a></li>
+<li><a href="https://12factor.net/config">12-Factor App Config</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../crates/log/env_logger.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../crates/indoc.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../crates/log/env_logger.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../crates/indoc.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

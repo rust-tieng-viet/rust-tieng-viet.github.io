@@ -1,0 +1,698 @@
+<!DOCTYPE HTML>
+<html lang="vi" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>actix-web - Rust Tiếng Việt</title>
+
+
+        <!-- Custom HTML head -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-88RKF7DLPY"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-88RKF7DLPY');
+        </script>
+        
+        <!-- pageview.js -->
+        <script>
+          !function(e,n,t){e.onload=function(){
+          let e=n.createElement("script");
+          e.src=t,n.body.appendChild(e)}}
+          (window,document,"https://pageview.duyet.net/pageview.js");
+        </script>
+        
+        <script async src="https://seline.duyet.workers.dev/seline.js" data-api-host="https://seline.duyet.workers.dev" data-token="d7c8002f8e40139"></script>
+        <script async src="https://cm43xj8zd00093b619ak2zfuc.d.jitsu.com/p.js"></script>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust Tiếng Việt</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/crates/actix-web.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="actix-web"><a class="header" href="#actix-web">actix-web</a></h1>
+<p><a href="https://actix.rs/"><code>actix-web</code></a> là một powerful, pragmatic và extremely fast web framework cho Rust. Được xây dựng trên nền tảng <a href="https://actix.rs/"><code>actix</code></a> actor framework, actix-web là một trong những web framework nhanh nhất theo benchmark.</p>
+<h2 id="Đặc-điểm"><a class="header" href="#Đặc-điểm">Đặc điểm</a></h2>
+<ul>
+<li>⚡ <strong>Cực kỳ nhanh</strong> - Thường xuyên top đầu các benchmark web frameworks</li>
+<li>🔒 <strong>Type-safe</strong> - Tận dụng type system của Rust</li>
+<li>🚀 <strong>Async/await</strong> - Built-in async support</li>
+<li>🔧 <strong>Flexible</strong> - Middleware, extractors, routing mạnh mẽ</li>
+<li>🛠️ <strong>Batteries included</strong> - WebSocket, HTTP/2, TLS, compression...</li>
+</ul>
+<h2 id="cài-đặt"><a class="header" href="#cài-đặt">Cài đặt</a></h2>
+<pre><code class="language-toml">[dependencies]
+actix-web = "4"
+tokio = { version = "1", features = ["full"] }
+</code></pre>
+<p>Hoặc:</p>
+<pre><code class="language-bash">cargo add actix-web
+cargo add tokio --features full
+</code></pre>
+<h2 id="ví-dụ-cơ-bản-hello-world"><a class="header" href="#ví-dụ-cơ-bản-hello-world">Ví dụ cơ bản: Hello World</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
+
+#[get("/")]
+async fn hello() -&gt; impl Responder {
+    HttpResponse::Ok().body("Hello World!")
+}
+
+#[get("/hello/{name}")]
+async fn greet(name: web::Path&lt;String&gt;) -&gt; impl Responder {
+    HttpResponse::Ok().body(format!("Hello {}!", name))
+}
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+    println!("🚀 Server chạy tại http://localhost:8080");
+
+    HttpServer::new(|| {
+        App::new()
+            .service(hello)
+            .service(greet)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</code></pre></pre>
+<p>Chạy và test:</p>
+<pre><code class="language-bash">cargo run
+
+# Terminal khác:
+curl http://localhost:8080/
+# Hello World!
+
+curl http://localhost:8080/hello/Rust
+# Hello Rust!
+</code></pre>
+<h2 id="routing"><a class="header" href="#routing">Routing</a></h2>
+<h3 id="route-với-nhiều-http-methods"><a class="header" href="#route-với-nhiều-http-methods">Route với nhiều HTTP methods</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use actix_web::{get, post, put, delete, web, HttpResponse};
+
+#[get("/users")]
+async fn get_users() -&gt; HttpResponse {
+    HttpResponse::Ok().json(vec!["user1", "user2"])
+}
+
+#[post("/users")]
+async fn create_user() -&gt; HttpResponse {
+    HttpResponse::Created().json("User created")
+}
+
+#[put("/users/{id}")]
+async fn update_user(id: web::Path&lt;u32&gt;) -&gt; HttpResponse {
+    HttpResponse::Ok().json(format!("Updated user {}", id))
+}
+
+#[delete("/users/{id}")]
+async fn delete_user(id: web::Path&lt;u32&gt;) -&gt; HttpResponse {
+    HttpResponse::Ok().json(format!("Deleted user {}", id))
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="route-parameters"><a class="header" href="#route-parameters">Route parameters</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use actix_web::{get, web, HttpResponse};
+use serde::Deserialize;
+
+// Path parameters
+#[get("/posts/{id}")]
+async fn get_post(id: web::Path&lt;u32&gt;) -&gt; HttpResponse {
+    HttpResponse::Ok().json(format!("Post ID: {}", id))
+}
+
+// Multiple path parameters
+#[get("/posts/{id}/comments/{comment_id}")]
+async fn get_comment(path: web::Path&lt;(u32, u32)&gt;) -&gt; HttpResponse {
+    let (post_id, comment_id) = path.into_inner();
+    HttpResponse::Ok().json(format!("Post {}, Comment {}", post_id, comment_id))
+}
+
+// Query parameters
+#[derive(Deserialize)]
+struct Pagination {
+    page: Option&lt;u32&gt;,
+    limit: Option&lt;u32&gt;,
+}
+
+#[get("/posts")]
+async fn list_posts(query: web::Query&lt;Pagination&gt;) -&gt; HttpResponse {
+    let page = query.page.unwrap_or(1);
+    let limit = query.limit.unwrap_or(10);
+    HttpResponse::Ok().json(format!("Page {}, Limit {}", page, limit))
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="json-và-requestresponse"><a class="header" href="#json-và-requestresponse">JSON và Request/Response</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use actix_web::{post, web, HttpResponse};
+use serde::{Deserialize, Serialize};
+
+#[derive(Deserialize)]
+struct CreateUserRequest {
+    username: String,
+    email: String,
+}
+
+#[derive(Serialize)]
+struct UserResponse {
+    id: u32,
+    username: String,
+    email: String,
+}
+
+#[post("/users")]
+async fn create_user(user: web::Json&lt;CreateUserRequest&gt;) -&gt; HttpResponse {
+    // Process user data
+    let response = UserResponse {
+        id: 1,
+        username: user.username.clone(),
+        email: user.email.clone(),
+    };
+
+    HttpResponse::Created().json(response)
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Test với curl:</p>
+<pre><code class="language-bash">curl -X POST http://localhost:8080/users \
+  -H "Content-Type: application/json" \
+  -d '{"username":"duyet","email":"me@duyet.net"}'
+</code></pre>
+<h2 id="state-management"><a class="header" href="#state-management">State Management</a></h2>
+<p>Shared application state:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use actix_web::{get, web, App, HttpResponse, HttpServer};
+use std::sync::Mutex;
+
+struct AppState {
+    counter: Mutex&lt;i32&gt;,
+}
+
+#[get("/count")]
+async fn get_count(data: web::Data&lt;AppState&gt;) -&gt; HttpResponse {
+    let count = data.counter.lock().unwrap();
+    HttpResponse::Ok().json(*count)
+}
+
+#[get("/increment")]
+async fn increment(data: web::Data&lt;AppState&gt;) -&gt; HttpResponse {
+    let mut count = data.counter.lock().unwrap();
+    *count += 1;
+    HttpResponse::Ok().json(*count)
+}
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+    let app_state = web::Data::new(AppState {
+        counter: Mutex::new(0),
+    });
+
+    HttpServer::new(move || {
+        App::new()
+            .app_data(app_state.clone())
+            .service(get_count)
+            .service(increment)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</code></pre></pre>
+<h2 id="middleware"><a class="header" href="#middleware">Middleware</a></h2>
+<h3 id="custom-middleware"><a class="header" href="#custom-middleware">Custom Middleware</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use actix_web::{dev::ServiceRequest, Error, HttpMessage};
+use actix_web::middleware::Logger;
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+    env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
+
+    HttpServer::new(|| {
+        App::new()
+            // Logger middleware
+            .wrap(Logger::default())
+            // CORS
+            .wrap(
+                actix_cors::Cors::default()
+                    .allow_any_origin()
+                    .allow_any_method()
+                    .allow_any_header()
+            )
+            .service(hello)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</code></pre></pre>
+<h2 id="error-handling"><a class="header" href="#error-handling">Error Handling</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use actix_web::{get, web, HttpResponse, ResponseError};
+use std::fmt;
+
+#[derive(Debug)]
+enum MyError {
+    NotFound,
+    InternalError,
+}
+
+impl fmt::Display for MyError {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        match self {
+            MyError::NotFound =&gt; write!(f, "Resource not found"),
+            MyError::InternalError =&gt; write!(f, "Internal server error"),
+        }
+    }
+}
+
+impl ResponseError for MyError {
+    fn status_code(&amp;self) -&gt; actix_web::http::StatusCode {
+        match self {
+            MyError::NotFound =&gt; actix_web::http::StatusCode::NOT_FOUND,
+            MyError::InternalError =&gt; actix_web::http::StatusCode::INTERNAL_SERVER_ERROR,
+        }
+    }
+}
+
+#[get("/users/{id}")]
+async fn get_user(id: web::Path&lt;u32&gt;) -&gt; Result&lt;HttpResponse, MyError&gt; {
+    if *id == 0 {
+        return Err(MyError::NotFound);
+    }
+
+    Ok(HttpResponse::Ok().json(format!("User {}", id)))
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="database-integration-với-sqlx"><a class="header" href="#database-integration-với-sqlx">Database Integration (với sqlx)</a></h2>
+<pre><code class="language-toml">[dependencies]
+actix-web = "4"
+sqlx = { version = "0.7", features = ["runtime-tokio-native-tls", "postgres"] }
+serde = { version = "1.0", features = ["derive"] }
+</code></pre>
+<pre><pre class="playground"><code class="language-rust edition2021">use actix_web::{get, web, App, HttpResponse, HttpServer};
+use sqlx::{PgPool, postgres::PgPoolOptions};
+use serde::Serialize;
+
+#[derive(Serialize, sqlx::FromRow)]
+struct User {
+    id: i32,
+    username: String,
+}
+
+#[get("/users")]
+async fn get_users(pool: web::Data&lt;PgPool&gt;) -&gt; HttpResponse {
+    let users = sqlx::query_as::&lt;_, User&gt;("SELECT id, username FROM users")
+        .fetch_all(pool.get_ref())
+        .await;
+
+    match users {
+        Ok(users) =&gt; HttpResponse::Ok().json(users),
+        Err(_) =&gt; HttpResponse::InternalServerError().finish(),
+    }
+}
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+    let pool = PgPoolOptions::new()
+        .max_connections(5)
+        .connect("postgres://user:password@localhost/db")
+        .await
+        .expect("Failed to create pool");
+
+    let pool_data = web::Data::new(pool);
+
+    HttpServer::new(move || {
+        App::new()
+            .app_data(pool_data.clone())
+            .service(get_users)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</code></pre></pre>
+<h2 id="websocket"><a class="header" href="#websocket">WebSocket</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use actix_web::{web, App, HttpRequest, HttpResponse, HttpServer};
+use actix_web_actors::ws;
+
+struct MyWebSocket;
+
+impl actix::Actor for MyWebSocket {
+    type Context = ws::WebsocketContext&lt;Self&gt;;
+}
+
+impl actix::StreamHandler&lt;Result&lt;ws::Message, ws::ProtocolError&gt;&gt; for MyWebSocket {
+    fn handle(&amp;mut self, msg: Result&lt;ws::Message, ws::ProtocolError&gt;, ctx: &amp;mut Self::Context) {
+        match msg {
+            Ok(ws::Message::Ping(msg)) =&gt; ctx.pong(&amp;msg),
+            Ok(ws::Message::Text(text)) =&gt; ctx.text(format!("Echo: {}", text)),
+            Ok(ws::Message::Binary(bin)) =&gt; ctx.binary(bin),
+            _ =&gt; (),
+        }
+    }
+}
+
+async fn ws_index(req: HttpRequest, stream: web::Payload) -&gt; Result&lt;HttpResponse, actix_web::Error&gt; {
+    ws::start(MyWebSocket {}, &amp;req, stream)
+}
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+    HttpServer::new(|| {
+        App::new().route("/ws/", web::get().to(ws_index))
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</code></pre></pre>
+<h2 id="testing"><a class="header" href="#testing">Testing</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[cfg(test)]
+mod tests {
+    use super::*;
+    use actix_web::{test, App};
+
+    #[actix_web::test]
+    async fn test_hello() {
+        let app = test::init_service(App::new().service(hello)).await;
+        let req = test::TestRequest::get().uri("/").to_request();
+        let resp = test::call_service(&amp;app, req).await;
+
+        assert!(resp.status().is_success());
+    }
+
+    #[actix_web::test]
+    async fn test_greet() {
+        let app = test::init_service(App::new().service(greet)).await;
+        let req = test::TestRequest::get().uri("/hello/Rust").to_request();
+        let resp: String = test::read_body_json(test::call_service(&amp;app, req).await).await;
+
+        assert_eq!(resp, "Hello Rust!");
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="so-sánh-với-framework-khác"><a class="header" href="#so-sánh-với-framework-khác">So sánh với framework khác</a></h2>
+<h3 id="python-fastapi"><a class="header" href="#python-fastapi">Python (FastAPI)</a></h3>
+<pre><code class="language-python">from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def hello():
+    return {"message": "Hello World"}
+
+@app.get("/hello/{name}")
+def greet(name: str):
+    return {"message": f"Hello {name}"}
+</code></pre>
+<h3 id="nodejs-express"><a class="header" href="#nodejs-express">Node.js (Express)</a></h3>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
+
+app.get('/', (req, res) =&gt; {
+  res.send('Hello World!');
+});
+
+app.get('/hello/:name', (req, res) =&gt; {
+  res.send(`Hello ${req.params.name}!`);
+});
+
+app.listen(8080);
+</code></pre>
+<p><strong>Ưu điểm của actix-web:</strong></p>
+<ul>
+<li>Nhanh hơn 5-10x so với FastAPI/Express</li>
+<li>Type safety tại compile time</li>
+<li>Memory safe (no null pointer, data races)</li>
+<li>Low resource usage</li>
+</ul>
+<h2 id="performance-tips"><a class="header" href="#performance-tips">Performance Tips</a></h2>
+<ol>
+<li><strong>Sử dụng connection pooling cho database</strong></li>
+<li><strong>Enable compression middleware</strong></li>
+<li><strong>Configure worker threads:</strong></li>
+</ol>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>HttpServer::new(|| App::new())
+    .workers(4)  // Số lượng workers
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+<span class="boring">}</span></code></pre></pre>
+<ol start="4">
+<li><strong>Use <code>web::Data</code> thay vì <code>Arc</code> trực tiếp</strong></li>
+</ol>
+<h2 id="tổng-kết"><a class="header" href="#tổng-kết">Tổng kết</a></h2>
+<p>actix-web là lựa chọn tuyệt vời cho:</p>
+<ul>
+<li>✅ High-performance APIs</li>
+<li>✅ Real-time applications (WebSocket)</li>
+<li>✅ Microservices</li>
+<li>✅ RESTful APIs</li>
+<li>✅ Production-ready web services</li>
+</ul>
+<p>Ecosystem phong phú:</p>
+<ul>
+<li><code>actix-web</code> - Web framework</li>
+<li><code>actix-cors</code> - CORS middleware</li>
+<li><code>actix-session</code> - Session management</li>
+<li><code>actix-files</code> - Static file serving</li>
+<li><code>actix-web-actors</code> - WebSocket support</li>
+</ul>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ul>
+<li><a href="https://actix.rs/docs/">actix-web Documentation</a></li>
+<li><a href="https://github.com/actix/actix-web">actix-web GitHub</a></li>
+<li><a href="https://github.com/actix/examples">actix-web Examples</a></li>
+<li><a href="https://www.techempower.com/benchmarks/">Benchmarks</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../crates/tokio.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../crates/anyhow.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../crates/tokio.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../crates/anyhow.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>
