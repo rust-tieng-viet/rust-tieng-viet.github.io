@@ -194,3 +194,8 @@
 - [Iterating over `Option`](./idioms/option-iter.md)
 - [Pass variables to closure](./idioms/pass-variables-to-closure.md)
 - [`let-else` pattern](./idioms/let-else.md)
+- [Newtype Pattern](./idioms/newtype.md)
+- [RAII Guards](./idioms/raii-guards.md)
+- [Zero-Cost Abstractions](./idioms/zero-cost-abstractions.md)
+- [Typestate Pattern](./idioms/typestate.md)
+- [Error Handling Patterns](./idioms/error-handling-patterns.md)
