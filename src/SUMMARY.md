@@ -179,6 +179,16 @@
 
 ---
 
+# AI và Large Language Models (LLM)
+
+- [Rust và LLM Overview](./llm/README.md)
+- [Rig - LLM Application Framework](./llm/rig.md)
+- [llm - Unified LLM Interface](./llm/llm-crate.md)
+- [Candle - Minimalist ML Framework](./llm/candle.md)
+- [Recent Updates 2025](./llm/recent-updates-2025.md)
+
+---
+
 # Rust Idioms
 
 - [Functional programming](./idioms/functional-programming.md)
