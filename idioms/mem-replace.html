@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Concatenating strings with format! - Rust Tiếng Việt</title>
+        <title>mem::replace and mem::take - Rust Tiếng Việt</title>
 
 
         <!-- Custom HTML head -->
@@ -167,7 +167,7 @@
                         <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/idioms/format.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/idioms/mem-replace.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -201,134 +201,280 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="concatenating-strings-with-format"><a class="header" href="#concatenating-strings-with-format">Concatenating strings with <code>format!</code></a></h1>
-<p>Trong Rust, khi cần nối các chuỗi với nhau, sử dụng macro <code>format!</code> là một idiom phổ biến và hiệu quả.</p>
-<h2 id="tại-sao-nên-dùng-format"><a class="header" href="#tại-sao-nên-dùng-format">Tại sao nên dùng <code>format!</code>?</a></h2>
-<p><code>format!</code> macro tạo ra một <code>String</code> mới bằng cách kết hợp các giá trị theo một template định sẵn. Điều này giúp code dễ đọc và bảo trì hơn so với việc nối chuỗi thủ công.</p>
-<h2 id="ví-dụ-cơ-bản"><a class="header" href="#ví-dụ-cơ-bản">Ví dụ cơ bản</a></h2>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let name = "Duyet";
-let age = 18;
-let message = format!("{} is {} years old", name, age);
-println!("{}", message);
-// Output: Duyet is 18 years old
-<span class="boring">}</span></code></pre></pre>
-<h2 id="các-cách-sử-dụng-khác"><a class="header" href="#các-cách-sử-dụng-khác">Các cách sử dụng khác</a></h2>
-<h3 id="named-parameters"><a class="header" href="#named-parameters">Named parameters</a></h3>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let message = format!("{name} is {age} years old", name = "Duyet", age = 18);
-println!("{}", message);
-// Output: Duyet is 18 years old
-<span class="boring">}</span></code></pre></pre>
-<h3 id="formatting-numbers"><a class="header" href="#formatting-numbers">Formatting numbers</a></h3>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let pi = 3.14159265359;
-let formatted = format!("Pi rounded to 2 decimals: {:.2}", pi);
-println!("{}", formatted);
-// Output: Pi rounded to 2 decimals: 3.14
+                        <h1 id="memreplace-và-memtake"><a class="header" href="#memreplace-và-memtake">mem::replace và mem::take</a></h1>
+<p><code>std::mem::replace</code> và <code>std::mem::take</code> là hai functions hữu ích giúp thay thế giá trị trong một mutable reference mà không cần clone, đặc biệt hữu dụng khi làm việc với ownership.</p>
+<h2 id="memreplace"><a class="header" href="#memreplace">mem::replace</a></h2>
+<p><code>mem::replace</code> lấy giá trị hiện tại và thay thế bằng giá trị mới, trả về giá trị cũ:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::mem;
 
-let hex = format!("Hex: 0x{:X}", 255);
-println!("{}", hex);
-// Output: Hex: 0xFF
-<span class="boring">}</span></code></pre></pre>
-<h3 id="debug-formatting"><a class="header" href="#debug-formatting">Debug formatting</a></h3>
+fn main() {
+    let mut v = vec![1, 2, 3];
+
+    let old_v = mem::replace(&amp;mut v, vec![4, 5, 6]);
+
+    println!("Old: {:?}", old_v); // [1, 2, 3]
+    println!("New: {:?}", v);      // [4, 5, 6]
+}</code></pre></pre>
+<h3 id="signature"><a class="header" href="#signature">Signature</a></h3>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>#[derive(Debug)]
-struct Point {
-    x: i32,
-    y: i32,
+</span>pub fn replace&lt;T&gt;(dest: &amp;mut T, src: T) -&gt; T
+<span class="boring">}</span></code></pre></pre>
+<h2 id="memtake"><a class="header" href="#memtake">mem::take</a></h2>
+<p><code>mem::take</code> là shorthand cho <code>mem::replace(&amp;mut dest, Default::default())</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::mem;
+
+fn main() {
+    let mut v = vec![1, 2, 3];
+
+    let old_v = mem::take(&amp;mut v);
+
+    println!("Old: {:?}", old_v); // [1, 2, 3]
+    println!("New: {:?}", v);      // []
+}</code></pre></pre>
+<h3 id="signature-1"><a class="header" href="#signature-1">Signature</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn take&lt;T: Default&gt;(dest: &amp;mut T) -&gt; T
+<span class="boring">}</span></code></pre></pre>
+<h2 id="use-cases"><a class="header" href="#use-cases">Use Cases</a></h2>
+<h3 id="1-modify-enum-variants"><a class="header" href="#1-modify-enum-variants">1. Modify enum variants</a></h3>
+<p>Một trong những use case phổ biến nhất là khi cần modify một enum variant:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::mem;
+
+enum State {
+    Active { count: u32 },
+    Inactive,
 }
 
-let point = Point { x: 10, y: 20 };
-let debug_output = format!("Point: {:?}", point);
-println!("{}", debug_output);
-// Output: Point: Point { x: 10, y: 20 }
+impl State {
+    fn increment(&amp;mut self) {
+        // Lấy ownership của self để pattern match
+        let old_state = mem::take(self);
 
-let pretty_output = format!("Point:\n{:#?}", point);
-println!("{}", pretty_output);
-// Output (pretty-printed):
-// Point:
-// Point {
-//     x: 10,
-//     y: 20,
-// }
-<span class="boring">}</span></code></pre></pre>
-<h3 id="padding-và-alignment"><a class="header" href="#padding-và-alignment">Padding và Alignment</a></h3>
+        *self = match old_state {
+            State::Active { count } =&gt; State::Active { count: count + 1 },
+            State::Inactive =&gt; State::Active { count: 1 },
+        };
+    }
+}
+
+fn main() {
+    let mut state = State::Inactive;
+    state.increment();
+
+    if let State::Active { count } = state {
+        println!("Count: {}", count); // Count: 1
+    }
+}</code></pre></pre>
+<p>Nếu không dùng <code>mem::take</code>, bạn sẽ gặp borrow checker error:</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// Padding với spaces
-let padded = format!("{:&gt;10}", "Rust");
-println!("'{}'", padded);
-// Output: '      Rust'
-
-// Padding bên trái
-let left_padded = format!("{:&lt;10}", "Rust");
-println!("'{}'", left_padded);
-// Output: 'Rust      '
-
-// Center alignment
-let centered = format!("{:^10}", "Rust");
-println!("'{}'", centered);
-// Output: '   Rust   '
-
-// Padding với custom character
-let custom = format!("{:*&gt;10}", "Rust");
-println!("{}", custom);
-// Output: ******Rust
+</span>// ❌ Compile error!
+fn increment_wrong(&amp;mut self) {
+    *self = match self {
+        // Error: cannot move out of `*self` which is behind a mutable reference
+        State::Active { count } =&gt; State::Active { count: count + 1 },
+        State::Inactive =&gt; State::Active { count: 1 },
+    };
+}
 <span class="boring">}</span></code></pre></pre>
-<h2 id="so-sánh-với-các-cách-khác"><a class="header" href="#so-sánh-với-các-cách-khác">So sánh với các cách khác</a></h2>
-<h3 id="-không-nên-sử-dụng--operator"><a class="header" href="#-không-nên-sử-dụng--operator">❌ Không nên: Sử dụng <code>+</code> operator</a></h3>
+<h3 id="2-implement-methods-on-structs-với-owned-fields"><a class="header" href="#2-implement-methods-on-structs-với-owned-fields">2. Implement methods on structs với owned fields</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::mem;
+
+struct Buffer {
+    data: Vec&lt;u8&gt;,
+}
+
+impl Buffer {
+    fn process(&amp;mut self) -&gt; Vec&lt;u8&gt; {
+        // Lấy data ra để xử lý, thay bằng empty vec
+        let data = mem::take(&amp;mut self.data);
+
+        // Process data
+        let processed = data.into_iter()
+            .map(|b| b.wrapping_add(1))
+            .collect();
+
+        processed
+    }
+}
+
+fn main() {
+    let mut buffer = Buffer {
+        data: vec![1, 2, 3],
+    };
+
+    let result = buffer.process();
+    println!("Processed: {:?}", result);     // [2, 3, 4]
+    println!("Buffer now: {:?}", buffer.data); // []
+}</code></pre></pre>
+<h3 id="3-swap-values"><a class="header" href="#3-swap-values">3. Swap values</a></h3>
+<p>Sử dụng <code>mem::replace</code> để swap values:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::mem;
+
+fn main() {
+    let mut a = 5;
+    let mut b = 10;
+
+    // Swap using mem::replace
+    let temp = mem::replace(&amp;mut a, mem::replace(&amp;mut b, a));
+
+    println!("a: {}, b: {}", a, b); // a: 10, b: 5
+
+    // Hoặc đơn giản hơn, dùng std::mem::swap
+    mem::swap(&amp;mut a, &amp;mut b);
+    println!("a: {}, b: {}", a, b); // a: 5, b: 10
+}</code></pre></pre>
+<h3 id="4-avoid-clone-trong-loops"><a class="header" href="#4-avoid-clone-trong-loops">4. Avoid clone trong loops</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::mem;
+
+struct Node {
+    value: i32,
+    next: Option&lt;Box&lt;Node&gt;&gt;,
+}
+
+impl Node {
+    fn into_values(self) -&gt; Vec&lt;i32&gt; {
+        let mut values = Vec::new();
+        let mut current = Some(Box::new(self));
+
+        while let Some(mut node) = current {
+            values.push(node.value);
+            // Take ownership of next without cloning
+            current = mem::take(&amp;mut node.next);
+        }
+
+        values
+    }
+}
+
+fn main() {
+    let list = Node {
+        value: 1,
+        next: Some(Box::new(Node {
+            value: 2,
+            next: Some(Box::new(Node {
+                value: 3,
+                next: None,
+            })),
+        })),
+    };
+
+    let values = list.into_values();
+    println!("{:?}", values); // [1, 2, 3]
+}</code></pre></pre>
+<h3 id="5-working-with-option"><a class="header" href="#5-working-with-option">5. Working with Option</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::mem;
+
+struct Cache {
+    data: Option&lt;String&gt;,
+}
+
+impl Cache {
+    fn take_data(&amp;mut self) -&gt; Option&lt;String&gt; {
+        mem::take(&amp;mut self.data)
+    }
+
+    fn replace_data(&amp;mut self, new_data: String) -&gt; Option&lt;String&gt; {
+        mem::replace(&amp;mut self.data, Some(new_data))
+    }
+}
+
+fn main() {
+    let mut cache = Cache {
+        data: Some("Hello".to_string()),
+    };
+
+    // Lấy data ra khỏi cache
+    let data = cache.take_data();
+    println!("Taken: {:?}", data);        // Some("Hello")
+    println!("Cache: {:?}", cache.data);  // None
+
+    // Replace với data mới
+    let old = cache.replace_data("World".to_string());
+    println!("Old: {:?}", old);           // None
+    println!("Cache: {:?}", cache.data);  // Some("World")
+}</code></pre></pre>
+<h2 id="memreplace-vs-clone"><a class="header" href="#memreplace-vs-clone">mem::replace vs clone</a></h2>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let name = "Duyet".to_string();
-let age = 18;
-// Phức tạp và khó đọc
-let message = name + " is " + &amp;age.to_string() + " years old";
-<span class="boring">}</span></code></pre></pre>
-<h3 id="-không-nên-sử-dụng-push_str-nhiều-lần"><a class="header" href="#-không-nên-sử-dụng-push_str-nhiều-lần">❌ Không nên: Sử dụng <code>push_str</code> nhiều lần</a></h3>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let mut message = String::new();
-message.push_str("Duyet");
-message.push_str(" is ");
-message.push_str(&amp;18.to_string());
-message.push_str(" years old");
-// Dài dòng và khó maintain
-<span class="boring">}</span></code></pre></pre>
-<h3 id="-nên-sử-dụng-format"><a class="header" href="#-nên-sử-dụng-format">✅ Nên: Sử dụng <code>format!</code></a></h3>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let message = format!("{} is {} years old", "Duyet", 18);
-// Ngắn gọn, dễ đọc, dễ maintain
-<span class="boring">}</span></code></pre></pre>
-<h2 id="hiệu-năng"><a class="header" href="#hiệu-năng">Hiệu năng</a></h2>
-<p>Lưu ý rằng <code>format!</code> sẽ allocate memory mới cho <code>String</code> kết quả. Nếu bạn đang trong một vòng lặp hiệu năng cao và cần tối ưu, có thể cân nhắc sử dụng <code>write!</code> macro để ghi trực tiếp vào một buffer có sẵn:</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::fmt::Write;
+</span>use std::mem;
 
-let mut output = String::new();
-write!(&amp;mut output, "{} is {} years old", "Duyet", 18).unwrap();
+fn process_with_clone(data: &amp;mut Vec&lt;i32&gt;) {
+    let copy = data.clone();  // ❌ Expensive: allocates new memory
+    // Process copy...
+}
+
+fn process_with_replace(data: &amp;mut Vec&lt;i32&gt;) {
+    let owned = mem::replace(data, Vec::new()); // ✅ No allocation
+    // Process owned...
+}
 <span class="boring">}</span></code></pre></pre>
+<h2 id="so-sánh-memtake-vs-memreplace"><a class="header" href="#so-sánh-memtake-vs-memreplace">So sánh mem::take vs mem::replace</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Feature</th><th><code>mem::take</code></th><th><code>mem::replace</code></th></tr></thead><tbody>
+<tr><td>Yêu cầu</td><td><code>T: Default</code></td><td>Bất kỳ <code>T</code> nào</td></tr>
+<tr><td>Giá trị thay thế</td><td><code>Default::default()</code></td><td>Giá trị tùy chỉnh</td></tr>
+<tr><td>Use case</td><td>Khi muốn giá trị mặc định</td><td>Khi cần giá trị cụ thể</td></tr>
+</tbody></table>
+</div>
+<h2 id="khi-nào-nên-dùng"><a class="header" href="#khi-nào-nên-dùng">Khi nào nên dùng?</a></h2>
+<p>✅ <strong>Nên dùng khi:</strong></p>
+<ul>
+<li>Cần move value ra khỏi mutable reference</li>
+<li>Muốn tránh clone expensive values</li>
+<li>Làm việc với enums có multiple variants</li>
+<li>Implement state machines</li>
+</ul>
+<p>❌ <strong>Không cần dùng khi:</strong></p>
+<ul>
+<li>Type implement <code>Copy</code></li>
+<li>Có thể dùng <code>Option::take()</code> (cho <code>Option</code> types)</li>
+<li>Clone là acceptable</li>
+</ul>
+<h2 id="pattern-thực-tế-optiontake"><a class="header" href="#pattern-thực-tế-optiontake">Pattern thực tế: Option::take()</a></h2>
+<p>Với <code>Option&lt;T&gt;</code>, có thể dùng method <code>take()</code> thay vì <code>mem::take()</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Handler {
+    resource: Option&lt;String&gt;,
+}
+
+impl Handler {
+    fn consume(&amp;mut self) -&gt; Option&lt;String&gt; {
+        // Cả hai cách đều work
+
+        // Cách 1: Option::take()
+        self.resource.take()
+
+        // Cách 2: mem::take() - ít common hơn cho Option
+        // std::mem::take(&amp;mut self.resource)
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h2>
+<ol>
+<li><strong>Prefer <code>mem::take</code> khi có <code>Default</code></strong>: Ngắn gọn hơn <code>mem::replace</code></li>
+<li><strong>Document side effects</strong>: Ghi rõ function modifies state</li>
+<li><strong>Consider <code>Option::take()</code></strong>: Cho <code>Option</code> types</li>
+<li><strong>Combine với pattern matching</strong>: Rất hữu dụng với enums</li>
+</ol>
 <h2 id="tham-khảo"><a class="header" href="#tham-khảo">Tham khảo</a></h2>
 <ul>
-<li><a href="https://doc.rust-lang.org/std/fmt/">std::fmt documentation</a></li>
-<li><a href="https://doc.rust-lang.org/std/macro.format.html">format! macro</a></li>
+<li><a href="https://doc.rust-lang.org/std/mem/fn.replace.html">std::mem::replace</a></li>
+<li><a href="https://doc.rust-lang.org/std/mem/fn.take.html">std::mem::take</a></li>
+<li><a href="https://doc.rust-lang.org/std/mem/fn.swap.html">std::mem::swap</a></li>
 </ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../idioms/borrowed-types.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../idioms/aim-for-immutability.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../idioms/constructor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../idioms/privacy-for-extensibility.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -338,11 +484,11 @@ write!(&amp;mut output, "{} is {} years old", "Duyet", 18).unwrap();
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../idioms/borrowed-types.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../idioms/aim-for-immutability.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../idioms/constructor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../idioms/privacy-for-extensibility.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

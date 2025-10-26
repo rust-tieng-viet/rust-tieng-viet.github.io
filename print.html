@@ -10552,15 +10552,126 @@ fn print3&lt;S: Borrow&lt;str&gt;&gt;(s: S) {
 <li><a href="https://doc.rust-lang.org/book/ch15-02-deref.html">Deref coercion</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="concatenating-strings-with-format"><a class="header" href="#concatenating-strings-with-format">Concatenating strings with <code>format!</code></a></h1>
+<p>Trong Rust, khi cần nối các chuỗi với nhau, sử dụng macro <code>format!</code> là một idiom phổ biến và hiệu quả.</p>
+<h2 id="tại-sao-nên-dùng-format"><a class="header" href="#tại-sao-nên-dùng-format">Tại sao nên dùng <code>format!</code>?</a></h2>
+<p><code>format!</code> macro tạo ra một <code>String</code> mới bằng cách kết hợp các giá trị theo một template định sẵn. Điều này giúp code dễ đọc và bảo trì hơn so với việc nối chuỗi thủ công.</p>
+<h2 id="ví-dụ-cơ-bản-1"><a class="header" href="#ví-dụ-cơ-bản-1">Ví dụ cơ bản</a></h2>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let name = "Duyet";
 let age = 18;
 let message = format!("{} is {} years old", name, age);
 println!("{}", message);
+// Output: Duyet is 18 years old
 <span class="boring">}</span></code></pre></pre>
+<h2 id="các-cách-sử-dụng-khác"><a class="header" href="#các-cách-sử-dụng-khác">Các cách sử dụng khác</a></h2>
+<h3 id="named-parameters"><a class="header" href="#named-parameters">Named parameters</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let message = format!("{name} is {age} years old", name = "Duyet", age = 18);
+println!("{}", message);
+// Output: Duyet is 18 years old
+<span class="boring">}</span></code></pre></pre>
+<h3 id="formatting-numbers"><a class="header" href="#formatting-numbers">Formatting numbers</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let pi = 3.14159265359;
+let formatted = format!("Pi rounded to 2 decimals: {:.2}", pi);
+println!("{}", formatted);
+// Output: Pi rounded to 2 decimals: 3.14
+
+let hex = format!("Hex: 0x{:X}", 255);
+println!("{}", hex);
+// Output: Hex: 0xFF
+<span class="boring">}</span></code></pre></pre>
+<h3 id="debug-formatting"><a class="header" href="#debug-formatting">Debug formatting</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[derive(Debug)]
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+let point = Point { x: 10, y: 20 };
+let debug_output = format!("Point: {:?}", point);
+println!("{}", debug_output);
+// Output: Point: Point { x: 10, y: 20 }
+
+let pretty_output = format!("Point:\n{:#?}", point);
+println!("{}", pretty_output);
+// Output (pretty-printed):
+// Point:
+// Point {
+//     x: 10,
+//     y: 20,
+// }
+<span class="boring">}</span></code></pre></pre>
+<h3 id="padding-và-alignment"><a class="header" href="#padding-và-alignment">Padding và Alignment</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Padding với spaces
+let padded = format!("{:&gt;10}", "Rust");
+println!("'{}'", padded);
+// Output: '      Rust'
+
+// Padding bên trái
+let left_padded = format!("{:&lt;10}", "Rust");
+println!("'{}'", left_padded);
+// Output: 'Rust      '
+
+// Center alignment
+let centered = format!("{:^10}", "Rust");
+println!("'{}'", centered);
+// Output: '   Rust   '
+
+// Padding với custom character
+let custom = format!("{:*&gt;10}", "Rust");
+println!("{}", custom);
+// Output: ******Rust
+<span class="boring">}</span></code></pre></pre>
+<h2 id="so-sánh-với-các-cách-khác"><a class="header" href="#so-sánh-với-các-cách-khác">So sánh với các cách khác</a></h2>
+<h3 id="-không-nên-sử-dụng--operator"><a class="header" href="#-không-nên-sử-dụng--operator">❌ Không nên: Sử dụng <code>+</code> operator</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let name = "Duyet".to_string();
+let age = 18;
+// Phức tạp và khó đọc
+let message = name + " is " + &amp;age.to_string() + " years old";
+<span class="boring">}</span></code></pre></pre>
+<h3 id="-không-nên-sử-dụng-push_str-nhiều-lần"><a class="header" href="#-không-nên-sử-dụng-push_str-nhiều-lần">❌ Không nên: Sử dụng <code>push_str</code> nhiều lần</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut message = String::new();
+message.push_str("Duyet");
+message.push_str(" is ");
+message.push_str(&amp;18.to_string());
+message.push_str(" years old");
+// Dài dòng và khó maintain
+<span class="boring">}</span></code></pre></pre>
+<h3 id="-nên-sử-dụng-format"><a class="header" href="#-nên-sử-dụng-format">✅ Nên: Sử dụng <code>format!</code></a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let message = format!("{} is {} years old", "Duyet", 18);
+// Ngắn gọn, dễ đọc, dễ maintain
+<span class="boring">}</span></code></pre></pre>
+<h2 id="hiệu-năng"><a class="header" href="#hiệu-năng">Hiệu năng</a></h2>
+<p>Lưu ý rằng <code>format!</code> sẽ allocate memory mới cho <code>String</code> kết quả. Nếu bạn đang trong một vòng lặp hiệu năng cao và cần tối ưu, có thể cân nhắc sử dụng <code>write!</code> macro để ghi trực tiếp vào một buffer có sẵn:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fmt::Write;
+
+let mut output = String::new();
+write!(&amp;mut output, "{} is {} years old", "Duyet", 18).unwrap();
+<span class="boring">}</span></code></pre></pre>
+<h2 id="tham-khảo"><a class="header" href="#tham-khảo">Tham khảo</a></h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/std/fmt/">std::fmt documentation</a></li>
+<li><a href="https://doc.rust-lang.org/std/macro.format.html">format! macro</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="constructor"><a class="header" href="#constructor">Constructor</a></h1>
-<p>Rust không có constructors, thay vào đó có một convention là sử dụng <code>new</code> method (<a href="https://doc.rust-lang.org/stable/book/ch05-03-method-syntax.html#associated-functions">Associated Functions</a>) để tạo một instance mới của struct hoặc enum.</p>
+<p>Rust không có constructors như các ngôn ngữ hướng đối tượng khác (Java, C++, etc.). Thay vào đó, Rust sử dụng convention là tạo <a href="https://doc.rust-lang.org/stable/book/ch05-03-method-syntax.html#associated-functions">Associated Functions</a> có tên <code>new</code> để khởi tạo instance mới.</p>
+<h2 id="convention-cơ-bản-new"><a class="header" href="#convention-cơ-bản-new">Convention cơ bản: <code>new()</code></a></h2>
 <pre><pre class="playground"><code class="language-rust edition2021">struct Point {
     x: i32,
     y: i32,
@@ -10575,6 +10686,185 @@ impl Point {
 fn main() {
     let point = Point::new(1, 2);
     println!("({}, {})", point.x, point.y);
+}</code></pre></pre>
+<h2 id="tại-sao-không-dùng-pub-cho-fields"><a class="header" href="#tại-sao-không-dùng-pub-cho-fields">Tại sao không dùng <code>pub</code> cho fields?</a></h2>
+<p>Trong thực tế, chúng ta thường giữ các fields là private và cung cấp constructor <code>new()</code> để kiểm soát việc khởi tạo:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">pub struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    // Constructor đảm bảo width và height hợp lệ
+    pub fn new(width: u32, height: u32) -&gt; Result&lt;Self, String&gt; {
+        if width == 0 || height == 0 {
+            return Err("Width and height must be positive".to_string());
+        }
+        Ok(Rectangle { width, height })
+    }
+
+    pub fn area(&amp;self) -&gt; u32 {
+        self.width * self.height
+    }
+}
+
+fn main() {
+    let rect = Rectangle::new(10, 20).unwrap();
+    println!("Area: {}", rect.area());
+
+    // Lỗi compile: fields are private
+    // println!("{}", rect.width);
+}</code></pre></pre>
+<h2 id="multiple-constructors"><a class="header" href="#multiple-constructors">Multiple Constructors</a></h2>
+<p>Rust cho phép tạo nhiều constructor methods với tên khác nhau:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">pub struct Color {
+    r: u8,
+    g: u8,
+    b: u8,
+}
+
+impl Color {
+    pub fn new(r: u8, g: u8, b: u8) -&gt; Self {
+        Color { r, g, b }
+    }
+
+    pub fn from_hex(hex: u32) -&gt; Self {
+        Color {
+            r: ((hex &gt;&gt; 16) &amp; 0xFF) as u8,
+            g: ((hex &gt;&gt; 8) &amp; 0xFF) as u8,
+            b: (hex &amp; 0xFF) as u8,
+        }
+    }
+
+    pub fn black() -&gt; Self {
+        Color { r: 0, g: 0, b: 0 }
+    }
+
+    pub fn white() -&gt; Self {
+        Color { r: 255, g: 255, b: 255 }
+    }
+}
+
+fn main() {
+    let c1 = Color::new(255, 0, 0);          // Red
+    let c2 = Color::from_hex(0x00FF00);      // Green
+    let c3 = Color::black();                  // Black
+    let c4 = Color::white();                  // White
+}</code></pre></pre>
+<h2 id="builder-pattern-cho-complex-constructors"><a class="header" href="#builder-pattern-cho-complex-constructors">Builder Pattern cho complex constructors</a></h2>
+<p>Khi struct có nhiều parameters, nên sử dụng Builder Pattern:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">pub struct User {
+    username: String,
+    email: String,
+    age: Option&lt;u32&gt;,
+    country: Option&lt;String&gt;,
+}
+
+pub struct UserBuilder {
+    username: String,
+    email: String,
+    age: Option&lt;u32&gt;,
+    country: Option&lt;String&gt;,
+}
+
+impl User {
+    pub fn builder(username: String, email: String) -&gt; UserBuilder {
+        UserBuilder {
+            username,
+            email,
+            age: None,
+            country: None,
+        }
+    }
+}
+
+impl UserBuilder {
+    pub fn age(mut self, age: u32) -&gt; Self {
+        self.age = Some(age);
+        self
+    }
+
+    pub fn country(mut self, country: String) -&gt; Self {
+        self.country = Some(country);
+        self
+    }
+
+    pub fn build(self) -&gt; User {
+        User {
+            username: self.username,
+            email: self.email,
+            age: self.age,
+            country: self.country,
+        }
+    }
+}
+
+fn main() {
+    let user = User::builder(
+        "duyet".to_string(),
+        "duyet@example.com".to_string()
+    )
+    .age(25)
+    .country("Vietnam".to_string())
+    .build();
+}</code></pre></pre>
+<h2 id="constructor-với-validation"><a class="header" href="#constructor-với-validation">Constructor với validation</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">pub struct Email {
+    address: String,
+}
+
+impl Email {
+    pub fn new(address: String) -&gt; Result&lt;Self, &amp;'static str&gt; {
+        if !address.contains('@') {
+            return Err("Invalid email address");
+        }
+        Ok(Email { address })
+    }
+
+    pub fn as_str(&amp;self) -&gt; &amp;str {
+        &amp;self.address
+    }
+}
+
+fn main() {
+    match Email::new("user@example.com".to_string()) {
+        Ok(email) =&gt; println!("Valid email: {}", email.as_str()),
+        Err(e) =&gt; println!("Error: {}", e),
+    }
+}</code></pre></pre>
+<h2 id="khi-nào-dùng-new-vs-default"><a class="header" href="#khi-nào-dùng-new-vs-default">Khi nào dùng <code>new()</code> vs <code>default()</code>?</a></h2>
+<ul>
+<li><strong><code>new()</code></strong>: Khi cần parameters để khởi tạo</li>
+<li><strong><code>default()</code></strong>: Khi có thể tạo instance với giá trị mặc định hợp lý</li>
+</ul>
+<p>Thông thường, struct sẽ implement cả hai:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">#[derive(Debug)]
+pub struct Config {
+    pub host: String,
+    pub port: u16,
+}
+
+impl Config {
+    pub fn new(host: String, port: u16) -&gt; Self {
+        Config { host, port }
+    }
+}
+
+impl Default for Config {
+    fn default() -&gt; Self {
+        Config {
+            host: "localhost".to_string(),
+            port: 8080,
+        }
+    }
+}
+
+fn main() {
+    let config1 = Config::new("example.com".to_string(), 3000);
+    let config2 = Config::default();
+
+    println!("{:?}", config1);
+    println!("{:?}", config2);
 }</code></pre></pre>
 <h1 id="the-default-trait-default-constructors"><a class="header" href="#the-default-trait-default-constructors">The Default Trait (Default Constructors)</a></h1>
 <p>Rust hỗ trợ default constructor thông qua <a href="https://doc.rust-lang.org/stable/std/default/trait.Default.html">Default</a> trait.</p>
@@ -10652,6 +10942,284 @@ trong standard library.</p>
     T::default()
 }
 <span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="finalisation-in-destructors"><a class="header" href="#finalisation-in-destructors">Finalisation in Destructors</a></h1>
+<p>Trong Rust, destructors (hay còn gọi là "drop handlers") được gọi tự động khi một value ra khỏi scope. Điều này cho phép chúng ta thực hiện các tác vụ cleanup một cách tự động và an toàn.</p>
+<h2 id="drop-trait"><a class="header" href="#drop-trait">Drop Trait</a></h2>
+<p>Rust cung cấp <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code> trait</a> để customize hành vi khi một value bị dropped:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">struct FileHandler {
+    filename: String,
+}
+
+impl Drop for FileHandler {
+    fn drop(&amp;mut self) {
+        println!("Closing file: {}", self.filename);
+        // Cleanup code ở đây
+    }
+}
+
+fn main() {
+    let handler = FileHandler {
+        filename: "data.txt".to_string(),
+    };
+    println!("Working with file...");
+
+    // Khi handler ra khỏi scope, drop() sẽ được gọi tự động
+}
+// Output:
+// Working with file...
+// Closing file: data.txt</code></pre></pre>
+<h2 id="use-cases-phổ-biến"><a class="header" href="#use-cases-phổ-biến">Use Cases phổ biến</a></h2>
+<h3 id="1-resource-management-raii-pattern"><a class="header" href="#1-resource-management-raii-pattern">1. Resource Management (RAII Pattern)</a></h3>
+<p>RAII (Resource Acquisition Is Initialization) là một pattern quan trọng trong Rust:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::fs::File;
+use std::io::Write;
+
+struct Logger {
+    file: File,
+}
+
+impl Logger {
+    fn new(path: &amp;str) -&gt; std::io::Result&lt;Self&gt; {
+        Ok(Logger {
+            file: File::create(path)?,
+        })
+    }
+
+    fn log(&amp;mut self, message: &amp;str) -&gt; std::io::Result&lt;()&gt; {
+        writeln!(self.file, "{}", message)
+    }
+}
+
+impl Drop for Logger {
+    fn drop(&amp;mut self) {
+        writeln!(self.file, "Logger closed").ok();
+        // File sẽ tự động được đóng khi ra khỏi scope
+    }
+}
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    {
+        let mut logger = Logger::new("app.log")?;
+        logger.log("Application started")?;
+        logger.log("Processing data")?;
+        // Logger tự động flush và đóng file khi ra khỏi scope
+    }
+
+    Ok(())
+}</code></pre></pre>
+<h3 id="2-lock-management"><a class="header" href="#2-lock-management">2. Lock Management</a></h3>
+<p>Sử dụng Drop để tự động release locks:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::sync::{Arc, Mutex};
+use std::thread;
+
+fn main() {
+    let data = Arc::new(Mutex::new(vec![1, 2, 3]));
+    let mut handles = vec![];
+
+    for i in 0..3 {
+        let data = Arc::clone(&amp;data);
+        let handle = thread::spawn(move || {
+            let mut locked_data = data.lock().unwrap();
+            locked_data.push(i);
+            // Lock tự động được release khi locked_data ra khỏi scope
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!("Result: {:?}", *data.lock().unwrap());
+}</code></pre></pre>
+<h3 id="3-connection-pooling"><a class="header" href="#3-connection-pooling">3. Connection Pooling</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">struct DatabaseConnection {
+    id: u32,
+}
+
+impl DatabaseConnection {
+    fn new(id: u32) -&gt; Self {
+        println!("Opening database connection #{}", id);
+        DatabaseConnection { id }
+    }
+
+    fn execute(&amp;self, query: &amp;str) {
+        println!("Connection #{} executing: {}", self.id, query);
+    }
+}
+
+impl Drop for DatabaseConnection {
+    fn drop(&amp;mut self) {
+        println!("Closing database connection #{}", self.id);
+        // Return connection to pool
+    }
+}
+
+fn main() {
+    {
+        let conn = DatabaseConnection::new(1);
+        conn.execute("SELECT * FROM users");
+        // Connection tự động được trả về pool khi ra khỏi scope
+    }
+    println!("Connection has been returned to pool");
+}</code></pre></pre>
+<h2 id="thứ-tự-drop"><a class="header" href="#thứ-tự-drop">Thứ tự Drop</a></h2>
+<p>Rust drop các values theo thứ tự ngược lại với thứ tự chúng được tạo ra:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">struct PrintOnDrop(&amp;'static str);
+
+impl Drop for PrintOnDrop {
+    fn drop(&amp;mut self) {
+        println!("Dropping: {}", self.0);
+    }
+}
+
+fn main() {
+    let _first = PrintOnDrop("First");
+    let _second = PrintOnDrop("Second");
+    let _third = PrintOnDrop("Third");
+
+    println!("End of main");
+}
+// Output:
+// End of main
+// Dropping: Third
+// Dropping: Second
+// Dropping: First</code></pre></pre>
+<h2 id="drop-với-struct-fields"><a class="header" href="#drop-với-struct-fields">Drop với Struct Fields</a></h2>
+<p>Fields trong một struct được dropped theo thứ tự khai báo:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">struct Container {
+    first: PrintOnDrop,
+    second: PrintOnDrop,
+}
+
+impl Drop for Container {
+    fn drop(&amp;mut self) {
+        println!("Dropping Container");
+    }
+}
+
+fn main() {
+    let _container = Container {
+        first: PrintOnDrop("Field 1"),
+        second: PrintOnDrop("Field 2"),
+    };
+}
+// Output:
+// Dropping Container
+// Dropping: Field 1
+// Dropping: Field 2</code></pre></pre>
+<h2 id="manual-drop-với-stdmemdrop"><a class="header" href="#manual-drop-với-stdmemdrop">Manual Drop với <code>std::mem::drop</code></a></h2>
+<p>Đôi khi cần drop một value trước khi nó ra khỏi scope:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let handler = FileHandler {
+        filename: "data.txt".to_string(),
+    };
+
+    println!("Before manual drop");
+    drop(handler); // Gọi destructor ngay lập tức
+    println!("After manual drop");
+
+    // handler không còn tồn tại ở đây
+}</code></pre></pre>
+<h2 id="lưu-ý-quan-trọng-1"><a class="header" href="#lưu-ý-quan-trọng-1">Lưu ý quan trọng</a></h2>
+<h3 id="1-không-thể-gọi-drop-trực-tiếp"><a class="header" href="#1-không-thể-gọi-drop-trực-tiếp">1. Không thể gọi <code>drop()</code> trực tiếp</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ❌ Sai: không thể gọi drop() method trực tiếp
+// handler.drop(); // Compile error!
+
+// ✅ Đúng: sử dụng std::mem::drop
+drop(handler);
+<span class="boring">}</span></code></pre></pre>
+<h3 id="2-drop-không-được-gọi-trong-panic"><a class="header" href="#2-drop-không-được-gọi-trong-panic">2. Drop không được gọi trong panic</a></h3>
+<p>Nếu panic xảy ra trong <code>drop()</code>, chương trình sẽ abort:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Drop for Risky {
+    fn drop(&amp;mut self) {
+        // Tránh panic trong drop!
+        if let Err(e) = self.cleanup() {
+            eprintln!("Cleanup failed: {}", e);
+            // Log error nhưng không panic
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="3-copy-types-không-có-drop"><a class="header" href="#3-copy-types-không-có-drop">3. Copy types không có Drop</a></h3>
+<p>Types implement <code>Copy</code> không thể implement <code>Drop</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ❌ Compile error: Copy và Drop không thể cùng tồn tại
+#[derive(Copy, Clone)]
+struct CopyType {
+    value: i32,
+}
+
+impl Drop for CopyType {
+    fn drop(&amp;mut self) {
+        // Error: Copy type cannot implement Drop
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="best-practices-7"><a class="header" href="#best-practices-7">Best Practices</a></h2>
+<ol>
+<li><strong>Giữ <code>drop()</code> đơn giản</strong>: Tránh logic phức tạp trong destructor</li>
+<li><strong>Không panic</strong>: Handle errors gracefully trong <code>drop()</code></li>
+<li><strong>Sử dụng RAII</strong>: Tự động quản lý resources thông qua scope</li>
+<li><strong>Document behavior</strong>: Ghi rõ side effects của destructor</li>
+</ol>
+<h2 id="ví-dụ-thực-tế-guard-pattern"><a class="header" href="#ví-dụ-thực-tế-guard-pattern">Ví dụ thực tế: Guard Pattern</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::fs::File;
+use std::io::Write;
+
+struct FileGuard {
+    file: Option&lt;File&gt;,
+    path: String,
+}
+
+impl FileGuard {
+    fn new(path: &amp;str) -&gt; std::io::Result&lt;Self&gt; {
+        Ok(FileGuard {
+            file: Some(File::create(path)?),
+            path: path.to_string(),
+        })
+    }
+
+    fn write(&amp;mut self, data: &amp;str) -&gt; std::io::Result&lt;()&gt; {
+        if let Some(ref mut file) = self.file {
+            writeln!(file, "{}", data)
+        } else {
+            Err(std::io::Error::new(
+                std::io::ErrorKind::Other,
+                "File already closed",
+            ))
+        }
+    }
+}
+
+impl Drop for FileGuard {
+    fn drop(&amp;mut self) {
+        if let Some(file) = self.file.take() {
+            drop(file); // Explicit flush
+            println!("File '{}' has been closed", self.path);
+        }
+    }
+}
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let mut guard = FileGuard::new("output.txt")?;
+    guard.write("Hello")?;
+    guard.write("World")?;
+
+    // File sẽ tự động được flush và close
+    Ok(())
+}</code></pre></pre>
+<h2 id="tham-khảo-1"><a class="header" href="#tham-khảo-1">Tham khảo</a></h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/ch15-03-drop.html">The Drop Trait</a></li>
+<li><a href="https://doc.rust-lang.org/std/ops/trait.Drop.html">std::ops::Drop</a></li>
+<li><a href="https://doc.rust-lang.org/std/mem/fn.drop.html">std::mem::drop</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="temporary-mutability"><a class="header" href="#temporary-mutability">Temporary mutability</a></h1>
 <p>Thường chúng ta sẽ cần phải prepare hoặc process dữ liệu, nhưng sau đó chúng ta không cần tính mutable nữa, để tránh lỗi phát sinh ngoài ý muốn.</p>
 <p>Temporary mutability giúp chúng ta tạo một biến mutable trong một phạm vi nhất định, sau đó biến đó sẽ trở thành immutable.</p>
@@ -10718,6 +11286,1738 @@ fn main() {
 <ul>
 <li>https://corrode.dev/blog/immutability/</li>
 <li>http://xion.io/post/code/rust-borrowchk-tricks.html</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="memreplace-và-memtake"><a class="header" href="#memreplace-và-memtake">mem::replace và mem::take</a></h1>
+<p><code>std::mem::replace</code> và <code>std::mem::take</code> là hai functions hữu ích giúp thay thế giá trị trong một mutable reference mà không cần clone, đặc biệt hữu dụng khi làm việc với ownership.</p>
+<h2 id="memreplace"><a class="header" href="#memreplace">mem::replace</a></h2>
+<p><code>mem::replace</code> lấy giá trị hiện tại và thay thế bằng giá trị mới, trả về giá trị cũ:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::mem;
+
+fn main() {
+    let mut v = vec![1, 2, 3];
+
+    let old_v = mem::replace(&amp;mut v, vec![4, 5, 6]);
+
+    println!("Old: {:?}", old_v); // [1, 2, 3]
+    println!("New: {:?}", v);      // [4, 5, 6]
+}</code></pre></pre>
+<h3 id="signature"><a class="header" href="#signature">Signature</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn replace&lt;T&gt;(dest: &amp;mut T, src: T) -&gt; T
+<span class="boring">}</span></code></pre></pre>
+<h2 id="memtake"><a class="header" href="#memtake">mem::take</a></h2>
+<p><code>mem::take</code> là shorthand cho <code>mem::replace(&amp;mut dest, Default::default())</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::mem;
+
+fn main() {
+    let mut v = vec![1, 2, 3];
+
+    let old_v = mem::take(&amp;mut v);
+
+    println!("Old: {:?}", old_v); // [1, 2, 3]
+    println!("New: {:?}", v);      // []
+}</code></pre></pre>
+<h3 id="signature-1"><a class="header" href="#signature-1">Signature</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn take&lt;T: Default&gt;(dest: &amp;mut T) -&gt; T
+<span class="boring">}</span></code></pre></pre>
+<h2 id="use-cases"><a class="header" href="#use-cases">Use Cases</a></h2>
+<h3 id="1-modify-enum-variants"><a class="header" href="#1-modify-enum-variants">1. Modify enum variants</a></h3>
+<p>Một trong những use case phổ biến nhất là khi cần modify một enum variant:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::mem;
+
+enum State {
+    Active { count: u32 },
+    Inactive,
+}
+
+impl State {
+    fn increment(&amp;mut self) {
+        // Lấy ownership của self để pattern match
+        let old_state = mem::take(self);
+
+        *self = match old_state {
+            State::Active { count } =&gt; State::Active { count: count + 1 },
+            State::Inactive =&gt; State::Active { count: 1 },
+        };
+    }
+}
+
+fn main() {
+    let mut state = State::Inactive;
+    state.increment();
+
+    if let State::Active { count } = state {
+        println!("Count: {}", count); // Count: 1
+    }
+}</code></pre></pre>
+<p>Nếu không dùng <code>mem::take</code>, bạn sẽ gặp borrow checker error:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ❌ Compile error!
+fn increment_wrong(&amp;mut self) {
+    *self = match self {
+        // Error: cannot move out of `*self` which is behind a mutable reference
+        State::Active { count } =&gt; State::Active { count: count + 1 },
+        State::Inactive =&gt; State::Active { count: 1 },
+    };
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="2-implement-methods-on-structs-với-owned-fields"><a class="header" href="#2-implement-methods-on-structs-với-owned-fields">2. Implement methods on structs với owned fields</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::mem;
+
+struct Buffer {
+    data: Vec&lt;u8&gt;,
+}
+
+impl Buffer {
+    fn process(&amp;mut self) -&gt; Vec&lt;u8&gt; {
+        // Lấy data ra để xử lý, thay bằng empty vec
+        let data = mem::take(&amp;mut self.data);
+
+        // Process data
+        let processed = data.into_iter()
+            .map(|b| b.wrapping_add(1))
+            .collect();
+
+        processed
+    }
+}
+
+fn main() {
+    let mut buffer = Buffer {
+        data: vec![1, 2, 3],
+    };
+
+    let result = buffer.process();
+    println!("Processed: {:?}", result);     // [2, 3, 4]
+    println!("Buffer now: {:?}", buffer.data); // []
+}</code></pre></pre>
+<h3 id="3-swap-values"><a class="header" href="#3-swap-values">3. Swap values</a></h3>
+<p>Sử dụng <code>mem::replace</code> để swap values:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::mem;
+
+fn main() {
+    let mut a = 5;
+    let mut b = 10;
+
+    // Swap using mem::replace
+    let temp = mem::replace(&amp;mut a, mem::replace(&amp;mut b, a));
+
+    println!("a: {}, b: {}", a, b); // a: 10, b: 5
+
+    // Hoặc đơn giản hơn, dùng std::mem::swap
+    mem::swap(&amp;mut a, &amp;mut b);
+    println!("a: {}, b: {}", a, b); // a: 5, b: 10
+}</code></pre></pre>
+<h3 id="4-avoid-clone-trong-loops"><a class="header" href="#4-avoid-clone-trong-loops">4. Avoid clone trong loops</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::mem;
+
+struct Node {
+    value: i32,
+    next: Option&lt;Box&lt;Node&gt;&gt;,
+}
+
+impl Node {
+    fn into_values(self) -&gt; Vec&lt;i32&gt; {
+        let mut values = Vec::new();
+        let mut current = Some(Box::new(self));
+
+        while let Some(mut node) = current {
+            values.push(node.value);
+            // Take ownership of next without cloning
+            current = mem::take(&amp;mut node.next);
+        }
+
+        values
+    }
+}
+
+fn main() {
+    let list = Node {
+        value: 1,
+        next: Some(Box::new(Node {
+            value: 2,
+            next: Some(Box::new(Node {
+                value: 3,
+                next: None,
+            })),
+        })),
+    };
+
+    let values = list.into_values();
+    println!("{:?}", values); // [1, 2, 3]
+}</code></pre></pre>
+<h3 id="5-working-with-option"><a class="header" href="#5-working-with-option">5. Working with Option</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::mem;
+
+struct Cache {
+    data: Option&lt;String&gt;,
+}
+
+impl Cache {
+    fn take_data(&amp;mut self) -&gt; Option&lt;String&gt; {
+        mem::take(&amp;mut self.data)
+    }
+
+    fn replace_data(&amp;mut self, new_data: String) -&gt; Option&lt;String&gt; {
+        mem::replace(&amp;mut self.data, Some(new_data))
+    }
+}
+
+fn main() {
+    let mut cache = Cache {
+        data: Some("Hello".to_string()),
+    };
+
+    // Lấy data ra khỏi cache
+    let data = cache.take_data();
+    println!("Taken: {:?}", data);        // Some("Hello")
+    println!("Cache: {:?}", cache.data);  // None
+
+    // Replace với data mới
+    let old = cache.replace_data("World".to_string());
+    println!("Old: {:?}", old);           // None
+    println!("Cache: {:?}", cache.data);  // Some("World")
+}</code></pre></pre>
+<h2 id="memreplace-vs-clone"><a class="header" href="#memreplace-vs-clone">mem::replace vs clone</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::mem;
+
+fn process_with_clone(data: &amp;mut Vec&lt;i32&gt;) {
+    let copy = data.clone();  // ❌ Expensive: allocates new memory
+    // Process copy...
+}
+
+fn process_with_replace(data: &amp;mut Vec&lt;i32&gt;) {
+    let owned = mem::replace(data, Vec::new()); // ✅ No allocation
+    // Process owned...
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="so-sánh-memtake-vs-memreplace"><a class="header" href="#so-sánh-memtake-vs-memreplace">So sánh mem::take vs mem::replace</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Feature</th><th><code>mem::take</code></th><th><code>mem::replace</code></th></tr></thead><tbody>
+<tr><td>Yêu cầu</td><td><code>T: Default</code></td><td>Bất kỳ <code>T</code> nào</td></tr>
+<tr><td>Giá trị thay thế</td><td><code>Default::default()</code></td><td>Giá trị tùy chỉnh</td></tr>
+<tr><td>Use case</td><td>Khi muốn giá trị mặc định</td><td>Khi cần giá trị cụ thể</td></tr>
+</tbody></table>
+</div>
+<h2 id="khi-nào-nên-dùng"><a class="header" href="#khi-nào-nên-dùng">Khi nào nên dùng?</a></h2>
+<p>✅ <strong>Nên dùng khi:</strong></p>
+<ul>
+<li>Cần move value ra khỏi mutable reference</li>
+<li>Muốn tránh clone expensive values</li>
+<li>Làm việc với enums có multiple variants</li>
+<li>Implement state machines</li>
+</ul>
+<p>❌ <strong>Không cần dùng khi:</strong></p>
+<ul>
+<li>Type implement <code>Copy</code></li>
+<li>Có thể dùng <code>Option::take()</code> (cho <code>Option</code> types)</li>
+<li>Clone là acceptable</li>
+</ul>
+<h2 id="pattern-thực-tế-optiontake"><a class="header" href="#pattern-thực-tế-optiontake">Pattern thực tế: Option::take()</a></h2>
+<p>Với <code>Option&lt;T&gt;</code>, có thể dùng method <code>take()</code> thay vì <code>mem::take()</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Handler {
+    resource: Option&lt;String&gt;,
+}
+
+impl Handler {
+    fn consume(&amp;mut self) -&gt; Option&lt;String&gt; {
+        // Cả hai cách đều work
+
+        // Cách 1: Option::take()
+        self.resource.take()
+
+        // Cách 2: mem::take() - ít common hơn cho Option
+        // std::mem::take(&amp;mut self.resource)
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="best-practices-8"><a class="header" href="#best-practices-8">Best Practices</a></h2>
+<ol>
+<li><strong>Prefer <code>mem::take</code> khi có <code>Default</code></strong>: Ngắn gọn hơn <code>mem::replace</code></li>
+<li><strong>Document side effects</strong>: Ghi rõ function modifies state</li>
+<li><strong>Consider <code>Option::take()</code></strong>: Cho <code>Option</code> types</li>
+<li><strong>Combine với pattern matching</strong>: Rất hữu dụng với enums</li>
+</ol>
+<h2 id="tham-khảo-2"><a class="header" href="#tham-khảo-2">Tham khảo</a></h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/std/mem/fn.replace.html">std::mem::replace</a></li>
+<li><a href="https://doc.rust-lang.org/std/mem/fn.take.html">std::mem::take</a></li>
+<li><a href="https://doc.rust-lang.org/std/mem/fn.swap.html">std::mem::swap</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="privacy-for-extensibility"><a class="header" href="#privacy-for-extensibility">Privacy for Extensibility</a></h1>
+<p>Một trong những idioms quan trọng nhất trong Rust API design là sử dụng privacy (tính riêng tư) để đảm bảo API có thể được mở rộng trong tương lai mà không breaking changes.</p>
+<h2 id="nguyên-tắc-cơ-bản"><a class="header" href="#nguyên-tắc-cơ-bản">Nguyên tắc cơ bản</a></h2>
+<p><strong>Mặc định, hãy giữ mọi thứ private, chỉ expose những gì cần thiết.</strong></p>
+<p>Điều này cho phép bạn thay đổi implementation details trong tương lai mà không ảnh hưởng đến users của library.</p>
+<h2 id="ví-dụ-struct-fields"><a class="header" href="#ví-dụ-struct-fields">Ví dụ: Struct Fields</a></h2>
+<h3 id="-không-nên-public-fields"><a class="header" href="#-không-nên-public-fields">❌ Không nên: Public fields</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">pub struct User {
+    pub username: String,
+    pub email: String,
+    pub age: u32,
+}
+
+fn main() {
+    let user = User {
+        username: "duyet".to_string(),
+        email: "duyet@example.com".to_string(),
+        age: 25,
+    };
+
+    // Users có thể truy cập và modify trực tiếp
+    println!("{}", user.age);
+}</code></pre></pre>
+<p><strong>Vấn đề:</strong></p>
+<ul>
+<li>Không thể thêm validation</li>
+<li>Không thể track changes</li>
+<li>Không thể thay đổi internal representation</li>
+<li>Breaking change nếu rename hoặc xóa field</li>
+</ul>
+<h3 id="-nên-private-fields-với-accessor-methods"><a class="header" href="#-nên-private-fields-với-accessor-methods">✅ Nên: Private fields với accessor methods</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">pub struct User {
+    username: String,
+    email: String,
+    age: u32,
+}
+
+impl User {
+    pub fn new(username: String, email: String, age: u32) -&gt; Result&lt;Self, String&gt; {
+        if age &gt; 150 {
+            return Err("Invalid age".to_string());
+        }
+        if !email.contains('@') {
+            return Err("Invalid email".to_string());
+        }
+
+        Ok(User { username, email, age })
+    }
+
+    pub fn username(&amp;self) -&gt; &amp;str {
+        &amp;self.username
+    }
+
+    pub fn email(&amp;self) -&gt; &amp;str {
+        &amp;self.email
+    }
+
+    pub fn age(&amp;self) -&gt; u32 {
+        self.age
+    }
+
+    pub fn set_email(&amp;mut self, email: String) -&gt; Result&lt;(), String&gt; {
+        if !email.contains('@') {
+            return Err("Invalid email".to_string());
+        }
+        self.email = email;
+        Ok(())
+    }
+}
+
+fn main() {
+    let user = User::new(
+        "duyet".to_string(),
+        "duyet@example.com".to_string(),
+        25,
+    ).unwrap();
+
+    println!("{}", user.age());
+}</code></pre></pre>
+<p><strong>Ưu điểm:</strong></p>
+<ul>
+<li>Có thể thêm validation logic</li>
+<li>Có thể thay đổi internal representation</li>
+<li>Có thể track changes, logging</li>
+<li>API ổn định hơn</li>
+</ul>
+<h2 id="non-exhaustive-enums"><a class="header" href="#non-exhaustive-enums">Non-exhaustive Enums</a></h2>
+<p>Sử dụng <code>#[non_exhaustive]</code> để cho phép thêm variants trong tương lai:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[non_exhaustive]
+pub enum Error {
+    NotFound,
+    PermissionDenied,
+    Timeout,
+}
+
+// Trong tương lai có thể thêm:
+// NetworkError,
+// DatabaseError,
+// ...mà không breaking existing code
+<span class="boring">}</span></code></pre></pre>
+<p>Users buộc phải có default case khi match:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn handle_error(error: Error) {
+    match error {
+        Error::NotFound =&gt; println!("Not found"),
+        Error::PermissionDenied =&gt; println!("Permission denied"),
+        Error::Timeout =&gt; println!("Timeout"),
+        // Bắt buộc phải có _ case
+        _ =&gt; println!("Other error"),
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="non-exhaustive-structs"><a class="header" href="#non-exhaustive-structs">Non-exhaustive Structs</a></h2>
+<p>Tương tự với structs, <code>#[non_exhaustive]</code> prevent users khởi tạo trực tiếp:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[non_exhaustive]
+pub struct Config {
+    pub host: String,
+    pub port: u16,
+}
+
+impl Config {
+    pub fn new(host: String, port: u16) -&gt; Self {
+        Config { host, port }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Users không thể sử dụng struct literal syntax:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ❌ Compile error!
+// let config = Config {
+//     host: "localhost".to_string(),
+//     port: 8080,
+// };
+
+// ✅ Must use constructor
+let config = Config::new("localhost".to_string(), 8080);
+<span class="boring">}</span></code></pre></pre>
+<h2 id="builder-pattern-cho-extensibility"><a class="header" href="#builder-pattern-cho-extensibility">Builder Pattern cho Extensibility</a></h2>
+<p>Builder pattern giúp thêm fields mới mà không breaking changes:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">pub struct HttpClient {
+    timeout: u64,
+    retry_count: u32,
+    user_agent: String,
+}
+
+pub struct HttpClientBuilder {
+    timeout: u64,
+    retry_count: u32,
+    user_agent: String,
+}
+
+impl HttpClient {
+    pub fn builder() -&gt; HttpClientBuilder {
+        HttpClientBuilder {
+            timeout: 30,
+            retry_count: 3,
+            user_agent: "MyClient/1.0".to_string(),
+        }
+    }
+}
+
+impl HttpClientBuilder {
+    pub fn timeout(mut self, timeout: u64) -&gt; Self {
+        self.timeout = timeout;
+        self
+    }
+
+    pub fn retry_count(mut self, count: u32) -&gt; Self {
+        self.retry_count = count;
+        self
+    }
+
+    pub fn user_agent(mut self, agent: String) -&gt; Self {
+        self.user_agent = agent;
+        self
+    }
+
+    pub fn build(self) -&gt; HttpClient {
+        HttpClient {
+            timeout: self.timeout,
+            retry_count: self.retry_count,
+            user_agent: self.user_agent,
+        }
+    }
+}
+
+fn main() {
+    let client = HttpClient::builder()
+        .timeout(60)
+        .retry_count(5)
+        .build();
+}</code></pre></pre>
+<p>Trong tương lai có thể thêm field mới:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct HttpClientBuilder {
+    timeout: u64,
+    retry_count: u32,
+    user_agent: String,
+    // Thêm mới - không breaking change!
+    max_redirects: u32,
+}
+
+impl HttpClientBuilder {
+    // Thêm method mới
+    pub fn max_redirects(mut self, max: u32) -&gt; Self {
+        self.max_redirects = max;
+        self
+    }
+}
+
+// Existing code vẫn hoạt động bình thường!
+let client = HttpClient::builder()
+    .timeout(60)
+    .build();
+<span class="boring">}</span></code></pre></pre>
+<h2 id="private-modules"><a class="header" href="#private-modules">Private modules</a></h2>
+<p>Sử dụng private modules để ẩn implementation details:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// lib.rs
+mod internal {
+    // Private helper functions
+    pub(crate) fn helper() {
+        // ...
+    }
+}
+
+pub mod api {
+    // Public API
+    pub fn public_function() {
+        crate::internal::helper();
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="sealed-trait-pattern"><a class="header" href="#sealed-trait-pattern">Sealed Trait Pattern</a></h2>
+<p>Prevent users implement trait của bạn:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>mod sealed {
+    pub trait Sealed {}
+}
+
+pub trait MyTrait: sealed::Sealed {
+    fn do_something(&amp;self);
+}
+
+// Chỉ types trong module này có thể implement MyTrait
+impl sealed::Sealed for MyType {}
+impl MyTrait for MyType {
+    fn do_something(&amp;self) {
+        // ...
+    }
+}
+
+// Users không thể implement MyTrait cho types của họ
+// vì không thể access sealed::Sealed
+<span class="boring">}</span></code></pre></pre>
+<h2 id="visibility-modifiers"><a class="header" href="#visibility-modifiers">Visibility Modifiers</a></h2>
+<p>Rust cung cấp nhiều levels của visibility:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct Container {
+    pub public_field: i32,           // Accessible everywhere
+    pub(crate) crate_field: i32,     // Accessible within crate
+    pub(super) parent_field: i32,    // Accessible in parent module
+    private_field: i32,               // Accessible in same module
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="real-world-example-database-client"><a class="header" href="#real-world-example-database-client">Real-world Example: Database Client</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct Database {
+    // Private: có thể thay đổi từ String sang URL type
+    connection_string: String,
+    // Private: có thể switch sang connection pool
+    max_connections: u32,
+}
+
+impl Database {
+    pub fn connect(url: &amp;str) -&gt; Result&lt;Self, String&gt; {
+        // Validation
+        if url.is_empty() {
+            return Err("Empty URL".to_string());
+        }
+
+        Ok(Database {
+            connection_string: url.to_string(),
+            max_connections: 10,
+        })
+    }
+
+    pub fn with_max_connections(url: &amp;str, max: u32) -&gt; Result&lt;Self, String&gt; {
+        let mut db = Self::connect(url)?;
+        db.max_connections = max;
+        Ok(db)
+    }
+
+    pub fn execute(&amp;self, query: &amp;str) -&gt; Result&lt;Vec&lt;String&gt;, String&gt; {
+        // Implementation có thể thay đổi hoàn toàn
+        println!("Executing: {}", query);
+        Ok(vec![])
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Trong tương lai có thể thay đổi implementation:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::sync::Arc;
+
+pub struct Database {
+    // Thay đổi internal structure
+    connection_pool: Arc&lt;ConnectionPool&gt;,
+    config: DatabaseConfig,
+}
+
+// Public API không thay đổi!
+impl Database {
+    pub fn connect(url: &amp;str) -&gt; Result&lt;Self, String&gt; {
+        // New implementation
+        // ...
+    }
+
+    pub fn execute(&amp;self, query: &amp;str) -&gt; Result&lt;Vec&lt;String&gt;, String&gt; {
+        // New implementation using pool
+        // ...
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="best-practices-9"><a class="header" href="#best-practices-9">Best Practices</a></h2>
+<ol>
+<li><strong>Start private</strong>: Mặc định mọi thứ private, expose dần khi cần</li>
+<li><strong>Use <code>#[non_exhaustive]</code></strong>: Cho enums và structs có thể mở rộng</li>
+<li><strong>Prefer methods over public fields</strong>: Giữ control và flexibility</li>
+<li><strong>Document stability</strong>: Ghi rõ API nào stable, nào experimental</li>
+<li><strong>Use semantic versioning</strong>: Breaking changes = major version bump</li>
+</ol>
+<h2 id="anti-patterns"><a class="header" href="#anti-patterns">Anti-patterns</a></h2>
+<p>❌ <strong>Tránh expose internal types:</strong></p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ❌ Bad
+pub use internal::InternalType;
+
+pub fn process() -&gt; InternalType {
+    // ...
+}
+<span class="boring">}</span></code></pre></pre>
+<p>✅ <strong>Wrap hoặc convert:</strong></p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Good
+pub struct PublicType {
+    // ...
+}
+
+pub fn process() -&gt; PublicType {
+    let internal = internal::InternalType::new();
+    PublicType::from(internal)
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="tham-khảo-3"><a class="header" href="#tham-khảo-3">Tham khảo</a></h2>
+<ul>
+<li><a href="https://rust-lang.github.io/api-guidelines/future-proofing.html">Rust API Guidelines - Future proofing</a></li>
+<li><a href="https://doc.rust-lang.org/reference/visibility-and-privacy.html">The Rust Reference - Visibility</a></li>
+<li><a href="https://rust-lang.github.io/api-guidelines/future-proofing.html#sealed-traits-protect-against-downstream-implementations-c-sealed">Sealed Trait Pattern</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="iterating-over-option"><a class="header" href="#iterating-over-option">Iterating over Option</a></h1>
+<p><code>Option&lt;T&gt;</code> trong Rust implement <code>IntoIterator</code>, điều này cho phép chúng ta sử dụng <code>Option</code> trong các iterator chains một cách elegant và expressive.</p>
+<h2 id="cơ-bản-1"><a class="header" href="#cơ-bản-1">Cơ bản</a></h2>
+<p><code>Option&lt;T&gt;</code> hoạt động như một iterator có 0 hoặc 1 phần tử:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let some = Some(5);
+    let none: Option&lt;i32&gt; = None;
+
+    // Some(5) iterate 1 lần
+    for value in some {
+        println!("Value: {}", value); // Prints: Value: 5
+    }
+
+    // None không iterate lần nào
+    for value in none {
+        println!("This won't print");
+    }
+}</code></pre></pre>
+<h2 id="tại-sao-hữu-dụng"><a class="header" href="#tại-sao-hữu-dụng">Tại sao hữu dụng?</a></h2>
+<h3 id="1-combining-với-iterator-methods"><a class="header" href="#1-combining-với-iterator-methods">1. Combining với iterator methods</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let numbers = vec![1, 2, 3, 4, 5];
+    let filter_value = Some(3);
+
+    let result: Vec&lt;i32&gt; = numbers
+        .into_iter()
+        .filter(|&amp;n| n &gt; 2)
+        .chain(filter_value)  // Thêm Option vào iterator chain
+        .collect();
+
+    println!("{:?}", result); // [3, 4, 5, 3]
+}</code></pre></pre>
+<h3 id="2-flatmap-với-option"><a class="header" href="#2-flatmap-với-option">2. FlatMap với Option</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn parse_number(s: &amp;str) -&gt; Option&lt;i32&gt; {
+    s.parse().ok()
+}
+
+fn main() {
+    let strings = vec!["1", "two", "3", "four", "5"];
+
+    let numbers: Vec&lt;i32&gt; = strings
+        .iter()
+        .flat_map(|s| parse_number(s))  // flat_map tự động unwrap Option
+        .collect();
+
+    println!("{:?}", numbers); // [1, 3, 5]
+}</code></pre></pre>
+<h3 id="3-filter_map-alternative"><a class="header" href="#3-filter_map-alternative">3. Filter_map alternative</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let values = vec![Some(1), None, Some(3), None, Some(5)];
+
+    // Cách 1: filter + map
+    let sum1: i32 = values.iter()
+        .filter(|v| v.is_some())
+        .map(|v| v.unwrap())
+        .sum();
+
+    // Cách 2: filter_map (idiomatic)
+    let sum2: i32 = values.iter()
+        .filter_map(|&amp;v| v)
+        .sum();
+
+    // Cách 3: flatten (Option implements IntoIterator)
+    let sum3: i32 = values.iter()
+        .flatten()
+        .sum();
+
+    println!("{}, {}, {}", sum1, sum2, sum3); // 9, 9, 9
+}</code></pre></pre>
+<h2 id="use-cases-thực-tế"><a class="header" href="#use-cases-thực-tế">Use Cases thực tế</a></h2>
+<h3 id="1-optional-configuration"><a class="header" href="#1-optional-configuration">1. Optional configuration</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[derive(Debug)]
+struct Config {
+    host: String,
+    port: u16,
+}
+
+impl Config {
+    fn from_env() -&gt; Self {
+        let custom_host = std::env::var("HOST").ok();
+        let custom_port = std::env::var("PORT").ok()
+            .and_then(|s| s.parse().ok());
+
+        let default_host = "localhost".to_string();
+        let default_port = 8080;
+
+        // Sử dụng chain để ưu tiên custom values
+        Config {
+            host: custom_host.into_iter()
+                .chain(Some(default_host))
+                .next()
+                .unwrap(),
+            port: custom_port.into_iter()
+                .chain(Some(default_port))
+                .next()
+                .unwrap(),
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="2-collecting-optional-values"><a class="header" href="#2-collecting-optional-values">2. Collecting optional values</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn get_user_by_id(id: u32) -&gt; Option&lt;String&gt; {
+    match id {
+        1 =&gt; Some("Alice".to_string()),
+        2 =&gt; Some("Bob".to_string()),
+        _ =&gt; None,
+    }
+}
+
+fn main() {
+    let user_ids = vec![1, 3, 2, 5];
+
+    // Collect tất cả users tồn tại
+    let users: Vec&lt;String&gt; = user_ids
+        .into_iter()
+        .filter_map(get_user_by_id)
+        .collect();
+
+    println!("{:?}", users); // ["Alice", "Bob"]
+}</code></pre></pre>
+<h3 id="3-chaining-operations"><a class="header" href="#3-chaining-operations">3. Chaining operations</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn divide(a: f64, b: f64) -&gt; Option&lt;f64&gt; {
+    if b == 0.0 {
+        None
+    } else {
+        Some(a / b)
+    }
+}
+
+fn main() {
+    let result = divide(10.0, 2.0)
+        .into_iter()
+        .map(|x| x * 2.0)
+        .map(|x| x + 1.0)
+        .next();
+
+    println!("{:?}", result); // Some(11.0)
+
+    let error = divide(10.0, 0.0)
+        .into_iter()
+        .map(|x| x * 2.0)
+        .next();
+
+    println!("{:?}", error); // None
+}</code></pre></pre>
+<h3 id="4-flattening-nested-options"><a class="header" href="#4-flattening-nested-options">4. Flattening nested Options</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let nested = vec![
+        Some(Some(1)),
+        Some(None),
+        None,
+        Some(Some(4)),
+    ];
+
+    // Flatten 2 levels
+    let flat: Vec&lt;i32&gt; = nested
+        .into_iter()
+        .flatten()  // Option&lt;Option&lt;i32&gt;&gt; -&gt; Option&lt;i32&gt;
+        .flatten()  // Option&lt;i32&gt; -&gt; i32
+        .collect();
+
+    println!("{:?}", flat); // [1, 4]
+}</code></pre></pre>
+<h2 id="so-sánh-các-approaches"><a class="header" href="#so-sánh-các-approaches">So sánh các approaches</a></h2>
+<h3 id="kiểm-tra-và-unwrap"><a class="header" href="#kiểm-tra-và-unwrap">Kiểm tra và unwrap</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ❌ Verbose và unsafe
+let value = if option.is_some() {
+    option.unwrap()
+} else {
+    default_value
+};
+
+// ✅ Idiomatic
+let value = option.unwrap_or(default_value);
+<span class="boring">}</span></code></pre></pre>
+<h3 id="iterate-và-collect"><a class="header" href="#iterate-và-collect">Iterate và collect</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let options = vec![Some(1), None, Some(3)];
+
+// ❌ Manual loop
+let mut result = Vec::new();
+for opt in options {
+    if let Some(val) = opt {
+        result.push(val);
+    }
+}
+
+// ✅ Using flatten
+let result: Vec&lt;i32&gt; = options.into_iter().flatten().collect();
+<span class="boring">}</span></code></pre></pre>
+<h2 id="advanced-custom-iteration"><a class="header" href="#advanced-custom-iteration">Advanced: Custom iteration</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">struct MaybeValue&lt;T&gt; {
+    value: Option&lt;T&gt;,
+}
+
+impl&lt;T&gt; MaybeValue&lt;T&gt; {
+    fn new(value: Option&lt;T&gt;) -&gt; Self {
+        MaybeValue { value }
+    }
+
+    fn process&lt;F, U&gt;(self, f: F) -&gt; Option&lt;U&gt;
+    where
+        F: FnOnce(T) -&gt; U,
+    {
+        self.value.into_iter().map(f).next()
+    }
+}
+
+fn main() {
+    let maybe = MaybeValue::new(Some(5));
+    let result = maybe.process(|x| x * 2);
+    println!("{:?}", result); // Some(10)
+
+    let empty = MaybeValue::new(None);
+    let result = empty.process(|x: i32| x * 2);
+    println!("{:?}", result); // None
+}</code></pre></pre>
+<h2 id="option-methods-tương-tự-iterator"><a class="header" href="#option-methods-tương-tự-iterator">Option methods tương tự iterator</a></h2>
+<p><code>Option</code> cung cấp nhiều methods tương tự iterator:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let value = Some(5);
+
+    // map
+    let doubled = value.map(|x| x * 2);
+    println!("{:?}", doubled); // Some(10)
+
+    // filter
+    let filtered = value.filter(|&amp;x| x &gt; 3);
+    println!("{:?}", filtered); // Some(5)
+
+    // and_then (flatMap)
+    let result = value.and_then(|x| {
+        if x &gt; 3 {
+            Some(x * 2)
+        } else {
+            None
+        }
+    });
+    println!("{:?}", result); // Some(10)
+}</code></pre></pre>
+<h2 id="kết-hợp-với-result"><a class="header" href="#kết-hợp-với-result">Kết hợp với Result</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn parse_and_double(s: &amp;str) -&gt; Option&lt;i32&gt; {
+    s.parse::&lt;i32&gt;()
+        .ok()  // Result -&gt; Option
+        .map(|n| n * 2)
+}
+
+fn main() {
+    let strings = vec!["1", "two", "3"];
+
+    let numbers: Vec&lt;i32&gt; = strings
+        .iter()
+        .filter_map(|s| parse_and_double(s))
+        .collect();
+
+    println!("{:?}", numbers); // [2, 6]
+}</code></pre></pre>
+<h2 id="performance-notes"><a class="header" href="#performance-notes">Performance notes</a></h2>
+<p>Iterate over <code>Option</code> không có overhead so với if-let hay match:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Tất cả đều compile thành cùng assembly code:
+
+// 1. Using iterator
+for value in option {
+    process(value);
+}
+
+// 2. Using if-let
+if let Some(value) = option {
+    process(value);
+}
+
+// 3. Using match
+match option {
+    Some(value) =&gt; process(value),
+    None =&gt; {}
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="best-practices-10"><a class="header" href="#best-practices-10">Best Practices</a></h2>
+<ol>
+<li><strong>Use <code>flatten()</code></strong> thay vì <code>filter_map(|x| x)</code> cho clarity</li>
+<li><strong>Use <code>filter_map()</code></strong> khi cần transform + filter</li>
+<li><strong>Combine với iterator chains</strong> cho expressive code</li>
+<li><strong>Avoid unnecessary unwrap</strong> - let iterator handle <code>None</code></li>
+</ol>
+<h2 id="common-patterns-1"><a class="header" href="#common-patterns-1">Common patterns</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let options = vec![Some(1), None, Some(3), None, Some(5)];
+
+    // Sum của tất cả Some values
+    let sum: i32 = options.iter().flatten().sum();
+    println!("Sum: {}", sum); // 9
+
+    // Count số lượng Some values
+    let count = options.iter().flatten().count();
+    println!("Count: {}", count); // 3
+
+    // Find first Some value
+    let first = options.iter().flatten().next();
+    println!("First: {:?}", first); // Some(1)
+
+    // Check có ít nhất 1 Some value
+    let has_some = options.iter().flatten().next().is_some();
+    println!("Has some: {}", has_some); // true
+}</code></pre></pre>
+<h2 id="tham-khảo-4"><a class="header" href="#tham-khảo-4">Tham khảo</a></h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/std/option/enum.Option.html">Option documentation</a></li>
+<li><a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html">Iterator trait</a></li>
+<li><a href="https://doc.rust-lang.org/std/option/enum.Option.html#impl-IntoIterator">IntoIterator for Option</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pass-variables-to-closure"><a class="header" href="#pass-variables-to-closure">Pass variables to closure</a></h1>
+<p>Closures trong Rust có thể capture variables từ môi trường xung quanh. Tuy nhiên, việc pass variables vào closure đôi khi gặp các vấn đề với ownership và borrowing. Có nhiều patterns để giải quyết vấn đề này.</p>
+<h2 id="vấn-đề-closure-captures-by-reference"><a class="header" href="#vấn-đề-closure-captures-by-reference">Vấn đề: Closure captures by reference</a></h2>
+<p>Mặc định, closures capture variables bằng reference:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let s = String::from("hello");
+
+    let closure = || {
+        println!("{}", s); // Capture by reference
+    };
+
+    closure();
+    println!("{}", s); // s vẫn valid
+}</code></pre></pre>
+<p>Nhưng điều này gây vấn đề khi closure cần outlive scope:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn create_closure() -&gt; impl Fn() {
+    let s = String::from("hello");
+
+    // ❌ Compile error!
+    // || println!("{}", s) // s doesn't live long enough
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="solution-1-move-closure"><a class="header" href="#solution-1-move-closure">Solution 1: Move closure</a></h2>
+<p>Sử dụng <code>move</code> keyword để transfer ownership:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn create_closure() -&gt; impl Fn() {
+    let s = String::from("hello");
+
+    // ✅ Move ownership vào closure
+    move || println!("{}", s)
+}
+
+fn main() {
+    let closure = create_closure();
+    closure(); // "hello"
+}</code></pre></pre>
+<h2 id="solution-2-clone-before-move"><a class="header" href="#solution-2-clone-before-move">Solution 2: Clone before move</a></h2>
+<p>Khi cần giữ lại original value:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let s = String::from("hello");
+
+    // Clone trước khi move
+    let s_clone = s.clone();
+    let closure = move || {
+        println!("{}", s_clone);
+    };
+
+    closure();
+    println!("Original: {}", s); // s vẫn còn
+}</code></pre></pre>
+<h2 id="solution-3-explicit-move-trong-closure"><a class="header" href="#solution-3-explicit-move-trong-closure">Solution 3: Explicit move trong closure</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let s = String::from("hello");
+
+    let closure = {
+        let s = s.clone(); // Clone trong block
+        move || println!("{}", s)
+    };
+
+    println!("Original: {}", s); // s vẫn còn
+    closure();
+}</code></pre></pre>
+<h2 id="pattern-rebinding-với-move"><a class="header" href="#pattern-rebinding-với-move">Pattern: Rebinding với move</a></h2>
+<p>Một pattern phổ biến là rebinding variable với cùng tên:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let data = vec![1, 2, 3];
+
+    // Rebind để cho rõ ràng
+    let data = data.clone();
+
+    let closure = move || {
+        println!("{:?}", data);
+    };
+
+    // data original đã bị moved
+    closure();
+}</code></pre></pre>
+<h2 id="working-với-multiple-variables"><a class="header" href="#working-với-multiple-variables">Working với multiple variables</a></h2>
+<h3 id="-vấn-đề-partial-move"><a class="header" href="#-vấn-đề-partial-move">❌ Vấn đề: Partial move</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let x = String::from("x");
+    let y = String::from("y");
+
+    let closure = move || {
+        println!("{}", x); // Only need x
+    };
+
+    // ❌ Compile error! y cũng bị moved
+    // println!("{}", y);
+}</code></pre></pre>
+<h3 id="-solution-selective-cloning"><a class="header" href="#-solution-selective-cloning">✅ Solution: Selective cloning</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let x = String::from("x");
+    let y = String::from("y");
+
+    let x = x; // Chỉ move x
+    let closure = move || {
+        println!("{}", x);
+    };
+
+    println!("{}", y); // y vẫn available
+    closure();
+}</code></pre></pre>
+<h2 id="use-case-thread-spawning"><a class="header" href="#use-case-thread-spawning">Use case: Thread spawning</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::thread;
+
+fn main() {
+    let data = vec![1, 2, 3, 4, 5];
+
+    // Clone để thread có ownership
+    let data_clone = data.clone();
+
+    let handle = thread::spawn(move || {
+        let sum: i32 = data_clone.iter().sum();
+        println!("Sum: {}", sum);
+    });
+
+    // data vẫn available trong main thread
+    println!("Original: {:?}", data);
+
+    handle.join().unwrap();
+}</code></pre></pre>
+<h2 id="pattern-reference-counted-arc"><a class="header" href="#pattern-reference-counted-arc">Pattern: Reference counted (Arc)</a></h2>
+<p>Khi cần share data giữa nhiều closures/threads:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::sync::Arc;
+use std::thread;
+
+fn main() {
+    let data = Arc::new(vec![1, 2, 3, 4, 5]);
+
+    let mut handles = vec![];
+
+    for i in 0..3 {
+        let data = Arc::clone(&amp;data);
+
+        let handle = thread::spawn(move || {
+            println!("Thread {}: {:?}", i, data);
+        });
+
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+}</code></pre></pre>
+<h2 id="capturing-specific-fields"><a class="header" href="#capturing-specific-fields">Capturing specific fields</a></h2>
+<p>Khi chỉ cần capture một field từ struct:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">struct Config {
+    name: String,
+    value: i32,
+}
+
+fn main() {
+    let config = Config {
+        name: "test".to_string(),
+        value: 42,
+    };
+
+    // Chỉ capture field cần thiết
+    let name = config.name.clone();
+    let closure = move || {
+        println!("Name: {}", name);
+    };
+
+    // config.value vẫn available
+    println!("Value: {}", config.value);
+    closure();
+}</code></pre></pre>
+<h2 id="pattern-combinator-style"><a class="header" href="#pattern-combinator-style">Pattern: Combinator style</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let numbers = vec![1, 2, 3, 4, 5];
+
+    let threshold = 3;
+
+    // Clone threshold để use nhiều lần
+    let filtered: Vec&lt;i32&gt; = numbers
+        .iter()
+        .filter(|&amp;&amp;n| n &gt; threshold)
+        .copied()
+        .collect();
+
+    println!("{:?}", filtered);
+}</code></pre></pre>
+<h2 id="closure-với-mutable-variables"><a class="header" href="#closure-với-mutable-variables">Closure với mutable variables</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let mut count = 0;
+
+    {
+        let mut closure = || {
+            count += 1;
+            println!("Count: {}", count);
+        };
+
+        closure(); // 1
+        closure(); // 2
+    }
+
+    println!("Final: {}", count); // 2
+}</code></pre></pre>
+<h3 id="move-với-mutable"><a class="header" href="#move-với-mutable">Move với mutable</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let mut count = 0;
+
+    let mut closure = move || {
+        count += 1; // Modifying moved copy
+        count
+    };
+
+    println!("{}", closure()); // 1
+    println!("{}", closure()); // 2
+
+    // Original count vẫn là 0
+    println!("Original: {}", count); // 0
+}</code></pre></pre>
+<h2 id="real-world-example-event-handlers"><a class="header" href="#real-world-example-event-handlers">Real-world example: Event handlers</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">struct Button {
+    on_click: Box&lt;dyn Fn()&gt;,
+}
+
+impl Button {
+    fn new&lt;F&gt;(on_click: F) -&gt; Self
+    where
+        F: Fn() + 'static,
+    {
+        Button {
+            on_click: Box::new(on_click),
+        }
+    }
+
+    fn click(&amp;self) {
+        (self.on_click)();
+    }
+}
+
+fn main() {
+    let message = String::from("Button clicked!");
+
+    let button = Button::new(move || {
+        println!("{}", message);
+    });
+
+    button.click();
+    button.click();
+}</code></pre></pre>
+<h2 id="pattern-builder-with-closures"><a class="header" href="#pattern-builder-with-closures">Pattern: Builder with closures</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">struct Request {
+    url: String,
+    on_success: Box&lt;dyn Fn(String)&gt;,
+    on_error: Box&lt;dyn Fn(String)&gt;,
+}
+
+impl Request {
+    fn new(url: String) -&gt; RequestBuilder {
+        RequestBuilder {
+            url,
+            on_success: None,
+            on_error: None,
+        }
+    }
+}
+
+struct RequestBuilder {
+    url: String,
+    on_success: Option&lt;Box&lt;dyn Fn(String)&gt;&gt;,
+    on_error: Option&lt;Box&lt;dyn Fn(String)&gt;&gt;,
+}
+
+impl RequestBuilder {
+    fn on_success&lt;F&gt;(mut self, callback: F) -&gt; Self
+    where
+        F: Fn(String) + 'static,
+    {
+        self.on_success = Some(Box::new(callback));
+        self
+    }
+
+    fn on_error&lt;F&gt;(mut self, callback: F) -&gt; Self
+    where
+        F: Fn(String) + 'static,
+    {
+        self.on_error = Some(Box::new(callback));
+        self
+    }
+
+    fn send(self) {
+        // Simulate request
+        let success = true;
+
+        if success {
+            if let Some(callback) = self.on_success {
+                callback("Success!".to_string());
+            }
+        } else {
+            if let Some(callback) = self.on_error {
+                callback("Error!".to_string());
+            }
+        }
+    }
+}
+
+fn main() {
+    let prefix = String::from("[LOG]");
+
+    Request::new("https://api.example.com".to_string())
+        .on_success(move |msg| {
+            println!("{} {}", prefix, msg);
+        })
+        .send();
+}</code></pre></pre>
+<h2 id="closure-types-và-capture-modes"><a class="header" href="#closure-types-và-capture-modes">Closure types và capture modes</a></h2>
+<p>Rust có 3 closure traits tùy thuộc vào cách capture:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    let s = String::from("hello");
+
+    // FnOnce: Consumes captured variables
+    let consume = move || {
+        drop(s); // Takes ownership
+    };
+    consume();
+    // consume(); // ❌ Can't call twice
+
+    let s = String::from("hello");
+
+    // FnMut: Mutably borrows captured variables
+    let mut mutate = || {
+        s.push_str(" world"); // ❌ Won't compile: can't mutate
+    };
+
+    let mut s = String::from("hello");
+
+    // Fn: Immutably borrows captured variables
+    let borrow = || {
+        println!("{}", s); // Just reads
+    };
+    borrow();
+    borrow(); // ✅ Can call multiple times
+}</code></pre></pre>
+<h2 id="best-practices-11"><a class="header" href="#best-practices-11">Best Practices</a></h2>
+<ol>
+<li><strong>Clone judiciously</strong>: Chỉ clone khi cần thiết</li>
+<li><strong>Use <code>Arc</code> cho shared ownership</strong>: Đặc biệt với threads</li>
+<li><strong>Prefer <code>move</code> cho long-lived closures</strong>: Tránh lifetime issues</li>
+<li><strong>Document capture behavior</strong>: Ghi rõ closure captures gì</li>
+<li><strong>Consider using structs</strong>: Cho complex state management</li>
+</ol>
+<h2 id="common-mistakes"><a class="header" href="#common-mistakes">Common mistakes</a></h2>
+<h3 id="-forgetting-move-with-threads"><a class="header" href="#-forgetting-move-with-threads">❌ Forgetting move with threads</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ❌ Won't compile
+fn wrong() {
+    let data = vec![1, 2, 3];
+
+    thread::spawn(|| {
+        println!("{:?}", data); // Error: may outlive borrowed value
+    });
+}
+
+// ✅ Correct
+fn correct() {
+    let data = vec![1, 2, 3];
+
+    thread::spawn(move || {
+        println!("{:?}", data);
+    });
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="-moving-when-you-need-to-borrow"><a class="header" href="#-moving-when-you-need-to-borrow">❌ Moving when you need to borrow</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn wrong() {
+    let data = vec![1, 2, 3];
+
+    let closure = move || {
+        println!("{:?}", data);
+    };
+
+    closure();
+    // println!("{:?}", data); // ❌ Error: value moved
+}
+
+// ✅ Just borrow
+fn correct() {
+    let data = vec![1, 2, 3];
+
+    let closure = || {
+        println!("{:?}", data);
+    };
+
+    closure();
+    println!("{:?}", data); // ✅ Still available
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="tham-khảo-5"><a class="header" href="#tham-khảo-5">Tham khảo</a></h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/ch13-01-closures.html">Closures: Anonymous Functions that Capture Their Environment</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch13-01-closures.html#closure-type-inference-and-annotation">Closure types (Fn, FnMut, FnOnce)</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="let-else-pattern"><a class="header" href="#let-else-pattern">let-else Pattern</a></h1>
+<p><code>let-else</code> là một tính năng được giới thiệu trong Rust 1.65 (2022), cho phép pattern matching với early return một cách elegant và concise.</p>
+<h2 id="syntax-cơ-bản"><a class="header" href="#syntax-cơ-bản">Syntax cơ bản</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let PATTERN = EXPRESSION else {
+    DIVERGING_CODE
+};
+<span class="boring">}</span></code></pre></pre>
+<p>Nếu pattern matching thất bại, code trong <code>else</code> block sẽ chạy. Block này phải diverge (return, break, continue, panic, etc.)</p>
+<h2 id="ví-dụ-đơn-giản"><a class="header" href="#ví-dụ-đơn-giản">Ví dụ đơn giản</a></h2>
+<h3 id="với-option"><a class="header" href="#với-option">Với Option</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn process_value(maybe_value: Option&lt;i32&gt;) {
+    let Some(value) = maybe_value else {
+        println!("No value provided");
+        return;
+    };
+
+    // value có type i32, không phải Option&lt;i32&gt;
+    println!("Processing: {}", value);
+}
+
+fn main() {
+    process_value(Some(42));  // Processing: 42
+    process_value(None);       // No value provided
+}</code></pre></pre>
+<h3 id="với-result"><a class="header" href="#với-result">Với Result</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn parse_config(input: &amp;str) -&gt; Result&lt;(), String&gt; {
+    let Ok(port) = input.parse::&lt;u16&gt;() else {
+        return Err("Invalid port number".to_string());
+    };
+
+    println!("Port: {}", port);
+    Ok(())
+}
+
+fn main() {
+    parse_config("8080").ok();  // Port: 8080
+    parse_config("invalid").ok(); // Returns Err
+}</code></pre></pre>
+<h2 id="so-sánh-với-các-approaches-khác"><a class="header" href="#so-sánh-với-các-approaches-khác">So sánh với các approaches khác</a></h2>
+<h3 id="-before-let-else-verbose"><a class="header" href="#-before-let-else-verbose">❌ Before let-else (verbose)</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn get_first_word(text: &amp;str) -&gt; Result&lt;String, &amp;'static str&gt; {
+    let words: Vec&lt;&amp;str&gt; = text.split_whitespace().collect();
+
+    // Cách 1: if-let với nested logic
+    if let Some(first) = words.first() {
+        Ok(first.to_string())
+    } else {
+        Err("No words found")
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn get_first_word(text: &amp;str) -&gt; Result&lt;String, &amp;'static str&gt; {
+    let words: Vec&lt;&amp;str&gt; = text.split_whitespace().collect();
+
+    // Cách 2: match
+    match words.first() {
+        Some(first) =&gt; Ok(first.to_string()),
+        None =&gt; Err("No words found"),
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="-with-let-else-concise"><a class="header" href="#-with-let-else-concise">✅ With let-else (concise)</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn get_first_word(text: &amp;str) -&gt; Result&lt;String, &amp;'static str&gt; {
+    let words: Vec&lt;&amp;str&gt; = text.split_whitespace().collect();
+
+    let Some(first) = words.first() else {
+        return Err("No words found");
+    };
+
+    Ok(first.to_string())
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="use-cases-1"><a class="header" href="#use-cases-1">Use Cases</a></h2>
+<h3 id="1-function-argument-validation"><a class="header" href="#1-function-argument-validation">1. Function argument validation</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn create_user(name: Option&lt;String&gt;, age: Option&lt;u32&gt;) -&gt; Result&lt;User, String&gt; {
+    let Some(name) = name else {
+        return Err("Name is required".to_string());
+    };
+
+    let Some(age) = age else {
+        return Err("Age is required".to_string());
+    };
+
+    if age &lt; 18 {
+        return Err("Must be 18 or older".to_string());
+    }
+
+    Ok(User { name, age })
+}
+
+struct User {
+    name: String,
+    age: u32,
+}
+
+fn main() {
+    match create_user(Some("Alice".to_string()), Some(25)) {
+        Ok(user) =&gt; println!("Created user: {}", user.name),
+        Err(e) =&gt; println!("Error: {}", e),
+    }
+}</code></pre></pre>
+<h3 id="2-parsing-và-validation"><a class="header" href="#2-parsing-và-validation">2. Parsing và validation</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn parse_port(s: &amp;str) -&gt; Result&lt;u16, String&gt; {
+    let Ok(port) = s.parse::&lt;u16&gt;() else {
+        return Err(format!("'{}' is not a valid port number", s));
+    };
+
+    if port &lt; 1024 {
+        return Err(format!("Port {} is reserved", port));
+    }
+
+    Ok(port)
+}
+
+fn main() {
+    println!("{:?}", parse_port("8080"));    // Ok(8080)
+    println!("{:?}", parse_port("invalid")); // Err(...)
+    println!("{:?}", parse_port("80"));      // Err("Port 80 is reserved")
+}</code></pre></pre>
+<h3 id="3-destructuring-structstuples"><a class="header" href="#3-destructuring-structstuples">3. Destructuring structs/tuples</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn process_point(maybe_point: Option&lt;Point&gt;) {
+    let Some(Point { x, y }) = maybe_point else {
+        println!("No point provided");
+        return;
+    };
+
+    println!("Point: ({}, {})", x, y);
+}
+
+fn main() {
+    process_point(Some(Point { x: 10, y: 20 }));
+    process_point(None);
+}</code></pre></pre>
+<h3 id="4-working-với-enums"><a class="header" href="#4-working-với-enums">4. Working với enums</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">enum Message {
+    Text(String),
+    Number(i32),
+}
+
+fn process_text(msg: Message) -&gt; Result&lt;(), String&gt; {
+    let Message::Text(content) = msg else {
+        return Err("Expected text message".to_string());
+    };
+
+    println!("Text: {}", content);
+    Ok(())
+}
+
+fn main() {
+    process_text(Message::Text("Hello".to_string())).ok();
+    process_text(Message::Number(42)).ok();
+}</code></pre></pre>
+<h3 id="5-guard-clauses"><a class="header" href="#5-guard-clauses">5. Guard clauses</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">fn calculate_discount(price: f64, coupon: Option&lt;String&gt;) -&gt; f64 {
+    let Some(code) = coupon else {
+        return price; // No discount
+    };
+
+    let discount = match code.as_str() {
+        "SAVE10" =&gt; 0.10,
+        "SAVE20" =&gt; 0.20,
+        _ =&gt; return price, // Invalid code
+    };
+
+    price * (1.0 - discount)
+}
+
+fn main() {
+    println!("{}", calculate_discount(100.0, Some("SAVE10".to_string()))); // 90
+    println!("{}", calculate_discount(100.0, None)); // 100
+}</code></pre></pre>
+<h2 id="multiple-let-else-trong-sequence"><a class="header" href="#multiple-let-else-trong-sequence">Multiple let-else trong sequence</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn process_config(
+    host: Option&lt;String&gt;,
+    port: Option&lt;String&gt;,
+) -&gt; Result&lt;(String, u16), String&gt; {
+    let Some(host) = host else {
+        return Err("Host is required".to_string());
+    };
+
+    let Some(port_str) = port else {
+        return Err("Port is required".to_string());
+    };
+
+    let Ok(port) = port_str.parse::&lt;u16&gt;() else {
+        return Err(format!("Invalid port: {}", port_str));
+    };
+
+    Ok((host, port))
+}
+
+fn main() {
+    let result = process_config(
+        Some("localhost".to_string()),
+        Some("8080".to_string()),
+    );
+    println!("{:?}", result); // Ok(("localhost", 8080))
+}</code></pre></pre>
+<h2 id="pattern-với-slices"><a class="header" href="#pattern-với-slices">Pattern với slices</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">fn get_first_two(numbers: &amp;[i32]) -&gt; Result&lt;(i32, i32), &amp;'static str&gt; {
+    let [first, second, ..] = numbers else {
+        return Err("Need at least 2 elements");
+    };
+
+    Ok((*first, *second))
+}
+
+fn main() {
+    println!("{:?}", get_first_two(&amp;[1, 2, 3]));    // Ok((1, 2))
+    println!("{:?}", get_first_two(&amp;[1]));           // Err(...)
+}</code></pre></pre>
+<h2 id="combining-với-other-patterns"><a class="header" href="#combining-với-other-patterns">Combining với other patterns</a></h2>
+<h3 id="let-else--if-let"><a class="header" href="#let-else--if-let">let-else + if-let</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn process_nested(value: Option&lt;Option&lt;i32&gt;&gt;) {
+    let Some(inner) = value else {
+        println!("Outer None");
+        return;
+    };
+
+    if let Some(number) = inner {
+        println!("Number: {}", number);
+    } else {
+        println!("Inner None");
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="let-else--while-let"><a class="header" href="#let-else--while-let">let-else + while-let</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn process_iterator(mut iter: impl Iterator&lt;Item = Result&lt;i32, String&gt;&gt;) {
+    while let Some(result) = iter.next() {
+        let Ok(value) = result else {
+            eprintln!("Skipping error");
+            continue;
+        };
+
+        println!("Value: {}", value);
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="best-practices-12"><a class="header" href="#best-practices-12">Best practices</a></h2>
+<h3 id="-use-khi-có-early-return"><a class="header" href="#-use-khi-có-early-return">✅ Use khi có early return</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Good: early return
+fn process(value: Option&lt;i32&gt;) -&gt; Result&lt;i32, String&gt; {
+    let Some(v) = value else {
+        return Err("No value".to_string());
+    };
+
+    Ok(v * 2)
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="-avoid-cho-simple-cases"><a class="header" href="#-avoid-cho-simple-cases">❌ Avoid cho simple cases</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ❌ Overkill for simple case
+let Some(value) = option else {
+    panic!("No value");
+};
+
+// ✅ Better
+let value = option.expect("No value");
+<span class="boring">}</span></code></pre></pre>
+<h3 id="-use-cho-validation-chains"><a class="header" href="#-use-cho-validation-chains">✅ Use cho validation chains</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn validate_user(
+    name: Option&lt;String&gt;,
+    email: Option&lt;String&gt;,
+    age: Option&lt;u32&gt;,
+) -&gt; Result&lt;User, String&gt; {
+    let Some(name) = name else {
+        return Err("Name required".to_string());
+    };
+
+    let Some(email) = email else {
+        return Err("Email required".to_string());
+    };
+
+    let Some(age) = age else {
+        return Err("Age required".to_string());
+    };
+
+    // All validations passed
+    Ok(User { name, age })
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="error-messages"><a class="header" href="#error-messages">Error messages</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn parse_number(s: &amp;str) -&gt; Result&lt;i32, String&gt; {
+    let Ok(num) = s.parse::&lt;i32&gt;() else {
+        // Có thể customize error message
+        return Err(format!(
+            "Failed to parse '{}' as number",
+            s
+        ));
+    };
+
+    Ok(num)
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="let-else-vs-unwrapexpect"><a class="header" href="#let-else-vs-unwrapexpect">let-else vs unwrap/expect</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ❌ Using unwrap (panics)
+let value = option.unwrap();
+
+// ❌ Using expect (panics with message)
+let value = option.expect("Value required");
+
+// ✅ Using let-else (controlled error handling)
+let Some(value) = option else {
+    return Err("Value required".to_string());
+};
+<span class="boring">}</span></code></pre></pre>
+<h2 id="real-world-example-request-handling"><a class="header" href="#real-world-example-request-handling">Real-world example: Request handling</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[derive(Debug)]
+struct Request {
+    path: String,
+    method: String,
+    body: Option&lt;String&gt;,
+}
+
+fn handle_create_user(req: Request) -&gt; Result&lt;String, String&gt; {
+    // Validate method
+    if req.method != "POST" {
+        return Err(format!("Expected POST, got {}", req.method));
+    }
+
+    // Validate body exists
+    let Some(body) = req.body else {
+        return Err("Request body is required".to_string());
+    };
+
+    // Parse body as JSON (simplified)
+    let Ok(user_data) = serde_json::from_str::&lt;serde_json::Value&gt;(&amp;body) else {
+        return Err("Invalid JSON".to_string());
+    };
+
+    // Extract name
+    let Some(name) = user_data.get("name").and_then(|v| v.as_str()) else {
+        return Err("Missing 'name' field".to_string());
+    };
+
+    Ok(format!("Created user: {}", name))
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="limitations"><a class="header" href="#limitations">Limitations</a></h2>
+<ol>
+<li><strong>else block must diverge</strong>: Phải return, break, continue, hoặc panic</li>
+<li><strong>Cannot use với if-let chains</strong>: Chỉ work với <code>let</code> statements</li>
+<li><strong>Pattern must be refutable</strong>: Không work với irrefutable patterns</li>
+</ol>
+<h2 id="tham-khảo-6"><a class="header" href="#tham-khảo-6">Tham khảo</a></h2>
+<ul>
+<li><a href="https://rust-lang.github.io/rfcs/3137-let-else.html">let-else RFC</a></li>
+<li><a href="https://blog.rust-lang.org/2022/11/03/Rust-1.65.0.html">Rust 1.65 Release Notes</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html">Pattern Syntax</a></li>
 </ul>
 
                     </main>

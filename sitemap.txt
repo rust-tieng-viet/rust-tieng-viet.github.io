@@ -46,8 +46,14 @@ https://rust-tieng-viet.github.io/idioms/aim-for-immutability
 https://rust-tieng-viet.github.io/idioms/borrowed-types
 https://rust-tieng-viet.github.io/idioms/constructor
 https://rust-tieng-viet.github.io/idioms/default-trait
+https://rust-tieng-viet.github.io/idioms/finalisation-destructors
 https://rust-tieng-viet.github.io/idioms/format
 https://rust-tieng-viet.github.io/idioms/functional-programming
+https://rust-tieng-viet.github.io/idioms/let-else
+https://rust-tieng-viet.github.io/idioms/mem-replace
+https://rust-tieng-viet.github.io/idioms/option-iter
+https://rust-tieng-viet.github.io/idioms/pass-variables-to-closure
+https://rust-tieng-viet.github.io/idioms/privacy-for-extensibility
 https://rust-tieng-viet.github.io/idioms/temporary-mutability
 https://rust-tieng-viet.github.io/advanced/smart-pointer/box
 https://rust-tieng-viet.github.io/advanced/smart-pointer/cow
