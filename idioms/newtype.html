@@ -1,0 +1,754 @@
+<!DOCTYPE HTML>
+<html lang="vi" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Newtype Pattern - Rust Tiếng Việt</title>
+
+
+        <!-- Custom HTML head -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-88RKF7DLPY"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-88RKF7DLPY');
+        </script>
+        
+        <!-- pageview.js -->
+        <script>
+          !function(e,n,t){e.onload=function(){
+          let e=n.createElement("script");
+          e.src=t,n.body.appendChild(e)}}
+          (window,document,"https://pageview.duyet.net/pageview.js");
+        </script>
+        
+        <script async src="https://seline.duyet.workers.dev/seline.js" data-api-host="https://seline.duyet.workers.dev" data-token="d7c8002f8e40139"></script>
+        <script async src="https://cm43xj8zd00093b619ak2zfuc.d.jitsu.com/p.js"></script>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust Tiếng Việt</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/src/idioms/newtype.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="newtype-pattern"><a class="header" href="#newtype-pattern">Newtype Pattern</a></h1>
+<p>Newtype pattern sử dụng một tuple struct với một field duy nhất để tạo wrapper cho một type, tạo ra một type mới thay vì một alias. Pattern này giúp tăng type safety và tránh nhầm lẫn giữa các giá trị có cùng underlying type nhưng khác ý nghĩa.</p>
+<h2 id="vấn-đề"><a class="header" href="#vấn-đề">Vấn đề</a></h2>
+<p>Khi làm việc với data, ta thường có nhiều giá trị cùng kiểu nhưng khác ý nghĩa:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">// ❌ Dễ nhầm lẫn - tất cả đều là f64
+fn calculate_distance(lat1: f64, lon1: f64, lat2: f64, lon2: f64) -&gt; f64 {
+    // Dễ truyền sai thứ tự parameters
+    // ...
+    0.0
+}
+
+fn main() {
+    let latitude = 37.7749;
+    let longitude = -122.4194;
+
+    // Có thể vô tình đảo vị trí
+    calculate_distance(longitude, latitude, 0.0, 0.0); // ❌ Bug!
+}</code></pre></pre>
+<h2 id="giải-pháp-newtype-pattern"><a class="header" href="#giải-pháp-newtype-pattern">Giải pháp: Newtype Pattern</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">// ✅ Type-safe với newtypes
+struct Latitude(f64);
+struct Longitude(f64);
+struct Kilometers(f64);
+
+fn calculate_distance(
+    lat1: Latitude,
+    lon1: Longitude,
+    lat2: Latitude,
+    lon2: Longitude
+) -&gt; Kilometers {
+    // Compiler đảm bảo đúng thứ tự!
+    Kilometers(0.0)
+}
+
+fn main() {
+    let lat = Latitude(37.7749);
+    let lon = Longitude(-122.4194);
+
+    // ✅ Type-safe - compiler sẽ báo lỗi nếu sai thứ tự
+    calculate_distance(lat, lon, Latitude(0.0), Longitude(0.0));
+
+    // ❌ Compile error!
+    // calculate_distance(lon, lat, Latitude(0.0), Longitude(0.0));
+}</code></pre></pre>
+<h2 id="zero-cost-abstraction"><a class="header" href="#zero-cost-abstraction">Zero-Cost Abstraction</a></h2>
+<p>Newtypes không có runtime overhead:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">struct UserId(u64);
+struct ProductId(u64);
+
+fn main() {
+    let user = UserId(12345);
+    let product = ProductId(67890);
+
+    // ❌ Compile error - không thể nhầm lẫn!
+    // let x: UserId = product;
+
+    // Compiled code giống như dùng trực tiếp u64
+    // Zero runtime cost!
+}</code></pre></pre>
+<h2 id="Ứng-dụng-trong-data-engineering"><a class="header" href="#Ứng-dụng-trong-data-engineering">Ứng dụng trong Data Engineering</a></h2>
+<h3 id="1-phân-biệt-các-loại-ids"><a class="header" href="#1-phân-biệt-các-loại-ids">1. Phân biệt các loại IDs</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+struct CustomerId(u64);
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+struct OrderId(u64);
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+struct ProductId(u64);
+
+use std::collections::HashMap;
+
+struct DataWarehouse {
+    customer_orders: HashMap&lt;CustomerId, Vec&lt;OrderId&gt;&gt;,
+    order_products: HashMap&lt;OrderId, Vec&lt;ProductId&gt;&gt;,
+}
+
+impl DataWarehouse {
+    fn get_customer_orders(&amp;self, customer: CustomerId) -&gt; Option&lt;&amp;Vec&lt;OrderId&gt;&gt; {
+        self.customer_orders.get(&amp;customer)
+    }
+
+    // ✅ Type system đảm bảo không truyền nhầm ID type
+    fn get_order_products(&amp;self, order: OrderId) -&gt; Option&lt;&amp;Vec&lt;ProductId&gt;&gt; {
+        self.order_products.get(&amp;order)
+    }
+}
+
+fn main() {
+    let customer = CustomerId(1001);
+    let order = OrderId(5001);
+
+    let warehouse = DataWarehouse {
+        customer_orders: HashMap::new(),
+        order_products: HashMap::new(),
+    };
+
+    // ✅ Type-safe
+    warehouse.get_customer_orders(customer);
+
+    // ❌ Compile error!
+    // warehouse.get_customer_orders(order);
+}</code></pre></pre>
+<h3 id="2-units-và-measurements"><a class="header" href="#2-units-và-measurements">2. Units và Measurements</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">#[derive(Debug, Clone, Copy)]
+struct Meters(f64);
+
+#[derive(Debug, Clone, Copy)]
+struct Feet(f64);
+
+#[derive(Debug, Clone, Copy)]
+struct Celsius(f64);
+
+#[derive(Debug, Clone, Copy)]
+struct Fahrenheit(f64);
+
+impl Meters {
+    fn to_feet(self) -&gt; Feet {
+        Feet(self.0 * 3.28084)
+    }
+}
+
+impl Feet {
+    fn to_meters(self) -&gt; Meters {
+        Meters(self.0 / 3.28084)
+    }
+}
+
+impl Celsius {
+    fn to_fahrenheit(self) -&gt; Fahrenheit {
+        Fahrenheit(self.0 * 9.0 / 5.0 + 32.0)
+    }
+}
+
+fn main() {
+    let height_m = Meters(1.75);
+    let height_ft = height_m.to_feet();
+
+    println!("Height: {:?} = {:?}", height_m, height_ft);
+
+    let temp_c = Celsius(25.0);
+    let temp_f = temp_c.to_fahrenheit();
+
+    println!("Temperature: {:?} = {:?}", temp_c, temp_f);
+
+    // ❌ Compile error - không thể cộng các units khác nhau!
+    // let x = height_m.0 + temp_c.0;
+}</code></pre></pre>
+<h3 id="3-validated-data"><a class="header" href="#3-validated-data">3. Validated Data</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::error::Error;
+
+#[derive(Debug)]
+struct Email(String);
+
+impl Email {
+    fn new(email: String) -&gt; Result&lt;Self, Box&lt;dyn Error&gt;&gt; {
+        if email.contains('@') &amp;&amp; email.contains('.') {
+            Ok(Email(email))
+        } else {
+            Err("Invalid email format".into())
+        }
+    }
+
+    fn as_str(&amp;self) -&gt; &amp;str {
+        &amp;self.0
+    }
+}
+
+#[derive(Debug)]
+struct PhoneNumber(String);
+
+impl PhoneNumber {
+    fn new(phone: String) -&gt; Result&lt;Self, Box&lt;dyn Error&gt;&gt; {
+        if phone.len() &gt;= 10 {
+            Ok(PhoneNumber(phone))
+        } else {
+            Err("Phone number too short".into())
+        }
+    }
+}
+
+fn send_notification(email: Email, phone: PhoneNumber) {
+    // Email và PhoneNumber đã được validated!
+    println!("Sending to {} and {:?}", email.as_str(), phone);
+}
+
+fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+    let email = Email::new("user@example.com".to_string())?;
+    let phone = PhoneNumber::new("1234567890".to_string())?;
+
+    send_notification(email, phone);
+
+    // ❌ Invalid data không thể tạo được Email
+    let bad_email = Email::new("notanemail".to_string());
+    assert!(bad_email.is_err());
+
+    Ok(())
+}</code></pre></pre>
+<h3 id="4-currency-và-money"><a class="header" href="#4-currency-và-money">4. Currency và Money</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+struct USD(i64);  // Cents
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+struct EUR(i64);  // Cents
+
+impl USD {
+    fn from_dollars(dollars: f64) -&gt; Self {
+        USD((dollars * 100.0) as i64)
+    }
+
+    fn to_dollars(&amp;self) -&gt; f64 {
+        self.0 as f64 / 100.0
+    }
+
+    fn add(self, other: USD) -&gt; USD {
+        USD(self.0 + other.0)
+    }
+}
+
+impl EUR {
+    fn from_euros(euros: f64) -&gt; Self {
+        EUR((euros * 100.0) as i64)
+    }
+
+    fn to_euros(&amp;self) -&gt; f64 {
+        self.0 as f64 / 100.0
+    }
+}
+
+fn calculate_total_revenue(amounts: &amp;[USD]) -&gt; USD {
+    amounts.iter()
+        .fold(USD(0), |acc, &amp;amount| acc.add(amount))
+}
+
+fn main() {
+    let price1 = USD::from_dollars(19.99);
+    let price2 = USD::from_dollars(29.99);
+
+    let total = price1.add(price2);
+    println!("Total: ${:.2}", total.to_dollars());
+
+    let euro_price = EUR::from_euros(45.50);
+
+    // ❌ Compile error - không thể cộng USD và EUR!
+    // let wrong = price1.add(euro_price);
+
+    // ✅ Type-safe calculations
+    let revenues = vec![
+        USD::from_dollars(100.0),
+        USD::from_dollars(250.5),
+        USD::from_dollars(75.25),
+    ];
+
+    let total_revenue = calculate_total_revenue(&amp;revenues);
+    println!("Total revenue: ${:.2}", total_revenue.to_dollars());
+}</code></pre></pre>
+<h2 id="implementing-traits-cho-newtypes"><a class="header" href="#implementing-traits-cho-newtypes">Implementing Traits cho Newtypes</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::fmt;
+
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+struct RowId(usize);
+
+impl RowId {
+    fn new(id: usize) -&gt; Self {
+        RowId(id)
+    }
+
+    fn value(&amp;self) -&gt; usize {
+        self.0
+    }
+}
+
+// Custom Display
+impl fmt::Display for RowId {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        write!(f, "Row#{}", self.0)
+    }
+}
+
+// Custom Debug
+impl fmt::Debug for RowId {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        write!(f, "RowId({})", self.0)
+    }
+}
+
+fn main() {
+    let row = RowId::new(42);
+
+    println!("{}", row);      // Row#42
+    println!("{:?}", row);    // RowId(42)
+
+    // Có thể dùng trong collections nhờ Hash, Eq
+    let mut rows = std::collections::HashSet::new();
+    rows.insert(row);
+    rows.insert(RowId::new(100));
+
+    println!("Rows: {:?}", rows);
+}</code></pre></pre>
+<h2 id="deref-coercion"><a class="header" href="#deref-coercion">Deref Coercion</a></h2>
+<p>Cho phép newtype tự động convert sang underlying type trong một số contexts:</p>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::ops::Deref;
+
+struct DatabaseUrl(String);
+
+impl DatabaseUrl {
+    fn new(url: String) -&gt; Self {
+        DatabaseUrl(url)
+    }
+}
+
+impl Deref for DatabaseUrl {
+    type Target = str;
+
+    fn deref(&amp;self) -&gt; &amp;Self::Target {
+        &amp;self.0
+    }
+}
+
+fn connect(url: &amp;str) {
+    println!("Connecting to: {}", url);
+}
+
+fn main() {
+    let db_url = DatabaseUrl::new("postgres://localhost:5432/mydb".to_string());
+
+    // ✅ Tự động deref từ &amp;DatabaseUrl sang &amp;str
+    connect(&amp;db_url);
+
+    // ✅ Có thể gọi String methods
+    println!("Length: {}", db_url.len());
+    println!("Starts with postgres: {}", db_url.starts_with("postgres"));
+}</code></pre></pre>
+<h2 id="ví-dụ-thực-tế-data-pipeline"><a class="header" href="#ví-dụ-thực-tế-data-pipeline">Ví dụ thực tế: Data Pipeline</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021">use std::collections::HashMap;
+
+// Newtypes cho data pipeline
+#[derive(Debug, Clone, Hash, PartialEq, Eq)]
+struct SourceId(String);
+
+#[derive(Debug, Clone, Hash, PartialEq, Eq)]
+struct DatasetId(String);
+
+#[derive(Debug, Clone, Copy)]
+struct Timestamp(i64);
+
+#[derive(Debug, Clone, Copy)]
+struct RecordCount(usize);
+
+struct DataPipeline {
+    datasets: HashMap&lt;DatasetId, DatasetInfo&gt;,
+}
+
+#[derive(Debug)]
+struct DatasetInfo {
+    source: SourceId,
+    last_updated: Timestamp,
+    record_count: RecordCount,
+}
+
+impl DataPipeline {
+    fn new() -&gt; Self {
+        DataPipeline {
+            datasets: HashMap::new(),
+        }
+    }
+
+    fn add_dataset(
+        &amp;mut self,
+        dataset_id: DatasetId,
+        source: SourceId,
+        timestamp: Timestamp,
+        count: RecordCount,
+    ) {
+        self.datasets.insert(
+            dataset_id,
+            DatasetInfo {
+                source,
+                last_updated: timestamp,
+                record_count: count,
+            },
+        );
+    }
+
+    fn get_dataset(&amp;self, dataset_id: &amp;DatasetId) -&gt; Option&lt;&amp;DatasetInfo&gt; {
+        self.datasets.get(dataset_id)
+    }
+}
+
+fn main() {
+    let mut pipeline = DataPipeline::new();
+
+    let dataset = DatasetId("users_2024".to_string());
+    let source = SourceId("postgresql".to_string());
+    let timestamp = Timestamp(1704067200);  // 2024-01-01
+    let count = RecordCount(1_000_000);
+
+    pipeline.add_dataset(dataset.clone(), source, timestamp, count);
+
+    if let Some(info) = pipeline.get_dataset(&amp;dataset) {
+        println!("Dataset info: {:?}", info);
+    }
+}</code></pre></pre>
+<h2 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h2>
+<h3 id="1-derive-useful-traits"><a class="header" href="#1-derive-useful-traits">1. Derive useful traits</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ✅ Derive các traits thường dùng
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+struct TransactionId(u64);
+
+#[derive(Debug, Clone, PartialEq)]
+struct Amount(f64);
+<span class="boring">}</span></code></pre></pre>
+<h3 id="2-provide-accessor-methods"><a class="header" href="#2-provide-accessor-methods">2. Provide accessor methods</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Score(f64);
+
+impl Score {
+    fn new(value: f64) -&gt; Self {
+        Score(value.max(0.0).min(100.0))  // Clamp 0-100
+    }
+
+    // Accessor
+    fn value(&amp;self) -&gt; f64 {
+        self.0
+    }
+
+    // Business logic
+    fn is_passing(&amp;self) -&gt; bool {
+        self.0 &gt;= 60.0
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="3-implement-conversion-traits"><a class="header" href="#3-implement-conversion-traits">3. Implement conversion traits</a></h3>
+<pre><pre class="playground"><code class="language-rust edition2021">struct Percentage(f64);
+
+impl From&lt;f64&gt; for Percentage {
+    fn from(value: f64) -&gt; Self {
+        Percentage(value)
+    }
+}
+
+impl From&lt;Percentage&gt; for f64 {
+    fn from(p: Percentage) -&gt; Self {
+        p.0
+    }
+}
+
+fn main() {
+    let p: Percentage = 75.5.into();
+    let f: f64 = p.into();
+    println!("{}", f);  // 75.5
+}</code></pre></pre>
+<h2 id="khi-nào-nên-dùng-newtype"><a class="header" href="#khi-nào-nên-dùng-newtype">Khi nào nên dùng Newtype?</a></h2>
+<h3 id="-nên-dùng-khi"><a class="header" href="#-nên-dùng-khi">✅ Nên dùng khi:</a></h3>
+<ol>
+<li><strong>Phân biệt giá trị cùng type</strong> - IDs, measurements, currencies</li>
+<li><strong>Validation</strong> - Email, phone, URL phải valid</li>
+<li><strong>Type safety</strong> - Tránh truyền sai parameters</li>
+<li><strong>Domain modeling</strong> - Express business concepts</li>
+<li><strong>Implementing traits cho external types</strong> - Orphan rule workaround</li>
+</ol>
+<h3 id="-không-cần-dùng-khi"><a class="header" href="#-không-cần-dùng-khi">❌ Không cần dùng khi:</a></h3>
+<ol>
+<li><strong>Simple local variables</strong> - Overhead không đáng</li>
+<li><strong>Performance-critical code</strong> - Nếu cần optimize extreme</li>
+<li><strong>Prototype code</strong> - Quá nhiều boilerplate ban đầu</li>
+</ol>
+<h2 id="tổng-kết"><a class="header" href="#tổng-kết">Tổng kết</a></h2>
+<p>Newtype pattern là một idiom quan trọng trong Rust:</p>
+<ul>
+<li>✅ Zero-cost abstraction</li>
+<li>✅ Type safety tăng cao</li>
+<li>✅ Self-documenting code</li>
+<li>✅ Compile-time guarantees</li>
+<li>✅ Tránh bugs phổ biến</li>
+</ul>
+<p>Best practices:</p>
+<ol>
+<li>Dùng cho IDs, units, validated data</li>
+<li>Derive useful traits</li>
+<li>Provide accessor methods</li>
+<li>Implement conversion traits khi cần</li>
+<li>Document the invariants</li>
+</ol>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ul>
+<li><a href="https://rust-unofficial.github.io/patterns/patterns/behavioural/newtype.html">Newtype Pattern - Rust Design Patterns</a></li>
+<li><a href="https://doc.rust-lang.org/rust-by-example/generics/new_types.html">New Type Idiom - Rust By Example</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch20-03-advanced-types.html">Advanced Types - The Rust Book</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../idioms/let-else.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../idioms/raii-guards.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../idioms/let-else.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../idioms/raii-guards.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>
