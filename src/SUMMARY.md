@@ -75,7 +75,7 @@
 
 - [Vec](./basic/vec/INDEX.md)
   - [Iter](./basic/vec/iter.md)
-  - [Sử dụng Enum để chứa nhiều loại dữ liệu]()
+  - [Sử dụng Enum để chứa nhiều loại dữ liệu](./basic/vec/enum-vec.md)
 
 - [`Code comment`](./basic/code-comment/README.md)
   - [Regular comments](./basic/code-comment/regular-comment.md)
