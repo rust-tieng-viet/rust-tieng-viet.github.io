@@ -1,4 +1,5 @@
 https://rust-tieng-viet.github.io/
+https://rust-tieng-viet.github.io/llm
 https://rust-tieng-viet.github.io/advanced/saturating
 https://rust-tieng-viet.github.io/advanced/smart-pointer
 https://rust-tieng-viet.github.io/basic/attr
@@ -60,6 +61,11 @@ https://rust-tieng-viet.github.io/idioms/raii-guards
 https://rust-tieng-viet.github.io/idioms/temporary-mutability
 https://rust-tieng-viet.github.io/idioms/typestate
 https://rust-tieng-viet.github.io/idioms/zero-cost-abstractions
+https://rust-tieng-viet.github.io/llm/ai-agents-workflows
+https://rust-tieng-viet.github.io/llm/candle
+https://rust-tieng-viet.github.io/llm/llm-crate
+https://rust-tieng-viet.github.io/llm/recent-updates-2025
+https://rust-tieng-viet.github.io/llm/rig
 https://rust-tieng-viet.github.io/advanced/smart-pointer/box
 https://rust-tieng-viet.github.io/advanced/smart-pointer/cow
 https://rust-tieng-viet.github.io/advanced/smart-pointer/rc
