@@ -2,7 +2,7 @@
 
 [https://play.rust-lang.org](https://play.rust-lang.org) giúp chúng ta chạy Rust code trực tiếp trên trình duyệt mà không cần [cài đặt Rust trên máy](./installation.md).
 
-![](./plaground.png)
+![](./playground.png)
 
 Một số tips:
 

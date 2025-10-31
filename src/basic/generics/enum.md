@@ -24,7 +24,7 @@ Xem thêm: [*Enum > Option<T>*](../enum/option)
 
 {{#playground ../enum/result/result-example.rs}}
 
-Xem tưhêm: [*Enum > Result<T, E>*](../enum/result)
+Xem thêm: [*Enum > Result<T, E>*](../enum/result)
 
 [`Option`]: https://doc.rust-lang.org/std/option/index.html
 [`Option<T>`]: https://doc.rust-lang.org/std/option/index.html
