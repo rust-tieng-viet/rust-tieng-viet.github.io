@@ -3,6 +3,7 @@ authors = ["Duyet Le"]
 language = "vi"
 src = "src"
 title = "Rust Tiếng Việt"
+description = "Tài liệu học Rust toàn diện bằng tiếng Việt - từ cơ bản đến nâng cao, bao gồm ownership, traits, async programming, data engineering và AI/LLM"
 
 [rust]
 edition = "2021"
@@ -10,6 +11,11 @@ edition = "2021"
 [output.html]
 git-repository-url = "https://github.com/rust-tieng-viet/rust-tieng-viet.github.io"
 edit-url-template = "https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/{path}"
+site-url = "https://rust-tieng-viet.github.io/"
+additional-css = ["theme/custom.css"]
+additional-js = ["theme/custom.js"]
+default-theme = "rust"
+preferred-dark-theme = "navy"
 
 [output.html.playground]
 editable = true
@@ -22,6 +28,7 @@ page-break = true # insert page-break after each chapter
 enable = true            # enables the search feature
 
 [output.linkcheck]
-# Check links on the internet
-follow-web-links = false
-optional = true
+# Check links on the internet (now enabled for better quality)
+follow-web-links = true
+optional = false
+warning-policy = "warn"

@@ -130,6 +130,8 @@
   - [Cow](./advanced/smart-pointer/cow.md)
   - [Ref<T>](./advanced/smart-pointer/ref.md)
   - [RefMut<T>](./advanced/smart-pointer/refmut.md)
+- [Async/Await - Lập trình Bất đồng bộ](./advanced/async/README.md)
+- [Unsafe Rust](./advanced/unsafe/README.md)
 - [`Saturating<T>`](./advanced/saturating.md)
 
 ---
@@ -210,3 +212,10 @@
 - [Zero-Cost Abstractions](./idioms/zero-cost-abstractions.md)
 - [Typestate Pattern](./idioms/typestate.md)
 - [Error Handling Patterns](./idioms/error-handling-patterns.md)
+
+---
+
+# Tài liệu Khác
+
+- [Chính sách Bảo mật](./privacy.md)
+- [Ai đang sử dụng Rust](./who-is-using.md)

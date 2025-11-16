@@ -2,7 +2,7 @@
 
 [https://play.rust-lang.org](https://play.rust-lang.org) giúp chúng ta chạy Rust code trực tiếp trên trình duyệt mà không cần [cài đặt Rust trên máy](./installation.md).
 
-![](./plaground.png)
+![Rust Playground interface - an online code editor for running Rust code in the browser](./playground.png)
 
 Một số tips:
 

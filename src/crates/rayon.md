@@ -89,7 +89,7 @@ speedup: 5.34x
 cargo run --release -- nbody visualize
 ```
 
-![](https://i.imgur.com/cF6Euyf.png)
+![Rayon nbody simulation visualization demo - showing parallel physics calculations in action](https://i.imgur.com/cF6Euyf.png)
 
 ## References
 

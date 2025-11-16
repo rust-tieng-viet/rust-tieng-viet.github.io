@@ -1,0 +1,432 @@
+/* ==================================================
+   Rust Tiếng Việt - Custom Styles
+   Vietnamese Typography Optimization & Enhancements
+   ================================================== */
+
+/* Vietnamese Font Stack - Optimized for readability */
+:root {
+  --vietnamese-font-family:
+    /* Vietnamese fonts */
+    -apple-system, BlinkMacSystemFont,
+    /* System fonts */
+    "Segoe UI", "SF Pro Display", "SF Pro Text",
+    /* Fallbacks optimized for Vietnamese */
+    "Helvetica Neue", Arial,
+    "Noto Sans", "Liberation Sans",
+    /* Vietnamese-specific fallback */
+    sans-serif,
+    /* Emoji support */
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+  --monospace-vietnamese:
+    /* Code fonts with Vietnamese support */
+    "SF Mono", Monaco, "Cascadia Code", "Roboto Mono",
+    "Source Code Pro", "Fira Code", Menlo, Consolas,
+    "DejaVu Sans Mono", monospace;
+}
+
+/* Apply Vietnamese-optimized fonts */
+body {
+  font-family: var(--vietnamese-font-family);
+  /* Optimize for Vietnamese diacritics */
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Code blocks with Vietnamese comments support */
+code, pre, .hljs {
+  font-family: var(--monospace-vietnamese);
+  /* Ensure diacritics don't get clipped */
+  line-height: 1.6;
+}
+
+/* Improve heading legibility for Vietnamese */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--vietnamese-font-family);
+  font-weight: 600;
+  line-height: 1.4;
+  /* Prevent diacritics from being cut off */
+  padding-top: 0.2em;
+  letter-spacing: -0.01em;
+}
+
+/* Vietnamese text in inline code */
+code {
+  padding: 0.15em 0.4em;
+  /* Increase padding for diacritics */
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  font-size: 0.9em;
+  border-radius: 3px;
+}
+
+/* ============================================
+   Cookie Consent Banner Styles
+   ============================================ */
+#cookie-consent {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg);
+  border-top: 2px solid var(--theme-hover);
+  padding: 1rem;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  z-index: 9999;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.cookie-consent-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cookie-consent-content p {
+  margin: 0;
+  flex: 1;
+  min-width: 300px;
+  line-height: 1.6;
+}
+
+.cookie-consent-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.cookie-consent button {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.cookie-consent .btn-primary {
+  background: var(--links);
+  color: white;
+}
+
+.cookie-consent .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  opacity: 0.9;
+}
+
+.cookie-consent .btn-secondary {
+  background: transparent;
+  border: 1px solid var(--theme-hover);
+  color: var(--fg);
+}
+
+.cookie-consent .btn-secondary:hover {
+  background: var(--theme-hover);
+}
+
+/* Responsive cookie banner */
+@media (max-width: 768px) {
+  .cookie-consent-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cookie-consent-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cookie-consent button {
+    flex: 1;
+    min-width: 120px;
+  }
+}
+
+/* ============================================
+   Improved Syntax Highlighting
+   ============================================ */
+.hljs {
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+/* Rust-specific syntax highlighting enhancements */
+.hljs-keyword {
+  font-weight: 600;
+}
+
+.hljs-comment {
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* ============================================
+   Accessibility Improvements
+   ============================================ */
+
+/* Focus indicators */
+a:focus, button:focus, input:focus {
+  outline: 2px solid var(--links);
+  outline-offset: 2px;
+}
+
+/* Skip to content link (for screen readers) */
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  z-index: 10000;
+  padding: 1em;
+  background: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.skip-to-content:focus {
+  left: 50%;
+  transform: translateX(-50%);
+  top: 1em;
+}
+
+/* Better image accessibility */
+img {
+  max-width: 100%;
+  height: auto;
+  /* Lazy loading indicator */
+  background: var(--quote-bg);
+}
+
+img[loading="lazy"] {
+  /* Reserve space to prevent layout shift */
+  min-height: 200px;
+}
+
+/* ============================================
+   Responsive Images
+   ============================================ */
+picture {
+  display: block;
+  margin: 1rem 0;
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+  #cookie-consent {
+    display: none !important;
+  }
+
+  /* Improve Vietnamese text rendering in print */
+  body {
+    font-size: 12pt;
+    line-height: 1.6;
+  }
+
+  /* Ensure code is readable when printed */
+  code, pre {
+    page-break-inside: avoid;
+    border: 1px solid #ccc;
+  }
+}
+
+/* ============================================
+   Dark Mode Optimizations
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  /* Reduce eye strain with slightly dimmed code blocks */
+  .hljs {
+    filter: brightness(0.95);
+  }
+}
+
+/* ============================================
+   Performance: Reduce Motion for Accessibility
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  #cookie-consent {
+    animation: none;
+  }
+}
+
+/* ============================================
+   Custom 404 Page Styles
+   ============================================ */
+.page-404 {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.page-404 h1 {
+  font-size: 4rem;
+  margin: 0;
+  color: var(--links);
+}
+
+.page-404 p {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+
+.page-404 .search-box {
+  margin: 2rem auto;
+  max-width: 500px;
+}
+
+/* ============================================
+   Breadcrumb Navigation
+   ============================================ */
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+  list-style: none;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.breadcrumb-item {
+  display: inline-block;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: "›";
+  padding: 0 0.5rem;
+  color: var(--fg);
+}
+
+.breadcrumb-item a {
+  text-decoration: none;
+  color: var(--links);
+}
+
+.breadcrumb-item a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================
+   Reading Progress Indicator
+   ============================================ */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: var(--links);
+  z-index: 10000;
+  transition: width 0.1s ease;
+}
+
+/* ============================================
+   Vietnamese-Specific Improvements
+   ============================================ */
+
+/* Prevent Vietnamese tone marks from being cut off */
+p, li, td, th {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: manual;
+}
+
+/* Optimize Vietnamese quotation marks */
+q::before {
+  content: """;
+}
+
+q::after {
+  content: """;
+}
+
+/* Better support for Vietnamese bullet lists */
+ul, ol {
+  line-height: 1.8;
+}
+
+/* Improve table readability with Vietnamese text */
+table {
+  line-height: 1.6;
+}
+
+th, td {
+  padding: 0.75rem;
+  /* Ensure diacritics aren't clipped */
+  vertical-align: top;
+}
+
+/* ============================================
+   Mobile Optimizations
+   ============================================ */
+@media (max-width: 768px) {
+  body {
+    /* Slightly larger font for mobile readability */
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Improve code readability on mobile */
+  code {
+    font-size: 0.85em;
+  }
+
+  pre {
+    padding: 0.75rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ============================================
+   Link to Privacy Policy in Footer
+   ============================================ */
+.privacy-link {
+  text-align: center;
+  padding: 1rem;
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+.privacy-link a {
+  color: var(--links);
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+.privacy-link a:hover {
+  text-decoration: underline;
+}
