@@ -130,6 +130,8 @@
   - [Cow](./advanced/smart-pointer/cow.md)
   - [Ref<T>](./advanced/smart-pointer/ref.md)
   - [RefMut<T>](./advanced/smart-pointer/refmut.md)
+- [Async/Await - Lập trình Bất đồng bộ](./advanced/async/README.md)
+- [Unsafe Rust](./advanced/unsafe/README.md)
 - [`Saturating<T>`](./advanced/saturating.md)
 
 ---

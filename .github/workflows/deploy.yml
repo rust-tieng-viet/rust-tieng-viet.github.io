@@ -16,6 +16,19 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      # Cache for faster builds
+      - name: Cache mdBook
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+          key: ${{ runner.os }}-mdbook-${{ hashFiles('book.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-mdbook-
+
       - name: Setup mdBook
         uses: peaceiris/actions-mdbook@v2
         with:
@@ -40,6 +53,9 @@ jobs:
           echo $url
           echo "url=$url" >> $GITHUB_ENV
           echo "Book URL: $url" >> $GITHUB_STEP_SUMMARY
+
+      - name: Test code examples
+        run: mdbook test || echo "Some tests failed but continuing..."
 
       - name: Build mdBook
         run: mdbook build

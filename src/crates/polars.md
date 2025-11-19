@@ -2,7 +2,7 @@
 
 Xử lý DataFrame lớn, dễ sử dụng, hiệu năng cao và có nhiều ưu điểm giống với Pandas nổi tiếng. Polars cũng được hỗ trợ trên Python.
 
-![](./polars.png)
+![Polars DataFrame library logo - high-performance data processing framework for Rust and Python](./polars.png)
 
 ## Cài đặt
 
@@ -45,4 +45,4 @@ println!("{}", df);
 
 - https://pola.rs
 
-[``polars``]: ttps://pola.rs
+[``polars``]: https://pola.rs
