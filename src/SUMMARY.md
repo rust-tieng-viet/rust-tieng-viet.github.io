@@ -134,6 +134,14 @@
 
 ---
 
+# Tối ưu Hiệu suất
+
+- [Tối ưu Hiệu suất (Performance)](./performance/README.md)
+  - [Đo lường Hiệu suất (Benchmarking)](./performance/benchmarking.md)
+  - [Cấu hình Build để Tối ưu](./performance/build-configuration.md)
+
+---
+
 # Design patterns
 
 - [Behavioural Patterns](./design-pattern/behavioural/README.md)
