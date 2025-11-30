@@ -1,149 +1,144 @@
-# Tối ưu Hiệu suất (Performance)
+# Tối ưu Hiệu suất
 
-Hiệu suất là một trong những lý do chính mà nhiều developer chọn Rust. Ngôn ngữ này cung cấp khả năng kiểm soát low-level như C/C++ nhưng với sự an toàn về memory và thread. Tuy nhiên, để tận dụng tối đa sức mạnh của Rust, bạn cần hiểu cách đo lường và tối ưu hóa hiệu suất.
+Performance là một trong những lý do chính nhiều người chọn Rust. Nhưng viết Rust không tự động có nghĩa là code chạy nhanh - vẫn cần biết cách đo lường và tối ưu đúng chỗ.
 
-## Tại sao Hiệu suất Quan trọng?
+## Tại sao quan tâm đến performance?
 
-Trong thế giới phần mềm hiện đại, hiệu suất ảnh hưởng trực tiếp đến:
+Code chạy nhanh thì:
+- User hài lòng hơn (ai cũng ghét app chậm)
+- Tiết kiệm tiền server
+- Scale dễ hơn
+- Tiêu thụ ít điện hơn (tốt cho môi trường)
 
-- **Trải nghiệm người dùng**: Ứng dụng phản hồi nhanh = người dùng hài lòng
-- **Chi phí vận hành**: Code chạy nhanh hơn = ít server hơn = tiết kiệm tiền
-- **Khả năng mở rộng**: Xử lý được nhiều requests hơn với cùng tài nguyên
-- **Tác động môi trường**: Tiêu thụ ít năng lượng hơn
+Nhưng cũng đừng quá ám ảnh về performance. Có câu nói kinh điển của Donald Knuth: "Premature optimization is the root of all evil" - Tối ưu sớm là gốc rễ mọi tội lỗi.
 
-## Triết lý Tối ưu hóa
+## Triết lý
 
-> "Premature optimization is the root of all evil." - Donald Knuth
+Nguyên tắc chung:
+1. **Đo trước khi tối ưu** - Đừng đoán mò, phải có data
+2. **Tối ưu bottleneck** - 20% code chiếm 80% runtime, tìm ra 20% đó
+3. **Verify bằng benchmark** - Đừng tin "cảm giác"
+4. **Cân bằng** - Đừng vì 1% performance mà làm code khó maintain
 
-Nhưng:
+Và một câu hay khác: "Mediocre benchmarking is far better than no benchmarking" - Đo tầm tầm vẫn tốt hơn không đo.
 
-> "Mediocre benchmarking is far better than no benchmarking."
+## Trong chương này
 
-**Nguyên tắc vàng:**
-1. **Đo lường trước khi tối ưu** - Đừng đoán, hãy dùng data
-2. **Tối ưu điểm nghẽn (bottlenecks)** - 20% code chiếm 80% runtime
-3. **Benchmark sau mỗi thay đổi** - Xác nhận cải thiện thực sự
-4. **Giữ cân bằng** - Đừng hy sinh maintainability cho 1% performance
+### [Đo lường Hiệu suất (Benchmarking)](./benchmarking.md)
 
-## Nội dung Chương này
+Học cách đo lường chính xác với các công cụ:
+- **Criterion** - Thư viện benchmark phổ biến nhất
+- **Divan** - Alternative mới, đơn giản hơn
+- **Hyperfine** - So sánh command-line programs
 
-Chương này bao gồm các chủ đề sau:
+Đây là skill cơ bản nhất. Không biết đo thì không biết code có nhanh hơn không.
 
-### 1. [Đo lường Hiệu suất (Benchmarking)](./benchmarking.md)
+### [Cấu hình Build](./build-configuration.md)
 
-Học cách đo lường hiệu suất chính xác với các công cụ:
-- **Criterion**: Benchmarking framework mạnh mẽ nhất
-- **Divan**: Công cụ hiện đại, đơn giản và nhanh
-- **Hyperfine**: So sánh command-line programs
-- **Built-in benchmarks**: Rust nightly benchmarks
+Cải thiện performance **mà không cần sửa code**, chỉ config Cargo:
+- Tăng tốc độ chạy: LTO, codegen-units, allocators
+- Giảm kích thước binary: opt-level, strip
+- Tăng tốc compile: mold, lld
 
-Bạn sẽ học:
-- Cách thiết lập benchmark đúng cách
-- Chọn metrics phù hợp (wall-time, CPU cycles, memory)
-- Tránh những lỗi thường gặp
-- Continuous benchmarking trong CI/CD
+Đây là cách dễ nhất để bắt đầu. Vài dòng config có thể cải thiện 10-20%.
 
-### 2. [Cấu hình Build để Tối ưu](./build-configuration.md)
+## Nên bắt đầu từ đâu?
 
-Tối ưu hiệu suất **mà không cần thay đổi code** thông qua Cargo configuration:
+Nếu mới học về performance trong Rust:
 
-- **Tăng tốc độ runtime**: LTO, codegen-units, PGO
-- **Giảm kích thước binary**: opt-level, strip symbols
-- **Tăng tốc compile time**: Fast linkers (mold, lld)
-- **Alternative allocators**: jemalloc, mimalloc
+**Bước 1: Build configuration** (dễ nhất)
 
-Đây là những cải thiện dễ dàng nhất và hiệu quả nhất để bắt đầu!
-
-## Lộ trình Học tập
-
-Nếu bạn mới bắt đầu với performance optimization trong Rust, đây là lộ trình đề xuất:
-
-1. **Bắt đầu với Build Configuration** (dễ nhất, không cần code)
-   - Thêm LTO và codegen-units vào release profile
-   - Thử alternative allocators
-   - Cài đặt fast linker
-
-2. **Học Benchmarking** (kỹ năng cốt lõi)
-   - Thiết lập Criterion hoặc Divan
-   - Tạo benchmark cho hot paths
-   - So sánh trước và sau optimization
-
-3. **Áp dụng vào Dự án Thực tế**
-   - Profile code với các công cụ profiling
-   - Tìm bottlenecks
-   - Tối ưu từng phần một
-   - Benchmark để xác nhận cải thiện
-
-## Công cụ Hỗ trợ
-
-### Benchmarking
-- [Criterion](https://github.com/bheisler/criterion.rs) - Feature-rich benchmarking
-- [Divan](https://github.com/nvzqz/divan) - Modern và đơn giản
-- [Hyperfine](https://github.com/sharkdp/hyperfine) - Command-line benchmarking
-- [Bencher](https://bencher.dev/) - Continuous benchmarking service
-
-### Profiling
-- [flamegraph](https://github.com/flamegraph-rs/flamegraph) - Visualize performance
-- [cargo-flamegraph](https://github.com/flamegraph-rs/flamegraph) - Easy profiling
-- [perf](https://perf.wiki.kernel.org/) - Linux profiler
-- [Instruments](https://developer.apple.com/instruments/) - macOS profiler
-
-### Analysis
-- [cargo-bloat](https://github.com/RazrFalcon/cargo-bloat) - Binary size analysis
-- [cargo-llvm-lines](https://github.com/dtolnay/cargo-llvm-lines) - LLVM IR analysis
-- [cargo-expand](https://github.com/dtolnay/cargo-expand) - Macro expansion
-
-## Tài nguyên Thêm
-
-### Documentation
-- [The Rust Performance Book](https://nnethercote.github.io/perf-book/) - Tài liệu gốc đầy đủ
-- [Rust Compiler Performance](https://nnethercote.github.io/perf-book/compile-times.html)
-- [Cargo Book - Profiles](https://doc.rust-lang.org/cargo/reference/profiles.html)
-
-### Cộng đồng
-- [Rust Performance Discord](https://discord.gg/rust-lang)
-- [r/rust](https://reddit.com/r/rust) - Subreddit với nhiều discussion về performance
-- [Rust Internals Forum](https://internals.rust-lang.org/)
-
-## Case Studies
-
-Các ví dụ thực tế về performance optimization trong Rust:
-
-- **[ripgrep](https://github.com/BurntSushi/ripgrep)**: Grep tool nhanh hơn grep/ag nhiều lần
-- **[fd](https://github.com/sharkdp/fd)**: Find replacement nhanh gấp nhiều lần
-- **[tokio](https://tokio.rs/)**: Async runtime với performance cao
-- **[rustc](https://github.com/rust-lang/rust)**: Rust compiler liên tục được tối ưu
-
-## Bắt đầu Ngay
-
-Nếu bạn muốn tăng performance ngay lập tức mà không cần tìm hiểu sâu:
-
-1. Thêm vào `Cargo.toml`:
+Thêm vào `Cargo.toml`:
 ```toml
 [profile.release]
 lto = "thin"
 codegen-units = 1
 ```
 
-2. Cài đặt fast linker:
+Cài fast linker:
 ```bash
-# Linux
-sudo apt install mold
-
-# Add to .cargo/config.toml
-[target.x86_64-unknown-linux-gnu]
-linker = "clang"
-rustflags = ["-C", "link-arg=-fuse-ld=mold"]
+sudo apt install mold  # Linux
 ```
 
-3. Benchmark để đo lường:
+**Bước 2: Học benchmark**
+
+Cài Criterion hoặc Divan, viết vài benchmark đơn giản. Chạy thử xem code nào nhanh hơn.
+
+**Bước 3: Áp dụng vào project thật**
+
+Profile code, tìm bottleneck, tối ưu từng phần. Benchmark để verify cải thiện.
+
+## Công cụ hữu ích
+
+### Benchmarking
+- [Criterion](https://github.com/bheisler/criterion.rs)
+- [Divan](https://github.com/nvzqz/divan)
+- [Hyperfine](https://github.com/sharkdp/hyperfine)
+
+### Profiling
+- [flamegraph](https://github.com/flamegraph-rs/flamegraph) - Visualize performance bottlenecks
+- [cargo-flamegraph](https://github.com/flamegraph-rs/flamegraph) - Dễ dùng hơn
+- perf (Linux), Instruments (macOS)
+
+### Analysis
+- [cargo-bloat](https://github.com/RazrFalcon/cargo-bloat) - Xem binary to ở đâu
+- [cargo-llvm-lines](https://github.com/dtolnay/cargo-llvm-lines) - LLVM IR analysis
+
+## Quick wins
+
+Muốn tăng performance ngay mà không tìm hiểu sâu? Thử mấy cái này:
+
+**1. Chắc chắn dùng release mode**
 ```bash
-cargo install hyperfine
-hyperfine './target/release/myapp'
+cargo build --release
+cargo run --release
 ```
 
-Đơn giản vậy thôi! Bây giờ hãy đi sâu vào từng chủ đề để hiểu rõ hơn.
+**2. Config Cargo tốt hơn**
+```toml
+[profile.release]
+lto = "thin"
+codegen-units = 1
+```
+
+**3. Thử alternative allocator**
+```toml
+[dependencies]
+mimalloc = "0.1"
+```
+
+```rust
+use mimalloc::MiMalloc;
+
+#[global_allocator]
+static GLOBAL: MiMalloc = MiMalloc;
+```
+
+**4. Cài fast linker**
+
+Giảm compile time 50-80% mà không ảnh hưởng runtime.
+
+## Case studies
+
+Vài project nổi tiếng về performance:
+- **ripgrep** - Grep replacement, nhanh hơn grep gấp nhiều lần
+- **fd** - Find replacement
+- **exa** - ls replacement
+
+Đọc source code của các project này sẽ học được nhiều thứ hay.
+
+## Tài nguyên
+
+- [The Rust Performance Book](https://nnethercote.github.io/perf-book/) - Nguồn gốc của nội dung trong chương này
+- [Rust Compiler Performance](https://nnethercote.github.io/perf-book/compile-times.html)
+- [Cargo Book - Profiles](https://doc.rust-lang.org/cargo/reference/profiles.html)
+
+## Lưu ý
+
+Performance optimization là nghệ thuật, không có công thức chung. Mỗi app khác nhau, mỗi workload khác nhau. Cái chạy tốt ở project này chưa chắc tốt ở project kia.
+
+Quan trọng nhất: **đo lường**. Đừng tin vào intuition, đừng tin vào "best practices" mù quáng. Benchmark và profile để biết thực tế như thế nào.
 
 ---
 
-**Ghi chú:** Nội dung trong chương này được tổng hợp và dịch từ [The Rust Performance Book](https://nnethercote.github.io/perf-book/) của Nicholas Nethercote, với các ví dụ và giải thích được Việt hóa để phù hợp với độc giả Việt Nam.
+**Ghi chú:** Nội dung được tổng hợp từ [The Rust Performance Book](https://nnethercote.github.io/perf-book/) của Nicholas Nethercote, điều chỉnh cho phù hợp với người đọc Việt Nam.

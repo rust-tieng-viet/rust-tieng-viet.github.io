@@ -1,41 +1,27 @@
-# Đo lường Hiệu suất (Benchmarking)
+# Đo lường Hiệu suất
 
-Benchmarking là quá trình so sánh hiệu suất của hai hoặc nhiều chương trình thực hiện cùng một công việc. Nó giúp chúng ta trả lời câu hỏi quan trọng: "Thay đổi này có làm chương trình chạy nhanh hơn không?"
+Bao giờ bạn cũng sẽ gặp câu hỏi kinh điển: "Code mình viết nhanh không?". Thay vì đoán mò hay dựa vào "cảm giác", hãy đo lường nó. Benchmarking chính là cách để làm việc đó - so sánh hiệu suất giữa các phiên bản code khác nhau, xem thay đổi nào thực sự làm chương trình chạy nhanh hơn.
 
-## Tại sao cần Benchmarking?
+## Tại sao phải đo?
 
-Khi tối ưu hóa code, chúng ta thường dựa vào cảm giác hoặc giả định rằng một đoạn code "có vẻ nhanh hơn". Tuy nhiên, hiệu suất thực tế có thể khác xa với dự đoán của chúng ta. Benchmarking cung cấp dữ liệu cụ thể để đưa ra quyết định chính xác.
+Nhiều khi mình nghĩ một đoạn code "chắc chắn nhanh hơn", nhưng thực tế lại khác. Compiler hiện đại rất thông minh, có khi code trông phức tạp lại chạy nhanh hơn code đơn giản. Không đo thì không biết.
 
-> "Mediocre benchmarking is far better than no benchmarking."
-> Đo lường tầm thường vẫn tốt hơn nhiều so với không đo lường gì cả.
+Có câu nói hay: "Mediocre benchmarking is far better than no benchmarking" - Đo tạm tạm vẫn tốt hơn không đo. Đừng để sự hoàn hảo cản trở việc bắt đầu.
 
-## Các yếu tố cần chuẩn bị
+## Chuẩn bị gì trước khi đo
 
-### 1. Workloads (Khối lượng công việc)
+Trước tiên cần có dữ liệu test hợp lý. Tốt nhất là dùng dữ liệu thực từ production, không phải data tự nghĩ ra. Nếu app xử lý file JSON thì dùng file JSON thật, đừng tạo data nhỏ xíu cho nó "chạy nhanh".
 
-Bạn cần có **nhiều loại workload đại diện cho cách sử dụng thực tế** của chương trình. Tốt nhất là sử dụng dữ liệu đầu vào từ thực tế (real-world inputs).
+Về chỉ số đo, có mấy loại phổ biến:
+- **Wall-time** là thời gian thực tế user cảm nhận được, dễ hiểu nhưng hay nhảy số
+- **CPU cycles** hoặc **instruction count** ổn định hơn, phù hợp khi cần so sánh chính xác
+- **Memory usage** quan trọng nếu app xử lý dữ liệu lớn
 
-**Các loại workload:**
-- **Real-world inputs**: Dữ liệu thực từ người dùng - đây là loại quan trọng nhất
-- **Microbenchmarks**: Đo lường từng phần nhỏ của code
-- **Stress tests**: Kiểm tra với tải nặng hoặc điều kiện cực đoan
+## Các công cụ trong Rust
 
-### 2. Chọn Metrics (Chỉ số đo)
+### Criterion - Phổ biến nhất
 
-Tùy thuộc vào loại chương trình, bạn cần chọn metrics phù hợp:
-
-- **Wall-time** (thời gian thực tế): Dễ hiểu và gần gũi với trải nghiệm người dùng, nhưng có thể biến động cao
-- **CPU cycles**: Ổn định hơn, phù hợp cho việc so sánh chi tiết
-- **Instruction count**: Variance thấp, tốt cho việc phát hiện những thay đổi nhỏ
-- **Memory usage**: Quan trọng cho các ứng dụng xử lý dữ liệu lớn
-
-## Công cụ Benchmarking trong Rust
-
-### 1. Criterion - Công cụ phổ biến nhất
-
-[Criterion](https://github.com/bheisler/criterion.rs) là thư viện benchmarking tiêu chuẩn trong Rust với nhiều tính năng hữu ích.
-
-**Cài đặt:**
+Criterion là thư viện benchmark chuẩn trong Rust. Setup khá đơn giản:
 
 ```toml
 [dev-dependencies]
@@ -46,7 +32,7 @@ name = "my_benchmark"
 harness = false
 ```
 
-**Ví dụ cơ bản:**
+Viết benchmark cũng straightforward:
 
 ```rust
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
@@ -67,36 +53,14 @@ criterion_group!(benches, criterion_benchmark);
 criterion_main!(benches);
 ```
 
-**Chạy benchmark:**
+Chạy với `cargo bench` là xong. Cái `black_box()` ở đây ngăn compiler "thông minh" quá, tối ưu mất cả đoạn code cần đo.
 
-```bash
-cargo bench
-```
+### Divan - Lựa chọn mới hơn
 
-**Giải thích:**
-- `black_box()`: Ngăn compiler tối ưu hóa quá mức, đảm bảo code thực sự chạy
-- `criterion_group!` và `criterion_main!`: Macro để thiết lập test suite
-
-### 2. Divan - Công cụ hiện đại và đơn giản
-
-[Divan](https://github.com/nvzqz/divan) là một lựa chọn mới, nhanh và đơn giản hơn Criterion.
-
-**Cài đặt:**
-
-```toml
-[dev-dependencies]
-divan = "0.1"
-
-[[bench]]
-name = "example"
-harness = false
-```
-
-**Ví dụ:**
+Divan ra đời gần đây, API đơn giản hơn Criterion một chút:
 
 ```rust
 fn main() {
-    // Run registered benchmarks.
     divan::main();
 }
 
@@ -106,116 +70,51 @@ fn parse_num() {
     let output: i32 = input.parse().unwrap();
     assert_eq!(output, 42);
 }
-
-#[divan::bench]
-fn parse_bytes() {
-    let input = b"42";
-    let output: i32 = std::str::from_utf8(input)
-        .unwrap()
-        .parse()
-        .unwrap();
-    assert_eq!(output, 42);
-}
 ```
 
-**Ưu điểm của Divan:**
-- Cú pháp đơn giản với attribute `#[divan::bench]` giống `#[test]`
-- Hỗ trợ generic types và const generics
-- Hiển thị kết quả rõ ràng và trực quan
+Thích cái cú pháp `#[divan::bench]` giống `#[test]`, nhìn quen mắt. Kết quả hiển thị cũng đẹp hơn.
 
-### 3. Hyperfine - Benchmark cho command-line
+### Hyperfine - Đo từ command line
 
-[Hyperfine](https://github.com/sharkdp/hyperfine) là công cụ tuyệt vời để đo lường wall-time của toàn bộ chương trình từ command line.
-
-**Cài đặt:**
+Hyperfine hữu ích khi muốn so sánh tổng thể hai version của chương trình, không cần viết code:
 
 ```bash
 cargo install hyperfine
-```
-
-**Sử dụng:**
-
-```bash
-# So sánh hai phiên bản của chương trình
 hyperfine './target/release/myapp-v1' './target/release/myapp-v2'
-
-# Với warmup runs
-hyperfine --warmup 3 './target/release/myapp'
-
-# So sánh với tham số khác nhau
-hyperfine --prepare 'cargo build --release' 'cargo run --release'
 ```
 
-**Kết quả mẫu:**
+Nó sẽ chạy nhiều lần, đưa ra con số trung bình và cho biết version nào nhanh hơn bao nhiêu lần. Rất tiện khi làm POC.
 
 ```
 Benchmark 1: ./target/release/myapp-v1
-  Time (mean ± σ):     142.3 ms ±   2.1 ms    [User: 98.2 ms, System: 43.5 ms]
-  Range (min … max):   139.8 ms … 147.2 ms    20 runs
+  Time (mean ± σ):     142.3 ms ±   2.1 ms
 
 Benchmark 2: ./target/release/myapp-v2
-  Time (mean ± σ):      89.7 ms ±   1.8 ms    [User: 62.1 ms, System: 27.2 ms]
-  Range (min … max):    87.4 ms …  93.5 ms    32 runs
+  Time (mean ± σ):      89.7 ms ±   1.8 ms
 
 Summary
-  './target/release/myapp-v2' ran
-    1.59 ± 0.04 times faster than './target/release/myapp-v1'
+  './target/release/myapp-v2' ran 1.59 times faster
 ```
 
-### 4. Built-in Benchmarks (Nightly-only)
+### Built-in benchmark của Rust
 
-Rust có sẵn framework benchmarking, nhưng chỉ hoạt động trên nightly compiler.
+Rust có sẵn framework benchmark nhưng chỉ chạy trên nightly. Ít người dùng vì Criterion/Divan đã đủ tốt và chạy trên stable.
 
-```rust
-#![feature(test)]
-extern crate test;
+## Mấy điều cần nhớ
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use test::Bencher;
+**Luôn dùng release mode.** Benchmark trên dev build không có ý nghĩa gì. Chạy `cargo bench` thì nó tự động dùng release rồi.
 
-    #[bench]
-    fn bench_add_two(b: &mut Bencher) {
-        b.iter(|| add_two(2));
-    }
-}
-```
+**Đổi từng cái một.** Đừng sửa 5 chỗ rồi benchmark - sẽ không biết cái nào thực sự giúp ích. Sửa một chỗ, đo, xem kết quả, rồi mới sửa tiếp.
 
-## Best Practices (Thực hành tốt nhất)
+**Đảm bảo môi trường ổn định.** Đóng Chrome đi, tắt Slack, đừng vừa benchmark vừa xem YouTube. CPU throttling cũng ảnh hưởng - máy quá nóng thì CPU chạy chậm lại.
 
-### 1. Benchmark từng thay đổi riêng lẻ
+**Chú ý xu hướng, không phải con số tuyệt đối.** Việc "nhanh hơn 20%" quan trọng hơn "chạy mất 100ms". Vì môi trường chạy khác nhau sẽ cho số khác nhau.
 
-Đừng thay đổi nhiều thứ cùng lúc. Benchmark từng thay đổi một để biết chính xác cái gì tạo ra sự khác biệt.
+**Test nhiều trường hợp.** Tối ưu cho case A có khi làm chậm case B. Đừng quá tập trung vào một scenario.
 
-### 2. Sử dụng release mode
+## Ví dụ thực tế
 
-Luôn chạy benchmark với release build:
-
-```bash
-cargo bench  # Tự động dùng release mode
-# hoặc
-cargo run --release
-```
-
-### 3. Giữ hệ thống ổn định
-
-- Đóng các ứng dụng không cần thiết
-- Không chạy benchmark trong khi làm việc khác
-- Chú ý đến CPU throttling (điều chỉnh tốc độ CPU)
-- Chạy nhiều lần để có kết quả trung bình đáng tin cậy
-
-### 4. Theo dõi xu hướng, không chỉ số liệu tuyệt đối
-
-Quan trọng hơn việc "chương trình chạy trong 100ms" là "phiên bản mới nhanh hơn 20%".
-
-### 5. Benchmark trên nhiều workload
-
-Tối ưu hóa có thể cải thiện một trường hợp nhưng làm chậm trường hợp khác. Luôn kiểm tra nhiều loại input.
-
-## Ví dụ thực tế: So sánh hai cách implement
-
-Giả sử chúng ta muốn so sánh hai cách tính tổng các số chẵn trong một vector:
+Giả sử muốn so sánh iterator vs loop truyền thống:
 
 ```rust
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
@@ -252,31 +151,27 @@ criterion_group!(benches, benchmark_sum_even);
 criterion_main!(benches);
 ```
 
-## Continuous Benchmarking (Benchmark liên tục)
+Chạy rồi sẽ thấy hai cách này performance gần như nhau (nhờ compiler tối ưu), nhưng iterator code ngắn gọn hơn.
 
-Để theo dõi hiệu suất qua thời gian, xem xét sử dụng các dịch vụ như:
+## Benchmark liên tục trong CI
 
-- **[Bencher](https://bencher.dev/)**: Continuous benchmarking service
-- **[CodSpeed](https://codspeed.io/)**: Hỗ trợ cả Criterion và Divan
-- **GitHub Actions**: Tự động chạy benchmark trên mỗi commit
+Nếu dự án lớn, nên setup benchmark trong CI để theo dõi performance regression. Có mấy dịch vụ hay:
 
-## Kết luận
+- **Bencher.dev** - tracking benchmark qua thời gian
+- **CodSpeed** - support Criterion và Divan
+- **GitHub Actions** - tự chạy benchmark mỗi PR
 
-Benchmarking là kỹ năng quan trọng trong việc tối ưu hóa hiệu suất. Hãy nhớ rằng:
+Như vậy nếu ai đó commit code làm chậm app, sẽ phát hiện ngay.
 
-1. **Đo lường trước khi tối ưu hóa** - Đừng đoán mò
-2. **Chọn công cụ phù hợp** - Criterion/Divan cho chi tiết, Hyperfine cho tổng quan
-3. **Benchmark thường xuyên** - Theo dõi hiệu suất qua thời gian
-4. **Giữ kết quả để so sánh** - Xu hướng quan trọng hơn con số tuyệt đối
+## Kết
 
-> "Good benchmarking is hard, but mediocre benchmarking is far better than no benchmarking."
+Benchmark không khó, quan trọng là bắt đầu. Đừng nghĩ phải làm sao cho hoàn hảo. Cài Criterion hoặc Divan, viết vài test case đơn giản, chạy thử. Từ đó mới hiểu được code chạy như thế nào.
 
-Hãy bắt đầu với những benchmark đơn giản, và dần dần cải thiện khi bạn hiểu rõ hơn về đặc điểm hiệu suất của chương trình.
+Nhớ là: đo trước khi tối ưu, đổi từng cái một, và luôn verify bằng con số chứ đừng tin vào "cảm giác".
 
 ---
 
-**Tài liệu tham khảo:**
+**Đọc thêm:**
 - [The Rust Performance Book - Benchmarking](https://nnethercote.github.io/perf-book/benchmarking.html)
 - [Criterion.rs Documentation](https://bheisler.github.io/criterion.rs/book/)
 - [Divan Documentation](https://docs.rs/divan/latest/divan/)
-- [Hyperfine Repository](https://github.com/sharkdp/hyperfine)
