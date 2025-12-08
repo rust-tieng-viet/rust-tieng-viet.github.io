@@ -21,7 +21,7 @@ page-break = true # insert page-break after each chapter
 [output.html.search]
 enable = true            # enables the search feature
 
-[output.linkcheck]
-# Check links on the internet
-follow-web-links = false
-optional = true
+# Temporarily disabled due to compatibility issues with mdbook-linkcheck
+# [output.linkcheck]
+# follow-web-links = false
+# optional = true
