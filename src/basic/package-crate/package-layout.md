@@ -1,7 +1,7 @@
 # Package layout
 
 Được mô tả trong [Cargo book](https://doc.rust-lang.org/cargo/guide/project-layout.html), 
-một crate trong Rust sẽ có layout như sau:
+một package trong Rust sẽ có layout như sau:
 
 ```
 .
