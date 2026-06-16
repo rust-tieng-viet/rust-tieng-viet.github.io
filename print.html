@@ -8,6 +8,11 @@
 
 
         <!-- Custom HTML head -->
+        <!-- SEO Meta Tags -->
+        <meta name="description" content="Comprehensive Rust documentation in Vietnamese - from basics to advanced topics including ownership, traits, async programming, data engineering, and AI/LLM">
+        <meta name="keywords" content="Rust, Rust Vietnamese, Learn Rust, Rust programming, Rust tutorial, ownership, borrowing, async Rust, Rust Vietnam">
+        <meta name="author" content="Duyet Le">
+        
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-88RKF7DLPY"></script>
         <script>
@@ -15,19 +20,10 @@
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
         
-          gtag('config', 'G-88RKF7DLPY');
+          gtag('config', 'G-88RKF7DLPY', {
+            'anonymize_ip': true
+          });
         </script>
-        
-        <!-- pageview.js -->
-        <script>
-          !function(e,n,t){e.onload=function(){
-          let e=n.createElement("script");
-          e.src=t,n.body.appendChild(e)}}
-          (window,document,"https://pageview.duyet.net/pageview.js");
-        </script>
-        
-        <script async src="https://seline.duyet.workers.dev/seline.js" data-api-host="https://seline.duyet.workers.dev" data-token="d7c8002f8e40139"></script>
-        <script async src="https://cm43xj8zd00093b619ak2zfuc.d.jitsu.com/p.js"></script>
 
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,10 +52,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-4cd6569c.js";
+            window.path_to_searchindex_js = "searchindex-58394469.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-b3a836bf.js"></script>
+        <script src="toc-d2455f51.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -251,7 +247,7 @@ Vui lòng xem mục <strong>references</strong> ở cuối các trang nếu bạ
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="rust-playground"><a class="header" href="#rust-playground">Rust Playground</a></h1>
 <p><a href="https://play.rust-lang.org">https://play.rust-lang.org</a> giúp chúng ta chạy Rust code trực tiếp trên trình duyệt mà không cần <a href="#cài-đặt-rust">cài đặt Rust trên máy</a>.</p>
-<p><img src="getting-started/plaground.png" alt=""></p>
+<p><img src="getting-started/playground.png" alt="Rust Playground interface - an online code editor for running Rust code in the browser"></p>
 <p>Một số tips:</p>
 <ul>
 <li>Bấm Run để chạy code. Có thể chuyển đổi giữa các version của Rust.</li>
@@ -6132,7 +6128,7 @@ error: could not compile `cons-list` due to 2 previous errors
 <span class="boring">}</span></code></pre>
 <p>Để xác định bao nhiêu bộ nhớ cần để allocate cho <code>Message</code>, Rust sẽ kiểm tra từng variant (biến thể của enum) để xem variant nào cần bộ nhớ nhiều nhất. Rust thấy rằng <code>Message::Quit</code> không cần, <code>Message::Move</code> phải cần ít nhất bộ nhớ để lưu hai giá trị <code>i32</code>. Tương tự với các variant còn lại. Bởi vì một thời điểm cho có một variant được sử dụng, do đó bộ nhớ tối đa mà <code>Message</code> cần sẽ là một nhớ cần để lưu trữ variant lớn nhất.</p>
 <p>Quay lại với Cons List, bộ nhớ mà Rust tính toán được có thể đến vô tận.</p>
-<p><img src="advanced/smart-pointer/box-cons.svg" alt=""></p>
+<p><img src="advanced/smart-pointer/box-cons.svg" alt="Diagram showing infinite size problem with recursive Cons List type in Rust"></p>
 <p>Theo như gợi ý của compiler, chúng ta có thể sử dụng <code>Box&lt;T&gt;</code> để có một Recursive Type với một kích thước bộ nhớ xác định:</p>
 <pre><code class="language-bash">help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to make `List` representable
   |
@@ -6140,7 +6136,7 @@ error: could not compile `cons-list` due to 2 previous errors
   |               ++++    +
 </code></pre>
 <p>Bởi vì <code>Box&lt;T&gt;</code> là một pointer, Rust luôn biết chính xác bao nhiêu bộ nhớ mà một <code>Box&lt;T&gt;</code> <strong>pointer</strong> cần.</p>
-<p><img src="advanced/smart-pointer/box-cons-box.png" alt=""></p>
+<p><img src="advanced/smart-pointer/box-cons-box.png" alt="Diagram showing how Box&lt;T&gt; solves the recursive type size problem with fixed-size pointers"></p>
 <p>Chương trình của chúng ta lúc này sẽ là:</p>
 <pre class="playground"><code class="language-rust editable edition2021">enum List {
   Cons(i32, Box&lt;List&gt;),
@@ -6338,6 +6334,410 @@ let c = RefCell::new((5, 'b'));
 assert_eq!(*c.borrow(), (42, 'b'));
 <span class="boring">}</span></code></pre>
 <p>https://doc.rust-lang.org/std/cell/struct.RefMut.html</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="asyncawait---lập-trình-bất-đồng-bộ"><a class="header" href="#asyncawait---lập-trình-bất-đồng-bộ">Async/Await - Lập trình Bất đồng bộ</a></h1>
+<p>Async/await là một trong những tính năng mạnh mẽ nhất của Rust, cho phép viết code bất đồng bộ (asynchronous) một cách dễ đọc và maintainable như code đồng bộ (synchronous) truyền thống.</p>
+<h2 id="tại-sao-cần-async-programming"><a class="header" href="#tại-sao-cần-async-programming">Tại sao cần Async Programming?</a></h2>
+<h3 id="vấn-đề-với-synchronous-code"><a class="header" href="#vấn-đề-với-synchronous-code">Vấn đề với Synchronous Code</a></h3>
+<pre class="playground"><code class="language-rust editable edition2021">use std::thread;
+use std::time::Duration;
+
+fn download_file(url: &amp;str) -&gt; String {
+    println!("Đang tải {}...", url);
+    // Giả lập download mất 2 giây
+    thread::sleep(Duration::from_secs(2));
+    format!("Dữ liệu từ {}", url)
+}
+
+fn main() {
+    let start = std::time::Instant::now();
+
+    // Download tuần tự - mỗi file phải đợi file trước xong
+    let file1 = download_file("https://example.com/file1");
+    let file2 = download_file("https://example.com/file2");
+    let file3 = download_file("https://example.com/file3");
+
+    println!("Tổng thời gian: {:?}", start.elapsed());
+    // Kết quả: ~6 giây (2s × 3 files)
+}</code></pre>
+<p><strong>Vấn đề</strong>: Khi download file1, CPU chỉ ngồi chờ đợi network I/O. Lãng phí tài nguyên!</p>
+<h3 id="giải-pháp-với-async"><a class="header" href="#giải-pháp-với-async">Giải pháp với Async</a></h3>
+<pre class="playground"><code class="language-rust edition2021">// Với async/await, ba downloads chạy đồng thời
+async fn download_file_async(url: &amp;str) -&gt; String {
+    println!("Đang tải {}...", url);
+    // Trong khi chờ network I/O, CPU có thể làm việc khác
+    tokio::time::sleep(tokio::time::Duration::from_secs(2)).await;
+    format!("Dữ liệu từ {}", url)
+}
+
+#[tokio::main]
+async fn main() {
+    let start = std::time::Instant::now();
+
+    // Download song song - không phải đợi nhau
+    let (file1, file2, file3) = tokio::join!(
+        download_file_async("https://example.com/file1"),
+        download_file_async("https://example.com/file2"),
+        download_file_async("https://example.com/file3"),
+    );
+
+    println!("Tổng thời gian: {:?}", start.elapsed());
+    // Kết quả: ~2 giây (chạy song song!)
+}</code></pre>
+<p><strong>Lợi ích</strong>: Tiết kiệm 4 giây! Từ 6s xuống 2s.</p>
+<h2 id="khái-niệm-cơ-bản"><a class="header" href="#khái-niệm-cơ-bản">Khái niệm Cơ bản</a></h2>
+<h3 id="future-là-gì"><a class="header" href="#future-là-gì">Future là gì?</a></h3>
+<p><code>Future</code> là một giá trị đại diện cho một computation có thể chưa hoàn thành. Khi bạn <code>.await</code> một Future, bạn đang nói: “Hãy đợi computation này hoàn thành”.</p>
+<pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::future::Future;
+
+// Mỗi async function trả về một Future
+async fn get_number() -&gt; i32 {
+    42
+}
+
+// Tương đương với:
+fn get_number_manual() -&gt; impl Future&lt;Output = i32&gt; {
+    async { 42 }
+}
+<span class="boring">}</span></code></pre>
+<h3 id="async-keyword"><a class="header" href="#async-keyword"><code>async</code> Keyword</a></h3>
+<p>Biến một function thành async function:</p>
+<pre class="playground"><code class="language-rust editable edition2021">// Sync function - chạy ngay lập tức
+fn compute_sync() -&gt; i32 {
+    println!("Computing...");
+    1 + 1
+}
+
+// Async function - trả về Future, chưa chạy
+async fn compute_async() -&gt; i32 {
+    println!("Computing async...");
+    1 + 1
+}
+
+fn main() {
+    // Sync: in ra ngay
+    let result = compute_sync();
+    println!("Sync result: {}", result);
+
+    // Async: KHÔNG in ra gì!
+    let future = compute_async();
+    // future chưa được execute
+
+    // Cần `.await` hoặc runtime để chạy
+    // println!("Async result: {}", future.await); // Lỗi: không thể await ở đây
+}</code></pre>
+<p><strong>Lưu ý quan trọng</strong>: Async function <strong>KHÔNG tự động chạy</strong>. Chúng lazy và chỉ chạy khi được <code>.await</code>.</p>
+<h3 id="await-keyword"><a class="header" href="#await-keyword"><code>.await</code> Keyword</a></h3>
+<p>Chờ đợi một Future hoàn thành:</p>
+<pre class="playground"><code class="language-rust edition2021">async fn fetch_data() -&gt; String {
+    // Giả lập network request
+    tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
+    "Data".to_string()
+}
+
+#[tokio::main]
+async fn main() {
+    // .await đợi future hoàn thành
+    let data = fetch_data().await;
+    println!("Received: {}", data);
+}</code></pre>
+<p><strong>Điều kiện</strong>: Chỉ có thể <code>.await</code> bên trong async function hoặc async block.</p>
+<h2 id="async-runtime"><a class="header" href="#async-runtime">Async Runtime</a></h2>
+<p>Rust không có built-in async runtime. Bạn cần chọn một runtime như Tokio, async-std, hoặc smol.</p>
+<h3 id="tokio---runtime-phổ-biến-nhất"><a class="header" href="#tokio---runtime-phổ-biến-nhất">Tokio - Runtime phổ biến nhất</a></h3>
+<pre><code class="language-toml">[dependencies]
+tokio = { version = "1", features = ["full"] }
+</code></pre>
+<pre class="playground"><code class="language-rust edition2021">// Attribute macro biến main() thành async
+#[tokio::main]
+async fn main() {
+    println!("Hello from async!");
+}
+
+// Tương đương với:
+fn main() {
+    tokio::runtime::Runtime::new()
+        .unwrap()
+        .block_on(async {
+            println!("Hello from async!");
+        })
+}</code></pre>
+<h2 id="async-blocks"><a class="header" href="#async-blocks">Async Blocks</a></h2>
+<p>Tạo Future inline:</p>
+<pre class="playground"><code class="language-rust editable edition2021">#[tokio::main]
+async fn main() {
+    // Async block
+    let future = async {
+        println!("Inside async block");
+        42
+    };
+
+    let result = future.await;
+    println!("Result: {}", result);
+}</code></pre>
+<h2 id="xem-thêm"><a class="header" href="#xem-thêm">Xem thêm</a></h2>
+<ul>
+<li><a href="advanced/async/async-fn.html">Async Functions</a> - Chi tiết về async functions</li>
+<li><a href="advanced/async/futures.html">Futures và Polling</a> - Cách Future hoạt động bên trong</li>
+<li><a href="advanced/async/tokio.html">Tokio Runtime</a> - Sử dụng Tokio chi tiết</li>
+<li><a href="advanced/async/error-handling.html">Error Handling</a> - Xử lý lỗi trong async code</li>
+<li><a href="advanced/async/concurrency.html">Concurrency Patterns</a> - Patterns async phổ biến</li>
+<li><a href="advanced/async/performance.html">Performance</a> - Tối ưu async code</li>
+</ul>
+<h2 id="khi-nào-nên-dùng-async"><a class="header" href="#khi-nào-nên-dùng-async">Khi nào nên dùng Async?</a></h2>
+<p>✅ <strong>Nên dùng cho:</strong></p>
+<ul>
+<li>I/O-bound tasks: Network requests, file I/O, database queries</li>
+<li>Web servers: Xử lý nhiều requests đồng thời</li>
+<li>Concurrent operations: Download nhiều files, call nhiều APIs</li>
+</ul>
+<p>❌ <strong>Không nên dùng cho:</strong></p>
+<ul>
+<li>CPU-bound tasks: Tính toán nặng (dùng threads thay vì)</li>
+<li>Simple scripts: Overhead không cần thiết</li>
+<li>Code đơn giản: Sync code dễ đọc hơn</li>
+</ul>
+<h2 id="tham-khảo"><a class="header" href="#tham-khảo">Tham khảo</a></h2>
+<ul>
+<li><a href="https://rust-lang.github.io/async-book/">The Rust Async Book</a></li>
+<li><a href="https://tokio.rs/tokio/tutorial">Tokio Tutorial</a></li>
+<li><a href="https://book.async.rs/">async-std Book</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="unsafe-rust"><a class="header" href="#unsafe-rust">Unsafe Rust</a></h1>
+<p>Unsafe Rust cho phép bạn bỏ qua một số kiểm tra an toàn của compiler để đạt được hiệu suất cao hơn hoặc tương tác với code bên ngoài Rust. Tuy nhiên, bạn cần chịu trách nhiệm đảm bảo tính đúng đắn của code.</p>
+<h2 id="tại-sao-cần-unsafe"><a class="header" href="#tại-sao-cần-unsafe">Tại sao cần Unsafe?</a></h2>
+<p>Rust’s safety guarantees có một số giới hạn:</p>
+<ol>
+<li><strong>Performance</strong>: Đôi khi cần tối ưu bỏ qua bounds checking</li>
+<li><strong>FFI</strong>: Gọi C libraries không an toàn theo định nghĩa</li>
+<li><strong>Low-level operations</strong>: Thao tác trực tiếp với memory</li>
+<li><strong>Hardware interaction</strong>: Embedded programming, kernel development</li>
+</ol>
+<h2 id="năm-unsafe-superpowers"><a class="header" href="#năm-unsafe-superpowers">Năm Unsafe Superpowers</a></h2>
+<p>Unsafe Rust cho phép bạn làm 5 điều mà safe Rust không cho phép:</p>
+<h3 id="1-dereferencing-raw-pointers"><a class="header" href="#1-dereferencing-raw-pointers">1. Dereferencing Raw Pointers</a></h3>
+<pre class="playground"><code class="language-rust editable edition2021">fn main() {
+    let mut num = 5;
+
+    // Tạo raw pointers (an toàn)
+    let r1 = &amp;num as *const i32;      // immutable raw pointer
+    let r2 = &amp;mut num as *mut i32;    // mutable raw pointer
+
+    // Dereferencing raw pointer (KHÔNG an toàn)
+    unsafe {
+        println!("r1 points to: {}", *r1);
+        *r2 = 10;
+        println!("r2 changed value to: {}", *r2);
+    }
+}</code></pre>
+<p><strong>Nguy hiểm</strong>: Raw pointers có thể null, dangling, hoặc unaligned!</p>
+<h3 id="2-gọi-unsafe-functions"><a class="header" href="#2-gọi-unsafe-functions">2. Gọi Unsafe Functions</a></h3>
+<pre class="playground"><code class="language-rust editable edition2021">// Khai báo unsafe function
+unsafe fn dangerous() {
+    println!("Doing something dangerous!");
+}
+
+fn main() {
+    // Phải gọi trong unsafe block
+    unsafe {
+        dangerous();
+    }
+}</code></pre>
+<h3 id="3-truy-cậpmodify-mutable-static-variables"><a class="header" href="#3-truy-cậpmodify-mutable-static-variables">3. Truy cập/Modify Mutable Static Variables</a></h3>
+<pre class="playground"><code class="language-rust editable edition2021">static mut COUNTER: u32 = 0;
+
+fn add_to_counter(inc: u32) {
+    unsafe {
+        COUNTER += inc; // Có thể gây data race!
+    }
+}
+
+fn main() {
+    add_to_counter(3);
+
+    unsafe {
+        println!("COUNTER: {}", COUNTER);
+    }
+}</code></pre>
+<p><strong>Cảnh báo</strong>: Mutable static có thể gây data races trong multi-threaded code!</p>
+<h3 id="4-implementing-unsafe-traits"><a class="header" href="#4-implementing-unsafe-traits">4. Implementing Unsafe Traits</a></h3>
+<pre class="playground"><code class="language-rust editable edition2021">// Unsafe trait
+unsafe trait Foo {
+    fn foo(&amp;self);
+}
+
+struct MyType;
+
+// Implement unsafe trait
+unsafe impl Foo for MyType {
+    fn foo(&amp;self) {
+        println!("Foo!");
+    }
+}
+
+fn main() {
+    let my = MyType;
+    my.foo(); // Gọi method không cần unsafe
+}</code></pre>
+<h3 id="5-accessing-fields-of-unions"><a class="header" href="#5-accessing-fields-of-unions">5. Accessing Fields of Unions</a></h3>
+<pre class="playground"><code class="language-rust editable edition2021">union MyUnion {
+    f1: u32,
+    f2: f32,
+}
+
+fn main() {
+    let u = MyUnion { f1: 1 };
+
+    unsafe {
+        // Không biết field nào valid
+        println!("u.f1: {}", u.f1);
+        // println!("u.f2: {}", u.f2); // Có thể in giá trị garbage
+    }
+}</code></pre>
+<h2 id="best-practices-2"><a class="header" href="#best-practices-2">Best Practices</a></h2>
+<h3 id="1-minimize-unsafe-scope"><a class="header" href="#1-minimize-unsafe-scope">1. Minimize Unsafe Scope</a></h3>
+<pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ❌ Tránh: Unsafe block lớn
+unsafe {
+    // 100 lines of code
+}
+
+// ✅ Tốt hơn: Unsafe block nhỏ nhất có thể
+let result = unsafe {
+    *raw_pointer
+};
+// Xử lý result ở safe code
+<span class="boring">}</span></code></pre>
+<h3 id="2-abstraction-pattern"><a class="header" href="#2-abstraction-pattern">2. Abstraction Pattern</a></h3>
+<p>Wrap unsafe code trong safe API:</p>
+<pre class="playground"><code class="language-rust editable edition2021">pub struct SafeVec&lt;T&gt; {
+    ptr: *mut T,
+    len: usize,
+    capacity: usize,
+}
+
+impl&lt;T&gt; SafeVec&lt;T&gt; {
+    // Safe API
+    pub fn push(&amp;mut self, value: T) {
+        if self.len == self.capacity {
+            self.grow();
+        }
+
+        unsafe {
+            // Unsafe implementation ẩn bên trong
+            std::ptr::write(self.ptr.add(self.len), value);
+        }
+
+        self.len += 1;
+    }
+
+    fn grow(&amp;mut self) {
+        // Implementation with unsafe code...
+    }
+}</code></pre>
+<h3 id="3-document-safety-invariants"><a class="header" href="#3-document-safety-invariants">3. Document Safety Invariants</a></h3>
+<pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// # Safety
+///
+/// `ptr` must be valid for reads of `len` elements of type `T`.
+/// `ptr` must be properly aligned.
+/// `len` must not exceed the allocation size.
+unsafe fn read_slice&lt;T&gt;(ptr: *const T, len: usize) -&gt; Vec&lt;T&gt; {
+    let mut vec = Vec::with_capacity(len);
+    std::ptr::copy_nonoverlapping(ptr, vec.as_mut_ptr(), len);
+    vec.set_len(len);
+    vec
+}
+<span class="boring">}</span></code></pre>
+<h2 id="common-patterns"><a class="header" href="#common-patterns">Common Patterns</a></h2>
+<h3 id="transmute---chuyển-đổi-type"><a class="header" href="#transmute---chuyển-đổi-type">Transmute - Chuyển đổi Type</a></h3>
+<pre class="playground"><code class="language-rust editable edition2021">use std::mem;
+
+fn main() {
+    // Chuyển f32 thành u32 bit pattern
+    let f: f32 = 3.14;
+
+    let bits: u32 = unsafe {
+        mem::transmute(f)
+    };
+
+    println!("f32 {:.2} as u32 bits: 0x{:08x}", f, bits);
+}</code></pre>
+<p><strong>Nguy hiểm</strong>: Transmute không kiểm tra gì cả. Rất dễ gây UB (Undefined Behavior)!</p>
+<h3 id="raw-pointer-arithmetic"><a class="header" href="#raw-pointer-arithmetic">Raw Pointer Arithmetic</a></h3>
+<pre class="playground"><code class="language-rust editable edition2021">fn main() {
+    let arr = [1, 2, 3, 4, 5];
+    let ptr = arr.as_ptr();
+
+    unsafe {
+        // Pointer arithmetic
+        for i in 0..5 {
+            let elem = ptr.add(i);
+            println!("Element {}: {}", i, *elem);
+        }
+    }
+}</code></pre>
+<h2 id="undefined-behavior-ub"><a class="header" href="#undefined-behavior-ub">Undefined Behavior (UB)</a></h2>
+<p>Actions gây UB trong unsafe code:</p>
+<ul>
+<li>❌ Dereferencing null/dangling pointers</li>
+<li>❌ Data races</li>
+<li>❌ Breaking pointer aliasing rules</li>
+<li>❌ Using uninitialized memory</li>
+<li>❌ Invalid values (e.g., <code>bool</code> không phải 0 hoặc 1)</li>
+<li>❌ Calling foreign functions không đúng cách</li>
+</ul>
+<p><strong>UB = Game Over</strong>: Compiler có thể assume UB never happens và optimize sai!</p>
+<h2 id="tools-để-debug-unsafe-code"><a class="header" href="#tools-để-debug-unsafe-code">Tools để Debug Unsafe Code</a></h2>
+<h3 id="1-miri"><a class="header" href="#1-miri">1. Miri</a></h3>
+<p>Interpreter phát hiện UB:</p>
+<pre><code class="language-bash">cargo install miri
+cargo +nightly miri test
+</code></pre>
+<h3 id="2-addresssanitizer"><a class="header" href="#2-addresssanitizer">2. AddressSanitizer</a></h3>
+<p>Phát hiện memory errors:</p>
+<pre><code class="language-bash">RUSTFLAGS="-Z sanitizer=address" cargo +nightly build
+</code></pre>
+<h3 id="3-threadsanitizer"><a class="header" href="#3-threadsanitizer">3. ThreadSanitizer</a></h3>
+<p>Phát hiện data races:</p>
+<pre><code class="language-bash">RUSTFLAGS="-Z sanitizer=thread" cargo +nightly build
+</code></pre>
+<h2 id="khi-nào-dùng-unsafe"><a class="header" href="#khi-nào-dùng-unsafe">Khi nào dùng Unsafe?</a></h2>
+<p>✅ <strong>Hợp lý:</strong></p>
+<ul>
+<li>Implement low-level data structures (Vec, HashMap)</li>
+<li>FFI bindings</li>
+<li>Optimize performance critical code</li>
+<li>Interact với hardware</li>
+</ul>
+<p>❌ <strong>Tránh:</strong></p>
+<ul>
+<li>Shortcuts vì lười implement trait bounds</li>
+<li>“Compiler bắt bẻ quá” - suy nghĩ lại design!</li>
+<li>Chưa hiểu rõ tại sao cần</li>
+</ul>
+<h2 id="nguyên-tắc-vàng"><a class="header" href="#nguyên-tắc-vàng">Nguyên tắc Vàng</a></h2>
+<blockquote>
+<p><strong>“Unsafe không có nghĩa là unreviewed”</strong></p>
+<p>Mọi unsafe block cần:</p>
+<ol>
+<li>Comment giải thích TẠI SAO cần unsafe</li>
+<li>Document safety invariants</li>
+<li>Code review kỹ càng</li>
+<li>Test coverage cao</li>
+</ol>
+</blockquote>
+<h2 id="tham-khảo-1"><a class="header" href="#tham-khảo-1">Tham khảo</a></h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/nomicon/">The Rustonomicon</a> - The Dark Arts of Unsafe Rust</li>
+<li><a href="https://doc.rust-lang.org/reference/unsafe-code.html">Rust Reference - Unsafe</a></li>
+<li><a href="https://github.com/rust-lang/miri">Miri Documentation</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="saturatingt"><a class="header" href="#saturatingt"><code>Saturating&lt;T&gt;</code></a></h1>
 <p>Khi nhìn vào ví dụ này, khi cộng (<code>+</code>) hoặc trừ (<code>-</code>) hai số unsigned <code>u8</code> có thể dẫn đến tràn số (overflow) <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=c62ff328d54f469ee00bb87dcd5aeaee">(playground)</a>:</p>
@@ -7081,7 +7481,7 @@ hyperfine './target/release/myapp'
 <pre><code class="language-bash">cargo clean
 time cargo build --release
 </code></pre>
-<h2 id="best-practices-2"><a class="header" href="#best-practices-2">Best Practices</a></h2>
+<h2 id="best-practices-3"><a class="header" href="#best-practices-3">Best Practices</a></h2>
 <ol>
 <li><strong>Benchmark mọi thay đổi</strong> - Đừng giả định, hãy đo lường</li>
 <li><strong>Bắt đầu với config đơn giản</strong> - Từng bước một</li>
@@ -9199,7 +9599,7 @@ for (let i = 0; i &lt; options.count; i++) {
 <li>Better error messages</li>
 <li>No runtime type checking needed</li>
 </ul>
-<h2 id="best-practices-3"><a class="header" href="#best-practices-3">Best Practices</a></h2>
+<h2 id="best-practices-4"><a class="header" href="#best-practices-4">Best Practices</a></h2>
 <h3 id="1-sử-dụng-derive-api-cho-simple-cases"><a class="header" href="#1-sử-dụng-derive-api-cho-simple-cases">1. Sử dụng derive API cho simple cases</a></h3>
 <pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -9868,7 +10268,7 @@ async fn main() -&gt; std::io::Result&lt;()&gt; {
     .run()
     .await
 }</code></pre>
-<h2 id="best-practices-4"><a class="header" href="#best-practices-4">Best Practices</a></h2>
+<h2 id="best-practices-5"><a class="header" href="#best-practices-5">Best Practices</a></h2>
 <h3 id="1-separate-configs-by-environment"><a class="header" href="#1-separate-configs-by-environment">1. Separate configs by environment</a></h3>
 <pre><code>config/
 ├── default.toml         # Shared defaults
@@ -10055,7 +10455,7 @@ speedup: 5.34x
 <p><strong>Demo nbody visualize</strong>: gõ <code>s</code> để chạy tuần tự và <code>p</code> để parallel</p>
 <pre><code class="language-bash">cargo run --release -- nbody visualize
 </code></pre>
-<p><img src="https://i.imgur.com/cF6Euyf.png" alt=""></p>
+<p><img src="https://i.imgur.com/cF6Euyf.png" alt="Rayon nbody simulation visualization demo - showing parallel physics calculations in action"></p>
 <h2 id="references-40"><a class="header" href="#references-40">References</a></h2>
 <ul>
 <li><a href="https://smallcultfollowing.com/babysteps/blog/2015/12/18/rayon-data-parallelism-in-rust/">Rayon: data parallelism in Rust</a></li>
@@ -10063,9 +10463,9 @@ speedup: 5.34x
 <li><a href="https://github.com/rayon-rs/rayon">https://github.com/rayon-rs/rayon</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="polars"><a class="header" href="#polars"><a href="ttps://pola.rs"><code>polars</code></a></a></h1>
+<h1 id="polars"><a class="header" href="#polars"><a href="https://pola.rs"><code>polars</code></a></a></h1>
 <p>Xử lý DataFrame lớn, dễ sử dụng, hiệu năng cao và có nhiều ưu điểm giống với Pandas nổi tiếng. Polars cũng được hỗ trợ trên Python.</p>
-<p><img src="crates/polars.png" alt=""></p>
+<p><img src="crates/polars.png" alt="Polars DataFrame library logo - high-performance data processing framework for Rust and Python"></p>
 <h2 id="cài-đặt-9"><a class="header" href="#cài-đặt-9">Cài đặt</a></h2>
 <pre><code class="language-bash">cargo add polars
 </code></pre>
@@ -10379,7 +10779,7 @@ result.to_parquet('output.parquet')
 <li>Ecosystem nhỏ hơn Python (nhưng đang phát triển nhanh)</li>
 <li>Learning curve cao hơn</li>
 </ul>
-<h2 id="best-practices-5"><a class="header" href="#best-practices-5">Best Practices</a></h2>
+<h2 id="best-practices-6"><a class="header" href="#best-practices-6">Best Practices</a></h2>
 <ol>
 <li>
 <p><strong>Sử dụng Lazy Evaluation khi làm việc với large datasets:</strong></p>
@@ -10865,7 +11265,7 @@ async fn main() -&gt; Result&lt;()&gt; {
 
     Ok(())
 }</code></pre>
-<h2 id="best-practices-6"><a class="header" href="#best-practices-6">Best Practices</a></h2>
+<h2 id="best-practices-7"><a class="header" href="#best-practices-7">Best Practices</a></h2>
 <h3 id="1-sử-dụng-columnar-format"><a class="header" href="#1-sử-dụng-columnar-format">1. Sử dụng Columnar Format</a></h3>
 <pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -13834,7 +14234,7 @@ fn main() {
     println!("Sum: {}", sum);
     println!("Sum (parallel): {}", sum_parallel);
 }</code></pre>
-<h2 id="best-practices-7"><a class="header" href="#best-practices-7">Best Practices</a></h2>
+<h2 id="best-practices-8"><a class="header" href="#best-practices-8">Best Practices</a></h2>
 <h3 id="1-prefer-iterators-over-loops"><a class="header" href="#1-prefer-iterators-over-loops">1. Prefer iterators over loops</a></h3>
 <pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -14266,7 +14666,7 @@ fn process(s: String) {
 fn main() {
     process("hello".to_string());  // Allocate memory
 }</code></pre>
-<h2 id="best-practices-8"><a class="header" href="#best-practices-8">Best Practices</a></h2>
+<h2 id="best-practices-9"><a class="header" href="#best-practices-9">Best Practices</a></h2>
 <h3 id="1-default-to-borrowed"><a class="header" href="#1-default-to-borrowed">1. Default to borrowed</a></h3>
 <pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -14310,7 +14710,7 @@ fn uppercase(s: String) -&gt; String {
     s.to_uppercase()
 }
 <span class="boring">}</span></code></pre>
-<h2 id="common-patterns"><a class="header" href="#common-patterns">Common Patterns</a></h2>
+<h2 id="common-patterns-1"><a class="header" href="#common-patterns-1">Common Patterns</a></h2>
 <h3 id="accepting-both-owned-and-borrowed"><a class="header" href="#accepting-both-owned-and-borrowed">Accepting both owned and borrowed</a></h3>
 <pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -14473,7 +14873,7 @@ message.push_str(" years old");
 let mut output = String::new();
 write!(&amp;mut output, "{} is {} years old", "Duyet", 18).unwrap();
 <span class="boring">}</span></code></pre>
-<h2 id="tham-khảo"><a class="header" href="#tham-khảo">Tham khảo</a></h2>
+<h2 id="tham-khảo-2"><a class="header" href="#tham-khảo-2">Tham khảo</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/fmt/">std::fmt documentation</a></li>
 <li><a href="https://doc.rust-lang.org/std/macro.format.html">format! macro</a></li>
@@ -14973,7 +15373,7 @@ impl Drop for CopyType {
     }
 }
 <span class="boring">}</span></code></pre>
-<h2 id="best-practices-9"><a class="header" href="#best-practices-9">Best Practices</a></h2>
+<h2 id="best-practices-10"><a class="header" href="#best-practices-10">Best Practices</a></h2>
 <ol>
 <li><strong>Giữ <code>drop()</code> đơn giản</strong>: Tránh logic phức tạp trong destructor</li>
 <li><strong>Không panic</strong>: Handle errors gracefully trong <code>drop()</code></li>
@@ -15026,7 +15426,7 @@ fn main() -&gt; std::io::Result&lt;()&gt; {
     // File sẽ tự động được flush và close
     Ok(())
 }</code></pre>
-<h2 id="tham-khảo-1"><a class="header" href="#tham-khảo-1">Tham khảo</a></h2>
+<h2 id="tham-khảo-3"><a class="header" href="#tham-khảo-3">Tham khảo</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch15-03-drop.html">The Drop Trait</a></li>
 <li><a href="https://doc.rust-lang.org/std/ops/trait.Drop.html">std::ops::Drop</a></li>
@@ -15359,14 +15759,14 @@ impl Handler {
     }
 }
 <span class="boring">}</span></code></pre>
-<h2 id="best-practices-10"><a class="header" href="#best-practices-10">Best Practices</a></h2>
+<h2 id="best-practices-11"><a class="header" href="#best-practices-11">Best Practices</a></h2>
 <ol>
 <li><strong>Prefer <code>mem::take</code> khi có <code>Default</code></strong>: Ngắn gọn hơn <code>mem::replace</code></li>
 <li><strong>Document side effects</strong>: Ghi rõ function modifies state</li>
 <li><strong>Consider <code>Option::take()</code></strong>: Cho <code>Option</code> types</li>
 <li><strong>Combine với pattern matching</strong>: Rất hữu dụng với enums</li>
 </ol>
-<h2 id="tham-khảo-2"><a class="header" href="#tham-khảo-2">Tham khảo</a></h2>
+<h2 id="tham-khảo-4"><a class="header" href="#tham-khảo-4">Tham khảo</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/mem/fn.replace.html">std::mem::replace</a></li>
 <li><a href="https://doc.rust-lang.org/std/mem/fn.take.html">std::mem::take</a></li>
@@ -15708,7 +16108,7 @@ impl Database {
     }
 }
 <span class="boring">}</span></code></pre>
-<h2 id="best-practices-11"><a class="header" href="#best-practices-11">Best Practices</a></h2>
+<h2 id="best-practices-12"><a class="header" href="#best-practices-12">Best Practices</a></h2>
 <ol>
 <li><strong>Start private</strong>: Mặc định mọi thứ private, expose dần khi cần</li>
 <li><strong>Use <code>#[non_exhaustive]</code></strong>: Cho enums và structs có thể mở rộng</li>
@@ -15740,7 +16140,7 @@ pub fn process() -&gt; PublicType {
     PublicType::from(internal)
 }
 <span class="boring">}</span></code></pre>
-<h2 id="tham-khảo-3"><a class="header" href="#tham-khảo-3">Tham khảo</a></h2>
+<h2 id="tham-khảo-5"><a class="header" href="#tham-khảo-5">Tham khảo</a></h2>
 <ul>
 <li><a href="https://rust-lang.github.io/api-guidelines/future-proofing.html">Rust API Guidelines - Future proofing</a></li>
 <li><a href="https://doc.rust-lang.org/reference/visibility-and-privacy.html">The Rust Reference - Visibility</a></li>
@@ -16031,14 +16431,14 @@ match option {
     None =&gt; {}
 }
 <span class="boring">}</span></code></pre>
-<h2 id="best-practices-12"><a class="header" href="#best-practices-12">Best Practices</a></h2>
+<h2 id="best-practices-13"><a class="header" href="#best-practices-13">Best Practices</a></h2>
 <ol>
 <li><strong>Use <code>flatten()</code></strong> thay vì <code>filter_map(|x| x)</code> cho clarity</li>
 <li><strong>Use <code>filter_map()</code></strong> khi cần transform + filter</li>
 <li><strong>Combine với iterator chains</strong> cho expressive code</li>
 <li><strong>Avoid unnecessary unwrap</strong> - let iterator handle <code>None</code></li>
 </ol>
-<h2 id="common-patterns-1"><a class="header" href="#common-patterns-1">Common patterns</a></h2>
+<h2 id="common-patterns-2"><a class="header" href="#common-patterns-2">Common patterns</a></h2>
 <pre class="playground"><code class="language-rust edition2021">fn main() {
     let options = vec![Some(1), None, Some(3), None, Some(5)];
 
@@ -16058,7 +16458,7 @@ match option {
     let has_some = options.iter().flatten().next().is_some();
     println!("Has some: {}", has_some); // true
 }</code></pre>
-<h2 id="tham-khảo-4"><a class="header" href="#tham-khảo-4">Tham khảo</a></h2>
+<h2 id="tham-khảo-6"><a class="header" href="#tham-khảo-6">Tham khảo</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/option/enum.Option.html">Option documentation</a></li>
 <li><a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html">Iterator trait</a></li>
@@ -16404,7 +16804,7 @@ fn main() {
     borrow();
     borrow(); // ✅ Can call multiple times
 }</code></pre>
-<h2 id="best-practices-13"><a class="header" href="#best-practices-13">Best Practices</a></h2>
+<h2 id="best-practices-14"><a class="header" href="#best-practices-14">Best Practices</a></h2>
 <ol>
 <li><strong>Clone judiciously</strong>: Chỉ clone khi cần thiết</li>
 <li><strong>Use <code>Arc</code> cho shared ownership</strong>: Đặc biệt với threads</li>
@@ -16460,7 +16860,7 @@ fn correct() {
     println!("{:?}", data); // ✅ Still available
 }
 <span class="boring">}</span></code></pre>
-<h2 id="tham-khảo-5"><a class="header" href="#tham-khảo-5">Tham khảo</a></h2>
+<h2 id="tham-khảo-7"><a class="header" href="#tham-khảo-7">Tham khảo</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch13-01-closures.html">Closures: Anonymous Functions that Capture Their Environment</a></li>
 <li><a href="https://doc.rust-lang.org/book/ch13-01-closures.html#closure-type-inference-and-annotation">Closure types (Fn, FnMut, FnOnce)</a></li>
@@ -16721,7 +17121,7 @@ fn main() {
     }
 }
 <span class="boring">}</span></code></pre>
-<h2 id="best-practices-14"><a class="header" href="#best-practices-14">Best practices</a></h2>
+<h2 id="best-practices-15"><a class="header" href="#best-practices-15">Best practices</a></h2>
 <h3 id="-use-khi-có-early-return"><a class="header" href="#-use-khi-có-early-return">✅ Use khi có early return</a></h3>
 <pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -16838,7 +17238,7 @@ fn handle_create_user(req: Request) -&gt; Result&lt;String, String&gt; {
 <li><strong>Cannot use với if-let chains</strong>: Chỉ work với <code>let</code> statements</li>
 <li><strong>Pattern must be refutable</strong>: Không work với irrefutable patterns</li>
 </ol>
-<h2 id="tham-khảo-6"><a class="header" href="#tham-khảo-6">Tham khảo</a></h2>
+<h2 id="tham-khảo-8"><a class="header" href="#tham-khảo-8">Tham khảo</a></h2>
 <ul>
 <li><a href="https://rust-lang.github.io/rfcs/3137-let-else.html">let-else RFC</a></li>
 <li><a href="https://blog.rust-lang.org/2022/11/03/Rust-1.65.0.html">Rust 1.65 Release Notes</a></li>
@@ -17248,7 +17648,7 @@ fn main() {
         println!("Dataset info: {:?}", info);
     }
 }</code></pre>
-<h2 id="best-practices-15"><a class="header" href="#best-practices-15">Best Practices</a></h2>
+<h2 id="best-practices-16"><a class="header" href="#best-practices-16">Best Practices</a></h2>
 <h3 id="1-derive-useful-traits-1"><a class="header" href="#1-derive-useful-traits-1">1. Derive useful traits</a></h3>
 <pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -17851,7 +18251,7 @@ fn main() {
     println!("Function end");
     // Defers execute in reverse order (LIFO)
 }</code></pre>
-<h2 id="best-practices-16"><a class="header" href="#best-practices-16">Best Practices</a></h2>
+<h2 id="best-practices-17"><a class="header" href="#best-practices-17">Best Practices</a></h2>
 <h3 id="1-always-implement-drop-correctly"><a class="header" href="#1-always-implement-drop-correctly">1. Always implement Drop correctly</a></h3>
 <pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -18302,7 +18702,7 @@ fn main() {
     // Match compiled thành efficient jump table
     // Zero overhead vs if-else chain!
 }</code></pre>
-<h2 id="best-practices-17"><a class="header" href="#best-practices-17">Best Practices</a></h2>
+<h2 id="best-practices-18"><a class="header" href="#best-practices-18">Best Practices</a></h2>
 <h3 id="1-prefer-iterators-over-manual-loops"><a class="header" href="#1-prefer-iterators-over-manual-loops">1. Prefer iterators over manual loops</a></h3>
 <pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -19044,7 +19444,7 @@ fn main() {
     // let mut pool = ConnectionPool::new();
     // pool.acquire();
 }</code></pre>
-<h2 id="best-practices-18"><a class="header" href="#best-practices-18">Best Practices</a></h2>
+<h2 id="best-practices-19"><a class="header" href="#best-practices-19">Best Practices</a></h2>
 <h3 id="1-use-phantomdata-cho-zero-cost-states"><a class="header" href="#1-use-phantomdata-cho-zero-cost-states">1. Use PhantomData cho zero-cost states</a></h3>
 <pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -19679,7 +20079,7 @@ fn main() -&gt; Result&lt;()&gt; {
 
     Ok(())
 }</code></pre>
-<h2 id="best-practices-19"><a class="header" href="#best-practices-19">Best Practices</a></h2>
+<h2 id="best-practices-20"><a class="header" href="#best-practices-20">Best Practices</a></h2>
 <h3 id="1-use--for-propagation"><a class="header" href="#1-use--for-propagation">1. Use <code>?</code> for propagation</a></h3>
 <pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

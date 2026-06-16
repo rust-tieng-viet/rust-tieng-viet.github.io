@@ -1,8 +1,10 @@
 https://rust-tieng-viet.github.io/
 https://rust-tieng-viet.github.io/llm
 https://rust-tieng-viet.github.io/performance
+https://rust-tieng-viet.github.io/advanced/async
 https://rust-tieng-viet.github.io/advanced/saturating
 https://rust-tieng-viet.github.io/advanced/smart-pointer
+https://rust-tieng-viet.github.io/advanced/unsafe
 https://rust-tieng-viet.github.io/basic/attr
 https://rust-tieng-viet.github.io/basic/cargo
 https://rust-tieng-viet.github.io/basic/closure

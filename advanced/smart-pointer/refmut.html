@@ -7,6 +7,11 @@
 
 
         <!-- Custom HTML head -->
+        <!-- SEO Meta Tags -->
+        <meta name="description" content="Comprehensive Rust documentation in Vietnamese - from basics to advanced topics including ownership, traits, async programming, data engineering, and AI/LLM">
+        <meta name="keywords" content="Rust, Rust Vietnamese, Learn Rust, Rust programming, Rust tutorial, ownership, borrowing, async Rust, Rust Vietnam">
+        <meta name="author" content="Duyet Le">
+        
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-88RKF7DLPY"></script>
         <script>
@@ -14,19 +19,10 @@
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
         
-          gtag('config', 'G-88RKF7DLPY');
+          gtag('config', 'G-88RKF7DLPY', {
+            'anonymize_ip': true
+          });
         </script>
-        
-        <!-- pageview.js -->
-        <script>
-          !function(e,n,t){e.onload=function(){
-          let e=n.createElement("script");
-          e.src=t,n.body.appendChild(e)}}
-          (window,document,"https://pageview.duyet.net/pageview.js");
-        </script>
-        
-        <script async src="https://seline.duyet.workers.dev/seline.js" data-api-host="https://seline.duyet.workers.dev" data-token="d7c8002f8e40139"></script>
-        <script async src="https://cm43xj8zd00093b619ak2zfuc.d.jitsu.com/p.js"></script>
 
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -55,10 +51,10 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-4cd6569c.js";
+            window.path_to_searchindex_js = "../../searchindex-58394469.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-b3a836bf.js"></script>
+        <script src="../../toc-d2455f51.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -224,7 +220,7 @@ assert_eq!(*c.borrow(), (42, 'b'));
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../../advanced/saturating.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../advanced/async/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -238,7 +234,7 @@ assert_eq!(*c.borrow(), (42, 'b'));
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../../advanced/saturating.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../advanced/async/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
