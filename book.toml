@@ -25,3 +25,4 @@ enable = true            # enables the search feature
 # [output.linkcheck]
 # follow-web-links = false
 # optional = true
+# warning-policy = "warn"
