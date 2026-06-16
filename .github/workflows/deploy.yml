@@ -14,7 +14,7 @@ jobs:
     name: Build mdBook and Deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       # Cache for faster builds
       - name: Cache mdBook
@@ -33,15 +33,6 @@ jobs:
         uses: peaceiris/actions-mdbook@v2
         with:
           mdbook-version: latest
-
-      - name: Setup mbBook linkcheck
-        run: |
-          mkdir -p mdbook-linkcheck && cd "$_" && \
-            curl -L https://github.com/Michael-F-Bryan/mdbook-linkcheck/releases/latest/download/mdbook-linkcheck.x86_64-unknown-linux-gnu.zip -o mdbook-linkcheck.zip && \
-            unzip "$_" && \
-            chmod +x mdbook-linkcheck && \
-            export PATH=$PWD:$PATH && \
-            echo "$PWD" >> $GITHUB_PATH
 
       - name: Get site url
         env:
@@ -62,7 +53,7 @@ jobs:
 
       - name: Generate sitemap
         run: |
-          cd book/html
+          cd book
           npx static-sitemap-cli --base ${{ env.url }}
           cat sitemap.xml
 
@@ -72,16 +63,16 @@ jobs:
         with:
           message: Build book successfully!
           reactions: tada
-          comment_tag: build_book
-          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+          comment-tag: build_book
+          github-token: ${{ secrets.BOT_TOKEN }}
 
       - name: Deploy to GitHub
         if: github.event_name == 'push'
         id: deploy
-        uses: JamesIves/github-pages-deploy-action@v4.7.4
+        uses: JamesIves/github-pages-deploy-action@v4.8.0
         with:
           branch: gh-pages
-          folder: book/html
+          folder: book
 
       - name: Comment Commit
         if: github.event_name == 'push' && steps.deploy.outputs.deployment-status == 'success'

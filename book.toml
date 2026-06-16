@@ -3,7 +3,6 @@ authors = ["Duyet Le"]
 language = "vi"
 src = "src"
 title = "Rust Tiếng Việt"
-description = "Comprehensive Rust documentation in Vietnamese - from basics to advanced topics including ownership, traits, async programming, data engineering, and AI/LLM"
 
 [rust]
 edition = "2021"
@@ -11,9 +10,6 @@ edition = "2021"
 [output.html]
 git-repository-url = "https://github.com/rust-tieng-viet/rust-tieng-viet.github.io"
 edit-url-template = "https://github.com/rust-tieng-viet/rust-tieng-viet.github.io/edit/main/{path}"
-site-url = "https://rust-tieng-viet.github.io/"
-default-theme = "rust"
-preferred-dark-theme = "navy"
 
 [output.html.playground]
 editable = true
@@ -25,8 +21,8 @@ page-break = true # insert page-break after each chapter
 [output.html.search]
 enable = true            # enables the search feature
 
-[output.linkcheck]
-# Check links but don't fail the build on external link errors
-follow-web-links = false
-optional = true
-warning-policy = "warn"
+# Temporarily disabled due to compatibility issues with mdbook-linkcheck
+# [output.linkcheck]
+# follow-web-links = false
+# optional = true
+# warning-policy = "warn"
