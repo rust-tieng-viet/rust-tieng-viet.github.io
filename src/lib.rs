@@ -1,3 +1,1 @@
-fn main() {
-    // Make Github recognize this as a Rust project
-}
+// Thư viện hỗ trợ biên dịch các ví dụ của sách Rust Tiếng Việt.
