@@ -764,6 +764,114 @@ impl ResearchAssistant {
 }
 ```
 
+## Các Mẫu Thiết Kế AI Agent Nâng Cao (Advanced AI Agent Design Patterns)
+
+Vào năm 2025 và 2026, thay vì xây dựng các Agent đơn lẻ, cộng đồng AI Agent Engineering đã chuyển dịch sang sử dụng các Agent Design Patterns có tính phối hợp cao để giải quyết các bài toán phức tạp. Dưới đây là 3 mẫu thiết kế phổ biến nhất được triển khai bằng Rust:
+
+### 1. Router Pattern (Mẫu Định Tuyến)
+
+Router dùng một LLM để phân tích đầu vào và quyết định gửi yêu cầu đó tới Agent chuyên biệt nào. Điều này rất thích hợp cho các hệ thống Support Bot hoặc Multi-tool Hub.
+
+```rust,ignore
+enum TargetAgent {
+    CodeAgent,
+    DatabaseAgent,
+    GeneralSupport,
+}
+
+async fn route_query(llm: &Agent, query: &str) -> TargetAgent {
+    let prompt = format!(
+        "Phân loại truy vấn sau thành một trong các nhóm: CODE, DATABASE, GENERAL.\n\nTruy vấn: '{}'\nChỉ trả về nhãn phân loại.",
+        query
+    );
+    let decision = llm.prompt(&prompt).await.unwrap_or_default();
+    
+    match decision.trim().to_uppercase().as_str() {
+        "CODE" => TargetAgent::CodeAgent,
+        "DATABASE" => TargetAgent::DatabaseAgent,
+        _ => TargetAgent::GeneralSupport,
+    }
+}
+```
+
+### 2. Orchestrator-Workers Pattern (Mẫu Điều Phối và Thực Thi)
+
+Orchestrator (Bộ điều phối) nhận một task lớn, phân tách (decompose) thành các sub-tasks riêng biệt, gán chúng cho các Worker Agents (Lao động chuyên biệt) và tổng hợp kết quả cuối cùng.
+
+```rust,ignore
+struct Orchestrator {
+    coordinator: Agent,
+    workers: HashMap<String, Agent>,
+}
+
+impl Orchestrator {
+    async fn solve_task(&self, task: &str) -> Result<String, Box<dyn std::error::Error>> {
+        // 1. Phân rã công việc
+        let sub_tasks_json = self.coordinator.prompt(&format!(
+            "Hãy chia nhỏ task này thành danh sách các bước JSON (mỗi bước gán cho một worker): '{}'",
+            task
+        )).await?;
+        let sub_tasks: Vec<SubTask> = serde_json::from_str(&sub_tasks_json)?;
+
+        // 2. Chạy song song các workers sử dụng tokio::join! hoặc join_all
+        let mut results = Vec::new();
+        for sub in sub_tasks {
+            if let Some(worker) = self.workers.get(&sub.assigned_agent) {
+                let res = worker.prompt(&sub.instruction).await?;
+                results.push(res);
+            }
+        }
+
+        // 3. Tổng hợp kết quả
+        let final_report = self.coordinator.prompt(&format!(
+            "Hãy tổng hợp các kết quả sau thành báo cáo hoàn chỉnh:\n{:?}",
+            results
+        )).await?;
+
+        Ok(final_report)
+    }
+}
+```
+
+### 3. Evaluator-Optimizer Pattern (Mẫu Đánh Giá và Tối Ưu)
+
+Mẫu thiết kế này tối ưu kết quả đầu ra bằng một vòng lặp phản hồi (feedback loop) giữa Generator Agent (tạo nội dung) và Evaluator Agent (đánh giá, kiểm tra chất lượng). Vòng lặp tiếp tục cho đến khi kết quả đạt chuẩn hoặc đạt giới hạn số lần thử (max iterations).
+
+```rust,ignore
+struct EvaluatorOptimizer {
+    generator: Agent,
+    evaluator: Agent,
+}
+
+impl EvaluatorOptimizer {
+    async fn generate_with_quality_control(&self, prompt: &str, max_iterations: usize) -> String {
+        let mut current_draft = self.generator.prompt(prompt).await.unwrap_or_default();
+        
+        for i in 0..max_iterations {
+            let evaluation_prompt = format!(
+                "Hãy đánh giá bản thảo này dựa trên yêu cầu: '{}'\nBản thảo:\n{}\n\nNếu đạt yêu cầu, trả về 'APPROVED'. Nếu không, chỉ ra điểm cần sửa.",
+                prompt, current_draft
+            );
+            let evaluation = self.evaluator.prompt(&evaluation_prompt).await.unwrap_or_default();
+
+            if evaluation.trim().to_uppercase() == "APPROVED" {
+                println!("✅ Bản thảo đạt chuẩn sau {} vòng tối ưu!", i + 1);
+                break;
+            }
+
+            // Gửi feedback lại cho Generator để cải tiến
+            let refinement_prompt = format!(
+                "Hãy chỉnh sửa bản thảo này:\n{}\nDựa trên phản hồi sau:\n{}",
+                current_draft, evaluation
+            );
+            current_draft = self.generator.prompt(&refinement_prompt).await.unwrap_or_default();
+        }
+
+        current_draft
+    }
+}
+```
+
 ## Performance Comparison: Rust vs Python
 
 **Agent Workflow Execution (100 tasks):**
