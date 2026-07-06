@@ -183,12 +183,10 @@ async fn main() {
 
 ## Xem thêm
 
-- [Async Functions](./async-fn.md) - Chi tiết về async functions
-- [Futures và Polling](./futures.md) - Cách Future hoạt động bên trong
-- [Tokio Runtime](./tokio.md) - Sử dụng Tokio chi tiết
-- [Error Handling](./error-handling.md) - Xử lý lỗi trong async code
-- [Concurrency Patterns](./concurrency.md) - Patterns async phổ biến
-- [Performance](./performance.md) - Tối ưu async code
+- [The Rust Async Book](https://rust-lang.github.io/async-book/) - Tài liệu chính thức về lập trình bất đồng bộ trong Rust.
+- [Tokio Tutorial](https://tokio.rs/tokio/tutorial) - Hướng dẫn chi tiết cách sử dụng Tokio runtime.
+- [Rust Async: Pinning](https://rust-lang.github.io/async-book/04_pinning/01_chapter.html) - Tìm hiểu về cơ chế Pin/Unpin trong Async Rust.
+- [Tokio Concurrency & Spawning](https://tokio.rs/tokio/tutorial/spawning) - Quản lý concurrency và spawning tasks trong Tokio.
 
 ## Khi nào nên dùng Async?
 
