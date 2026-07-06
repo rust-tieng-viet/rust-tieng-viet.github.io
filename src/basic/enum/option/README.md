@@ -132,7 +132,9 @@ fn get_name(who: Option<String>) -> String {
   }
 }
 
-get_name(Some("duyet"));
+fn main() {
+  get_name(Some("duyet".to_string()));
+}
 ```
 
 {{#include ./if_let_some.md}}

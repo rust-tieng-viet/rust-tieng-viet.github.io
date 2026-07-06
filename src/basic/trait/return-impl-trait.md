@@ -2,7 +2,7 @@
 
 Chúng ta cũng có thể sử dụng `impl Trait` cho giá trị được trả về của function.
 
-```rust,editable
+```rust,ignore
 fn returns_summarizable() -> impl Summary {
     Tweet {
         username: String::from("horse_ebooks"),
@@ -17,7 +17,7 @@ fn returns_summarizable() -> impl Summary {
 Tuy nhiên bạn chỉ có thể return về hoặc `Tweet`
 hoặc `NewsArticle` do cách implement của compiler. Code sau sẽ có lỗi:
 
-```rust,editable
+```rust,ignore
 fn returns_summarizable(switch: bool) -> impl Summary {
     if switch { NewsArticle {} }
 		else { Tweet {} }

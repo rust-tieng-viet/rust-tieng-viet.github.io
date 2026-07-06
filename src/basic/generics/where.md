@@ -14,7 +14,7 @@ where
 }
 ```
 
-```rust,editable
+```rust,ignore
 impl <A: TraitB + TraitC, D: TraitE + TraitF> MyTrait<A, D> for YourType {}
 
 // Expressing bounds with a `where` clause

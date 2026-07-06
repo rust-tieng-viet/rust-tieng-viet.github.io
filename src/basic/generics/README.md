@@ -10,7 +10,7 @@ Generic type parameters thường được biểu diễn dưới dạng `<T>`.
 
 Ví dụ, định nghĩa một *generic function* `foo` nhận một tham số `T` của mọi kiểu dữ liệu.
 
-```rust,no_run
+```rust,ignore
 fn foo<T>(arg: T) { ... }
 ```
 

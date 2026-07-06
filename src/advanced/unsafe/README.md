@@ -120,7 +120,7 @@ fn main() {
 
 ### 1. Minimize Unsafe Scope
 
-```rust
+```rust,ignore
 // ❌ Tránh: Unsafe block lớn
 unsafe {
     // 100 lines of code

@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - 2026-07-06
+
+#### Content
+- **Apache DataFusion & Delta Lake guide** (`src/data-engineering/datafusion.md`)
+  - Full introduction to extensible queries and Arrow memory layout in Rust.
+  - SQL and DataFrame APIs with runnable examples.
+  - Delta Lake integration (open_table, appends, ACID transactions).
+  - Performance optimization (pushdowns, partitioning, disk spilling).
+- **Model Context Protocol (MCP) & genai guide** (`src/llm/mcp-genai.md`)
+  - Full specification and architecture of Model Context Protocol (MCP).
+  - Step-by-step tutorial to build an MCP Server in Rust.
+  - Introduction to Jeremy Chone's `genai` library.
+  - Completion, streaming, and tool calling examples with `genai`.
+- **Advanced AI Agent Design Patterns** added to `src/llm/ai-agents-workflows.md`.
+  - Details and Rust implementations of Router, Orchestrator-Workers, and Evaluator-Optimizer patterns.
+
+#### Infrastructure
+- **Root Cargo.toml** created with standard book dependencies (`tokio`, `anyhow`, `thiserror`, `serde`, `polars`, `csv`, `rayon`, etc.) to allow compiled testing of all code blocks.
+
+### Fixed
+- **Broken links**: Fixed 6 broken internal links in `src/advanced/async/README.md`.
+- **mdbook test compilation errors**: Fixed multiple compiler errors across `display.md`, `fromstr.md`, `where.md`, `generics/README.md`, `named-vars.md`, `enum-vec.md`, `copy-clone.md`, `auto-trait.md`, `option/README.md`, and `generics/trait.md`.
+
 ### Added - 2025-11-16 (Simplified Version)
 
 #### Content

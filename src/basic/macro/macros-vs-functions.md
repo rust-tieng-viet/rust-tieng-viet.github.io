@@ -42,7 +42,7 @@ fn main() {
 | Input  | Token stream              | Tham số và đối số của hàm            |
 | Output | Đoạn mã Rust được mở rộng | Giá trị hoặc hiệu ứng sẽ được trả về |
 
-```rust
+```rust,compile_fail
 macro_rules! math {
     ($x:expr + $y:expr) => { $x * $y };
 }

@@ -2,7 +2,7 @@
 
 Trait cũng có thể được tổng quát hóa.
 
-```rust,editable,compile_fail
+```rust,editable
 // Non-copyable types.
 struct Empty;
 struct Null;

@@ -16,7 +16,7 @@ Crate được publish trên <https://crates.io>.
 
 ## Layout của **binary crate** và **library crate**
 
-```
+```text
 // Binary crate
 
 ├── Cargo.toml
@@ -24,7 +24,7 @@ Crate được publish trên <https://crates.io>.
     └── main.rs
 ```
 
-```
+```text
 // Library crate
 
 ├── Cargo.toml

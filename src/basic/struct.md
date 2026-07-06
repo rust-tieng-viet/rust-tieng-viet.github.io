@@ -68,7 +68,7 @@ fn main() {
 
 `colour: colour` có thể được viết gọn lại thành:
 
-```rust,editable
+```rust,ignore
 let size_and_colour = SizeAndColour {
   size: 150,
   colour

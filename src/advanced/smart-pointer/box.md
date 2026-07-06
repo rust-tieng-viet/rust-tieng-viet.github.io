@@ -33,7 +33,7 @@ là một ví dụ của recursive type. Cons là viết tắt của _"construct
 Mỗi item trong cons list có 2 thành phần: giá trị của item hiện tại và next item.
 Item cuối cùng có giá trị Nil và không có next item.
 
-```rust
+```rust,compile_fail
 enum List {
   Cons(i32, List),
   Nil,
@@ -42,7 +42,7 @@ enum List {
 
 Bây giờ hãy sử dụng `List` type để lưu list `1, 2, 3` như sau
 
-```rust,editable
+```rust,compile_fail
 enum List {
   Cons(i32, List),
   Nil,

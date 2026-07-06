@@ -129,7 +129,7 @@ fn main() {
 
 ### Owned: PathBuf
 
-```rust
+```rust,no_run
 use std::path::PathBuf;
 
 // ❌ Hạn chế
@@ -148,7 +148,7 @@ fn main() -> std::io::Result<()> {
 
 ### Borrowed: &Path
 
-```rust
+```rust,no_run
 use std::path::Path;
 
 // ✅ Linh hoạt
@@ -416,7 +416,7 @@ fn main() {
 
 ### 1. Default to borrowed
 
-```rust
+```rust,ignore
 // ✅ Bắt đầu với borrowed
 fn process(data: &str) { }
 
@@ -437,7 +437,7 @@ fn process<S: AsRef<str>>(s: S) {
 
 ### 3. Document ownership requirements
 
-```rust
+```rust,ignore
 /// Process data without taking ownership
 fn process(data: &[u8]) { }
 

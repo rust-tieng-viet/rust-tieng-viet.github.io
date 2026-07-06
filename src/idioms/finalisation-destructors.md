@@ -172,7 +172,7 @@ fn main() {
 
 Fields trong một struct được dropped theo thứ tự khai báo:
 
-```rust
+```rust,ignore
 struct Container {
     first: PrintOnDrop,
     second: PrintOnDrop,
@@ -200,7 +200,7 @@ fn main() {
 
 Đôi khi cần drop một value trước khi nó ra khỏi scope:
 
-```rust
+```rust,ignore
 fn main() {
     let handler = FileHandler {
         filename: "data.txt".to_string(),
@@ -218,7 +218,7 @@ fn main() {
 
 ### 1. Không thể gọi `drop()` trực tiếp
 
-```rust
+```rust,ignore
 // ❌ Sai: không thể gọi drop() method trực tiếp
 // handler.drop(); // Compile error!
 
@@ -230,7 +230,7 @@ drop(handler);
 
 Nếu panic xảy ra trong `drop()`, chương trình sẽ abort:
 
-```rust
+```rust,ignore
 impl Drop for Risky {
     fn drop(&mut self) {
         // Tránh panic trong drop!
@@ -246,7 +246,7 @@ impl Drop for Risky {
 
 Types implement `Copy` không thể implement `Drop`:
 
-```rust
+```rust,compile_fail
 // ❌ Compile error: Copy và Drop không thể cùng tồn tại
 #[derive(Copy, Clone)]
 struct CopyType {

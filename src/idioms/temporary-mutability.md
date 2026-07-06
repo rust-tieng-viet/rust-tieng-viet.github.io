@@ -6,7 +6,7 @@ Temporary mutability giúp chúng ta tạo một biến mutable trong một ph�
 
 Nested block:
 
-```rust
+```rust,ignore
 let data = {
     let mut data = get_vec();
     data.sort();
@@ -18,7 +18,7 @@ let data = {
 
 Variable rebinding:
 
-```rust
+```rust,ignore
 let mut data = get_vec();
 data.sort();
 let data = data;

@@ -2,7 +2,7 @@
 
 Đôi khi bạn cần có default behavior mà không cần phải implement content cho từng type mỗi khi cần sử dụng:
 
-```rust,editable
+```rust,ignore
 pub trait Summary {
   fn summarize(&self) -> String {
     String::from("(Read more...)")

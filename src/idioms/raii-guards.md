@@ -39,7 +39,7 @@ fn main() {
 ```
 
 Output:
-```
+```text
 Program start
 Acquiring resource: database
 Using resource
@@ -203,8 +203,8 @@ fn process_data() {
     let _timer = Timer::new("process_data");
 
     // Simulate work
-    let mut sum = 0;
-    for i in 0..1_000_000 {
+    let mut sum: i64 = 0;
+    for i in 0i64..1_000_000 {
         sum += i;
     }
 
@@ -597,7 +597,7 @@ impl CriticalData {
 
 ### 3. Document guard lifetime
 
-```rust
+```rust,ignore
 /// Returns a guard that holds a lock on the data.
 /// The lock is released when the guard is dropped.
 struct DataGuard<'a> {

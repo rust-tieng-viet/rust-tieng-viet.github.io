@@ -5,7 +5,7 @@ một function chấp nhận tham số là nhiều kiểu dữ liệu khác nhau
 Nói theo một cách khác, bạn không cần biết kiểu dữ liệu,
 bạn cần biết kiểu dữ liệu đó mang các behavior nào thì đúng hơn.
 
-```rust,editable
+```rust,ignore
 fn notify(data: &impl Summary) {
   println!("News: {}", data.summarize());
 }

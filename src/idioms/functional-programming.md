@@ -344,7 +344,7 @@ fn sum_of_squares_imperative(numbers: &[i32]) -> i32 {
 
 ### Functional style
 
-```rust
+```rust,ignore
 fn sum_of_squares_functional(numbers: &[i32]) -> i32 {
     numbers.iter()
         .filter(|n| *n % 2 == 0)
@@ -368,7 +368,7 @@ fn main() {
 
 ## Parallel Processing với Rayon
 
-```rust
+```rust,ignore
 use rayon::prelude::*;
 
 fn main() {
@@ -437,7 +437,7 @@ for n in &mut numbers {
 
 ### 4. Chain operations
 
-```rust
+```rust,ignore
 // ✅ Chaining
 let result = data
     .into_iter()

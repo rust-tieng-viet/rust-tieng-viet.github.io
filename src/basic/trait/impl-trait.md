@@ -4,7 +4,7 @@ Bây giờ ta định implement các method của trait Summary cho từng type.
 Ví dụ dưới đây ta có `struct NewsArticle` và `struct Tweet`,
 và ta định nghĩa `summarize` cho 2 struct này.
 
-```rust,editable
+```rust,ignore
 {{#include aggregator.rs:summary}}
 ```
 
@@ -15,7 +15,7 @@ người sử dụng crate đã có thể sử dụng các phương thức của
 Chỉ một điều khác biệt là bạn cần mang trait đó vào cùng scope hiện tại cùng với type để có thể sử dụng.
 Ví dụ:
 
-```rust,editable
+```rust,ignore
 {{#include aggregator.rs:main}}
 ```
 

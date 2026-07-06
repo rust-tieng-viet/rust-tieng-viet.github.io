@@ -56,7 +56,7 @@ fn main() {
 
 Compiler sẽ báo lỗi như sau: `rustc main.rs`
 
-```rust,editable
+```text
 error[E0382]: borrow of moved value: `x`
     --> main.rs:7:13
   |

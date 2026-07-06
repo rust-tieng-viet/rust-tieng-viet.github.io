@@ -27,7 +27,7 @@ Immutable code giúp chúng ta giảm thiểu lỗi, giúp chúng ta dễ dàng 
 
 Trong Rust, variable mặc định là immutable, chúng ta cần sử dụng từ khoá `mut` để khai báo mutable.
 
-```rust
+```rust,compile_fail
 let x = 100;
 x = 200; // error: re-assignment of immutable variable `x`
 ```

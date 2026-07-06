@@ -28,7 +28,7 @@ Như bạn thấy thì `main()` cũng có thể return về `Result<(), &'static
 
 Ví dụ trên nhưng sử dụng `.unwrap()` , chủ động panic (crash) dừng chương trình nếu gặp lỗi.
 
-```rust,editable
+```rust,ignore
 fn main() -> Result<(), &'static str> {
   let who = "duyet";
   let age = get_age(who).unwrap();
@@ -42,7 +42,7 @@ fn main() -> Result<(), &'static str> {
 
 Giống như `unwrap()`: chủ động panic (crash) dừng chương trình nếu gặp lỗi và kèm theo message. Sẽ rất có ích, nhất là khi có quá nhiều unwrap, bạn sẽ không biết nó panic ở đâu.
 
-```rust,editable
+```rust,ignore
 fn main() -> Result<(), &'static str> {
   let who = "ngan";
   let age = get_age(who).expect("could not get age");

@@ -339,7 +339,7 @@ System.out.println(p);  // Gọi toString()
 
 ### 1. Display cho user, Debug cho developer
 
-```rust
+```rust,ignore
 // ✅ Tốt
 impl fmt::Display for User {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -358,7 +358,7 @@ impl fmt::Display for User {
 
 ### 2. Concise và meaningful
 
-```rust
+```rust,ignore
 // ✅ Tốt
 write!(f, "Error: File not found")
 
@@ -368,7 +368,7 @@ write!(f, "An error has occurred during the file reading operation: The specifie
 
 ### 3. Consistent formatting
 
-```rust
+```rust,ignore
 // ✅ Tốt - consistent format cho cùng type
 impl fmt::Display for Date {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {

@@ -4,7 +4,7 @@
 định nghĩa một loạt các function trước để hình dung ra flow của project,
 liệt kê sẵn một loạt các function mà bạn dự định sẽ implementent và sử dụng sau:
 
-```rust
+```rust,compile_fail
 struct Book {} // Okay, first I need a book struct.
                // Nothing in there yet - will add later
 
@@ -32,7 +32,7 @@ fn main() {
 
 Chúng ta chưa dùng đến, nhưng compiler vẫn sẽ không happy với `get_book` và `delete_book`.
 
-```
+```text
 error[E0308]: mismatched types
   --> src\main.rs:32:29
    |

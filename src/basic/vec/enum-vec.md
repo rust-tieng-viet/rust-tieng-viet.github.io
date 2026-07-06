@@ -49,7 +49,7 @@ fn main() {
 ```
 
 Output:
-```
+```text
 Integer: 42
 Float: 3.14
 Text: hello
@@ -93,7 +93,7 @@ fn main() {
 ```
 
 Output:
-```
+```text
 Cell 0: 'Name'
 Cell 1: 42
 Cell 2: 3.14
@@ -171,7 +171,7 @@ fn main() {
 ```
 
 Output:
-```
+```text
 ID | Name    | Score | Active
 ---|---------|-------|-------
 1       | Alice   | 75.5    | true
@@ -471,7 +471,7 @@ fn main() {
 ```
 
 Output:
-```
+```text
 id              | name            | age             | salary          | notes
 ----------------------------------------------------------------------
 1               | 'Alice'         | 30              | 75000.5         | 'Team lead'
@@ -629,7 +629,7 @@ fn main() {
 ```
 
 Output:
-```
+```text
 Values: [Int(10), Float(20.5), String("15"), Bool(true), Int(30)]
 Sum: 76.5
 Average: 15.30
@@ -760,7 +760,7 @@ impl Value {
 
 ### 3. Use pattern matching
 
-```rust
+```rust,ignore
 // ✅ Exhaustive match
 fn process(value: &Value) {
     match value {
@@ -773,7 +773,7 @@ fn process(value: &Value) {
 
 ### 4. Consider memory layout
 
-```rust
+```rust,ignore
 // ❌ Large size difference - wastes memory
 enum Bad {
     Small(u8),        // 1 byte

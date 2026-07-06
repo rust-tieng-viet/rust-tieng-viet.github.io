@@ -183,6 +183,7 @@
 # Data Engineering
 
 - [Xử lý và phân tích dữ liệu](./data-engineering/data-processing.md)
+- [Apache DataFusion và Delta Lake](./data-engineering/datafusion.md)
 - [High-performance data pipeline](./data-engineering/first-data-pipeline.md)
 - [Building scalable data-driven applications using Rust](./data-engineering/data-driven.md)
 - [Rust as an alternative to Python for data engineering tasks](./data-engineering/rust-as-alternative-python.md)
@@ -196,6 +197,7 @@
 - [llm - Unified LLM Interface](./llm/llm-crate.md)
 - [Candle - Minimalist ML Framework](./llm/candle.md)
 - [Building AI Agents và Workflows](./llm/ai-agents-workflows.md)
+- [Model Context Protocol (MCP) và genai](./llm/mcp-genai.md)
 - [Recent Updates 2025](./llm/recent-updates-2025.md)
 
 ---

@@ -87,7 +87,7 @@ Cú pháp `1..=12` là inclusive range (bao gồm cả 1 và 12). Nếu dùng `1
 
 Một điểm mạnh của `match` trong Rust là compiler sẽ kiểm tra xem bạn đã xử lý hết tất cả các trường hợp chưa. Điều này giúp tránh bugs.
 
-```rust
+```rust,compile_fail
 fn check_number(x: i32) {
     match x {
         1 => println!("Một"),

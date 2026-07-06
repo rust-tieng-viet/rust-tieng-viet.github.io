@@ -10,7 +10,7 @@ Ví dụ: `ToString` trait trong
 [Rust standard library](https://doc.rust-lang.org/src/alloc/string.rs.html#2390),
 nó được implement cho mọi kiểu dữ liệu nào có được implement `Display` trait.
 
-```rust,editable
+```rust,ignore
 impl<T: Display> ToString for T {
   // --snip--
 }
@@ -18,7 +18,7 @@ impl<T: Display> ToString for T {
 
 Có nghĩa là, với mọi type có `impl Display`, ta có hiển nhiên thể sử dụng được các thuộc tính của `trait ToString`.
 
-```rust,editable
+```rust,ignore
 let s = 3.to_string(); // do 3 thoaỏa manãn Display
 ```
 

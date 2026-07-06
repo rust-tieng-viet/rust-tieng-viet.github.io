@@ -4,7 +4,7 @@
 
 ## Syntax cơ bản
 
-```rust
+```rust,ignore
 let PATTERN = EXPRESSION else {
     DIVERGING_CODE
 };
@@ -318,7 +318,7 @@ fn process(value: Option<i32>) -> Result<i32, String> {
 
 ### ❌ Avoid cho simple cases
 
-```rust
+```rust,ignore
 // ❌ Overkill for simple case
 let Some(value) = option else {
     panic!("No value");
@@ -330,7 +330,7 @@ let value = option.expect("No value");
 
 ### ✅ Use cho validation chains
 
-```rust
+```rust,ignore
 fn validate_user(
     name: Option<String>,
     email: Option<String>,
@@ -371,7 +371,7 @@ fn parse_number(s: &str) -> Result<i32, String> {
 
 ## let-else vs unwrap/expect
 
-```rust
+```rust,ignore
 // ❌ Using unwrap (panics)
 let value = option.unwrap();
 
@@ -386,7 +386,7 @@ let Some(value) = option else {
 
 ## Real-world example: Request handling
 
-```rust
+```rust,ignore
 #[derive(Debug)]
 struct Request {
     path: String,

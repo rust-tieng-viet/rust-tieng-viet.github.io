@@ -86,7 +86,7 @@ fn main() {
 thiserror = "1.0"
 ```
 
-```rust
+```rust,ignore
 use thiserror::Error;
 
 #[derive(Error, Debug)]
@@ -116,7 +116,7 @@ struct DatabaseError;
 
 // Automatic From implementation nhờ #[from]
 fn read_config() -> Result<String, DataError> {
-    std::fs::read_to_string("config.toml")?  // Auto convert io::Error
+    Ok(std::fs::read_to_string("config.toml")?)  // Auto convert io::Error
 }
 
 fn validate_email(email: &str) -> Result<(), DataError> {
@@ -147,7 +147,7 @@ fn main() {
 anyhow = "1.0"
 ```
 
-```rust
+```rust,ignore
 use anyhow::{Context, Result, bail, ensure};
 
 fn read_user_from_file(path: &str) -> Result<User> {
@@ -191,7 +191,7 @@ fn main() -> Result<()> {
 
 ### Với `anyhow`
 
-```rust
+```rust,ignore
 use anyhow::{Context, Result};
 
 fn load_dataset(id: u64) -> Result<Vec<Record>> {
@@ -220,7 +220,7 @@ struct Record {
 
 ### Custom Context Chain
 
-```rust
+```rust,ignore
 use anyhow::{Result, Context};
 
 fn process_pipeline(input_path: &str, output_path: &str) -> Result<()> {
@@ -256,7 +256,7 @@ fn load(path: &str) -> Result<()> {
 
 ## Pattern: Error Conversion
 
-```rust
+```rust,ignore
 use thiserror::Error;
 
 #[derive(Error, Debug)]
@@ -335,7 +335,7 @@ fn process_user(id: &str) -> Result<(), Box<dyn std::error::Error>> {
 
 ## Pattern: Early Return với `?`
 
-```rust
+```rust,ignore
 use anyhow::Result;
 
 fn validate_and_process(data: &str) -> Result<i32> {
@@ -363,7 +363,7 @@ fn main() -> Result<()> {
 
 ## Pattern: Multiple Error Types
 
-```rust
+```rust,ignore
 use anyhow::Result;
 
 fn complex_operation() -> Result<String> {
@@ -387,7 +387,7 @@ struct Config {
 
 ## Pattern: Fallback với `or_else`
 
-```rust
+```rust,ignore
 use anyhow::Result;
 
 fn read_config() -> Result<String> {
@@ -408,7 +408,7 @@ fn read_config() -> Result<String> {
 
 ## Pattern: Collect Results
 
-```rust
+```rust,ignore
 use anyhow::Result;
 
 fn process_files(paths: &[&str]) -> Result<Vec<String>> {
@@ -450,7 +450,7 @@ fn main() -> Result<()> {
 
 ## Real-World Example: Data Pipeline
 
-```rust
+```rust,ignore
 use anyhow::{Context, Result, bail};
 use thiserror::Error;
 
@@ -591,7 +591,7 @@ fn main() -> Result<()> {
 
 ### 1. Use `?` for propagation
 
-```rust
+```rust,ignore
 // ✅ Clean và concise
 fn read_data(path: &str) -> Result<String> {
     let data = std::fs::read_to_string(path)?;
@@ -609,7 +609,7 @@ fn read_data_verbose(path: &str) -> Result<String> {
 
 ### 2. Add context cho errors
 
-```rust
+```rust,ignore
 // ✅ Helpful error messages
 use anyhow::Context;
 
@@ -625,7 +625,7 @@ fn load_user(id: u64) -> Result<User> {
 
 ### 3. Avoid `unwrap()` trong production code
 
-```rust
+```rust,ignore
 // ❌ Dangerous
 let value = some_operation().unwrap();
 
@@ -639,7 +639,7 @@ let value = some_operation().unwrap_or_default();
 
 ### 4. Use `thiserror` cho libraries
 
-```rust
+```rust,ignore
 // Library code - concrete error types
 #[derive(Error, Debug)]
 pub enum MyLibError {
@@ -658,7 +658,7 @@ pub fn library_function() -> Result<(), MyLibError> {
 
 ### 5. Use `anyhow` cho applications
 
-```rust
+```rust,ignore
 // Application code - flexible errors
 use anyhow::Result;
 

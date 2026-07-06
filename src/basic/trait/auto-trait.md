@@ -5,7 +5,7 @@ trừ khi kiểu dữ liệu hoặc một kiểu dữ liệu mà nó chứa đư
 
 Ta cần bật feature `auto_traits` để khai báo auto trait.
 
-```rust
+```rust,ignore
 #![feature(auto_traits)]
 
 auto trait Valid {}
@@ -13,7 +13,7 @@ auto trait Valid {}
 
 Sau đó, ta có thể triển khai `trait Valid` cho các kiểu dữ liệu khác nhau:
 
-```rust
+```rust,ignore
 #![feature(auto_traits)]
 #![feature(negative_impls)]
 # auto trait Valid {}

@@ -2,7 +2,7 @@
 
 Standard Macros được định nghĩa bởi compiler và [std](https://doc.rust-lang.org/std).
 
-```
+```text
 print!, println!, eprint!, eprintln!
 format!, format_args!
 write!, writeln!

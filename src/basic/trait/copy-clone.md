@@ -39,7 +39,7 @@ Nếu bạn đọc document của String: [https://doc.rust-lang.org/std/string/
 
 String không được implement **Copy**, thay vào đó là **Clone**. Clone cũng giúp copy giá trị nhưng sẽ cần rất nhiều memory, và ta phải tự gọi method `.clone()` chứ Rust sẽ không tự Clone.
 
-```rust,editable
+```rust,compile_fail
 fn prints_country(country_name: String) {
   println!("{}", country_name);
 }
@@ -53,7 +53,7 @@ fn main() {
 
 Sẽ báo lỗi, theo như compiler giải thích rằng `country` là `String` và không được implement `Copy` nên country bị move vào trong function. Do đó ta không thể sử dụng `country` được nữa.
 
-```rust,editable
+```text
 error[E0382]: use of moved value: `country`
  --> src/main.rs:8:20
   |

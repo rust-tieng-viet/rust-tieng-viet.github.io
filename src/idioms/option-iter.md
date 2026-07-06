@@ -201,7 +201,7 @@ fn main() {
 
 ### Kiểm tra và unwrap
 
-```rust
+```rust,ignore
 // ❌ Verbose và unsafe
 let value = if option.is_some() {
     option.unwrap()
@@ -218,11 +218,10 @@ let value = option.unwrap_or(default_value);
 ```rust
 let options = vec![Some(1), None, Some(3)];
 
-// ❌ Manual loop
 let mut result = Vec::new();
-for opt in options {
+for opt in &options {
     if let Some(val) = opt {
-        result.push(val);
+        result.push(*val);
     }
 }
 
@@ -246,7 +245,7 @@ impl<T> MaybeValue<T> {
     where
         F: FnOnce(T) -> U,
     {
-        self.value.into_iter().map(f).next()
+        self.value.map(f)
     }
 }
 
@@ -314,7 +313,7 @@ fn main() {
 
 Iterate over `Option` không có overhead so với if-let hay match:
 
-```rust
+```rust,ignore
 // Tất cả đều compile thành cùng assembly code:
 
 // 1. Using iterator

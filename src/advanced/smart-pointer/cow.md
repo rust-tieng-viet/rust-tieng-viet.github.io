@@ -32,7 +32,7 @@ Tiếp theo là `enum` variant: một giá trị `Cow` có thể là `Borrowed` 
 
 Ví dụ bạn có một function trả về giá trị `Cow<'static, str>`. 
 
-```rust
+```rust,ignore
 fn cow_function() -> Cow<'static, str> {
     // ...
 }
@@ -42,7 +42,7 @@ Nếu bạn yêu cầu function đó trả về `"My message".into()`,
 nó sẽ xem `"My message"` là một `str`. Đây là một `Borrowed` type,
 do đó variant sẽ là `Cow::Borrowed(&'static str)`.
 
-```rust
+```rust,ignore
 fn cow_function() -> Cow<'static, str> {
     "My message".into()
 }
@@ -50,7 +50,7 @@ fn cow_function() -> Cow<'static, str> {
 
 Còn nếu bạn trả về
 
-```rust
+```rust,ignore
 fn cow_function() -> Cow<'static, str> {
     format!("{}", "My message").into()
 }

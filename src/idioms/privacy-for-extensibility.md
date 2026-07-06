@@ -116,7 +116,7 @@ pub enum Error {
 
 Users buộc phải có default case khi match:
 
-```rust
+```rust,ignore
 fn handle_error(error: Error) {
     match error {
         Error::NotFound => println!("Not found"),
@@ -148,7 +148,7 @@ impl Config {
 
 Users không thể sử dụng struct literal syntax:
 
-```rust
+```rust,ignore
 // ❌ Compile error!
 // let config = Config {
 //     host: "localhost".to_string(),
@@ -221,7 +221,7 @@ fn main() {
 
 Trong tương lai có thể thêm field mới:
 
-```rust
+```rust,ignore
 pub struct HttpClientBuilder {
     timeout: u64,
     retry_count: u32,
@@ -248,7 +248,7 @@ let client = HttpClient::builder()
 
 Sử dụng private modules để ẩn implementation details:
 
-```rust
+```rust,ignore
 // lib.rs
 mod internal {
     // Private helper functions
@@ -269,7 +269,7 @@ pub mod api {
 
 Prevent users implement trait của bạn:
 
-```rust
+```rust,ignore
 mod sealed {
     pub trait Sealed {}
 }
@@ -294,7 +294,7 @@ impl MyTrait for MyType {
 
 Rust cung cấp nhiều levels của visibility:
 
-```rust
+```rust,ignore
 pub struct Container {
     pub public_field: i32,           // Accessible everywhere
     pub(crate) crate_field: i32,     // Accessible within crate
@@ -342,7 +342,7 @@ impl Database {
 
 Trong tương lai có thể thay đổi implementation:
 
-```rust
+```rust,ignore
 use std::sync::Arc;
 
 pub struct Database {
@@ -377,7 +377,7 @@ impl Database {
 
 ❌ **Tránh expose internal types:**
 
-```rust
+```rust,ignore
 // ❌ Bad
 pub use internal::InternalType;
 
@@ -388,7 +388,7 @@ pub fn process() -> InternalType {
 
 ✅ **Wrap hoặc convert:**
 
-```rust
+```rust,ignore
 // ✅ Good
 pub struct PublicType {
     // ...

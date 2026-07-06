@@ -13,7 +13,7 @@ Theo benchmark **DevQualityEval v1.1** được công bố đầu năm 2025:
 - **ChatGPT-4o** vẫn là most capable overall
 
 **Key Findings:**
-```
+```text
 Model Performance Rankings (Rust Code Quality):
 1. GPT-4.1 Nano        - Best cost-efficiency
 2. ChatGPT-4o         - Most capable
@@ -39,7 +39,7 @@ Microsoft Research phát hành **RustAssistant** - tool sử dụng LLMs để t
 - Helps developers learn from mistakes
 
 **Example Workflow:**
-```rust
+```rust,ignore
 // Original code with error
 fn main() {
     let s = String::from("hello");
@@ -101,7 +101,7 @@ Coursera ra mắt course chính thức về **Rust for Large Language Model Oper
 - Tiny binary size (~2MB)
 
 **Example:**
-```rust
+```rust,ignore
 use lm_rs::{Model, Tokenizer};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -191,7 +191,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ### Rust vs. Python for LLM Inference (2025)
 
 **Llama 2 7B Inference (Tokens/Second):**
-```
+```text
 Environment         | Python (llama.cpp) | Rust (Candle) | Speedup
 --------------------|-------------------|---------------|--------
 CPU (Intel i9)      | 2.1 tok/s        | 2.5 tok/s     | 1.2x
@@ -201,7 +201,7 @@ Memory Usage        | ~8.5 GB          | ~7.2 GB       | 15% less
 ```
 
 **API Serving Latency:**
-```
+```text
 Metric              | Python (FastAPI) | Rust (Axum)   | Improvement
 --------------------|------------------|---------------|------------
 p50 latency         | 125ms           | 45ms          | 2.8x

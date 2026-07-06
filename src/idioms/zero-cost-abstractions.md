@@ -31,7 +31,7 @@ fn sum_of_squares_manual(numbers: &[i32]) -> i32 {
 
 ### Iterator chain (zero-cost!)
 
-```rust
+```rust,ignore
 fn sum_of_squares_iterator(numbers: &[i32]) -> i32 {
     numbers.iter()
         .filter(|n| *n % 2 == 0)
@@ -76,7 +76,7 @@ for x in 1..=100 {
 
 ### 2. Loop Fusion
 
-```rust
+```rust,ignore
 // Nhiều operations
 let result: Vec<_> = data
     .iter()
@@ -114,7 +114,7 @@ fn main() {
 
 ```rust
 trait Process {
-    fn process(&self) -> i32;
+    fn process(&self, value: i32) -> i32;
 }
 
 struct AddOne;
@@ -146,7 +146,7 @@ fn main() {
 
 ### Dynamic Dispatch (có runtime cost)
 
-```rust
+```rust,ignore
 // ❌ Dynamic dispatch - runtime overhead
 fn apply_dynamic(processor: &dyn Process, value: i32) -> i32 {
     processor.process(value)  // Virtual function call
@@ -245,7 +245,7 @@ fn main() {
 
 ## Benchmark: Iterator vs Loop
 
-```rust
+```rust,no_run
 use std::time::Instant;
 
 fn benchmark_iterator(data: &[i32]) -> i32 {
@@ -362,7 +362,7 @@ fn main() {
 
 ## Parallel Iterators với Rayon - Near Zero Cost
 
-```rust
+```rust,ignore
 use rayon::prelude::*;
 
 fn sum_sequential(data: &[i32]) -> i32 {
@@ -427,7 +427,7 @@ fn main() {
 
 ### 1. Prefer iterators over manual loops
 
-```rust
+```rust,ignore
 // ✅ Zero-cost và clear intent
 let sum: i32 = data.iter().filter(|&&x| x > 0).sum();
 
@@ -456,7 +456,7 @@ fn process_dyn(value: &dyn std::fmt::Display) {
 
 ### 3. Chain operations
 
-```rust
+```rust,ignore
 // ✅ Chaining - compiler optimize
 let result = data
     .iter()
@@ -550,7 +550,7 @@ pub fn loop_sum(data: &[i32]) -> i32 {
 
 ### 1. Dynamic dispatch
 
-```rust
+```rust,ignore
 // Runtime overhead do virtual function calls
 fn process(handler: &dyn Handler) {
     handler.handle();  // Indirect call
@@ -559,7 +559,7 @@ fn process(handler: &dyn Handler) {
 
 ### 2. Excessive allocations
 
-```rust
+```rust,ignore
 // Mỗi step allocate new Vec
 let step1: Vec<_> = data.iter().map(|x| x + 1).collect();
 let step2: Vec<_> = step1.iter().map(|x| x * 2).collect();
@@ -568,7 +568,7 @@ let step3: Vec<_> = step2.iter().filter(|&&x| x > 10).collect();
 
 ### 3. Unnecessary clones
 
-```rust
+```rust,ignore
 // Clone toàn bộ data mỗi iteration
 for item in data.clone() {  // ❌
     // ...

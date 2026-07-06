@@ -21,7 +21,7 @@ fn main() {
 
 Nhưng điều này gây vấn đề khi closure cần outlive scope:
 
-```rust
+```rust,ignore
 fn create_closure() -> impl Fn() {
     let s = String::from("hello");
 
@@ -383,7 +383,7 @@ fn main() {
 
 Rust có 3 closure traits tùy thuộc vào cách capture:
 
-```rust
+```rust,ignore
 fn main() {
     let s = String::from("hello");
 
@@ -424,7 +424,7 @@ fn main() {
 
 ### ❌ Forgetting move with threads
 
-```rust
+```rust,ignore
 // ❌ Won't compile
 fn wrong() {
     let data = vec![1, 2, 3];

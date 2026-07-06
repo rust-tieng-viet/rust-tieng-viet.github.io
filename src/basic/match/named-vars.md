@@ -39,7 +39,7 @@ fn main() {
 ```
 
 Output:
-```
+```text
 Matched, y = 5
 Kết thúc: x = Some(5), y = 10
 ```
@@ -149,6 +149,7 @@ fn main() {
         n @ 13..=19 => println!("Thiếu niên, tuổi: {}", n),
         n @ 20..=64 => println!("Người trưởng thành, tuổi: {}", n),
         n @ 65.. => println!("Người cao tuổi, tuổi: {}", n),
+        _ => println!("Tuổi không hợp lệ"),
     }
     // In ra: Người trưởng thành, tuổi: 25
 }
@@ -156,7 +157,7 @@ fn main() {
 
 Không có `@`, bạn sẽ không có biến để sử dụng:
 
-```rust
+```rust,ignore
 match age {
     0..=12 => println!("Trẻ em"),  // không biết tuổi cụ thể
     // ...

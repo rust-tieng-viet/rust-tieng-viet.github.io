@@ -21,7 +21,7 @@ fn main() {
 
 ### Signature
 
-```rust
+```rust,ignore
 pub fn replace<T>(dest: &mut T, src: T) -> T
 ```
 
@@ -44,7 +44,7 @@ fn main() {
 
 ### Signature
 
-```rust
+```rust,ignore
 pub fn take<T: Default>(dest: &mut T) -> T
 ```
 
@@ -57,8 +57,10 @@ Một trong những use case phổ biến nhất là khi cần modify một enum
 ```rust
 use std::mem;
 
+#[derive(Default)]
 enum State {
     Active { count: u32 },
+    #[default]
     Inactive,
 }
 
@@ -86,7 +88,7 @@ fn main() {
 
 Nếu không dùng `mem::take`, bạn sẽ gặp borrow checker error:
 
-```rust
+```rust,compile_fail
 // ❌ Compile error!
 fn increment_wrong(&mut self) {
     *self = match self {
@@ -143,7 +145,8 @@ fn main() {
     let mut b = 10;
 
     // Swap using mem::replace
-    let temp = mem::replace(&mut a, mem::replace(&mut b, a));
+    let temp = mem::replace(&mut a, b);
+    b = temp;
 
     println!("a: {}, b: {}", a, b); // a: 10, b: 5
 

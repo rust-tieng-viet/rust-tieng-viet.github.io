@@ -33,7 +33,7 @@ let x = 5;
 
 sẽ tương đương với
 
-```````
+```````text
 ```rust
 let x = 5;
 ```

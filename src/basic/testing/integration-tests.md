@@ -10,11 +10,11 @@ Trong thư mục `tests`, cargo sẽ compile mỗi file thành một thành mộ
 
 File: tests/integration_test.rs
 
-```rust
+```rust,ignore
 use adder;
 
 #[test]
-fưn it_adds_two() {
+fn it_adds_two() {
   assert_eq!(4, adder::adder(2, 2));
 }
 ```
@@ -24,7 +24,7 @@ do file integration test này là một crate độc lập.
 
 Chạy `cargo test`
 
-```
+```text
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 1.31s

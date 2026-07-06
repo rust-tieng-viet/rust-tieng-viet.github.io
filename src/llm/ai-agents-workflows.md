@@ -19,7 +19,7 @@ Rust cung cấp:
 
 ### 2. Type Safety và Reliability
 
-```rust
+```rust,ignore
 // Rust's type system prevents runtime errors
 enum AgentState {
     Idle,
@@ -43,7 +43,7 @@ match agent.state {
 
 Rust's `Result` type là perfect cho AI agents có thể hallucinate hoặc fail:
 
-```rust
+```rust,ignore
 async fn agent_task() -> Result<String, AgentError> {
     let llm_response = call_llm().await?;
 
@@ -87,7 +87,7 @@ async fn agent_task() -> Result<String, AgentError> {
 ```
 
 **Example - Multi-Agent System:**
-```rust
+```rust,ignore
 use kowalski::{Agent, Federation, Task};
 
 #[tokio::main]
@@ -196,8 +196,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 ```
 
 **Deploy to WASM:**
-```rust
-use autoagents::wasm::WasmExecutor;
+```rust,ignore
+use autoagents::{Agent, Message, System};
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
@@ -224,7 +224,7 @@ pub async fn run_agent_workflow(input: String) -> Result<String, JsValue> {
 - ⚡ Integration với Rig crate
 
 **Example - Graph Workflow:**
-```rust
+```rust,ignore
 use graph_flow::{Graph, Node, Edge, State};
 use rig::providers::openai::Client;
 
@@ -307,8 +307,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 [AgentAI](https://github.com/AdamStrojek/rust-agentai) simplifies việc tạo AI agents trong Rust.
 
 **Example:**
-```rust
-use agentai::{Agent, Tool};
+```rust,ignore
+use agent_ai::{Agent, OpenAIClient};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -347,7 +347,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### 1. ReAct Pattern (Reasoning + Acting)
 
-```rust
+```rust,ignore
 use rig::providers::openai::Client;
 
 struct ReActAgent {
@@ -402,7 +402,7 @@ impl ReActAgent {
 
 ### 2. Tool-Using Agent
 
-```rust
+```rust,ignore
 use std::collections::HashMap;
 
 #[derive(Clone)]
@@ -452,7 +452,7 @@ impl ToolAgent {
 
 ### 3. Multi-Agent Collaboration
 
-```rust
+```rust,ignore
 struct AgentTeam {
     agents: HashMap<String, Agent>,
     coordinator: Coordinator,
@@ -495,7 +495,7 @@ impl AgentTeam {
 
 ### 4. Stateful Conversational Agent
 
-```rust
+```rust,ignore
 use std::sync::Arc;
 use tokio::sync::RwLock;
 
@@ -550,7 +550,7 @@ impl ConversationalAgent {
 Model Context Protocol (MCP) cho phép AI agents access external tools và data sources.
 
 **Example MCP Server:**
-```rust
+```rust,ignore
 use mcp_server::{Server, Tool, Resource};
 
 #[tokio::main]
@@ -593,7 +593,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### 1. Error Handling và Retry Logic
 
-```rust
+```rust,ignore
 use tokio::time::{sleep, Duration};
 
 async fn resilient_agent_call<F, T>(
@@ -622,7 +622,7 @@ where
 
 ### 2. Rate Limiting
 
-```rust
+```rust,ignore
 use governor::{Quota, RateLimiter};
 use std::num::NonZeroU32;
 
@@ -651,7 +651,7 @@ impl RateLimitedAgent {
 
 ### 3. Observability
 
-```rust
+```rust,ignore
 use tracing::{info, warn, error, instrument};
 
 #[instrument(skip(agent))]
@@ -681,7 +681,7 @@ async fn traced_agent_execution(
 
 ### 1. Customer Support Bot
 
-```rust
+```rust,ignore
 struct SupportBot {
     agent: Agent,
     knowledge_base: VectorStore,
@@ -709,7 +709,7 @@ impl SupportBot {
 
 ### 2. Code Review Agent
 
-```rust
+```rust,ignore
 struct CodeReviewAgent {
     agent: Agent,
 }
@@ -736,7 +736,7 @@ impl CodeReviewAgent {
 
 ### 3. Research Assistant
 
-```rust
+```rust,ignore
 struct ResearchAssistant {
     searcher: Agent,
     analyzer: Agent,
@@ -874,8 +874,7 @@ impl EvaluatorOptimizer {
 
 ## Performance Comparison: Rust vs Python
 
-**Agent Workflow Execution (100 tasks):**
-```
+```text
 Metric                  | Python (LangChain) | Rust (Kowalski) | Improvement
 ------------------------|-------------------|-----------------|------------
 Execution Time          | 45.2s            | 8.3s            | 5.4x faster

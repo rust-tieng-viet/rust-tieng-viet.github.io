@@ -623,7 +623,7 @@ struct MyType<State> {
 
 ### 2. Consume self cho state transitions
 
-```rust
+```rust,ignore
 impl MyType<StateA> {
     // ✅ Consume self - không thể dùng old state sau transition
     fn transition(self) -> MyType<StateB> {
@@ -637,7 +637,7 @@ impl MyType<StateA> {
 
 ### 3. Document state transitions
 
-```rust
+```rust,ignore
 /// A connection that can be in one of three states:
 /// - `Disconnected`: Initial state, can call `connect()`
 /// - `Connected`: Can call `send()` and `disconnect()`
@@ -647,7 +647,7 @@ struct Connection<State> { /* ... */ }
 
 ### 4. Provide helpful error messages
 
-```rust
+```rust,ignore
 // Use type aliases cho clearer errors
 type DisconnectedConnection = Connection<Disconnected>;
 type ConnectedConnection = Connection<Connected>;
