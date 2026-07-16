@@ -32,8 +32,8 @@
         <link rel="icon" href="favicon-de23e50b.svg">
         <link rel="shortcut icon" href="favicon-8114d1fc.png">
         <link rel="stylesheet" href="css/variables-8adf115d.css">
-        <link rel="stylesheet" href="css/general-0392ca55.css">
-        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
         <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
@@ -52,7 +52,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-58394469.js";
+            window.path_to_searchindex_js = "searchindex-58af059b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-d2455f51.js"></script>
@@ -247,7 +247,7 @@ Vui lòng xem mục <strong>references</strong> ở cuối các trang nếu bạ
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="rust-playground"><a class="header" href="#rust-playground">Rust Playground</a></h1>
 <p><a href="https://play.rust-lang.org">https://play.rust-lang.org</a> giúp chúng ta chạy Rust code trực tiếp trên trình duyệt mà không cần <a href="#cài-đặt-rust">cài đặt Rust trên máy</a>.</p>
-<p><img src="getting-started/playground.png" alt="Rust Playground interface - an online code editor for running Rust code in the browser"></p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="getting-started/playground.png" alt="Rust Playground interface - an online code editor for running Rust code in the browser"><span class="img-wrapper"><img src="getting-started/playground.png" alt="Rust Playground interface - an online code editor for running Rust code in the browser"></span></label></p>
 <p>Một số tips:</p>
 <ul>
 <li>Bấm Run để chạy code. Có thể chuyển đổi giữa các version của Rust.</li>
@@ -949,7 +949,7 @@ fn main() {
 }
 </code></pre>
 <p>Còn trong Rust thì sao?</p>
-<p><img src="https://i.imgur.com/ZKHSRQK.png" alt="Trait implementations for Display"></p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="https://i.imgur.com/ZKHSRQK.png" alt="Trait implementations for Display"><span class="img-wrapper"><img src="https://i.imgur.com/ZKHSRQK.png" alt="Trait implementations for Display"></span></label></p>
 <h1 id="trait-là-gì"><a class="header" href="#trait-là-gì">Trait là gì?</a></h1>
 <p>Có thể bạn đã thấy qua trait rồi: <code>Debug</code>, <code>Copy</code>, <code>Clone</code>, … là các trait.</p>
 <p>Trait là một cơ chế abstract để thêm các tính năng (functionality) hay hành vi (behavior)
@@ -1394,7 +1394,7 @@ fn main() {
 <p>Do <code>i32</code> được Copy nên chúng ta có thể sử dụng <code>my_number</code> nhiều lần mà không cần borrow <code>&amp;</code> như struct.</p>
 <h1 id="clone-trait"><a class="header" href="#clone-trait">Clone trait</a></h1>
 <p>Nếu bạn đọc document của String: <a href="https://doc.rust-lang.org/std/string/struct.String.html">https://doc.rust-lang.org/std/string/struct.String.html</a></p>
-<p><img src="basic/trait/clone-trait.png" alt=""></p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="basic/trait/clone-trait.png" alt=""><span class="img-wrapper"><img src="basic/trait/clone-trait.png" alt=""></span></label></p>
 <p>String không được implement <strong>Copy</strong>, thay vào đó là <strong>Clone</strong>. Clone cũng giúp copy giá trị nhưng sẽ cần rất nhiều memory, và ta phải tự gọi method <code>.clone()</code> chứ Rust sẽ không tự Clone.</p>
 <pre class="playground"><code class="language-rust editable edition2021">fn prints_country(country_name: String) {
   println!("{}", country_name);
@@ -4020,7 +4020,7 @@ pub fn add_one(x: i32) -&gt; i32 {
 <span class="boring">}</span></code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="turbofish-"><a class="header" href="#turbofish-">Turbofish ::&lt;&gt;</a></h1>
-<p><img src="https://blog.duyet.net/static/a4e75d7d370caf2b035a94ab66138e47/3fe5e/rust-turbofish.webp" alt="Rust Turbofish"></p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="https://blog.duyet.net/static/a4e75d7d370caf2b035a94ab66138e47/3fe5e/rust-turbofish.webp" alt="Rust Turbofish"><span class="img-wrapper"><img src="https://blog.duyet.net/static/a4e75d7d370caf2b035a94ab66138e47/3fe5e/rust-turbofish.webp" alt="Rust Turbofish"></span></label></p>
 <p>Trong trường hợp bạn cần chỉ định kiểu dữ liệu cho một generic function, method, struct, hoặc enum,
 Rust có một cú pháp đặc biệt để làm điều này gọi là turbofish. Quy tắc là khi nào bạn thấy</p>
 <pre class="playground"><code class="language-rust editable edition2021">$ident&lt;T&gt;</code></pre>
@@ -6128,7 +6128,7 @@ error: could not compile `cons-list` due to 2 previous errors
 <span class="boring">}</span></code></pre>
 <p>Để xác định bao nhiêu bộ nhớ cần để allocate cho <code>Message</code>, Rust sẽ kiểm tra từng variant (biến thể của enum) để xem variant nào cần bộ nhớ nhiều nhất. Rust thấy rằng <code>Message::Quit</code> không cần, <code>Message::Move</code> phải cần ít nhất bộ nhớ để lưu hai giá trị <code>i32</code>. Tương tự với các variant còn lại. Bởi vì một thời điểm cho có một variant được sử dụng, do đó bộ nhớ tối đa mà <code>Message</code> cần sẽ là một nhớ cần để lưu trữ variant lớn nhất.</p>
 <p>Quay lại với Cons List, bộ nhớ mà Rust tính toán được có thể đến vô tận.</p>
-<p><img src="advanced/smart-pointer/box-cons.svg" alt="Diagram showing infinite size problem with recursive Cons List type in Rust"></p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="advanced/smart-pointer/box-cons.svg" alt="Diagram showing infinite size problem with recursive Cons List type in Rust"><span class="img-wrapper"><img src="advanced/smart-pointer/box-cons.svg" alt="Diagram showing infinite size problem with recursive Cons List type in Rust"></span></label></p>
 <p>Theo như gợi ý của compiler, chúng ta có thể sử dụng <code>Box&lt;T&gt;</code> để có một Recursive Type với một kích thước bộ nhớ xác định:</p>
 <pre><code class="language-bash">help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to make `List` representable
   |
@@ -6136,7 +6136,7 @@ error: could not compile `cons-list` due to 2 previous errors
   |               ++++    +
 </code></pre>
 <p>Bởi vì <code>Box&lt;T&gt;</code> là một pointer, Rust luôn biết chính xác bao nhiêu bộ nhớ mà một <code>Box&lt;T&gt;</code> <strong>pointer</strong> cần.</p>
-<p><img src="advanced/smart-pointer/box-cons-box.png" alt="Diagram showing how Box&lt;T&gt; solves the recursive type size problem with fixed-size pointers"></p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="advanced/smart-pointer/box-cons-box.png" alt="Diagram showing how Box&lt;T&gt; solves the recursive type size problem with fixed-size pointers"><span class="img-wrapper"><img src="advanced/smart-pointer/box-cons-box.png" alt="Diagram showing how Box&lt;T&gt; solves the recursive type size problem with fixed-size pointers"></span></label></p>
 <p>Chương trình của chúng ta lúc này sẽ là:</p>
 <pre class="playground"><code class="language-rust editable edition2021">enum List {
   Cons(i32, Box&lt;List&gt;),
@@ -10455,7 +10455,7 @@ speedup: 5.34x
 <p><strong>Demo nbody visualize</strong>: gõ <code>s</code> để chạy tuần tự và <code>p</code> để parallel</p>
 <pre><code class="language-bash">cargo run --release -- nbody visualize
 </code></pre>
-<p><img src="https://i.imgur.com/cF6Euyf.png" alt="Rayon nbody simulation visualization demo - showing parallel physics calculations in action"></p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="https://i.imgur.com/cF6Euyf.png" alt="Rayon nbody simulation visualization demo - showing parallel physics calculations in action"><span class="img-wrapper"><img src="https://i.imgur.com/cF6Euyf.png" alt="Rayon nbody simulation visualization demo - showing parallel physics calculations in action"></span></label></p>
 <h2 id="references-40"><a class="header" href="#references-40">References</a></h2>
 <ul>
 <li><a href="https://smallcultfollowing.com/babysteps/blog/2015/12/18/rayon-data-parallelism-in-rust/">Rayon: data parallelism in Rust</a></li>
@@ -10465,7 +10465,7 @@ speedup: 5.34x
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="polars"><a class="header" href="#polars"><a href="https://pola.rs"><code>polars</code></a></a></h1>
 <p>Xử lý DataFrame lớn, dễ sử dụng, hiệu năng cao và có nhiều ưu điểm giống với Pandas nổi tiếng. Polars cũng được hỗ trợ trên Python.</p>
-<p><img src="crates/polars.png" alt="Polars DataFrame library logo - high-performance data processing framework for Rust and Python"></p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="crates/polars.png" alt="Polars DataFrame library logo - high-performance data processing framework for Rust and Python"><span class="img-wrapper"><img src="crates/polars.png" alt="Polars DataFrame library logo - high-performance data processing framework for Rust and Python"></span></label></p>
 <h2 id="cài-đặt-9"><a class="header" href="#cài-đặt-9">Cài đặt</a></h2>
 <pre><code class="language-bash">cargo add polars
 </code></pre>
@@ -20235,7 +20235,7 @@ fn main() -&gt; Result&lt;()&gt; {
 
         <script src="clipboard-1626706a.min.js"></script>
         <script src="highlight-abc7f01d.js"></script>
-        <script src="book-c22b7243.js"></script>
+        <script src="book-609e4cb8.js"></script>
 
         <!-- Custom JS scripts -->
 

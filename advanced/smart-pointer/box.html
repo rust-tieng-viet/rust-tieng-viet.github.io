@@ -31,8 +31,8 @@
         <link rel="icon" href="../../favicon-de23e50b.svg">
         <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
         <link rel="stylesheet" href="../../css/variables-8adf115d.css">
-        <link rel="stylesheet" href="../../css/general-0392ca55.css">
-        <link rel="stylesheet" href="../../css/chrome-fc474251.css">
+        <link rel="stylesheet" href="../../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
         <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
@@ -51,7 +51,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-58394469.js";
+            window.path_to_searchindex_js = "../../searchindex-58af059b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-d2455f51.js"></script>
@@ -280,7 +280,7 @@ error: could not compile `cons-list` due to 2 previous errors
 <span class="boring">}</span></code></pre>
 <p>Để xác định bao nhiêu bộ nhớ cần để allocate cho <code>Message</code>, Rust sẽ kiểm tra từng variant (biến thể của enum) để xem variant nào cần bộ nhớ nhiều nhất. Rust thấy rằng <code>Message::Quit</code> không cần, <code>Message::Move</code> phải cần ít nhất bộ nhớ để lưu hai giá trị <code>i32</code>. Tương tự với các variant còn lại. Bởi vì một thời điểm cho có một variant được sử dụng, do đó bộ nhớ tối đa mà <code>Message</code> cần sẽ là một nhớ cần để lưu trữ variant lớn nhất.</p>
 <p>Quay lại với Cons List, bộ nhớ mà Rust tính toán được có thể đến vô tận.</p>
-<p><img src="./box-cons.svg" alt="Diagram showing infinite size problem with recursive Cons List type in Rust"></p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="./box-cons.svg" alt="Diagram showing infinite size problem with recursive Cons List type in Rust"><span class="img-wrapper"><img src="./box-cons.svg" alt="Diagram showing infinite size problem with recursive Cons List type in Rust"></span></label></p>
 <p>Theo như gợi ý của compiler, chúng ta có thể sử dụng <code>Box&lt;T&gt;</code> để có một Recursive Type với một kích thước bộ nhớ xác định:</p>
 <pre><code class="language-bash">help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to make `List` representable
   |
@@ -288,7 +288,7 @@ error: could not compile `cons-list` due to 2 previous errors
   |               ++++    +
 </code></pre>
 <p>Bởi vì <code>Box&lt;T&gt;</code> là một pointer, Rust luôn biết chính xác bao nhiêu bộ nhớ mà một <code>Box&lt;T&gt;</code> <strong>pointer</strong> cần.</p>
-<p><img src="./box-cons-box.png" alt="Diagram showing how Box&lt;T&gt; solves the recursive type size problem with fixed-size pointers"></p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="./box-cons-box.png" alt="Diagram showing how Box&lt;T&gt; solves the recursive type size problem with fixed-size pointers"><span class="img-wrapper"><img src="./box-cons-box.png" alt="Diagram showing how Box&lt;T&gt; solves the recursive type size problem with fixed-size pointers"></span></label></p>
 <p>Chương trình của chúng ta lúc này sẽ là:</p>
 <pre class="playground"><code class="language-rust editable edition2021">enum List {
   Cons(i32, Box&lt;List&gt;),
@@ -406,7 +406,7 @@ impl Screen {
 
         <script src="../../clipboard-1626706a.min.js"></script>
         <script src="../../highlight-abc7f01d.js"></script>
-        <script src="../../book-c22b7243.js"></script>
+        <script src="../../book-609e4cb8.js"></script>
 
         <!-- Custom JS scripts -->
 
